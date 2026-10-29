@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 22
       - run: pnpm install --no-frozen-lockfile
-      - run: pnpm build
+      - run: pnpm exec vite build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
