@@ -38,13 +38,16 @@ def sprite_grounding_audit()->None:
     for name,width,height,frames in pattern.findall(block):
         width=int(width);height=int(height);frames=int(frames)
         image=Image.open(sprite_root/f'{name}.png').convert('RGBA')
-        bottoms=[]
+        bottoms=[]; first_bottoms=[]
         for row in range(8):
             for col in range(frames):
                 alpha=image.crop((col*width,row*height,(col+1)*width,(row+1)*height)).getchannel('A')
                 bbox=alpha.getbbox()
-                if bbox: bottoms.append(bbox[3])
-        print(f'{name:13} {width:2}x{height:<2}   {min(bottoms):2}-{max(bottoms):2}               {max(bottoms)/height:.3f}')
+                if bbox:
+                    bottoms.append(bbox[3])
+                    if col==0: first_bottoms.append(bbox[3])
+        anchors=','.join(f'{bottom/height:.3f}' for bottom in first_bottoms)
+        print(f'{name:13} {width:2}x{height:<2}   {min(bottoms):2}-{max(bottoms):2}               [{anchors}]')
 
 
 if __name__=='__main__':

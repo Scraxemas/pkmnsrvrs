@@ -23,7 +23,7 @@ function buildTerrain(rng:MapRng,width:number,height:number,biome:Biome,paths:Re
   let x=middleX;
   for(let row=0;row<grid.rows;row++){if(row%4===0&&row>2&&row<grid.rows-3)x=Math.max(5,Math.min(grid.cols-6,x+rng.int(3)-1));carve(grid,x,row,1,TERRAIN.path);}
   for(const [sx,sy] of [[4,3],[grid.cols-5,3],[4,grid.rows-4],[grid.cols-5,grid.rows-4]] as const){const targetY=mainY[sx];for(let row=Math.min(sy,targetY);row<=Math.max(sy,targetY);row++)carve(grid,sx,row,1,TERRAIN.path);}
-  carve(grid,middleX,middleY,3,TERRAIN.path);
+  carve(grid,middleX,middleY,2,TERRAIN.path);
   const flower=landmarks.find(landmark=>landmark.id==='flower-clearing');if(flower)carve(grid,Math.floor(flower.x/grid.tileSize),Math.floor(flower.y/grid.tileSize),2,TERRAIN.path);
   const pond=landmarks.find(landmark=>landmark.id==='pond');if(pond){const px=Math.floor(pond.x/grid.tileSize),py=Math.floor(pond.y/grid.tileSize);for(let oy=-2;oy<=2;oy++)for(let ox=-2;ox<=2;ox++)if(ox*ox/4+oy*oy/2.25<=1&&terrainAtWorld(grid,(px+ox)*grid.tileSize,(py+oy)*grid.tileSize)!==TERRAIN.path)setTerrain(grid,px+ox,py+oy,TERRAIN.water);}
   return grid;

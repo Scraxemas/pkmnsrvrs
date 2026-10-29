@@ -19,9 +19,10 @@
 
 - Source: project-owned original raster generated for Pokémon Survivors on 2026-10-29 with OpenAI image generation, then reviewed and processed locally.
 - Master: `public/assets/environment/viridian/forest-atlas-source.png` (8 × 8 layout).
-- Runtime exports: `public/assets/environment/viridian/*.png` (58 transparent cells plus two seamless 128 × 128 terrain fills).
+- Runtime exports: `public/assets/environment/viridian/*.png` (61 extracted cells plus two seamless 128 × 128 terrain fills).
 - Extraction: `tools/extract_forest_atlas.py`; crops cells, applies nearest-neighbor scaling, and removes only border-connected magenta key pixels.
 - Use: grass and forest-floor variants, dirt paths, trees, logs, flowers, pond/water details, and landmarks for the Viridian Forest renderer.
-- Status: approved for this project. These are original generated assets, not extracted Pokémon game tiles.
+- Status: approved as the temporary project-owned environment, but **not FireRed/LeafGreen artwork**. The v0.3.2 audit found no approved FRLG tileset in this workspace, `D:\Projects`, or the source registry. Authentic FRLG replacement remains blocked on a user-supplied, documented, redistributable asset source; no ROM/decomp graphics will be imported as a substitute.
+- Coordinate contact sheet: `docs/visuals/current-environment-atlas-coordinates.png` (labels are `column,row`).
 
 Do not remove attribution or treat these assets as commercially cleared. Keep the asset source, revision, and approval state updated as the content pipeline expands.

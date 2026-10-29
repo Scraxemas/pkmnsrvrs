@@ -2,9 +2,11 @@
 
 ## Environment renderer
 
-Viridian Forest renders from individual PNG assets in `public/assets/environment/viridian`. The world seed selects ground and tree variants deterministically. World-generation records remain semantic (`tree`, `log`, `pond`, and landmarks), while `GameScene` resolves those records to runtime textures. Collision remains authoritative in `worldgen.ts`; the graphics do not define gameplay bounds.
+Viridian Forest renders from individual PNG assets in `public/assets/environment/viridian`. The world generator emits a deterministic 64-pixel semantic terrain grid (`grass`, `path`, and `water`), and the renderer selects transition art from its eight-neighbor mask. The world seed controls organic route bends, clearings, ground details, and tree variants. Collision remains authoritative in `worldgen.ts`; the graphics do not define gameplay bounds.
 
 The `pokemon-asset-master` checkout is used as the source/provenance registry. Its own policy states that public decompilations do not grant redistribution rights for Nintendo graphics, so the playable stage uses a project-owned original atlas instead of ROM-derived map art.
+
+The current atlas is not an authentic FireRed/LeafGreen tileset. Replacing it requires a separately supplied source with redistribution permission and verified atlas coordinates.
 
 ## PMD sprite directions
 
@@ -20,6 +22,8 @@ PMD walk sheets contain eight rows in this order:
 8. southwest
 
 `direction.ts` is the single source of truth for this mapping. Facing is calculated from actual post-collision velocity. An idle actor stops on the first frame of its last facing row; no direction is synthesized with horizontal mirroring.
+
+`renderProfiles.ts` stores each species' render scale, shadow dimensions, intentional elevation, and eight direction-specific ground anchors measured from its PMD walk sheet. The simulation coordinate is the ground-contact point; shadows remain at that coordinate while flying species can opt into visual elevation.
 
 ## Enemy navigation
 

@@ -27,3 +27,20 @@ test('menu to deterministic Viridian Forest run with visual checkpoints',async({
 });
 
 test('Pokédex and Research screens render',async({page})=>{await page.goto('/');const canvas=page.locator('canvas');await expect(canvas).toBeVisible();await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('dex');});await page.waitForTimeout(250);await page.screenshot({path:'test-results/screenshots/10-pokedex.png'});await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('research');});await page.waitForTimeout(250);await page.screenshot({path:'test-results/screenshots/11-research.png'});});
+
+test('grounding, terrain transitions, pond boundary, and responsive HP HUD',async({page})=>{
+  await page.setViewportSize({width:1280,height:720});await page.goto('/?fast=1');const canvas=page.locator('canvas');await expect(canvas).toBeVisible();
+  await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur',fast:true});});await page.waitForTimeout(700);
+  await page.screenshot({path:'test-results/screenshots/12-grounding-idle-1280.png'});
+  await page.keyboard.down('d');await page.waitForTimeout(220);await page.screenshot({path:'test-results/screenshots/13-grounding-walk-east-1280.png'});await page.keyboard.up('d');
+  const metrics=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{bar:s.hpLayout.player,originY:s.player.originY,spriteY:s.player.y,groundY:s.state.player.y,shadowY:s.playerShadow.y};});
+  expect(metrics.bar.width/1280).toBeGreaterThan(.93);expect(metrics.originY).toBeCloseTo(.65,2);expect(Math.abs(metrics.spriteY-metrics.groundY)).toBeLessThan(1);expect(metrics.shadowY-metrics.groundY).toBeCloseTo(2,1);
+  await page.screenshot({path:'test-results/screenshots/14-terrain-intersection-1280.png'});
+  await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.hp=s.state.maxHp*.18;});await page.waitForTimeout(100);
+  await page.screenshot({path:'test-results/screenshots/15-critical-hp-1280.png'});
+  await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.cameras.main.stopFollow();s.cameras.main.centerOn(1750,1080);});await page.waitForTimeout(150);
+  await page.screenshot({path:'test-results/screenshots/16-pond-boundary-1280.png'});
+  await page.setViewportSize({width:2560,height:1440});await page.waitForTimeout(250);
+  const canvasBox=await canvas.boundingBox();expect(canvasBox?.width).toBeGreaterThan(2500);
+  await page.screenshot({path:'test-results/screenshots/17-hud-2560x1440.png'});
+});
