@@ -7,6 +7,7 @@ playwright-report/
 .env.*
 .DS_Store
 Thumbs.db
+__pycache__/
 assets/external/
 # Superseded local extraction path from the first FRLG import attempt.
 public/assets/environment/frlg/

@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
 import { assetFor, ENEMIES, ITEMS, MOVES, POKEMON, SPRITE_FRAMES, STAGES } from './content';
 import { FACINGS, Facing, facingRow } from './direction';
-import { ENVIRONMENT_ASSETS, environmentKey, environmentUrl } from './environmentAssets';
+import { ENVIRONMENT_ASSETS, ENVIRONMENT_ATLASES, environmentKey, environmentUrl } from './environmentAssets';
+import {decorationVisual,visibleChunkRange} from './worldPresentation';
 import {gameplayHudLayout, GameplayHudLayout, hpBarColor} from './hudLayout';
 import {renderProfile} from './renderProfiles';
 import { applyUpgrade, AttackEvent, makeState, masteryOptions, rewardRoll, SimState, spawnSpecies, stateHash, tick, Upgrade, upgradeOptions } from './simulation';
@@ -28,17 +29,17 @@ class GameScene extends BaseScene {
  portrait!:Phaser.GameObjects.Image;hud!:Phaser.GameObjects.Text;hpGraphics!:Phaser.GameObjects.Graphics;hpText!:Phaser.GameObjects.Text;bossGraphics!:Phaser.GameObjects.Graphics;bossText!:Phaser.GameObjects.Text;hpLayout!:GameplayHudLayout;
  debugText?:Phaser.GameObjects.Text;debugGraphics?:Phaser.GameObjects.Graphics;enemyViews=new Map<number,Phaser.GameObjects.Sprite>();enemyShadows=new Map<number,Phaser.GameObjects.Ellipse>();pickupViews=new Map<number,Phaser.GameObjects.Arc>();projectileViews=new Map<number,Phaser.GameObjects.Shape>();
  playerAnimation!:PokemonAnimationController;enemyAnimations=new Map<number,PokemonAnimationController>();previousPlayer!:Position;previousEnemies=new Map<number,Position>();previousProjectiles=new Map<number,Position>();renderPlayer:Position={x:0,y:0};
- chunkViews=new Map<string,Phaser.GameObjects.GameObject[]>();activeChunk={cx:Number.NaN,cy:Number.NaN};sessionDefeats:Record<string,number>={};sessionBalls=0;acc=0;overlay?:Phaser.GameObjects.Container;fast=false;debug=false;duration=1800;nextSpawn=0;miniIndex=0;ended=false;
+ chunkViews=new Map<string,Phaser.GameObjects.GameObject[]>();chunkRangeKey='';activeChunk={cx:Number.NaN,cy:Number.NaN};sessionDefeats:Record<string,number>={};sessionBalls=0;acc=0;overlay?:Phaser.GameObjects.Container;fast=false;debug=false;duration=1800;nextSpawn=0;miniIndex=0;ended=false;
  readonly fixedStep=1/30;readonly miniProgress=[.10,.233,.367,.50,.633,.767,.90];
 
  constructor(){super('game')}
  init(d:{pokemon:string;fast?:boolean}){
   this.fast=!!d.fast;this.debug=new URLSearchParams(location.search).has('debug');this.state=makeState(POKEMON[d.pokemon]??POKEMON.bulbasaur,1337);this.duration=this.fast?90:1800;this.ended=false;this.overlay=undefined;this.acc=0;this.nextSpawn=0;this.miniIndex=0;this.sessionDefeats={};this.sessionBalls=0;
-  this.enemyViews.clear();this.enemyShadows.clear();this.enemyAnimations.clear();this.pickupViews.clear();this.projectileViews.clear();this.previousEnemies.clear();this.previousProjectiles.clear();this.chunkViews.clear();this.activeChunk={cx:Number.NaN,cy:Number.NaN};this.previousPlayer={x:this.state.player.x,y:this.state.player.y};
+  this.enemyViews.clear();this.enemyShadows.clear();this.enemyAnimations.clear();this.pickupViews.clear();this.projectileViews.clear();this.previousEnemies.clear();this.previousProjectiles.clear();this.chunkViews.clear();this.chunkRangeKey='';this.activeChunk={cx:Number.NaN,cy:Number.NaN};this.previousPlayer={x:this.state.player.x,y:this.state.player.y};
  }
- preload(){const ids=new Set([...Object.keys(POKEMON),...Object.keys(ENEMIES)]);for(const id of ids){const f=SPRITE_FRAMES[id];if(f)this.load.spritesheet(`${id}-sprite`,assetFor(id,'sprite'),{frameWidth:f.width,frameHeight:f.height});this.load.image(`${id}-portrait`,assetFor(id,'portrait'));}for(const name of new Set(Object.values(ENVIRONMENT_ASSETS)))this.load.image(environmentKey(name),environmentUrl(name));}
+ preload(){const ids=new Set([...Object.keys(POKEMON),...Object.keys(ENEMIES)]);for(const id of ids){const f=SPRITE_FRAMES[id];if(f)this.load.spritesheet(`${id}-sprite`,assetFor(id,'sprite'),{frameWidth:f.width,frameHeight:f.height});this.load.image(`${id}-portrait`,assetFor(id,'portrait'));}for(const name of new Set(Object.values(ENVIRONMENT_ASSETS))){if(ENVIRONMENT_ATLASES.has(name))this.load.spritesheet(environmentKey(name),environmentUrl(name),{frameWidth:16,frameHeight:16});else this.load.image(environmentKey(name),environmentUrl(name));}}
  create(){
-  this.drawForest();
+  this.cameras.main.centerOn(this.state.player.x,this.state.player.y);this.drawForest();
   for(const id of Object.keys(SPRITE_FRAMES)){const f=SPRITE_FRAMES[id];if(!this.textures.exists(`${id}-sprite`))continue;for(const facing of FACINGS){const row=facingRow(facing),key=`${id}-walk-${facing}`;if(!this.anims.exists(key))this.anims.create({key,frames:this.anims.generateFrameNumbers(`${id}-sprite`,{start:row*f.frames,end:row*f.frames+f.frames-1}),frameRate:Math.max(6,Math.min(10,f.frames*1.5)),repeat:-1});}}
   this.keys=this.input.keyboard!.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT,ESC') as Record<string,Phaser.Input.Keyboard.Key>;
   const profile=renderProfile(this.state.pokemonId);this.playerAnimation=new PokemonAnimationController(this.state.pokemonId);
@@ -59,30 +60,9 @@ class GameScene extends BaseScene {
  }
  renderHealthBars(){const layout=this.hpLayout,ratio=Math.max(0,Math.min(1,this.state.hp/Math.max(1,this.state.maxHp))),player=layout.player,g=this.hpGraphics;g.clear();g.fillStyle(0x09130f,.96);g.fillRect(player.x-4,player.y-4,player.width+8,player.height+8);g.fillStyle(0x3b2023,1);g.fillRect(player.x,player.y,player.width,player.height);g.fillStyle(hpBarColor(ratio),1);g.fillRect(player.x,player.y,Math.round(player.width*ratio),player.height);g.lineStyle(3,0xe7dfb0,1);g.strokeRect(player.x-1,player.y-1,player.width+2,player.height+2);this.hpText.setText(`${this.state.pokemon.name.toUpperCase()} · LV ${this.state.level}     ${Math.max(0,Math.ceil(this.state.hp))} / ${Math.ceil(this.state.maxHp)} HP`);const boss=this.state.enemies.find(enemy=>enemy.boss),bg=this.bossGraphics,b=layout.boss;bg.clear();if(!boss){this.bossText.setVisible(false);return;}const bossRatio=Math.max(0,Math.min(1,boss.hp/Math.max(1,boss.maxHp)));bg.fillStyle(0x12090a,.94);bg.fillRect(b.x-3,b.y-3,b.width+6,b.height+6);bg.fillStyle(0x3b2023,1);bg.fillRect(b.x,b.y,b.width,b.height);bg.fillStyle(0xcc4b5d,1);bg.fillRect(b.x,b.y,Math.round(b.width*bossRatio),b.height);bg.lineStyle(2,0xf1d5a8,1);bg.strokeRect(b.x-1,b.y-1,b.width+2,b.height+2);this.bossText.setVisible(true).setText(`BEEDRILL · PHASE ${boss.phase}     ${Math.max(0,Math.ceil(boss.hp))} / ${Math.ceil(boss.maxHp)}`);}
  terrainTexture(x:number,y:number){
-  const grid=this.state.world.terrain,value=terrainAt(grid,x,y),mask=adjacencyMask(grid,x,y,value),n=!!(mask&1),e=!!(mask&4),s=!!(mask&16),w=!!(mask&64);
-  if(value===TERRAIN.grass||value===TERRAIN.tallGrass)return ENVIRONMENT_ASSETS.grassFill;
-  if(value===TERRAIN.water){
-   if(!n&&!w)return ENVIRONMENT_ASSETS.pondNw;
-   if(!n&&!e)return ENVIRONMENT_ASSETS.pondNe;
-   if(!s&&!w)return ENVIRONMENT_ASSETS.pondSw;
-   if(!s&&!e)return ENVIRONMENT_ASSETS.pondSe;
-   if(!n)return ENVIRONMENT_ASSETS.shoreNorth;
-   if(!s)return ENVIRONMENT_ASSETS.shoreSouth;
-   if(!w)return ENVIRONMENT_ASSETS.shoreWest;
-   if(!e)return ENVIRONMENT_ASSETS.shoreEast;
-   return ENVIRONMENT_ASSETS.water;
-  }
-  if(!n&&!w)return ENVIRONMENT_ASSETS.pathCornerNw;
-  if(!n&&!e)return ENVIRONMENT_ASSETS.pathCornerNe;
-  if(!s&&!w)return ENVIRONMENT_ASSETS.pathCornerSw;
-  if(!s&&!e)return ENVIRONMENT_ASSETS.pathCornerSe;
-  if(!n)return ENVIRONMENT_ASSETS.pathNorth;
-  if(!s)return ENVIRONMENT_ASSETS.pathSouth;
-  if(!w)return ENVIRONMENT_ASSETS.pathWest;
-  if(!e)return ENVIRONMENT_ASSETS.pathEast;
-  return ENVIRONMENT_ASSETS.dirtFill;
+  return terrainAt(this.state.world.terrain,x,y)===TERRAIN.water?ENVIRONMENT_ASSETS.waterAtlas:ENVIRONMENT_ASSETS.pathAtlas;
  }
- drawForest(){this.cameras.main.setBackgroundColor('#72c9a6');this.syncWorldChunks(true);}
+ drawForest(){this.cameras.main.setBackgroundColor('#70c8a0');this.syncWorldChunks(true);}
  addForestTree(x:number,y:number,name:string,scale=2){
   const image=this.add.image(x,y,environmentKey(name));
   // Both metatrees include two pixels of padding and four pixels of ground
@@ -94,25 +74,27 @@ class GameScene extends BaseScene {
   for(let ly=0;ly<FOREST_CHUNK_CELLS;ly++)for(let lx=0;lx<FOREST_CHUNK_CELLS;lx++){
    const x=baseX+lx,y=baseY+ly;if(x<0||y<0||x>=map.terrain.cols||y>=map.terrain.rows)continue;const wx=x*tile+tile/2,wy=y*tile+tile/2,value=terrainAt(map.terrain,x,y),hash=Math.abs((x*17+y*31+map.seed*7)|0);
    objects.push(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.grassFill)).setDisplaySize(tile,tile).setDepth(0));
-   if(value===TERRAIN.path||value===TERRAIN.water)objects.push(this.add.image(wx,wy,environmentKey(this.terrainTexture(x,y))).setDisplaySize(tile,tile).setDepth(1));
+   if(value===TERRAIN.path||value===TERRAIN.water)objects.push(this.add.image(wx,wy,environmentKey(this.terrainTexture(x,y)),adjacencyMask(map.terrain,x,y,value)).setDisplaySize(tile,tile).setDepth(1));
    // These tiles contain opaque ground, so keep them below every tree. Sorting
    // them by world Y stamps square grass patches over taller canopies.
    else if(value===TERRAIN.tallGrass)objects.push(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.tallGrass)).setDisplaySize(tile,tile).setDepth(2));
-   else if(hash%19===0)objects.push(this.add.image(wx,wy,environmentKey(details[hash%details.length])).setDisplaySize(tile,tile).setDepth(.5));
+   else if(hash%19===0){const name=details[hash%details.length],flower=name===ENVIRONMENT_ASSETS.grassFlowers;objects.push(this.add.image(Math.max(24,Math.min(map.width-24,wx)),Math.max(24,Math.min(map.height-24,wy)),environmentKey(name)).setScale(2).setDepth(flower?2:.5));}
   }
-  for(const [index,d] of (map.decorationBuckets[key]??[]).entries()){
-   const name=d.id==='tree'?((index+map.seed)%7===0?ENVIRONMENT_ASSETS.treeCluster:ENVIRONMENT_ASSETS.treeLight):d.id==='rock'?(index%2?ENVIRONMENT_ASSETS.rockSmall:ENVIRONMENT_ASSETS.rockMedium):d.id==='stump'?ENVIRONMENT_ASSETS.stump:ENVIRONMENT_ASSETS.log;
-   const image=d.id==='tree'?this.addForestTree(d.x,d.y,name):this.add.image(d.x,d.y,environmentKey(name)).setOrigin(.5,.72).setDepth(d.y).setScale(.45);objects.push(image);
+  for(const d of map.decorationBuckets[key]??[]){
+   const visual=decorationVisual(d.id,d.x,d.y,map.seed),image=this.add.image(Math.round(d.x),Math.round(d.y),environmentKey(visual.name));
+   image.setOrigin(.5,(image.height-visual.trunkPadding)/image.height).setDepth(d.y).setScale(visual.scale).setData('mapProp',d.id);if(d.id==='tree')image.setData('forestTree',true);objects.push(image);
   }
   for(const landmark of map.landmarks.filter(l=>Math.floor(l.x/map.chunkSize)===cx&&Math.floor(l.y/map.chunkSize)===cy)){
    if(landmark.id==='ancient-tree')objects.push(this.addForestTree(landmark.x,landmark.y,ENVIRONMENT_ASSETS.ancientTree,4));
-   else if(landmark.id==='flower-clearing')for(let i=0;i<7;i++)objects.push(this.add.image(landmark.x+Math.cos(i*1.7)*landmark.radius*.6,landmark.y+Math.sin(i*1.7)*landmark.radius*.48,environmentKey(ENVIRONMENT_ASSETS.grassFlowers)).setDisplaySize(tile,tile).setDepth(.5));
+   else if(landmark.id==='flower-clearing')for(let i=0;i<7;i++)objects.push(this.add.image(Math.round(landmark.x+Math.cos(i*1.7)*landmark.radius*.6),Math.round(landmark.y+Math.sin(i*1.7)*landmark.radius*.48),environmentKey(ENVIRONMENT_ASSETS.grassFlowers)).setScale(2).setDepth(2));
   }
   this.chunkViews.set(key,objects);
  }
  syncWorldChunks(force=false){
-  const size=this.state.world.chunkSize,cx=Math.floor(this.state.player.x/size),cy=Math.floor(this.state.player.y/size);if(!force&&cx===this.activeChunk.cx&&cy===this.activeChunk.cy)return;this.activeChunk={cx,cy};const wanted=new Set<string>(),radius=2;
-  for(let oy=-radius;oy<=radius;oy++)for(let ox=-radius;ox<=radius;ox++){const key=chunkKey(cx+ox,cy+oy);if(this.state.world.chunks[key]){wanted.add(key);if(!this.chunkViews.has(key))this.renderWorldChunk(cx+ox,cy+oy);}}
+  const map=this.state.world,size=map.chunkSize,cam=this.cameras.main,halfW=cam.width/(2*cam.zoom),halfH=cam.height/(2*cam.zoom),centerX=cam.scrollX+cam.width/2,centerY=cam.scrollY+cam.height/2;
+  this.activeChunk={cx:Math.floor(this.state.player.x/size),cy:Math.floor(this.state.player.y/size)};
+  const range=visibleChunkRange({left:centerX-halfW,right:centerX+halfW,top:centerY-halfH,bottom:centerY+halfH},size,Math.ceil(map.width/size),Math.ceil(map.height/size)),rangeKey=JSON.stringify(range);if(!force&&rangeKey===this.chunkRangeKey)return;this.chunkRangeKey=rangeKey;const wanted=new Set<string>();
+  for(let cy=range.minY;cy<=range.maxY;cy++)for(let cx=range.minX;cx<=range.maxX;cx++){const key=chunkKey(cx,cy);if(map.chunks[key]){wanted.add(key);if(!this.chunkViews.has(key))this.renderWorldChunk(cx,cy);}}
   for(const [key,objects] of this.chunkViews)if(!wanted.has(key)){for(const object of objects)object.destroy();this.chunkViews.delete(key);}
  }
  moveInput(){return{x:(this.keys.D.isDown||this.keys.RIGHT.isDown?1:0)-(this.keys.A.isDown||this.keys.LEFT.isDown?1:0),y:(this.keys.S.isDown||this.keys.DOWN.isDown?1:0)-(this.keys.W.isDown||this.keys.UP.isDown?1:0)};}

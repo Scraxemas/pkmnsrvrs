@@ -2,11 +2,11 @@
 
 ## Environment renderer
 
-Viridian Forest renders from individual PNG assets in `public/assets/environment/viridian`. The world generator emits a deterministic 64-pixel semantic terrain grid (`grass`, `path`, and `water`), and the renderer selects transition art from its eight-neighbor mask. The world seed controls organic route bends, clearings, ground details, and tree variants. Collision remains authoritative in `worldgen.ts`; the graphics do not define gameplay bounds.
+Viridian Forest uses reviewed FRLG PNGs in `public/assets/environment/viridian/frlg`, extracted from the user-supplied sheet archived in `assets/source/frlg/outdoors-c.png`. Native 16-pixel terrain is rendered at 2× scale on a 32-pixel grid. Paths and water use 256 adjacency frames assembled from the FRLG textures and palette, including concave corners and narrow connections. The previous generated atlas is retained as archival source and is not loaded by the playable stage.
 
-The `pokemon-asset-master` checkout is used as the source/provenance registry. Its own policy states that public decompilations do not grant redistribution rights for Nintendo graphics, so the playable stage uses a project-owned original atlas instead of ROM-derived map art.
+Complete props have transparent margins and ground anchors. Opaque ground tiles stay below props, and streaming follows the camera bounds with extra space for canopy overhang. Decoration variants are selected from world coordinates rather than bucket order. Collision remains authoritative in `worldgen.ts`.
 
-The current atlas is not an authentic FireRed/LeafGreen tileset. Replacing it requires a separately supplied source with redistribution permission and verified atlas coordinates.
+The full extraction library is in `assets/extracted/frlg`: all 4,792 native cells, complete props, terrain samples, source-coordinate metadata, and a searchable local HTML catalog. Raw prop parts and cells requiring semantic review are explicitly separated from verified standalone props. See `FULL_MAP_ASSET_PASS.md` for the audit and validation.
 
 ## PMD sprite directions
 

@@ -74,6 +74,7 @@ function buildForest(seed:number){
     const nearStart=Math.abs(cx-centerCx)<=1&&Math.abs(cy-centerCy)<=1;
     const place=(id:string,lx:number,ly:number,radius:number,solid=true)=>{
       const x=cx*FOREST_CHUNK_SIZE+lx*FOREST_TILE_SIZE+16,y=cy*FOREST_CHUNK_SIZE+ly*FOREST_TILE_SIZE+16;
+      if(x<52||x>width-52||y<128||y>height-16)return;
       if(nearStart&&Math.hypot(x-start.x,y-start.y)<260)return;
       if(terrainAtWorld(grid,x,y)!==TERRAIN.grass)return;
       if(id==='tree'){
@@ -103,7 +104,7 @@ function buildForest(seed:number){
     }else if(motif==='rocky'){
       treeCluster(13,3,3,3);for(let i=0;i<6;i++)place('rock',4+rng.next()*7,5+rng.next()*6,20+rng.int(7));
     }else{
-      treeCluster(2.5,3,3,3);treeCluster(13,12.5,3,3);for(let i=0;i<3;i++)place(i===0?'log':'stump',6+i*2,8+(i%2),22);
+      treeCluster(2.5,3,3,3);treeCluster(13,12.5,3,3);for(let i=0;i<3;i++)place(i===0?'sapling':'bush',6+i*2,8+(i%2),22);
       landmarks.push({id:'flower-clearing',x:cx*FOREST_CHUNK_SIZE+FOREST_CHUNK_SIZE/2,y:cy*FOREST_CHUNK_SIZE+FOREST_CHUNK_SIZE/2,radius:80});
     }
   }
