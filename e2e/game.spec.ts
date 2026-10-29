@@ -57,3 +57,75 @@ test('interpolated movement states and streamed forest motifs',async({page})=>{
   await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.player.x+=1600;s.state.player.y+=900;s.previousPlayer={x:s.state.player.x,y:s.state.player.y};});await page.waitForTimeout(300);await page.screenshot({path:'test-results/screenshots/long-travel-streamed-world.png'});
   const streaming=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{loaded:s.chunkViews.size,total:Object.keys(s.state.world.chunks).length,chunk:s.activeChunk};});expect(streaming.loaded).toBeLessThan(streaming.total);expect(streaming.loaded).toBeGreaterThanOrEqual(20);
 });
+
+test('complete tree silhouettes survive chunk transitions',async({page})=>{
+  await page.setViewportSize({width:1280,height:720});
+  await page.goto('/');
+  await expect(page.locator('canvas')).toBeVisible();
+  await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur'});});
+  await page.waitForFunction(()=>{
+    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
+    return s.player&&s.chunkViews.size>0;
+  });
+
+  const silhouettes=await page.evaluate(()=>{
+    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
+    return ['tree','tree_cluster'].map(name=>{
+      const source=s.textures.get(`viridian-frlg/${name}`).getSourceImage();
+      const canvas=document.createElement('canvas');canvas.width=source.width;canvas.height=source.height;
+      const context=canvas.getContext('2d')!;context.drawImage(source,0,0);
+      const pixels=context.getImageData(0,0,canvas.width,canvas.height).data;
+      let borderOpaque=0,opaque=0;
+      for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++){
+        if(!pixels[(y*canvas.width+x)*4+3])continue;
+        opaque++;
+        if(x===0||y===0||x===canvas.width-1||y===canvas.height-1)borderOpaque++;
+      }
+      return{name,borderOpaque,opaque};
+    });
+  });
+  for(const tree of silhouettes){
+    expect(tree.borderOpaque,`${tree.name} must not end at an opaque cut edge`).toBe(0);
+    expect(tree.opaque).toBeGreaterThan(500);
+  }
+
+  const position=async(destination:'forest-wall'|'landmark'|'seam-left'|'seam-right')=>{
+    await page.evaluate(wanted=>{
+      const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),map=s.state.world;
+      const chunk=Object.values(map.chunks).filter((c:any)=>c.motif==='forest-wall').sort((a:any,b:any)=>Math.hypot(a.cx-8,a.cy-8)-Math.hypot(b.cx-8,b.cy-8))[0] as any;
+      const landmark=map.landmarks.find((l:any)=>l.id==='ancient-tree');
+      const x=wanted==='landmark'?landmark.x:wanted.startsWith('seam')?8*map.chunkSize+(wanted==='seam-left'?-4:4):(chunk.cx+.5)*map.chunkSize;
+      const y=wanted==='landmark'?landmark.y-50:wanted.startsWith('seam')?7.5*map.chunkSize:(chunk.cy+.5)*map.chunkSize;
+      s.overlay??=s.add.container(0,0);s.state.enemies=[];s.state.projectiles=[];s.syncViews(1);
+      s.state.player.x=x;s.state.player.y=y;s.previousPlayer={x,y};
+      s.applyPokemonAnimation(s.player,s.playerAnimation,s.state.pokemonId,'south',0,{x,y});
+      s.playerShadow.setPosition(x,y+2);s.cameras.main.stopFollow();s.cameras.main.centerOn(x,y);s.syncWorldChunks(true);
+    },destination);
+    await page.waitForTimeout(100);
+  };
+  await position('forest-wall');
+  await page.screenshot({path:'test-results/screenshots/trees-forest-wall.png'});
+  await position('landmark');
+  const layering=await page.evaluate(()=>{
+    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
+    const images=[...s.chunkViews.values()].flat() as any[];
+    const trees=images.filter(image=>image.getData?.('forestTree'));
+    const ground=images.filter(image=>['viridian-frlg/tall_grass','viridian-frlg/grass_flowers'].includes(image.texture?.key));
+    return{groundCount:ground.length,belowTrees:ground.every(image=>trees.every(tree=>image.depth<tree.depth))};
+  });
+  expect(layering.groundCount).toBeGreaterThan(0);expect(layering.belowTrees).toBe(true);
+  await page.screenshot({path:'test-results/screenshots/trees-landmark.png'});
+  await position('seam-left');
+  await page.evaluate(()=>{
+    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
+    (window as any).__TREE_SEAM_CHECK__=[...s.chunkViews.entries()].filter(([key]:[string,unknown])=>Number(key.split(',')[0])>=6).flatMap(([,objects]:[string,any[]])=>objects.filter(object=>object.getData?.('forestTree')));
+  });
+  await page.screenshot({path:'test-results/screenshots/trees-seam-before.png'});
+  await position('seam-right');
+  const retained=await page.evaluate(()=>{
+    const trees=(window as any).__TREE_SEAM_CHECK__ as any[];
+    return{count:trees.length,active:trees.every(tree=>tree.active)};
+  });
+  expect(retained.count).toBeGreaterThan(0);expect(retained.active).toBe(true);
+  await page.screenshot({path:'test-results/screenshots/trees-seam-after.png'});
+});

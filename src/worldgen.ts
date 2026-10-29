@@ -55,6 +55,7 @@ function addDecoration(decorations:Decoration[],id:string,x:number,y:number,radi
 function buildForest(seed:number){
   const width=8192,height=8192,grid=createTerrainGrid(width,height,FOREST_TILE_SIZE),decorations:Decoration[]=[],landmarks:Landmark[]=[],chunks:Record<string,WorldChunk>={};
   const cols=Math.ceil(width/FOREST_CHUNK_SIZE),rows=Math.ceil(height/FOREST_CHUNK_SIZE),centerCx=Math.floor(cols/2),centerCy=Math.floor(rows/2),start={x:width/2,y:height/2};
+  const treeCells=new Map<string,{x:number;y:number}[]>();
 
   for(let cy=0;cy<rows;cy++)for(let cx=0;cx<cols;cx++){
     const key=chunkKey(cx,cy),motif=motifForChunk(seed,cx,cy,centerCx,centerCy),rng=new MapRng(hash(seed,cx,cy,0x517cc1b7));
@@ -75,6 +76,14 @@ function buildForest(seed:number){
       const x=cx*FOREST_CHUNK_SIZE+lx*FOREST_TILE_SIZE+16,y=cy*FOREST_CHUNK_SIZE+ly*FOREST_TILE_SIZE+16;
       if(nearStart&&Math.hypot(x-start.x,y-start.y)<260)return;
       if(terrainAtWorld(grid,x,y)!==TERRAIN.grass)return;
+      if(id==='tree'){
+        // Keep whole crowns inside the map and avoid near-identical trunks.
+        // Neighbouring cells include trees across chunk seams.
+        if(x<52||x>width-52||y<128||y>height-16)return;
+        const cellX=Math.floor(x/64),cellY=Math.floor(y/64);
+        for(let oy=-1;oy<=1;oy++)for(let ox=-1;ox<=1;ox++)if((treeCells.get(chunkKey(cellX+ox,cellY+oy))??[]).some(tree=>Math.hypot(tree.x-x,tree.y-y)<44))return;
+        const cellKey=chunkKey(cellX,cellY);if(!treeCells.has(cellKey))treeCells.set(cellKey,[]);treeCells.get(cellKey)!.push({x,y});
+      }
       addDecoration(decorations,id,x,y,radius,solid);
     };
     const treeCluster=(anchorX:number,anchorY:number,count:number,spread:number)=>{for(let i=0;i<count;i++)place('tree',anchorX+(rng.next()-.5)*spread,anchorY+(rng.next()-.5)*spread,27+rng.int(8));};

@@ -41,14 +41,25 @@ TILES: dict[str, tuple[int, int, int, int]] = {
     "water_sw": (0, 54, 1, 1),
     "water_s": (1, 54, 1, 1),
     "water_se": (2, 54, 1, 1),
-    "tree": (6, 1, 2, 4),
-    "tree_cluster": (0, 349, 3, 4),
     "tree_edge": (5, 349, 3, 4),
     "forest_gate": (0, 575, 4, 4),
     "shrub_cluster": (4, 221, 4, 7),
 }
 
-GRASS_KEYED_SPRITES={"tree","tree_cluster","tree_edge","forest_gate","shrub_cluster"}
+GRASS_KEYED_SPRITES={"tree_edge","forest_gate","shrub_cluster"}
+
+# These are metatile parts, not rectangular sprites. The intervening rows are
+# overlap variants for a continuous forest wall; including them repeats crowns
+# and cuts off the tree. Assemble one cap, one crown, and one trunk instead.
+TREE_PARTS = {
+    "tree": ((32, 48), [((6, 1, 2, 1), (0, 0)), ((6, 3, 2, 2), (0, 16))]),
+    "tree_cluster": ((48, 64), [
+        ((1, 348, 1, 1), (16, 0)),
+        ((0, 349, 3, 1), (0, 16)),
+        ((0, 352, 3, 1), (0, 32)),
+        ((3, 352, 3, 1), (0, 48)),
+    ]),
+}
 
 
 def crop(image: Image.Image, spec: tuple[int, int, int, int]) -> Image.Image:
@@ -100,8 +111,18 @@ def main() -> None:
             asset=clear_connected_grass(asset,grass_palette)
         asset.save(args.runtime / f"{name}.png")
 
+    for name, (size, parts) in TREE_PARTS.items():
+        tree = Image.new("RGBA", size)
+        for spec, position in parts:
+            tree.alpha_composite(crop(image, spec), position)
+        tree = clear_connected_grass(tree, grass_palette)
+        # Transparent padding keeps every silhouette inside its texture bounds.
+        padded = Image.new("RGBA", (tree.width + 4, tree.height + 4))
+        padded.alpha_composite(tree, (2, 2))
+        padded.save(args.runtime / f"{name}.png")
+
     print(f"Archived {args.source} -> {args.archive}")
-    print(f"Extracted {len(TILES)} runtime assets -> {args.runtime}")
+    print(f"Extracted {len(TILES) + len(TREE_PARTS)} runtime assets -> {args.runtime}")
 
 
 if __name__ == "__main__":

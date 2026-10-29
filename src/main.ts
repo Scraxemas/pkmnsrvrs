@@ -83,22 +83,30 @@ class GameScene extends BaseScene {
   return ENVIRONMENT_ASSETS.dirtFill;
  }
  drawForest(){this.cameras.main.setBackgroundColor('#72c9a6');this.syncWorldChunks(true);}
+ addForestTree(x:number,y:number,name:string,scale=2){
+  const image=this.add.image(x,y,environmentKey(name));
+  // Both metatrees include two pixels of padding and four pixels of ground
+  // below the trunk. Sort at the trunk so overlapping canopies stay intact.
+  return image.setOrigin(.5,(image.height-6)/image.height).setScale(scale).setDepth(y).setData('forestTree',true);
+ }
  renderWorldChunk(cx:number,cy:number){
   const map=this.state.world,key=chunkKey(cx,cy);if(!map.chunks[key])return;const tile=map.terrain.tileSize,objects:Phaser.GameObjects.GameObject[]=[],baseX=cx*FOREST_CHUNK_CELLS,baseY=cy*FOREST_CHUNK_CELLS,details=[ENVIRONMENT_ASSETS.grass,ENVIRONMENT_ASSETS.grassLeaves,ENVIRONMENT_ASSETS.grassRocks,ENVIRONMENT_ASSETS.grassFlowers,ENVIRONMENT_ASSETS.forestFloor];
   for(let ly=0;ly<FOREST_CHUNK_CELLS;ly++)for(let lx=0;lx<FOREST_CHUNK_CELLS;lx++){
    const x=baseX+lx,y=baseY+ly;if(x<0||y<0||x>=map.terrain.cols||y>=map.terrain.rows)continue;const wx=x*tile+tile/2,wy=y*tile+tile/2,value=terrainAt(map.terrain,x,y),hash=Math.abs((x*17+y*31+map.seed*7)|0);
    objects.push(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.grassFill)).setDisplaySize(tile,tile).setDepth(0));
    if(value===TERRAIN.path||value===TERRAIN.water)objects.push(this.add.image(wx,wy,environmentKey(this.terrainTexture(x,y))).setDisplaySize(tile,tile).setDepth(1));
-   else if(value===TERRAIN.tallGrass)objects.push(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.tallGrass)).setDisplaySize(tile,tile).setDepth(wy-1));
+   // These tiles contain opaque ground, so keep them below every tree. Sorting
+   // them by world Y stamps square grass patches over taller canopies.
+   else if(value===TERRAIN.tallGrass)objects.push(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.tallGrass)).setDisplaySize(tile,tile).setDepth(2));
    else if(hash%19===0)objects.push(this.add.image(wx,wy,environmentKey(details[hash%details.length])).setDisplaySize(tile,tile).setDepth(.5));
   }
   for(const [index,d] of (map.decorationBuckets[key]??[]).entries()){
    const name=d.id==='tree'?((index+map.seed)%7===0?ENVIRONMENT_ASSETS.treeCluster:ENVIRONMENT_ASSETS.treeLight):d.id==='rock'?(index%2?ENVIRONMENT_ASSETS.rockSmall:ENVIRONMENT_ASSETS.rockMedium):d.id==='stump'?ENVIRONMENT_ASSETS.stump:ENVIRONMENT_ASSETS.log;
-   const image=this.add.image(d.x,d.y,environmentKey(name)).setOrigin(.5,d.id==='tree'?.88:.72).setDepth(d.y);image.setScale(d.id==='tree'?2:.45);objects.push(image);
+   const image=d.id==='tree'?this.addForestTree(d.x,d.y,name):this.add.image(d.x,d.y,environmentKey(name)).setOrigin(.5,.72).setDepth(d.y).setScale(.45);objects.push(image);
   }
   for(const landmark of map.landmarks.filter(l=>Math.floor(l.x/map.chunkSize)===cx&&Math.floor(l.y/map.chunkSize)===cy)){
-   if(landmark.id==='ancient-tree')objects.push(this.add.image(landmark.x,landmark.y,environmentKey(ENVIRONMENT_ASSETS.ancientTree)).setOrigin(.5,.88).setScale(4).setDepth(landmark.y));
-   else if(landmark.id==='flower-clearing')for(let i=0;i<7;i++)objects.push(this.add.image(landmark.x+Math.cos(i*1.7)*landmark.radius*.6,landmark.y+Math.sin(i*1.7)*landmark.radius*.48,environmentKey(ENVIRONMENT_ASSETS.grassFlowers)).setDisplaySize(tile,tile).setDepth(landmark.y+i));
+   if(landmark.id==='ancient-tree')objects.push(this.addForestTree(landmark.x,landmark.y,ENVIRONMENT_ASSETS.ancientTree,4));
+   else if(landmark.id==='flower-clearing')for(let i=0;i<7;i++)objects.push(this.add.image(landmark.x+Math.cos(i*1.7)*landmark.radius*.6,landmark.y+Math.sin(i*1.7)*landmark.radius*.48,environmentKey(ENVIRONMENT_ASSETS.grassFlowers)).setDisplaySize(tile,tile).setDepth(.5));
   }
   this.chunkViews.set(key,objects);
  }
