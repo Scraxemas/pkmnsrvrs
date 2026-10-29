@@ -1,4 +1,4 @@
-export const ENVIRONMENT_ASSETS={
+﻿export const ENVIRONMENT_ASSETS={
   grass:'grass',grassFill:'grass_fill',dirt:'dirt',dirtFill:'dirt_fill',pathNorth:'path_north',pathSouth:'path_south',pathWest:'path_west',pathEast:'path_east',pathCornerNw:'path_corner_nw',pathCornerNe:'path_corner_ne',pathCornerSw:'path_corner_sw',pathCornerSe:'path_corner_se',
   grassLeaves:'grass_leaves',grassRocks:'grass_rocks',grassFlowers:'grass_flowers',grassMushrooms:'grass_mushrooms',forestFloor:'forest_floor',
   treeLight:'tree_light',treeDark:'tree_dark',treeAutumn:'tree_autumn',treeCluster:'tree_cluster',treeClusterAlt:'tree_cluster_alt',ancientTree:'ancient_tree',ancientTreeRight:'ancient_tree_right',
@@ -9,4 +9,4 @@ export const ENVIRONMENT_ASSETS={
 } as const;
 
 export const environmentKey=(name:string)=>`viridian-${name}`;
-export const environmentUrl=(name:string)=>`/assets/environment/viridian/${name}.png`;
+export const environmentUrl=(name:string)=>`${import.meta.env.BASE_URL}assets/environment/viridian/${name}.png`;

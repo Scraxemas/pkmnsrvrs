@@ -1,4 +1,4 @@
-export const TYPES=['Normal','Fire','Water','Electric','Grass','Ice','Fighting','Poison','Ground','Flying','Psychic','Bug','Rock','Ghost','Dragon','Dark','Steel','Fairy'] as const;
+﻿export const TYPES=['Normal','Fire','Water','Electric','Grass','Ice','Fighting','Poison','Ground','Flying','Psychic','Bug','Rock','Ghost','Dragon','Dark','Steel','Fairy'] as const;
 export type PokemonType=typeof TYPES[number];
 export type DamageClass='Physical'|'Special'|'Status';
 export type MoveKind='charge'|'slash'|'sweep'|'cloud'|'drain'|'projectile'|'fixed'|'piercing'|'spread'|'spin';
@@ -41,19 +41,19 @@ export const STAGES={
  viridian:{id:'viridian',name:'Viridian Forest',region:'Kanto',biome:'forest',status:'available',duration:1800,boss:'beedrill',identity:'Dense woodland paths, Bug habitats, tall grass and forest clearings.'},
  mtMoon:{id:'mtMoon',name:'Mt. Moon',region:'Kanto',biome:'cave',status:'locked',duration:1800,boss:'clefable',identity:'Moonlit caverns, fossils, mineral chambers and rockfall hazards.'},
  ssAnne:{id:'ssAnne',name:'S.S. Anne',region:'Kanto',biome:'ship',status:'future',duration:1800,boss:'rival',identity:'Ship decks, cabins, dining rooms and moving cargo.'},
- pokemonTower:{id:'pokemonTower',name:'Pokémon Tower',region:'Kanto',biome:'tower',status:'future',duration:1800,boss:'marowak',identity:'Spectral floors, grave markers and curse zones.'},
+ pokemonTower:{id:'pokemonTower',name:'PokÃ©mon Tower',region:'Kanto',biome:'tower',status:'future',duration:1800,boss:'marowak',identity:'Spectral floors, grave markers and curse zones.'},
  rocketHideout:{id:'rocketHideout',name:'Rocket Hideout',region:'Kanto',biome:'facility',status:'future',duration:1800,boss:'giovanni',identity:'Mechanical traps, rotating floors and guarded vaults.'},
  safariZone:{id:'safariZone',name:'Safari Zone',region:'Kanto',biome:'wetland',status:'future',duration:1800,boss:'tauros',identity:'Open habitats, ponds, stampedes and rare encounters.'},
  silphCo:{id:'silphCo',name:'Silph Co.',region:'Kanto',biome:'facility',status:'future',duration:1800,boss:'giovanni',identity:'Office floors, laboratories and teleport networks.'},
  powerPlant:{id:'powerPlant',name:'Power Plant',region:'Kanto',biome:'industrial',status:'future',duration:1800,boss:'zapdos',identity:'Generators, electrical fields and machinery corridors.'},
  seafoam:{id:'seafoam',name:'Seafoam Islands',region:'Kanto',biome:'ice-cave',status:'future',duration:1800,boss:'articuno',identity:'Frozen caverns, currents and sliding ice.'},
- mansion:{id:'mansion',name:'Pokémon Mansion',region:'Kanto',biome:'ruin',status:'future',duration:1800,boss:'ditto',identity:'Abandoned laboratories, toxic rooms and experiments.'},
+ mansion:{id:'mansion',name:'PokÃ©mon Mansion',region:'Kanto',biome:'ruin',status:'future',duration:1800,boss:'ditto',identity:'Abandoned laboratories, toxic rooms and experiments.'},
  mtEmber:{id:'mtEmber',name:'Mt. Ember',region:'Kanto',biome:'volcano',status:'future',duration:1800,boss:'moltres',identity:'Lava channels, ash fields and volcanic ledges.'},
- victoryRoad:{id:'victoryRoad',name:'Victory Road',region:'Kanto',biome:'cave',status:'future',duration:1800,boss:'machamp',identity:'Advanced caves, strength puzzles and evolved Pokémon.'},
+ victoryRoad:{id:'victoryRoad',name:'Victory Road',region:'Kanto',biome:'cave',status:'future',duration:1800,boss:'machamp',identity:'Advanced caves, strength puzzles and evolved PokÃ©mon.'},
  indigo:{id:'indigo',name:'Indigo Plateau',region:'Kanto',biome:'arena',status:'future',duration:1800,boss:'elite-four',identity:'Elite battle arenas with escalating specialist waves.'},
- ceruleanCave:{id:'ceruleanCave',name:'Cerulean Cave',region:'Kanto',biome:'crystal-cave',status:'future',duration:1800,boss:'mewtwo',identity:'Powerful wild Pokémon, psychic distortions and crystal chambers.'}
+ ceruleanCave:{id:'ceruleanCave',name:'Cerulean Cave',region:'Kanto',biome:'crystal-cave',status:'future',duration:1800,boss:'mewtwo',identity:'Powerful wild PokÃ©mon, psychic distortions and crystal chambers.'}
 } as const;
-export const assetFor=(id:string,kind:'sprite'|'portrait')=>`/assets/pmdcollab/${kind}s/${id}.png`;
+export const assetFor=(id:string,kind:'sprite'|'portrait')=>`${import.meta.env.BASE_URL}assets/pmdcollab/${kind}s/${id}.png`;
 export const SPRITE_FRAMES:Record<string,{width:number;height:number;frames:number}>={
  beedrill:{width:32,height:48,frames:4},bellsprout:{width:24,height:32,frames:4},blastoise:{width:32,height:40,frames:4},bulbasaur:{width:40,height:40,frames:6},butterfree:{width:32,height:56,frames:12},caterpie:{width:32,height:32,frames:3},charizard:{width:40,height:48,frames:4},charmander:{width:32,height:32,frames:4},charmeleon:{width:24,height:32,frames:4},ivysaur:{width:32,height:32,frames:4},kakuna:{width:24,height:40,frames:5},metapod:{width:32,height:48,frames:10},oddish:{width:24,height:40,frames:8},pidgeotto:{width:32,height:40,frames:4},pidgey:{width:32,height:32,frames:5},pikachu:{width:32,height:40,frames:4},squirtle:{width:32,height:32,frames:4},venusaur:{width:32,height:32,frames:4},wartortle:{width:32,height:40,frames:4},weedle:{width:32,height:40,frames:3}
 };
