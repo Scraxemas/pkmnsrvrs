@@ -20,9 +20,7 @@ TILES: dict[str, tuple[int, int, int, int]] = {
     "grass": (1, 0, 1, 1),
     "grass_detail_a": (0, 1, 1, 1),
     "grass_detail_b": (0, 2, 1, 1),
-    "grass_flowers": (1, 348, 1, 1),
-    "grass_leaves": (4, 348, 1, 1),
-    "tall_grass": (2, 1, 1, 1),
+    "grass_flowers": (2, 348, 1, 1),
     "path_nw": (0, 26, 1, 1),
     "path_n": (1, 26, 1, 1),
     "path_ne": (2, 26, 1, 1),
@@ -111,6 +109,15 @@ def main() -> None:
             asset=clear_connected_grass(asset,grass_palette)
         asset.save(args.runtime / f"{name}.png")
 
+    # The tuft in cell (2, 1) is only 12 pixels tall: the last four rows
+    # belong to the tree underneath it on the source sheet. Keep the clean
+    # foliage and centre it over matching ground instead of exporting the cap.
+    tuft = crop(image, (2, 1, 1, 1)).crop((0, 0, TILE, 12))
+    for name in ("tall_grass", "grass_leaves"):
+        asset = grass.copy()
+        asset.alpha_composite(tuft, (0, 2))
+        asset.save(args.runtime / f"{name}.png")
+
     for name, (size, parts) in TREE_PARTS.items():
         tree = Image.new("RGBA", size)
         for spec, position in parts:
@@ -122,7 +129,7 @@ def main() -> None:
         padded.save(args.runtime / f"{name}.png")
 
     print(f"Archived {args.source} -> {args.archive}")
-    print(f"Extracted {len(TILES) + len(TREE_PARTS)} runtime assets -> {args.runtime}")
+    print(f"Extracted {len(TILES) + len(TREE_PARTS) + 2} runtime assets -> {args.runtime}")
 
 
 if __name__ == "__main__":

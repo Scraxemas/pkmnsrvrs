@@ -58,7 +58,7 @@ test('interpolated movement states and streamed forest motifs',async({page})=>{
   const streaming=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{loaded:s.chunkViews.size,total:Object.keys(s.state.world.chunks).length,chunk:s.activeChunk};});expect(streaming.loaded).toBeLessThan(streaming.total);expect(streaming.loaded).toBeGreaterThanOrEqual(20);
 });
 
-test('complete tree silhouettes survive chunk transitions',async({page})=>{
+test('complete trees and clean foliage survive chunk transitions',async({page})=>{
   await page.setViewportSize({width:1280,height:720});
   await page.goto('/');
   await expect(page.locator('canvas')).toBeVisible();
@@ -88,6 +88,21 @@ test('complete tree silhouettes survive chunk transitions',async({page})=>{
     expect(tree.borderOpaque,`${tree.name} must not end at an opaque cut edge`).toBe(0);
     expect(tree.opaque).toBeGreaterThan(500);
   }
+
+  const foliage=await page.evaluate(()=>{
+    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
+    return ['tall_grass','grass_leaves','grass_flowers'].map(name=>{
+      const source=s.textures.get(`viridian-frlg/${name}`).getSourceImage();
+      const canvas=document.createElement('canvas');canvas.width=source.width;canvas.height=source.height;
+      const context=canvas.getContext('2d')!;context.drawImage(source,0,0);
+      const pixels=context.getImageData(0,0,canvas.width,canvas.height).data;
+      let treeCapPixels=0;
+      // The two lime colours belong to the neighbouring tree cap, not grass.
+      for(let i=0;i<pixels.length;i+=4)if(pixels[i+3]&&((pixels[i]===184&&pixels[i+1]===248&&pixels[i+2]===136)||(pixels[i]===128&&pixels[i+1]===208&&pixels[i+2]===96)))treeCapPixels++;
+      return{name,treeCapPixels};
+    });
+  });
+  for(const tile of foliage)expect(tile.treeCapPixels,`${tile.name} includes a fragment of the neighbouring tree`).toBe(0);
 
   const position=async(destination:'forest-wall'|'landmark'|'seam-left'|'seam-right')=>{
     await page.evaluate(wanted=>{
