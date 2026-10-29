@@ -7,13 +7,24 @@ from pathlib import Path
 
 from PIL import Image
 
-from extract_frlg_tiles import terrain_coverage
+from extract_frlg_tiles import terrain_coverage, crop, clear_connected_grass, pad_sprite, TILES
 
 ROOT=Path(__file__).resolve().parents[1]
 DIRECTIONS=[(0,-1,1),(1,-1,2),(1,0,4),(1,1,8),(0,1,16),(-1,1,32),(-1,0,64),(-1,-1,128)]
 
 
 class MapAssetTests(unittest.TestCase):
+    def test_grass_keeps_the_complete_native_lower_leaves(self):
+        with Image.open(ROOT/'assets/source/frlg/outdoors-c.png') as source:
+            image=source.convert('RGBA')
+            palette={pixel[:3] for pixel in crop(image,TILES['grass']).getdata()}
+            expected=pad_sprite(clear_connected_grass(crop(image,(2,203,1,1)),palette))
+        with Image.open(ROOT/'public/assets/environment/viridian/frlg/tall_grass.png') as actual:
+            self.assertEqual(actual.size,expected.size)
+            self.assertEqual(actual.convert('RGBA').tobytes(),expected.tobytes())
+            alpha=actual.getchannel('A')
+            self.assertGreater(sum(alpha.getpixel((x,actual.height-3))>0 for x in range(actual.width)),0)
+
     def test_all_native_tiles_rebuild_source_exactly(self):
         root=ROOT/'assets/extracted/frlg'
         manifest=json.loads((root/'manifest.json').read_text(encoding='utf-8'))

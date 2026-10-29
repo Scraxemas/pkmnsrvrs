@@ -12,8 +12,8 @@
   "counts": {
     "blank": 151,
     "terrain": 1624,
-    "prop_parts": 651,
-    "review": 2375,
+    "prop_parts": 652,
+    "review": 2374,
     "prop": 10
   },
   "entries": [
@@ -27661,11 +27661,11 @@
     },
     {
       "id": "tile_r203_c02",
-      "name": "city_buildings_and_ground_sheet_part_r203_c02_16x16",
-      "kind": "review",
-      "group": "city_buildings_and_ground",
-      "semantic_status": "section_only",
-      "path": "tiles/review/city_buildings_and_ground/city_buildings_and_ground_sheet_part_r203_c02_16x16.png",
+      "name": "complete_grass_tuft_cell_r203_c02_16x16",
+      "kind": "prop_parts",
+      "group": "foliage",
+      "semantic_status": "region",
+      "path": "tiles/prop_parts/foliage/complete_grass_tuft_cell_r203_c02_16x16.png",
       "width": 16,
       "height": 16,
       "source_rect": [
@@ -81854,23 +81854,23 @@
       "name": "grass_tuft",
       "kind": "prop",
       "group": "foliage",
-      "path": "props/foliage/grass_tuft_20x16.png",
+      "path": "props/foliage/grass_tuft_20x20.png",
       "width": 20,
-      "height": 16,
+      "height": 20,
       "standalone": true,
       "semantic_status": "verified",
       "source_rect": [
         32,
+        3248,
         16,
-        16,
-        12
+        16
       ],
       "padding": 2,
       "content_bounds": [
         2,
         2,
         18,
-        14
+        18
       ]
     },
     {

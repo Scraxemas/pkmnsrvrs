@@ -54,6 +54,7 @@ REGIONS = [
     (3,57,2,2,'prop_parts','rocks','coastal_boulder'),
     (5,89,3,2,'prop_parts','shrubs','town_shrub_variants'),
     (0,200,6,3,'terrain','paths','town_sand_and_grass'),
+    (2,203,1,1,'prop_parts','foliage','complete_grass_tuft'),
     (0,204,8,3,'terrain','water','pond_wall_and_water'),
     (0,221,8,8,'prop_parts','trees','broadleaf_tree_and_hedge'),
     (3,229,5,1,'terrain','water','pond_edge'),
@@ -154,17 +155,17 @@ def main():
                             standalone=not modular,semantic_status='region' if modular else 'verified',source_cells=list(spec),padding=2,
                             content_bounds=list(image.getchannel('A').getbbox())))
 
-    # A clean tuft is a prop; the grass-background version is a terrain tile.
+    # A complete transparent tuft is a prop; its native background cell is a
+    # terrain tile. Do not trim the lower leaves to fit the earlier bad sample.
     tuft = Image.open(runtime/'tall_grass.png').convert('RGBA')
     grass = crop(source,TILES['grass'])
-    tuft = pad_sprite(clear_connected_grass(tuft,{p[:3] for p in grass.getdata()}))
     relative = Path('props/foliage')/f'grass_tuft_{tuft.width}x{tuft.height}.png'
     write_image(tuft,args.output/relative)
     entries.append(dict(id='grass_tuft',name='grass_tuft',kind='prop',group='foliage',path=relative.as_posix(),
                         width=tuft.width,height=tuft.height,standalone=True,semantic_status='verified',
-                        source_rect=[32,16,16,12],padding=2,content_bounds=list(tuft.getchannel('A').getbbox())))
+                        source_rect=[32,3248,16,16],padding=2,content_bounds=list(tuft.getchannel('A').getbbox())))
     for key in ('grass','grass_detail_a','grass_detail_b','tall_grass'):
-        image = Image.open(runtime/f'{key}.png').convert('RGBA')
+        image = crop(source,(2,203,1,1)) if key=='tall_grass' else Image.open(runtime/f'{key}.png').convert('RGBA')
         relative = Path('terrain/grass')/f'{key}_16x16.png'
         write_image(image,args.output/relative)
         entries.append(dict(id=key,name=key,kind='terrain',group='grass',path=relative.as_posix(),width=16,height=16,standalone=True,semantic_status='verified'))

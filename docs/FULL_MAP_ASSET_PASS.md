@@ -27,7 +27,7 @@ The library separates:
 
 `manifest.json` records source hash, coordinates, dimensions, classification status, and complete-prop composition. `index.html` provides local search, kind/group filters, native-pixel previews, and direct PNG links without a server or network access.
 
-Semantic status is explicit: 2,375 raw cells have section-level labels rather than invented individual object names. Raw fragments are never presented as complete props. No complete log has been verified in this supplied sheet.
+Semantic status is explicit: 2,374 raw cells have section-level labels rather than invented individual object names. The complete tuft at (2, 203) is now identified separately. Raw fragments are never presented as complete props. No complete log has been verified in this supplied sheet.
 
 ## Verification
 

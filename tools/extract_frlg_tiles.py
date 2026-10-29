@@ -183,14 +183,21 @@ def main() -> None:
     for prefix in ('path', 'water'):
         terrain_atlas(image, prefix).save(args.runtime / f'{prefix}_atlas.png')
 
-    # The tuft in cell (2, 1) is only 12 pixels tall: the last four rows
-    # belong to the tree underneath it on the source sheet. Keep the clean
-    # foliage and centre it over matching ground instead of exporting the cap.
-    tuft = crop(image, (2, 1, 1, 1)).crop((0, 0, TILE, 12))
+    # Cell (2, 203) contains the COMPLETE tuft, including its tapered lower
+    # leaves. The earlier (2, 1) sample overlaps a tree and cannot be repaired
+    # by chopping off its lower rows without flattening the grass silhouette.
+    tuft = pad_sprite(clear_connected_grass(crop(image, (2, 203, 1, 1)), grass_palette))
     for name in ("tall_grass", "grass_leaves"):
-        asset = grass.copy()
-        asset.alpha_composite(tuft, (0, 2))
-        asset.save(args.runtime / f"{name}.png")
+        tuft.save(args.runtime / f"{name}.png")
+    # Front blades can overlap an actor's ankles. Their transparent, uneven
+    # upper silhouette never stamps a rectangle of opaque ground onto actors.
+    front = tuft.copy()
+    pixels = front.load()
+    for y in range(front.height):
+        for x in range(front.width):
+            if y < 10 + (x % 3):
+                pixels[x, y] = (0, 0, 0, 0)
+    front.save(args.runtime / 'tall_grass_front.png')
 
     for name, (size, parts) in TREE_PARTS.items():
         tree = Image.new("RGBA", size)
@@ -203,7 +210,7 @@ def main() -> None:
         padded.save(args.runtime / f"{name}.png")
 
     print(f"Archived {args.source} -> {args.archive}")
-    print(f"Extracted {len(TILES) + len(TREE_PARTS) + len(PROP_CROPS) + 4} runtime assets -> {args.runtime}")
+    print(f"Extracted {len(TILES) + len(TREE_PARTS) + len(PROP_CROPS) + 5} runtime assets -> {args.runtime}")
 
 
 if __name__ == "__main__":

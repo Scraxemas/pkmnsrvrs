@@ -13,7 +13,7 @@ All **4,792 native 16x16 cells** (8 columns x 599 rows) are exported, including 
 - `terrain/`: ready-to-use terrain, including 16x16 grass, a 32x32 grass metatile, and 48x48 dirt/pond samples.
 - `manifest.json`: dimensions, type, classification status, source coordinates, composition, and content bounds.
 
-Counts by kind: {"blank": 151, "prop": 10, "prop_parts": 651, "review": 2375, "terrain": 1624}.
+Counts by kind: {"blank": 151, "prop": 10, "prop_parts": 652, "review": 2374, "terrain": 1624}.
 
 No complete log has been verified in this source sheet. No tree/fence fragment is mislabeled as a log. This catalog contains source artwork and mechanical assemblies only, without AI-generated replacements.
 

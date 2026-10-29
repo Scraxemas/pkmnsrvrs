@@ -3,6 +3,7 @@ import { assetFor, ENEMIES, ITEMS, MOVES, POKEMON, SPRITE_FRAMES, STAGES } from 
 import { FACINGS, Facing, facingRow } from './direction';
 import { ENVIRONMENT_ASSETS, ENVIRONMENT_ATLASES, environmentKey, environmentUrl } from './environmentAssets';
 import {decorationVisual,visibleChunkRange} from './worldPresentation';
+import {GrassBrushField} from './grassBrush';
 import {gameplayHudLayout, GameplayHudLayout, hpBarColor} from './hudLayout';
 import {renderProfile} from './renderProfiles';
 import { applyUpgrade, AttackEvent, makeState, masteryOptions, rewardRoll, SimState, spawnSpecies, stateHash, tick, Upgrade, upgradeOptions } from './simulation';
@@ -16,6 +17,7 @@ import {chunkKey,FOREST_CHUNK_CELLS} from './worldgen';
 import './style.css';
 
 const W=1280,H=720,FONT='Trebuchet MS, monospace';
+interface GrassView {back:Phaser.GameObjects.Image;front:Phaser.GameObjects.Image;x:number;y:number;}
 const button=(scene:Phaser.Scene,x:number,y:number,label:string,action:()=>void,w=260)=>{const t=scene.add.text(x,y,label,{fontFamily:FONT,fontSize:'22px',color:'#fff',backgroundColor:'#244c37',padding:{x:18,y:12},align:'center',fixedWidth:w}).setOrigin(.5).setInteractive({useHandCursor:true});t.on('pointerover',()=>t.setBackgroundColor('#3c7652'));t.on('pointerout',()=>t.setBackgroundColor('#244c37'));t.on('pointerdown',action);return t;};
 class BaseScene extends Phaser.Scene { backdrop(){this.cameras.main.setBackgroundColor('#14251d');const g=this.add.graphics();g.fillGradientStyle(0x183c2b,0x183c2b,0x0c1c18,0x0c1c18,1);g.fillRect(0,0,W,H);for(let i=0;i<30;i++){const x=(i*193)%W,y=(i*97)%H;g.fillStyle(i%2?0x2b5a3c:0x244c37,.5);g.fillCircle(x,y,24+(i%4)*7);}} }
 class MenuScene extends BaseScene {constructor(){super('menu')}create(){this.backdrop();this.add.text(W/2,105,'POKÉMON\nSURVIVORS',{fontFamily:FONT,fontSize:'64px',fontStyle:'bold',color:'#ffe26b',stroke:'#173126',strokeThickness:10,align:'center'}).setOrigin(.5);this.add.text(W/2,210,'Viridian Forest · v0.2 vertical slice',{fontFamily:FONT,fontSize:'18px',color:'#c8e6cf'}).setOrigin(.5);button(this,W/2,310,'NEW RUN',()=>this.scene.start('pokemon'));button(this,W/2,375,'POKÉDEX',()=>this.scene.start('dex'));button(this,W/2,440,'RESEARCH',()=>this.scene.start('research'));const s=loadSave();this.add.text(W/2,540,`Best: ${s.best.viridian?`Lv ${s.best.viridian.level} · ${s.best.viridian.defeated} defeated`:'No completed runs yet'}`,{fontFamily:FONT,fontSize:'17px',color:'#9fc8aa'}).setOrigin(.5);}}
@@ -30,12 +32,14 @@ class GameScene extends BaseScene {
  debugText?:Phaser.GameObjects.Text;debugGraphics?:Phaser.GameObjects.Graphics;enemyViews=new Map<number,Phaser.GameObjects.Sprite>();enemyShadows=new Map<number,Phaser.GameObjects.Ellipse>();pickupViews=new Map<number,Phaser.GameObjects.Arc>();projectileViews=new Map<number,Phaser.GameObjects.Shape>();
  playerAnimation!:PokemonAnimationController;enemyAnimations=new Map<number,PokemonAnimationController>();previousPlayer!:Position;previousEnemies=new Map<number,Position>();previousProjectiles=new Map<number,Position>();renderPlayer:Position={x:0,y:0};
  chunkViews=new Map<string,Phaser.GameObjects.GameObject[]>();chunkRangeKey='';activeChunk={cx:Number.NaN,cy:Number.NaN};sessionDefeats:Record<string,number>={};sessionBalls=0;acc=0;overlay?:Phaser.GameObjects.Container;fast=false;debug=false;duration=1800;nextSpawn=0;miniIndex=0;ended=false;
+ grassViews=new Map<string,GrassView>();grassBrush=new GrassBrushField();grassParticles=new Set<Phaser.GameObjects.Rectangle>();grassBrushCount=0;
  readonly fixedStep=1/30;readonly miniProgress=[.10,.233,.367,.50,.633,.767,.90];
 
  constructor(){super('game')}
  init(d:{pokemon:string;fast?:boolean}){
   this.fast=!!d.fast;this.debug=new URLSearchParams(location.search).has('debug');this.state=makeState(POKEMON[d.pokemon]??POKEMON.bulbasaur,1337);this.duration=this.fast?90:1800;this.ended=false;this.overlay=undefined;this.acc=0;this.nextSpawn=0;this.miniIndex=0;this.sessionDefeats={};this.sessionBalls=0;
   this.enemyViews.clear();this.enemyShadows.clear();this.enemyAnimations.clear();this.pickupViews.clear();this.projectileViews.clear();this.previousEnemies.clear();this.previousProjectiles.clear();this.chunkViews.clear();this.chunkRangeKey='';this.activeChunk={cx:Number.NaN,cy:Number.NaN};this.previousPlayer={x:this.state.player.x,y:this.state.player.y};
+  this.grassViews.clear();this.grassBrush.clear();this.grassParticles.clear();this.grassBrushCount=0;
  }
  preload(){const ids=new Set([...Object.keys(POKEMON),...Object.keys(ENEMIES)]);for(const id of ids){const f=SPRITE_FRAMES[id];if(f)this.load.spritesheet(`${id}-sprite`,assetFor(id,'sprite'),{frameWidth:f.width,frameHeight:f.height});this.load.image(`${id}-portrait`,assetFor(id,'portrait'));}for(const name of new Set(Object.values(ENVIRONMENT_ASSETS))){if(ENVIRONMENT_ATLASES.has(name))this.load.spritesheet(environmentKey(name),environmentUrl(name),{frameWidth:16,frameHeight:16});else this.load.image(environmentKey(name),environmentUrl(name));}}
  create(){
@@ -69,16 +73,54 @@ class GameScene extends BaseScene {
   // below the trunk. Sort at the trunk so overlapping canopies stay intact.
   return image.setOrigin(.5,(image.height-6)/image.height).setScale(scale).setDepth(y).setData('forestTree',true);
  }
+ addGrass(x:number,y:number,cellX:number,cellY:number){
+  // Preserve the complete silhouette, including its sway, at world borders.
+  x=Math.max(32,Math.min(this.state.world.width-32,x));y=Math.max(40,Math.min(this.state.world.height-12,y));
+  const key=chunkKey(cellX,cellY),back=this.add.image(x,y,environmentKey(ENVIRONMENT_ASSETS.tallGrass)),front=this.add.image(x,y,environmentKey(ENVIRONMENT_ASSETS.grassFront));
+  for(const image of [back,front])image.setOrigin(.5,(image.height-2)/image.height).setScale(2).setData('grass',true);
+  back.setDepth(2);front.setDepth(y+24);
+  this.grassViews.set(key,{back,front,x,y});
+  back.once('destroy',()=>{this.grassViews.delete(key);this.grassBrush.forget(key);});
+  return[back,front];
+ }
+ emitGrassBlades(x:number,y:number,vx:number,vy:number){
+  if(this.grassParticles.size>=72)return;
+  const phase=this.grassBrushCount++,direction=Math.abs(vx)>8?Math.sign(vx):Math.sign(vy)||1;
+  for(let i=0;i<3&&this.grassParticles.size<72;i++){
+   const blade=this.add.rectangle(x+(i-1)*4,y-4,2,5,[0x389030,0x98d878,0x58b848][i]).setRotation((i-1)*.6).setDepth(y+26);
+   this.grassParticles.add(blade);blade.once('destroy',()=>this.grassParticles.delete(blade));
+   this.tweens.add({targets:blade,x:x+direction*(8+i*4)+Math.sin(phase+i)*10,y:y-12-(i%2)*12,angle:direction*(45+i*32),alpha:0,duration:280+i*60,ease:'Quad.easeOut',onComplete:()=>blade.destroy()});
+  }
+ }
+ updateGrass(){
+  const time=this.time.now/1000,tile=this.state.world.terrain.tileSize;
+  const brush=(x:number,y:number,vx:number,vy:number,leaves:boolean)=>{
+   if(Math.hypot(vx,vy)<8)return;
+   const cx=Math.floor(x/tile),cy=Math.floor(y/tile);
+   for(let oy=-1;oy<=1;oy++)for(let ox=-1;ox<=1;ox++){
+    const key=chunkKey(cx+ox,cy+oy),view=this.grassViews.get(key);
+    if(view&&Math.abs(x-view.x)<24&&Math.abs(y-(view.y-8))<22&&this.grassBrush.touch(key,time,vx,vy)){
+     if(leaves)this.emitGrassBlades(x,y,vx,vy);
+    }
+   }
+  };
+  brush(this.renderPlayer.x,this.renderPlayer.y,this.state.player.vx,this.state.player.vy,true);
+  for(const enemy of this.state.enemies)if(renderProfile(enemy.species).elevation>=-4)brush(enemy.x,enemy.y,enemy.vx,enemy.vy,false);
+  for(const key of this.grassBrush.impulses.keys()){
+   const view=this.grassViews.get(key);if(!view){this.grassBrush.forget(key);continue;}
+   const bend=this.grassBrush.sample(key,time);
+   for(const image of [view.back,view.front])image.setRotation(bend?.rotation??0).setScale(2*(bend?.scaleX??1),2*(bend?.scaleY??1));
+  }
+ }
  renderWorldChunk(cx:number,cy:number){
   const map=this.state.world,key=chunkKey(cx,cy);if(!map.chunks[key])return;const tile=map.terrain.tileSize,objects:Phaser.GameObjects.GameObject[]=[],baseX=cx*FOREST_CHUNK_CELLS,baseY=cy*FOREST_CHUNK_CELLS,details=[ENVIRONMENT_ASSETS.grass,ENVIRONMENT_ASSETS.grassLeaves,ENVIRONMENT_ASSETS.grassRocks,ENVIRONMENT_ASSETS.grassFlowers,ENVIRONMENT_ASSETS.forestFloor];
   for(let ly=0;ly<FOREST_CHUNK_CELLS;ly++)for(let lx=0;lx<FOREST_CHUNK_CELLS;lx++){
    const x=baseX+lx,y=baseY+ly;if(x<0||y<0||x>=map.terrain.cols||y>=map.terrain.rows)continue;const wx=x*tile+tile/2,wy=y*tile+tile/2,value=terrainAt(map.terrain,x,y),hash=Math.abs((x*17+y*31+map.seed*7)|0);
    objects.push(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.grassFill)).setDisplaySize(tile,tile).setDepth(0));
    if(value===TERRAIN.path||value===TERRAIN.water)objects.push(this.add.image(wx,wy,environmentKey(this.terrainTexture(x,y)),adjacencyMask(map.terrain,x,y,value)).setDisplaySize(tile,tile).setDepth(1));
-   // These tiles contain opaque ground, so keep them below every tree. Sorting
-   // them by world Y stamps square grass patches over taller canopies.
-   else if(value===TERRAIN.tallGrass)objects.push(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.tallGrass)).setDisplaySize(tile,tile).setDepth(2));
-   else if(hash%19===0){const name=details[hash%details.length],flower=name===ENVIRONMENT_ASSETS.grassFlowers;objects.push(this.add.image(Math.max(24,Math.min(map.width-24,wx)),Math.max(24,Math.min(map.height-24,wy)),environmentKey(name)).setScale(2).setDepth(flower?2:.5));}
+   // Transparent whole tufts can bend without rotating opaque ground squares.
+   else if(value===TERRAIN.tallGrass)objects.push(...this.addGrass(wx+((y%2)*2-1)*2,wy+12,x,y));
+   else if(hash%19===0){const name=details[hash%details.length],flower=name===ENVIRONMENT_ASSETS.grassFlowers;if(name===ENVIRONMENT_ASSETS.grassLeaves)objects.push(...this.addGrass(wx,wy+12,x,y));else objects.push(this.add.image(Math.max(24,Math.min(map.width-24,wx)),Math.max(24,Math.min(map.height-24,wy)),environmentKey(name)).setScale(2).setDepth(flower?2:.5));}
   }
   for(const d of map.decorationBuckets[key]??[]){
    const visual=decorationVisual(d.id,d.x,d.y,map.seed),image=this.add.image(Math.round(d.x),Math.round(d.y),environmentKey(visual.name));
@@ -127,6 +169,7 @@ class GameScene extends BaseScene {
  drawDebug(){const g=this.debugGraphics;if(!g)return;g.clear();g.lineStyle(2,0xff5d73,.65);for(const d of this.state.world.decorations)if(Math.abs(d.x-this.state.player.x)<900&&Math.abs(d.y-this.state.player.y)<650)g.strokeCircle(d.x,d.y,d.collisionRadius+14);g.lineStyle(2,0x62e8ff,.8);for(const e of this.state.enemies.slice(0,100)){g.lineBetween(e.x,e.y,e.x+e.vx*.28,e.y+e.vy*.28);if(e.blockedFor>.4){g.lineStyle(2,0xffd45c,.9);g.strokeCircle(e.x,e.y,18);g.lineStyle(2,0x62e8ff,.8);}}g.lineStyle(3,0x8fff89,.9);g.lineBetween(this.state.player.x,this.state.player.y,this.state.player.x+this.state.player.vx*.3,this.state.player.y+this.state.player.vy*.3);}
  update(_t:number,delta:number){
   if(this.overlay||this.ended)return;this.acc+=Math.min(delta/1000,.1);while(this.acc>=this.fixedStep){this.step();this.acc-=this.fixedStep;}const alpha=interpolationAlpha(this.acc,this.fixedStep),profile=renderProfile(this.state.pokemonId);this.renderPlayer=interpolatePosition(this.previousPlayer,this.state.player,alpha);const playerOffset=this.applyPokemonAnimation(this.player,this.playerAnimation,this.state.pokemonId,this.state.player.facing,Math.hypot(this.state.player.vx,this.state.player.vy),this.renderPlayer);this.playerShadow.setPosition(this.renderPlayer.x,this.renderPlayer.y+profile.shadowOffsetY).setDepth(this.renderPlayer.y-2);this.cameraTarget.setPosition(this.renderPlayer.x,this.renderPlayer.y);this.syncViews(alpha);this.syncWorldChunks();this.drawDebug();this.renderHealthBars();
+  this.updateGrass();
   const moves=[0,1,2,3].map(i=>{const s=this.state.moveSlots[i];return s?`${MOVES[s.id].name} R${s.rank}`:'—'}).join('  |  '),items=[0,1,2,3].map(i=>{const s=this.state.items[i];return s?`${ITEMS[s.id].name} R${s.rank}`:'—'}).join('  |  ');this.hud.setText(`XP ${this.state.xp}/${this.state.nextXp}   TIME ${Math.floor(this.state.time/60)}:${String(Math.floor(this.state.time%60)).padStart(2,'0')}   KO ${this.state.defeated}${this.fast?'   [FAST TEST MODE]':''}\nMOVES ${moves}\nITEMS ${items}`);
   if(this.debugText){const ranged=this.state.enemies.filter(e=>e.behavior==='ranged').length;this.debugText.setText(`DEBUG\nFPS ${Math.round(this.game.loop.actualFps)}  SIM 30 Hz  α ${alpha.toFixed(2)}\nAnim ${this.playerAnimation.state}  Key ${this.player.anims.currentAnim?.key??'idle'}  Frame ${String(this.player.frame.name)}\nFacing ${this.state.player.facing}  Ground offset ${playerOffset.toFixed(1)}\nSim ${this.state.player.x.toFixed(1)},${this.state.player.y.toFixed(1)}  Prev ${this.previousPlayer.x.toFixed(1)},${this.previousPlayer.y.toFixed(1)}\nRender ${this.renderPlayer.x.toFixed(1)},${this.renderPlayer.y.toFixed(1)}  Shadow ${this.playerShadow.x.toFixed(1)},${this.playerShadow.y.toFixed(1)}\nCamera ${this.cameraTarget.x.toFixed(1)},${this.cameraTarget.y.toFixed(1)}  Chunk ${this.activeChunk.cx},${this.activeChunk.cy}\nPhase ${this.state.encounterPhase}  Ranged ${ranged}/${this.state.maxRangedEnemies}  Shots ${this.state.projectiles.length}/${this.state.maxEnemyProjectiles}\nEnemies ${this.state.enemies.length}  Checks ${this.state.collisionChecks}  Nav ${this.state.navigationRebuilds}\nSeed ${this.state.seed}  Hash ${stateHash(this.state)}`);}
  }

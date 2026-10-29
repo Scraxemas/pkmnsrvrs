@@ -163,8 +163,8 @@ test('full forest survey covers every chunk with complete reviewed props',async(
       if(!s.chunkViews.has(chunk.key))errors.push(`missing ${chunk.key}`);
       for(const objects of s.chunkViews.values())for(const image of objects){
         if(!image.texture?.key.startsWith('viridian-frlg/'))errors.push(`legacy texture ${image.texture?.key}`);
-        if(image.getData?.('mapProp')||image.getData?.('forestTree')){
-          seen.add(image.getData('mapProp')??'ancient-tree');
+        if(image.getData?.('mapProp')||image.getData?.('forestTree')||image.getData?.('grass')){
+          seen.add(image.getData('mapProp')??(image.getData('grass')?'grass':'ancient-tree'));
           const b=image.getBounds();
           if(b.left<0||b.top<0||b.right>map.width||b.bottom>map.height)errors.push(`outside world ${image.texture.key}`);
         }
@@ -197,4 +197,39 @@ test('full tile catalog browses complete props and terrain separately',async({pa
   await expect(page.locator('.card')).toHaveCount(1);await expect(page.locator('.tag')).toContainText('32×32');
   await page.locator('#kind').selectOption('all');await page.locator('#search').fill('tile_r598_c07');
   await expect(page.locator('.card')).toHaveCount(1);
+});
+
+test('complete grass brushes around walking feet and settles when idle',async({page})=>{
+  await page.setViewportSize({width:1280,height:720});await page.goto('/');
+  await expect(page.locator('canvas')).toBeVisible();
+  await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur'});});
+  await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player);
+  await page.evaluate(()=>{
+    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),map=s.state.world,grid=map.terrain;
+    const index=grid.cells.findIndex((value:number,i:number)=>value===3&&grid.cells[i-1]===3&&grid.cells[i+1]===3&&grid.cells[i+2]===3&&map.decorations.every((d:any)=>Math.hypot(d.x-((i%grid.cols)+.5)*grid.tileSize,d.y-(Math.floor(i/grid.cols)+.5)*grid.tileSize)>90));
+    if(index<0)throw new Error('No open grass patch for walk-through check');
+    const x=((index%grid.cols)+.5)*grid.tileSize,y=(Math.floor(index/grid.cols)+.5)*grid.tileSize;
+    s.state.player.x=x;s.state.player.y=y;s.state.player.vx=0;s.state.player.vy=0;s.previousPlayer={x,y};s.renderPlayer={x,y};
+    s.state.enemies=[];s.state.projectiles=[];s.state.moveSlots=[];s.nextSpawn=Infinity;
+    s.cameras.main.stopFollow();s.cameras.main.centerOn(x,y);s.syncWorldChunks(true);
+  });
+  await page.waitForTimeout(200);
+  await page.screenshot({path:'test-results/screenshots/grass-complete-idle.png'});
+  await page.keyboard.down('d');
+  const motion=[] as {bend:number;particles:number;brushes:number}[];
+  for(let i=0;i<6;i++){
+    await page.waitForTimeout(40);
+    motion.push(await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{bend:Math.max(0,...[...s.grassViews.values()].map((v:any)=>Math.abs(v.back.rotation))),particles:s.grassParticles.size,brushes:s.grassBrushCount};}));
+  }
+  await page.screenshot({path:'test-results/screenshots/grass-brushing-walk.png'});
+  await page.keyboard.up('d');
+  expect(Math.max(...motion.map(m=>m.bend))).toBeGreaterThan(.03);
+  expect(Math.max(...motion.map(m=>m.particles))).toBeGreaterThan(0);
+  expect(Math.max(...motion.map(m=>m.particles))).toBeLessThanOrEqual(72);
+  await page.waitForTimeout(950);
+  const settled=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{active:s.grassBrush.impulses.size,particles:s.grassParticles.size,bend:Math.max(0,...[...s.grassViews.values()].map((v:any)=>Math.abs(v.back.rotation))),brushes:s.grassBrushCount};});
+  expect(settled.active).toBe(0);expect(settled.particles).toBe(0);expect(settled.bend).toBe(0);
+  await page.waitForTimeout(250);
+  expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').grassBrushCount)).toBe(settled.brushes);
+  await page.screenshot({path:'test-results/screenshots/grass-settled.png'});
 });

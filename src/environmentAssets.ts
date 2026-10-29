@@ -4,7 +4,7 @@ export const ENVIRONMENT_ASSETS={
   grass:'frlg/grass_detail_a',grassFill:'frlg/grass',
   grassLeaves:'frlg/grass_leaves',grassRocks:'frlg/grass_detail_b',
   grassFlowers:'frlg/grass_flowers',forestFloor:'frlg/grass_detail_b',
-  tallGrass:'frlg/tall_grass',pathAtlas:'frlg/path_atlas',waterAtlas:'frlg/water_atlas',
+  tallGrass:'frlg/tall_grass',grassFront:'frlg/tall_grass_front',pathAtlas:'frlg/path_atlas',waterAtlas:'frlg/water_atlas',
   treeLight:'frlg/tree',treeCluster:'frlg/tree_cluster',ancientTree:'frlg/tree_cluster',
   rockSmall:'frlg/rock_small',rockMedium:'frlg/rock_medium',bush:'frlg/bush',sapling:'frlg/sapling',
 } as const;
