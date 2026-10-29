@@ -22,6 +22,7 @@ TILES: dict[str, tuple[int, int, int, int]] = {
     "grass_detail_b": (0, 2, 1, 1),
     "grass_flowers": (1, 348, 1, 1),
     "grass_leaves": (4, 348, 1, 1),
+    "tall_grass": (2, 1, 1, 1),
     "path_nw": (0, 26, 1, 1),
     "path_n": (1, 26, 1, 1),
     "path_ne": (2, 26, 1, 1),
@@ -87,7 +88,8 @@ def main() -> None:
 
     args.runtime.mkdir(parents=True, exist_ok=True)
     args.archive.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(args.source, args.archive)
+    if args.source.resolve()!=args.archive.resolve():
+        shutil.copy2(args.source, args.archive)
 
     grass=crop(image,TILES["grass"])
     grass_pixels=grass.load()
