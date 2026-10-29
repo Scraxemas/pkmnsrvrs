@@ -24,5 +24,14 @@ describe('Pokémon animation state controller',()=>{
     expect(controller.update(0,'northwest',3.9).state).toBe('idle');
     expect(controller.facing).toBe('northwest');
   });
+  it('recognizes same-direction movement after every idle interval',()=>{
+    const controller=new PokemonAnimationController('bulbasaur');
+    for(let i=0;i<4;i++){
+      expect(controller.update(i,'east',100).state).toBe('walk');
+      expect(controller.update(i+.1,'east',0).state).toBe('idle');
+      const restart=controller.update(i+.2,'east',100);
+      expect(restart.state).toBe('walk');expect(restart.changed).toBe(true);
+    }
+  });
 });
 

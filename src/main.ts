@@ -4,6 +4,7 @@ import { FACINGS, Facing, facingRow } from './direction';
 import { ENVIRONMENT_ASSETS, ENVIRONMENT_ATLASES, environmentKey, environmentUrl } from './environmentAssets';
 import {decorationVisual,visibleChunkRange} from './worldPresentation';
 import {GrassBrushField} from './grassBrush';
+import {grassBodyCrop,grassFootCoverage,measureVisibleRows,VisibleRows} from './grassOcclusion';
 import {gameplayHudLayout, GameplayHudLayout, hpBarColor} from './hudLayout';
 import {renderProfile} from './renderProfiles';
 import { applyUpgrade, AttackEvent, makeState, masteryOptions, rewardRoll, SimState, spawnSpecies, stateHash, tick, Upgrade, upgradeOptions } from './simulation';
@@ -33,6 +34,8 @@ class GameScene extends BaseScene {
  playerAnimation!:PokemonAnimationController;enemyAnimations=new Map<number,PokemonAnimationController>();previousPlayer!:Position;previousEnemies=new Map<number,Position>();previousProjectiles=new Map<number,Position>();renderPlayer:Position={x:0,y:0};
  chunkViews=new Map<string,Phaser.GameObjects.GameObject[]>();chunkRangeKey='';activeChunk={cx:Number.NaN,cy:Number.NaN};sessionDefeats:Record<string,number>={};sessionBalls=0;acc=0;overlay?:Phaser.GameObjects.Container;fast=false;debug=false;duration=1800;nextSpawn=0;miniIndex=0;ended=false;
  grassViews=new Map<string,GrassView>();grassBrush=new GrassBrushField();grassParticles=new Set<Phaser.GameObjects.Rectangle>();grassBrushCount=0;
+ pokemonVisibleRows=new Map<string,VisibleRows[]>();
+ pokemonGrassMasks=new Map<Phaser.GameObjects.Sprite,{graphics:Phaser.GameObjects.Graphics;mask:Phaser.Display.Masks.GeometryMask}>();
  readonly fixedStep=1/30;readonly miniProgress=[.10,.233,.367,.50,.633,.767,.90];
 
  constructor(){super('game')}
@@ -57,10 +60,33 @@ class GameScene extends BaseScene {
  applyPokemonAnimation(sprite:Phaser.GameObjects.Sprite,controller:PokemonAnimationController,species:string,facing:Facing,speed:number,ground:Position,multiplier=1){
   const f=SPRITE_FRAMES[species],profile=renderProfile(species);if(!f)return 0;controller.setSpecies(species);const decision=controller.update(this.state.time,facing,speed),row=facingRow(facing),walkKey=`${species}-walk-${facing}`;
   if(decision.moving&&decision.state!=='stun'&&decision.state!=='evolution'&&decision.state!=='defeat'){
-   if(sprite.anims.currentAnim?.key!==walkKey){const progress=sprite.anims.isPlaying?sprite.anims.getProgress():0;sprite.play(walkKey,true);if(progress>0)sprite.anims.setProgress(progress);}
+   if(sprite.anims.currentAnim?.key!==walkKey||!sprite.anims.isPlaying){const progress=sprite.anims.isPlaying?sprite.anims.getProgress():0;sprite.play(walkKey,true);if(progress>0)sprite.anims.setProgress(progress);}
   }else if(sprite.anims.isPlaying||Number(sprite.frame.name)!==row*f.frames){sprite.anims.stop();sprite.setFrame(row*f.frames);}
   sprite.setOrigin(.5,1).setScale(profile.scale*multiplier);const frame=Number(sprite.frame.name)||0,offset=frameGroundOffset(species,frame)*profile.scale*multiplier+profile.elevation;
-  sprite.setPosition(ground.x,ground.y+offset).setDepth(ground.y+20);return offset;
+  sprite.setPosition(ground.x,ground.y+offset).setDepth(ground.y+20);this.applyGrassOcclusion(sprite,species,ground);return offset;
+ }
+ applyGrassOcclusion(sprite:Phaser.GameObjects.Sprite,species:string,ground:Position){
+  const coverage=renderProfile(species).elevation<-4?0:grassFootCoverage(ground.x,ground.y,this.state.world.terrain.tileSize,(cx,cy)=>this.grassViews.get(chunkKey(cx,cy)));
+  if(coverage===0){if(sprite.mask)sprite.clearMask();sprite.setData('grassHiddenFraction',0);return;}
+  let rows=this.pokemonVisibleRows.get(species);
+  const metadata=SPRITE_FRAMES[species];
+  if(!rows){
+   const source=sprite.texture.getSourceImage() as HTMLImageElement,canvas=document.createElement('canvas');
+   canvas.width=source.width;canvas.height=source.height;
+   const context=canvas.getContext('2d',{willReadFrequently:true})!;context.drawImage(source,0,0);
+   rows=measureVisibleRows(context.getImageData(0,0,canvas.width,canvas.height).data,canvas.width,canvas.height,metadata.width,metadata.height);this.pokemonVisibleRows.set(species,rows);
+  }
+  const visible=rows[Number(sprite.frame.name)]??{top:0,bottom:metadata.height},crop=grassBodyCrop(visible,coverage);
+  let clipping=this.pokemonGrassMasks.get(sprite);
+  if(!clipping){
+   const graphics=this.make.graphics({x:0,y:0},false),mask=graphics.createGeometryMask();clipping={graphics,mask};this.pokemonGrassMasks.set(sprite,clipping);
+   sprite.once('destroy',()=>{mask.destroy();graphics.destroy();this.pokemonGrassMasks.delete(sprite);});
+  }
+  const x=Math.floor(sprite.x)-sprite.displayOriginX*sprite.scaleX,y=Math.floor(sprite.y)-sprite.displayOriginY*sprite.scaleY,bottom=y+crop.bottom*sprite.scaleY;
+  // Clip the already-rendered pixels, keeping the full sprite quad and its UV
+  // sampling unchanged. Resizing a cropped quad resamples fractional scales.
+  clipping.graphics.clear().fillStyle(0xffffff,1).fillRect(x-8,y-8,metadata.width*sprite.scaleX+16,bottom-y+8);
+  sprite.setMask(clipping.mask).setData('grassHiddenFraction',crop.hiddenFraction).setData('grassMaskBottom',bottom);
  }
  renderHealthBars(){const layout=this.hpLayout,ratio=Math.max(0,Math.min(1,this.state.hp/Math.max(1,this.state.maxHp))),player=layout.player,g=this.hpGraphics;g.clear();g.fillStyle(0x09130f,.96);g.fillRect(player.x-4,player.y-4,player.width+8,player.height+8);g.fillStyle(0x3b2023,1);g.fillRect(player.x,player.y,player.width,player.height);g.fillStyle(hpBarColor(ratio),1);g.fillRect(player.x,player.y,Math.round(player.width*ratio),player.height);g.lineStyle(3,0xe7dfb0,1);g.strokeRect(player.x-1,player.y-1,player.width+2,player.height+2);this.hpText.setText(`${this.state.pokemon.name.toUpperCase()} · LV ${this.state.level}     ${Math.max(0,Math.ceil(this.state.hp))} / ${Math.ceil(this.state.maxHp)} HP`);const boss=this.state.enemies.find(enemy=>enemy.boss),bg=this.bossGraphics,b=layout.boss;bg.clear();if(!boss){this.bossText.setVisible(false);return;}const bossRatio=Math.max(0,Math.min(1,boss.hp/Math.max(1,boss.maxHp)));bg.fillStyle(0x12090a,.94);bg.fillRect(b.x-3,b.y-3,b.width+6,b.height+6);bg.fillStyle(0x3b2023,1);bg.fillRect(b.x,b.y,b.width,b.height);bg.fillStyle(0xcc4b5d,1);bg.fillRect(b.x,b.y,Math.round(b.width*bossRatio),b.height);bg.lineStyle(2,0xf1d5a8,1);bg.strokeRect(b.x-1,b.y-1,b.width+2,b.height+2);this.bossText.setVisible(true).setText(`BEEDRILL · PHASE ${boss.phase}     ${Math.max(0,Math.ceil(boss.hp))} / ${Math.ceil(boss.maxHp)}`);}
  terrainTexture(x:number,y:number){

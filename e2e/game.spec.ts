@@ -233,3 +233,80 @@ test('complete grass brushes around walking feet and settles when idle',async({p
   expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').grassBrushCount)).toBe(settled.brushes);
   await page.screenshot({path:'test-results/screenshots/grass-settled.png'});
 });
+
+test('walking animation restarts after stopping in every direction',async({page})=>{
+  await page.goto('/');await expect(page.locator('canvas')).toBeVisible();
+  await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur'});});
+  await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player);
+  await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.enemies=[];s.state.moveSlots=[];s.nextSpawn=Infinity;});
+  for(const keys of [['d'],['w'],['a'],['s'],['d','s'],['a','s'],['a','w'],['d','w']]){
+    for(const key of keys)await page.keyboard.down(key);
+    await page.waitForTimeout(160);
+    for(const key of keys)await page.keyboard.up(key);
+    await page.waitForTimeout(100);
+    const idle=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{playing:s.player.anims.isPlaying,key:s.player.anims.currentAnim.key,x:s.state.player.x,y:s.state.player.y};});
+    expect(idle.playing).toBe(false);
+    for(const key of keys)await page.keyboard.down(key);
+    const frames=[] as string[];
+    for(let i=0;i<4;i++){
+      await page.waitForTimeout(85);
+      const moving=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{playing:s.player.anims.isPlaying,key:s.player.anims.currentAnim.key,frame:String(s.player.frame.name),x:s.state.player.x,y:s.state.player.y};});
+      expect(moving.playing,`${keys.join('+')} restarted playback`).toBe(true);
+      const facing:Record<string,string>={d:'east',w:'north',a:'west',s:'south','d+s':'southeast','a+s':'southwest','a+w':'northwest','d+w':'northeast'};
+      expect(moving.key).toBe(`bulbasaur-walk-${facing[keys.join('+')]}`);if(keys.length===1)expect(moving.key).toBe(idle.key);frames.push(moving.frame);
+      if(i===3)expect(Math.hypot(moving.x-idle.x,moving.y-idle.y)).toBeGreaterThan(20);
+    }
+    expect(new Set(frames).size,`${keys.join('+')} advances through walk frames`).toBeGreaterThan(1);
+    for(const key of keys)await page.keyboard.up(key);
+    await page.waitForTimeout(80);
+  }
+});
+
+test('grass makes only the bottom fifth of the visible body transparent',async({page})=>{
+  await page.setViewportSize({width:1280,height:720});await page.goto('/');
+  await expect(page.locator('canvas')).toBeVisible();
+  await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'charmander'});});
+  await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player);
+  await page.evaluate(()=>{
+    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),map=s.state.world,grid=map.terrain;
+    const index=grid.cells.findIndex((value:number,i:number)=>value===3&&grid.cells[i-1]===3&&grid.cells[i+1]===3&&map.decorations.every((d:any)=>Math.hypot(d.x-((i%grid.cols)+.5)*32,d.y-(Math.floor(i/grid.cols)+.5)*32)>90));
+    const x=((index%grid.cols)+.5)*32,y=(Math.floor(index/grid.cols)+.5)*32;
+    Object.assign(s.state.player,{x,y,vx:0,vy:0});s.previousPlayer={x,y};s.state.enemies=[];s.state.moveSlots=[];s.nextSpawn=Infinity;
+    s.cameras.main.stopFollow();s.cameras.main.centerOn(x,y);s.syncWorldChunks(true);
+  });
+  await page.waitForTimeout(150);
+  const pixels=await page.evaluate(async()=>{
+    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
+    s.overlay=s.add.container(0,0);s.player.anims.stop();
+    for(const view of s.grassViews.values())view.front.setVisible(false);
+    const sprite=s.player,box=sprite.getBounds(),cam=s.cameras.main;
+    const x=Math.floor(box.x-cam.scrollX),y=Math.floor(box.y-cam.scrollY),width=Math.ceil(box.width),height=Math.ceil(box.height);
+    const cutoff=sprite.getData('grassMaskBottom')-cam.scrollY-y;
+    const hidden=sprite.getData('grassHiddenFraction'),cropped=!!sprite.mask,alpha=sprite.alpha;
+    const snapshot=()=>new Promise<Uint8ClampedArray>(resolve=>s.game.renderer.snapshotArea(x,y,width,height,(image:any)=>{
+      const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;const context=canvas.getContext('2d')!;
+      context.drawImage(image,0,0);resolve(context.getImageData(0,0,width,height).data);
+    }));
+    const masked=await snapshot();sprite.clearMask();const full=await snapshot();let changedUpper=0,changedLower=0;
+    for(let py=0;py<height;py++)for(let px=0;px<width;px++){
+      const p=(py*width+px)*4;
+      if(masked[p]!==full[p]||masked[p+1]!==full[p+1]||masked[p+2]!==full[p+2]){if(py<cutoff-2)changedUpper++;else changedLower++;}
+    }
+    s.applyGrassOcclusion(sprite,s.state.pokemonId,s.state.player);
+    for(const view of s.grassViews.values())view.front.setVisible(true);s.overlay.destroy();s.overlay=undefined;
+    return{cropped,hidden,alpha,changedUpper,changedLower};
+  });
+  expect(pixels.cropped).toBe(true);expect(pixels.hidden).toBeCloseTo(.2);expect(pixels.alpha).toBe(1);
+  expect(pixels.changedUpper).toBe(0);expect(pixels.changedLower).toBeGreaterThan(0);
+  await page.screenshot({path:'test-results/screenshots/grass-bottom-fifth-mask.png'});
+  await page.evaluate(()=>{
+    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
+    for(let offset=0;offset<256;offset+=32){
+      const x=s.state.world.playerStart.x+offset,y=s.state.world.playerStart.y;
+      s.applyGrassOcclusion(s.player,s.state.pokemonId,{x,y});
+      if(!s.player.mask){Object.assign(s.state.player,{x,y,vx:0,vy:0});s.previousPlayer={x,y};s.cameras.main.centerOn(x,y);break;}
+    }
+  });
+  await page.waitForTimeout(100);
+  expect(await page.evaluate(()=>!!(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player.mask)).toBe(false);
+});
