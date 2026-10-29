@@ -1,11 +1,11 @@
 ﻿export const ENVIRONMENT_ASSETS={
-  grass:'grass',grassFill:'grass_fill',dirt:'dirt',dirtFill:'dirt_fill',pathNorth:'path_north',pathSouth:'path_south',pathWest:'path_west',pathEast:'path_east',pathCornerNw:'path_corner_nw',pathCornerNe:'path_corner_ne',pathCornerSw:'path_corner_sw',pathCornerSe:'path_corner_se',
-  grassLeaves:'grass_leaves',grassRocks:'grass_rocks',grassFlowers:'grass_flowers',grassMushrooms:'grass_mushrooms',forestFloor:'forest_floor',
-  treeLight:'tree_light',treeDark:'tree_dark',treeAutumn:'tree_autumn',treeCluster:'tree_cluster',treeClusterAlt:'tree_cluster_alt',ancientTree:'ancient_tree',ancientTreeRight:'ancient_tree_right',
+  grass:'frlg/grass_detail_a',grassFill:'frlg/grass',dirt:'frlg/path_center',dirtFill:'frlg/path_center',pathNorth:'frlg/path_n',pathSouth:'frlg/path_s',pathWest:'frlg/path_w',pathEast:'frlg/path_e',pathCornerNw:'frlg/path_nw',pathCornerNe:'frlg/path_ne',pathCornerSw:'frlg/path_sw',pathCornerSe:'frlg/path_se',
+  grassLeaves:'frlg/grass_leaves',grassRocks:'frlg/grass_detail_b',grassFlowers:'frlg/grass_flowers',grassMushrooms:'grass_mushrooms',forestFloor:'frlg/grass_detail_b',
+  treeLight:'frlg/tree',treeDark:'frlg/tree',treeAutumn:'frlg/tree',treeCluster:'frlg/tree_cluster',treeClusterAlt:'frlg/tree_cluster',ancientTree:'frlg/tree_cluster',ancientTreeRight:'frlg/tree_cluster',
   log:'log',logFlowers:'log_flowers',hollowLog:'hollow_log',stump:'stump',stumpLarge:'stump_large',rootArch:'root_arch',
   flowersWhite:'flowers_white',flowersPink:'flowers_pink',flowersBlue:'flowers_blue',flowersYellow:'flowers_yellow',flowersMixed:'flowers_mixed',
-  water:'water',shoreNorth:'shore_north',shoreSouth:'shore_south',shoreWest:'shore_west',shoreEast:'shore_east',
-  pondNw:'pond_nw',pondNe:'pond_ne',lilypads:'lilypads',lilyFlower:'lily_flower',reeds:'reeds',fern:'fern',fernTall:'fern_tall',
+  water:'frlg/water',shoreNorth:'frlg/water_n',shoreSouth:'frlg/water_s',shoreWest:'frlg/water_w',shoreEast:'frlg/water_e',
+  pondNw:'frlg/water_nw',pondNe:'frlg/water_ne',pondSw:'frlg/water_sw',pondSe:'frlg/water_se',lilypads:'lilypads',lilyFlower:'lily_flower',reeds:'reeds',fern:'fern',fernTall:'fern_tall',
 } as const;
 
 export const environmentKey=(name:string)=>`viridian-${name}`;

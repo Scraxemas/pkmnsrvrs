@@ -25,8 +25,50 @@ class GameScene extends BaseScene {state!:SimState;keys!:Record<string,Phaser.In
  applyDirectionalSprite(sprite:Phaser.GameObjects.Sprite,species:string,facing:Facing,moving:boolean){const f=SPRITE_FRAMES[species];if(!f)return;const row=facingRow(facing),key=`${species}-walk-${facing}`,profile=renderProfile(species);sprite.setOrigin(.5,profile.groundAnchors[row]);if(moving){if(sprite.anims.currentAnim?.key!==key)sprite.play(key,true);}else{sprite.anims.stop();sprite.setFrame(row*f.frames);}}
  applyRenderProfile(sprite:Phaser.GameObjects.Sprite,species:string,multiplier=1){const profile=renderProfile(species);sprite.setOrigin(.5,profile.groundAnchorY).setScale(profile.scale*multiplier);return profile;}
  renderHealthBars(){const layout=this.hpLayout,ratio=Math.max(0,Math.min(1,this.state.hp/Math.max(1,this.state.maxHp))),player=layout.player,g=this.hpGraphics;g.clear();g.fillStyle(0x09130f,.96);g.fillRect(player.x-4,player.y-4,player.width+8,player.height+8);g.fillStyle(0x3b2023,1);g.fillRect(player.x,player.y,player.width,player.height);g.fillStyle(hpBarColor(ratio),1);g.fillRect(player.x,player.y,Math.round(player.width*ratio),player.height);g.lineStyle(3,0xe7dfb0,1);g.strokeRect(player.x-1,player.y-1,player.width+2,player.height+2);this.hpText.setText(`${this.state.pokemon.name.toUpperCase()} · LV ${this.state.level}     ${Math.max(0,Math.ceil(this.state.hp))} / ${Math.ceil(this.state.maxHp)} HP`);const boss=this.state.enemies.find(enemy=>enemy.boss),bg=this.bossGraphics,b=layout.boss;bg.clear();if(!boss){this.bossText.setVisible(false);return;}const bossRatio=Math.max(0,Math.min(1,boss.hp/Math.max(1,boss.maxHp)));bg.fillStyle(0x12090a,.94);bg.fillRect(b.x-3,b.y-3,b.width+6,b.height+6);bg.fillStyle(0x3b2023,1);bg.fillRect(b.x,b.y,b.width,b.height);bg.fillStyle(0xcc4b5d,1);bg.fillRect(b.x,b.y,Math.round(b.width*bossRatio),b.height);bg.lineStyle(2,0xf1d5a8,1);bg.strokeRect(b.x-1,b.y-1,b.width+2,b.height+2);this.bossText.setVisible(true).setText(`BEEDRILL · PHASE ${boss.phase}     ${Math.max(0,Math.ceil(boss.hp))} / ${Math.ceil(boss.maxHp)}`);}
- terrainTexture(x:number,y:number){const grid=this.state.world.terrain,value=terrainAt(grid,x,y),mask=adjacencyMask(grid,x,y,value),n=!!(mask&1),e=!!(mask&4),s=!!(mask&16),w=!!(mask&64);if(value===TERRAIN.grass)return ENVIRONMENT_ASSETS.grassFill;if(value===TERRAIN.water){if(!n)return ENVIRONMENT_ASSETS.shoreNorth;if(!s)return ENVIRONMENT_ASSETS.shoreSouth;if(!w)return ENVIRONMENT_ASSETS.shoreWest;if(!e)return ENVIRONMENT_ASSETS.shoreEast;return ENVIRONMENT_ASSETS.water;}if(!n&&!w)return ENVIRONMENT_ASSETS.pathCornerNw;if(!n&&!e)return ENVIRONMENT_ASSETS.pathCornerNe;if(!s&&!w)return ENVIRONMENT_ASSETS.pathCornerSw;if(!s&&!e)return ENVIRONMENT_ASSETS.pathCornerSe;if(!n)return ENVIRONMENT_ASSETS.pathNorth;if(!s)return ENVIRONMENT_ASSETS.pathSouth;if(!w)return ENVIRONMENT_ASSETS.pathWest;if(!e)return ENVIRONMENT_ASSETS.pathEast;return ENVIRONMENT_ASSETS.dirtFill;}
- drawForest(){const map=this.state.world,grid=map.terrain,tile=grid.tileSize,groundDetails=[ENVIRONMENT_ASSETS.grass,ENVIRONMENT_ASSETS.grassLeaves,ENVIRONMENT_ASSETS.grassRocks,ENVIRONMENT_ASSETS.grassFlowers,ENVIRONMENT_ASSETS.forestFloor];this.cameras.main.setBackgroundColor('#24452d');for(let y=0;y<grid.rows;y++)for(let x=0;x<grid.cols;x++){const cx=x*tile+tile/2,cy=y*tile+tile/2,value=terrainAt(grid,x,y),hash=Math.abs((x*17+y*31+map.seed*7)|0);this.add.image(cx,cy,environmentKey(ENVIRONMENT_ASSETS.grassFill)).setDisplaySize(tile,tile).setDepth(0);if(value!==TERRAIN.grass)this.add.image(cx,cy,environmentKey(this.terrainTexture(x,y))).setDisplaySize(tile,tile).setDepth(1);else if(hash%7===0)this.add.image(cx,cy,environmentKey(groundDetails[hash%groundDetails.length])).setDisplaySize(tile,tile).setDepth(.5);}const trees=[ENVIRONMENT_ASSETS.treeLight,ENVIRONMENT_ASSETS.treeDark,ENVIRONMENT_ASSETS.treeCluster,ENVIRONMENT_ASSETS.treeClusterAlt];map.decorations.forEach((d,i)=>{const name=d.id==='log'?(i%2?ENVIRONMENT_ASSETS.log:ENVIRONMENT_ASSETS.logFlowers):trees[(i+map.seed)%trees.length],image=this.add.image(d.x,d.y,environmentKey(name)).setOrigin(.5,.78).setDepth(d.y);image.setScale(Math.max(.65,d.radius*2.35/128));});for(const l of map.landmarks){if(l.id==='ancient-tree'){this.add.image(l.x,l.y,environmentKey(ENVIRONMENT_ASSETS.ancientTree)).setOrigin(.5,.8).setScale(.9).setDepth(l.y);}else if(l.id==='pond'){this.add.image(l.x-28,l.y-10,environmentKey(ENVIRONMENT_ASSETS.lilypads)).setScale(.58).setDepth(l.y-3);this.add.image(l.x+70,l.y+30,environmentKey(ENVIRONMENT_ASSETS.reeds)).setScale(.55).setDepth(l.y+2);}else if(l.id==='flower-clearing'){const flowers=[ENVIRONMENT_ASSETS.flowersWhite,ENVIRONMENT_ASSETS.flowersPink,ENVIRONMENT_ASSETS.flowersBlue,ENVIRONMENT_ASSETS.flowersYellow,ENVIRONMENT_ASSETS.flowersMixed];flowers.forEach((name,i)=>this.add.image(l.x+Math.cos(i*1.7)*l.radius*.55,l.y+Math.sin(i*1.7)*l.radius*.45,environmentKey(name)).setScale(.45).setDepth(l.y+i));}}}
+ terrainTexture(x:number,y:number){
+  const grid=this.state.world.terrain,value=terrainAt(grid,x,y),mask=adjacencyMask(grid,x,y,value),n=!!(mask&1),e=!!(mask&4),s=!!(mask&16),w=!!(mask&64);
+  if(value===TERRAIN.grass)return ENVIRONMENT_ASSETS.grassFill;
+  if(value===TERRAIN.water){
+   if(!n&&!w)return ENVIRONMENT_ASSETS.pondNw;
+   if(!n&&!e)return ENVIRONMENT_ASSETS.pondNe;
+   if(!s&&!w)return ENVIRONMENT_ASSETS.pondSw;
+   if(!s&&!e)return ENVIRONMENT_ASSETS.pondSe;
+   if(!n)return ENVIRONMENT_ASSETS.shoreNorth;
+   if(!s)return ENVIRONMENT_ASSETS.shoreSouth;
+   if(!w)return ENVIRONMENT_ASSETS.shoreWest;
+   if(!e)return ENVIRONMENT_ASSETS.shoreEast;
+   return ENVIRONMENT_ASSETS.water;
+  }
+  if(!n&&!w)return ENVIRONMENT_ASSETS.pathCornerNw;
+  if(!n&&!e)return ENVIRONMENT_ASSETS.pathCornerNe;
+  if(!s&&!w)return ENVIRONMENT_ASSETS.pathCornerSw;
+  if(!s&&!e)return ENVIRONMENT_ASSETS.pathCornerSe;
+  if(!n)return ENVIRONMENT_ASSETS.pathNorth;
+  if(!s)return ENVIRONMENT_ASSETS.pathSouth;
+  if(!w)return ENVIRONMENT_ASSETS.pathWest;
+  if(!e)return ENVIRONMENT_ASSETS.pathEast;
+  return ENVIRONMENT_ASSETS.dirtFill;
+ }
+ drawForest(){
+  const map=this.state.world,grid=map.terrain,tile=grid.tileSize;
+  const groundDetails=[ENVIRONMENT_ASSETS.grass,ENVIRONMENT_ASSETS.grassLeaves,ENVIRONMENT_ASSETS.grassRocks,ENVIRONMENT_ASSETS.grassFlowers,ENVIRONMENT_ASSETS.forestFloor];
+  this.cameras.main.setBackgroundColor('#72c9a6');
+  for(let y=0;y<grid.rows;y++)for(let x=0;x<grid.cols;x++){
+   const cx=x*tile+tile/2,cy=y*tile+tile/2,value=terrainAt(grid,x,y),hash=Math.abs((x*17+y*31+map.seed*7)|0);
+   this.add.image(cx,cy,environmentKey(ENVIRONMENT_ASSETS.grassFill)).setDisplaySize(tile,tile).setDepth(0);
+   if(value!==TERRAIN.grass)this.add.image(cx,cy,environmentKey(this.terrainTexture(x,y))).setDisplaySize(tile,tile).setDepth(1);
+   else if(hash%13===0)this.add.image(cx,cy,environmentKey(groundDetails[hash%groundDetails.length])).setDisplaySize(tile,tile).setDepth(.5);
+  }
+  map.decorations.forEach((d,i)=>{
+   const name=(i+map.seed)%6===0?ENVIRONMENT_ASSETS.treeCluster:ENVIRONMENT_ASSETS.treeLight;
+   const image=this.add.image(d.x,d.y,environmentKey(name)).setOrigin(.5,.88).setDepth(d.y);
+   image.setScale(2);
+  });
+  for(const l of map.landmarks){
+   if(l.id==='ancient-tree')this.add.image(l.x,l.y,environmentKey(ENVIRONMENT_ASSETS.ancientTree)).setOrigin(.5,.88).setScale(4).setDepth(l.y);
+   else if(l.id==='flower-clearing')for(let i=0;i<7;i++)this.add.image(l.x+Math.cos(i*1.7)*l.radius*.6,l.y+Math.sin(i*1.7)*l.radius*.48,environmentKey(ENVIRONMENT_ASSETS.grassFlowers)).setDisplaySize(tile,tile).setDepth(l.y+i);
+  }
+ }
  moveInput(){return{x:(this.keys.D.isDown||this.keys.RIGHT.isDown?1:0)-(this.keys.A.isDown||this.keys.LEFT.isDown?1:0),y:(this.keys.S.isDown||this.keys.DOWN.isDown?1:0)-(this.keys.W.isDown||this.keys.UP.isDown?1:0)};}
  showChoices(title:string,options:Upgrade[],onDone?:()=>void){if(this.overlay)return;const parts:Phaser.GameObjects.GameObject[]=[];parts.push(this.add.rectangle(W/2,H/2,760,330,0x102019,.97).setStrokeStyle(3,0xffe26b));parts.push(this.add.text(W/2,235,title,{fontFamily:FONT,fontSize:'30px',fontStyle:'bold',color:'#ffe26b'}).setOrigin(.5));options.forEach((u,i)=>{const b=button(this,W/2,315+i*65,u.label,()=>{applyUpgrade(this.state,u);this.overlay?.destroy(true);this.overlay=undefined;onDone?.();},560);parts.push(b);});this.overlay=this.add.container(0,0,parts).setDepth(30000).setScrollFactor(0);}
  showEvolution(id:string){const p=POKEMON[id],profile=renderProfile(id);recordEvolution(id);this.player.setTexture(`${id}-sprite`,0);this.applyRenderProfile(this.player,id);this.playerShadow.setSize(profile.shadowWidth,profile.shadowHeight);this.applyDirectionalSprite(this.player,id,this.state.player.facing,Math.hypot(this.state.player.vx,this.state.player.vy)>1);this.portrait.setTexture(`${id}-portrait`);const text=this.add.text(W/2,H/2,`Congratulations!\nYour Pokémon evolved into ${p.name}!`,{fontFamily:FONT,fontSize:'30px',color:'#ffe26b',backgroundColor:'#102019ee',padding:{x:30,y:24},align:'center'}).setOrigin(.5).setDepth(30000).setScrollFactor(0);this.time.delayedCall(1800,()=>text.destroy());}

@@ -8,3 +8,5 @@ playwright-report/
 .DS_Store
 Thumbs.db
 assets/external/
+# Superseded local extraction path from the first FRLG import attempt.
+public/assets/environment/frlg/
