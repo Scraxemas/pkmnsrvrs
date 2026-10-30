@@ -9,12 +9,14 @@ export function spatialFocus(boxes:FocusBox[],current:number,direction:Direction
 export class MenuInput {
   static activeCount=0;
   private controller=new AbortController();private frame=0;private active=true;private padDirection='';private padConfirm=false;private padBack=false;private nextRepeat=0;
+  private pointerX=NaN;private pointerY=NaN;
   constructor(private root:HTMLElement,private back?:()=>void){
     MenuInput.activeCount++;
     const held=gamepad();
     this.padConfirm=!!held&&(!!held.buttons[0]?.pressed||!!held.buttons[9]?.pressed);this.padBack=!!held?.buttons[1]?.pressed;
     root.addEventListener('focusin',event=>{for(const node of this.buttons())node.classList.toggle('is-focused',node===event.target);},{signal:this.controller.signal});
-    root.addEventListener('pointerover',event=>{const button=(event.target as HTMLElement).closest<HTMLElement>('[data-nav]');if(button)button.focus({preventScroll:true});},{signal:this.controller.signal});
+    // Layout changes under a stationary pointer must not steal restored focus.
+    root.addEventListener('pointermove',event=>{if(event.clientX===this.pointerX&&event.clientY===this.pointerY)return;this.pointerX=event.clientX;this.pointerY=event.clientY;const button=(event.target as HTMLElement).closest<HTMLElement>('[data-nav]');if(button)button.focus({preventScroll:true});},{signal:this.controller.signal});
     window.addEventListener('keydown',event=>{
       if((event.key==='Enter'||event.key===' ')&&event.repeat){event.preventDefault();return;}
       const directions:Record<string,Direction>={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'up',s:'down',a:'left',d:'right'};

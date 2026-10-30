@@ -6,6 +6,13 @@ tagline, location preview, button descriptions, and statistics panel are removed
 Gold, blue, green, and slate controls use stepped corners, cream trim, hard
 dimensional shading, and original matching 24-pixel icons.
 
+The logo is anchored at the top center, enlarged to 606 pixels wide on standard
+desktop windows and 808 pixels on taller displays. The button group is anchored
+at the bottom center, preserving Play, the Pokédex/Research row, and Settings.
+Short and narrow windows scale the logo to fit; opening the mode picker keeps
+the logo and the bottom of the controls anchored. Only physical pointer movement
+changes hover focus, so closing the picker restores Play focus reliably.
+
 Play opens an animated mode picker inside the same scene. The logo and background
 keep their positions and the background controller continues running. Single
 Player enters the existing partner → stage → run flow. Multiplayer is disabled
@@ -86,6 +93,8 @@ the flat illustration; it does not bend or move entire tree trunks.
 [Stage Selection](qa/v038/stage-selection.png)
 
 **[18-second local forest animation recording](qa/v038/menu-ambience.webm)**
+(captured before the logo/button anchoring adjustment; screenshots above show
+the current layout).
 
 The reviewed VP9 clip removes browser startup from the Playwright-managed Chromium
 capture. Sampled beginning/middle/end frames were inspected for sharpness, scene
@@ -114,6 +123,10 @@ Verified 2026-10-29:
   level-up cards, and an accelerated real Beedrill victory.
 - TypeScript and production build pass. The existing large Phaser bundle warning
   remains; compilation succeeds.
+
+The anchoring follow-up rechecks the ten menu browser tests, including seven
+window sizes (390 × 844 through 3440 × 1440), real navigation, mode-picker focus,
+and top/bottom bounds, plus the production build.
 
 ```sh
 pnpm test

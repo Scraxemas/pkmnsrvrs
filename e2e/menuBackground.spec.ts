@@ -2,8 +2,8 @@ import {test,expect} from '@playwright/test';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {readyMenu,singlePlayer} from './helpers/menu';
 
-test('centered arcade layout and in-place mode picker work at every target resolution',async({page})=>{
-  for(const [width,height] of [[1280,720],[1920,1080],[2560,1440],[3440,1440]]){
+test('top-centered logo and bottom-centered arcade layout keep the mode picker anchored',async({page})=>{
+  for(const [width,height] of [[1280,720],[1920,1080],[2560,1440],[3440,1440],[960,600],[844,390],[390,844]]){
     await page.setViewportSize({width,height});await page.goto('/?seed=1337');await readyMenu(page);
     await expect(page.locator('.location-card,.profile-strip,.menu-masthead,.menu-tagline')).toHaveCount(0);
     const bounds=await page.evaluate(()=>{
@@ -12,11 +12,16 @@ test('centered arcade layout and in-place mode picker work at every target resol
       return{logo:box('.menu-logo'),play:box('.arcade-button--play'),dex:box('.arcade-button--pokedex'),research:box('.arcade-button--research'),settings:box('.arcade-button--settings')};
     });
     for(const item of [bounds.logo,bounds.play,bounds.settings])expect(item.x+item.width/2).toBeCloseTo(width/2,0);
+    expect(bounds.logo.y).toBeGreaterThanOrEqual(12);expect(bounds.logo.y).toBeLessThanOrEqual(48);expect(height-bounds.settings.y-bounds.settings.height).toBeGreaterThanOrEqual(24);expect(height-bounds.settings.y-bounds.settings.height).toBeLessThanOrEqual(56);
+    if(width>=1280)expect(bounds.logo.width).toBe(height>=1000?808:606);
     expect(bounds.play.y).toBeGreaterThan(bounds.logo.y+bounds.logo.height);expect(bounds.dex.y).toBeCloseTo(bounds.research.y,0);expect(bounds.dex.y).toBeGreaterThan(bounds.play.y+bounds.play.height);expect(bounds.dex.x+bounds.dex.width).toBeLessThan(bounds.research.x);expect(bounds.settings.y).toBeGreaterThan(bounds.dex.y+bounds.dex.height);
-    await page.getByRole('button',{name:'Play',exact:true}).click();await expect(page.getByRole('button',{name:'Single Player',exact:true})).toBeFocused();
+    await page.screenshot({animations:'disabled',path:`test-results/screenshots/v038-anchored-${width}.png`});
+    await page.getByRole('button',{name:'Play',exact:true}).click();await expect(page.getByRole('button',{name:'Single Player',exact:true})).toBeFocused();await readyMenu(page);
     const multiplayer=page.getByRole('button',{name:'Multiplayer — Coming soon'});await expect(multiplayer).toBeDisabled();await expect(multiplayer).toHaveAttribute('data-target-players','4');
     if(width===1280)await page.screenshot({animations:'disabled',path:'test-results/screenshots/v038-play-submenu.png'});
     const logo=await page.getByRole('img',{name:'Pokémon Survivors',exact:true}).boundingBox();expect(logo!.y).toBeCloseTo(bounds.logo.y,0);
+    const back=(await page.getByRole('button',{name:'Back',exact:true}).boundingBox())!;expect(back.y+back.height).toBeCloseTo(bounds.settings.y+bounds.settings.height,0);
+    const play=(await page.getByRole('button',{name:'Play',exact:true}).boundingBox())!;expect(play.y).toBeGreaterThan(logo!.y+logo!.height);
     await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Play',exact:true})).toBeFocused();await expect(page.getByRole('button',{name:'Play',exact:true})).toHaveAttribute('aria-expanded','false');
     expect(await page.evaluate(()=>(window as any).__BACKGROUND_REFERENCE__===(window as any).__POKEMON_SURVIVORS__.scene.getScene('menu').background)).toBe(true);
     await page.getByRole('button',{name:'Play',exact:true}).click();await page.getByRole('button',{name:'Back',exact:true}).click();await expect(page.getByRole('button',{name:'Play',exact:true})).toBeFocused();
