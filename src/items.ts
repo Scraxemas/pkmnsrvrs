@@ -1,5 +1,6 @@
 import type {MoveDef,PokemonDef,PokemonType} from './content';
 import {POKESPRITE_ASSETS} from './itemAssets';
+import {moveCapacity} from './moveProgression';
 
 export type ItemStat='typeDamage'|'attraction'|'regen'|'crit'|'cooldown'|'drain'|'experience'|'hitHeal'|'reflect'|'fatalShield'|'fatalChance'|'movement'|'physical'|'special'|'effective'|'impact'|'duration'|'sustained'|'rangedGuard'|'powderGuard'|'terrainGuard'|'damage'|'recoil'|'stagger';
 export type ItemCategory='damage'|'utility'|'defense'|'recovery'|'build'|'rare';
@@ -78,8 +79,8 @@ export function describeItemImprovement(item:ItemDef,rank:number){
   if(item.rules?.duration)lines.push(`Stagger ${item.rules.duration}s; bosses ${item.rules.bossDuration}s.`);
   return lines.join(' ');
 }
-export function itemApplicable(item:ItemDef,pokemon:PokemonDef,slots:readonly {id:string}[],moves:Record<string,MoveDef>){
-  const ids=new Set([...slots.map(slot=>slot.id),...(slots.length<4?pokemon.learnset:[])]),available=[...ids].map(id=>moves[id]).filter(Boolean);
+export function itemApplicable(item:ItemDef,pokemon:PokemonDef,slots:readonly {id:string}[],moves:Record<string,MoveDef>,level=1){
+  const ids=new Set([...slots.map(slot=>slot.id),...(slots.length<moveCapacity(pokemon,level)?pokemon.learnset:[])]),available=[...ids].map(id=>moves[id]).filter(Boolean);
   if(item.typeBoost)return available.some(move=>move.type===item.typeBoost);
   const checks:Record<ItemApplicability,(move:MoveDef)=>boolean>={all:()=>true,physical:move=>move.damageClass==='Physical',special:move=>move.damageClass==='Special',drain:move=>move.kind==='drain'||move.status==='seeded',projectile:move=>['projectile','piercing','spread','fixed'].includes(move.kind),duration:move=>!!move.status||move.kind==='cloud',sustained:move=>!!move.status&&['poison','burn','seeded'].includes(move.status)};
   return available.some(checks[item.applicability]);

@@ -6,6 +6,8 @@ import {interpolatePosition,Position} from './interpolation';
 import type {FeedbackKind} from './itemCombat';
 
 interface Spark {x:number;y:number;born:number;kind:FeedbackKind|'collect';}
+// Transparent 32px source frames have 20–24px silhouettes: 1.25× gives 25–30 world pixels.
+export const pickupScale=(kind:SimState['pickups'][number]['kind'])=>kind==='consumable'?1.25:2;
 /** Shared textures and one graphics batch; no tween, timer or particle emitter per candy. */
 export class PickupRenderer {
   readonly views=new Map<number,Phaser.GameObjects.Image>();
@@ -39,7 +41,7 @@ export class PickupRenderer {
     for(const pickup of state.pickups){
       alive.add(pickup.id);
       const art=pickup.kind==='xp'?`candy:${candyTier(pickup.value)}`:pickup.kind==='ball'?`ball:${pickup.tier??1}`:CONSUMABLES[pickup.consumableId!].art,key=itemTexture(art,true);
-      let image=this.views.get(pickup.id);if(!image){image=this.scene.add.image(pickup.x,pickup.y,key).setScale(2).setName('world-pickup');this.views.set(pickup.id,image);}else if(image.texture.key!==key)image.setTexture(key);
+      let image=this.views.get(pickup.id);if(!image){image=this.scene.add.image(pickup.x,pickup.y,key).setName('world-pickup');this.views.set(pickup.id,image);}else if(image.texture.key!==key)image.setTexture(key);image.setScale(pickupScale(pickup.kind));
       const p=interpolatePosition(previous.get(pickup.id),pickup,alpha),phase=state.time*3+pickup.id*1.71,bob=reduced?0:Math.sin(phase)*2;
       image.setPosition(p.x,p.y-7+bob).setDepth(p.y+6).setAlpha(reduced?1:.94+Math.sin(phase*.7)*.06).setData('assetId',art);
       if(!reduced&&pickup.kind==='xp'&&sparkleBudget>0&&Math.sin(phase*.43)>.975){this.star(p.x+11,p.y-18,2,0xdafaff,.65);sparkleBudget--;}

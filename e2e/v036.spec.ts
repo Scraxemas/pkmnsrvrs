@@ -50,7 +50,7 @@ test('level-up queue, keyboard, mastery, and double-click protection work',async
   await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').activeChoice?.request.kind==='mastery');
   await page.keyboard.press('1');await page.waitForTimeout(230);
   expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').state.masteries.overcharge)).toBe(1);
-  await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.moveSlots.find((m:any)=>m.id==='tackle').rank=1;s.showChoices('DOUBLE CLICK CHECK',[{kind:'move',id:'tackle',label:'Tackle'}]);});
+  await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');const move=s.state.moveSlots[0];move.rank=1;s.showChoices('DOUBLE CLICK CHECK',[{kind:'move',id:move.id,label:move.id}]);});
   await page.waitForTimeout(450);
   const before=await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').state.moveSlots[0].rank);
   const box=(await page.locator('#app canvas').boundingBox())!;await page.mouse.dblclick(box.x+box.width/2,box.y+box.height*390/720,{delay:30});

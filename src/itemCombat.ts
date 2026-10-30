@@ -30,12 +30,12 @@ export function hurtPlayer(state:SimState,amount:number,source:DamageSource,mods
   return Math.max(0,before-state.hp);
 }
 export function moveDamage(state:SimState,move:MoveDef,target:Entity,rank:number,mods:ItemModifiers,statusPower=false){
-  const fixed=move.kind==='fixed',fx=rankEffect(move,rank),base=fixed?move.power*(1+(rank-1)*.15):damageAmount(move,state.pokemon,{hp:target.maxHp/3,attack:40,defense:45,specialAttack:40,specialDefense:45,speed:target.speed},target.types,1)*fx.damage;
+  const fixed=move.kind==='fixed',fx=rankEffect(move,rank),base=fixed?move.power*fx.power*fx.damage:damageAmount(move,state.pokemon,{hp:target.maxHp/3,attack:40,defense:45,specialAttack:40,specialDefense:45,speed:target.speed},target.types,1)*fx.damage*fx.power;
   const vitamin=fixed?1:1+(move.damageClass==='Physical'?state.vitamins.protein:state.vitamins.calcium)*.025;
   const classBonus=move.damageClass==='Physical'?mods.physical:move.damageClass==='Special'?mods.special:0;
   const effective=typeMultiplier(move.type,target.types)>1?1+mods.effective:1;
   const critical=!statusPower&&mods.crit>0&&seededRoll(state)<mods.crit;
-  const raw=base*state.powerBonus*(1+(state.masteries.overcharge??0)*.12)*vitamin*(1+(mods.typeDamage[move.type]??0))*(1+classBonus)*(1+mods.damage)*effective*(critical?1.5:1);
+  const raw=base*(state.moveSlots.find(slot=>slot.id===move.id)?.evolutionPower??1)*state.powerBonus*(1+(state.masteries.overcharge??0)*.12)*vitamin*(1+(mods.typeDamage[move.type]??0))*(1+classBonus)*(1+mods.damage)*effective*(critical?1.5:1);
   return{amount:statusPower?raw:Math.max(0,Math.round(raw)),critical};
 }
 export function staggerEnemy(state:SimState,target:Entity,mods:ItemModifiers){

@@ -1,0 +1,90 @@
+[
+  {
+    "species": "charmeleon",
+    "moves": [
+      {
+        "id": "metalClaw",
+        "rank": 4
+      }
+    ],
+    "items": [
+      {
+        "id": "magnet",
+        "rank": 3
+      },
+      {
+        "id": "leftovers",
+        "rank": 4
+      }
+    ],
+    "iron": 5,
+    "capacity": 4,
+    "hud": [
+      {
+        "status": "filled",
+        "text": "Metal Claw MOVE 1 · Steel · R4"
+      },
+      {
+        "status": "empty",
+        "text": "EMPTY MOVE SLOT SLOT 2 · Learn from rewards"
+      },
+      {
+        "status": "empty",
+        "text": "EMPTY MOVE SLOT SLOT 3 · Learn from rewards"
+      },
+      {
+        "status": "empty",
+        "text": "EMPTY MOVE SLOT SLOT 4 · Learn from rewards"
+      },
+      {
+        "status": "locked",
+        "text": "    LOCKED Final evolution"
+      }
+    ],
+    "notice": "MOVE EVOLVED! Scratch → Metal Claw · Rank 4 Preserved  ·  FOURTH MOVE SLOT UNLOCKED!"
+  },
+  {
+    "species": "charizard",
+    "moves": [
+      {
+        "id": "dragonClaw",
+        "rank": 4
+      }
+    ],
+    "items": [
+      {
+        "id": "magnet",
+        "rank": 3
+      },
+      {
+        "id": "leftovers",
+        "rank": 4
+      }
+    ],
+    "iron": 5,
+    "capacity": 5,
+    "hud": [
+      {
+        "status": "filled",
+        "text": "Dragon Claw MOVE 1 · Dragon · R4"
+      },
+      {
+        "status": "empty",
+        "text": "EMPTY MOVE SLOT SLOT 2 · Learn from rewards"
+      },
+      {
+        "status": "empty",
+        "text": "EMPTY MOVE SLOT SLOT 3 · Learn from rewards"
+      },
+      {
+        "status": "empty",
+        "text": "EMPTY MOVE SLOT SLOT 4 · Learn from rewards"
+      },
+      {
+        "status": "empty",
+        "text": "EMPTY MOVE SLOT SLOT 5 · Learn from rewards"
+      }
+    ],
+    "notice": "MOVE EVOLVED! Metal Claw → Dragon Claw · Rank 4 Preserved  ·  FIFTH MOVE SLOT UNLOCKED!"
+  }
+]

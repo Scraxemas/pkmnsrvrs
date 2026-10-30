@@ -37,8 +37,8 @@ test('baseline, Magnet ranks, interpolation, pause and exact collection use actu
 test('all five candy tiers, balls and healing drops render as distinct pixel sprites',async({page})=>{
   await boot(page);
   await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),home=s.state.player;s.state.pickups=[5,12,30,70,160].map((value,i)=>({id:++s.state.eventId,x:home.x-160+i*80,y:home.y-110,kind:'xp',value}));for(let tier=1;tier<=3;tier++)s.state.pickups.push({id:++s.state.eventId,x:home.x-100+(tier-1)*100,y:home.y+100,kind:'ball',value:1,tier});for(const [i,consumableId] of ['potion','sitrusBerry','rareCandy'].entries())s.state.pickups.push({id:++s.state.eventId,x:home.x-100+i*100,y:home.y+165,kind:'consumable',value:1,consumableId});});
-  await page.waitForTimeout(200);const textures=await page.evaluate(()=>[...(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').pickupViews.values()].map((v:any)=>({type:v.type,key:v.texture.key,scale:v.scaleX})));
-  expect(textures).toHaveLength(11);expect(textures.every(v=>v.type==='Image'&&v.scale===2)).toBe(true);for(const tier of ['xs','s','m','l','xl'])expect(textures.some(v=>v.key===`pokesprite:candy:${tier}:outline`)).toBe(true);
+  await page.waitForTimeout(200);const textures=await page.evaluate(()=>[...(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').pickupViews.values()].map((v:any)=>({type:v.type,key:v.texture.key,scale:v.scaleX,kind:v.getData('assetId')})));
+  expect(textures).toHaveLength(11);expect(textures.every(v=>v.type==='Image'&&v.scale===(v.kind.startsWith('consumable:')?1.25:2))).toBe(true);for(const tier of ['xs','s','m','l','xl'])expect(textures.some(v=>v.key===`pokesprite:candy:${tier}:outline`)).toBe(true);
   await page.screenshot({path:`folder/all-pickups.png`.replace('folder',folder)});
 });
 
@@ -56,7 +56,7 @@ test('item cards use real artwork and honest values; the four HUD ranks update i
 test('type booster badges fit their cards at the source artwork aspect ratio',async({page})=>{
   await boot(page);await cards(page,['miracleSeed','silkScarf','poisonBarb'],'type-booster-cards');
   const badges=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('upgrade');return s.cards.map((c:any)=>{const image=c.getByName('type-badge'),b=image.getBounds();return{key:image.texture.key,width:image.displayWidth,height:image.displayHeight,left:b.left,right:b.right,top:b.top,bottom:b.bottom,cardLeft:c.x-165,cardRight:c.x+165};});});
-  for(const badge of badges){expect(badge.width).toBe(32);expect(badge.height).toBe(32);expect(badge.left).toBeGreaterThan(badge.cardLeft);expect(badge.right).toBeLessThan(badge.cardRight);expect(badge.top).toBeGreaterThan(150);expect(badge.bottom).toBeLessThan(218);}
+  for(const badge of badges){expect(badge.width).toBe(28);expect(badge.height).toBe(28);expect(badge.left).toBeGreaterThan(badge.cardLeft);expect(badge.right).toBeLessThan(badge.cardRight);expect(badge.top).toBeGreaterThan(205);expect(badge.bottom).toBeLessThan(252);}
 });
 
 test('protection, critical hits, returned damage and visible hazard warnings have actual feedback',async({page})=>{

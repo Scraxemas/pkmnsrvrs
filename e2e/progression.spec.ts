@@ -1,0 +1,92 @@
+import {test,expect,Page} from '@playwright/test';
+import {mkdirSync,writeFileSync} from 'node:fs';
+const folder='test-results/v041-visual';
+async function boot(page:Page,pokemon='charmander'){
+  await page.setViewportSize({width:1280,height:720});await page.goto('/?seed=1337');await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__);
+  await page.evaluate(pokemon=>(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon,seed:1337}),pokemon);
+  await page.waitForFunction(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return s.pickupRenderer&&s.moveHud&&s.state.time>0;});
+  await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.nextSpawn=Infinity;s.miniIndex=99;s.state.bossSpawned=true;});mkdirSync(folder,{recursive:true});
+}
+async function waitChoice(page:Page){await page.waitForFunction(()=>{const g=(window as any).__POKEMON_SURVIVORS__;return g.scene.isActive('upgrade')&&g.scene.getScene('upgrade').cards.length>0;});}
+async function snapshot(page:Page){return page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{sim:s.state.time,clock:s.time.now,seed:s.state.seed,position:{x:s.player.x,y:s.player.y},playerFrame:s.player.frame.name,playerProgress:s.player.anims.getProgress(),enemyFrames:[...s.enemyViews.values()].map((e:any)=>[e.frame.name,e.anims.getProgress()]),pickupPositions:[...s.pickupViews.values()].map((p:any)=>[p.x,p.y,p.alpha]),shots:s.state.projectiles.map((p:any)=>[p.id,p.x,p.y,p.ttl]),probe:s.qaProbe?.x,timer:s.qaTimerCount,hp:s.state.hp,spawn:s.nextSpawn};});}
+
+test('complete scene pause freezes frames, tweens, timers, particles and simulation while cards animate',async({page})=>{
+  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await boot(page);await page.keyboard.down('d');await page.waitForTimeout(220);
+  await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.items=[{id:'magnet',rank:2},{id:'luckyEgg',rank:1}];s.state.enemies.forEach((e:any,i:number)=>{e.x=s.state.player.x+65+(i%4)*55;e.y=s.state.player.y-75+Math.floor(i/4)*60;});s.state.pickups.push({id:++s.state.eventId,x:s.state.player.x-120,y:s.state.player.y+40,value:12,kind:'xp'});});await page.waitForTimeout(60);
+  await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.qaTimerCount=0;s.time.delayedCall(100,()=>s.qaTimerCount++);s.qaProbe=s.add.rectangle(s.state.player.x,s.state.player.y+90,4,6,0x92de6a).setDepth(17000);s.tweens.add({targets:s.qaProbe,x:s.qaProbe.x+100,duration:500});s.emitGrassBlades(s.state.player.x,s.state.player.y,100,0);s.showChoices('LEVEL UP',[{kind:'move',id:'scratch',label:'Scratch'},{kind:'item',id:'magnet',label:'Magnet'},{kind:'item',id:'luckyEgg',label:'Lucky Egg'}]);});await page.keyboard.up('d');await waitChoice(page);
+  const before=await snapshot(page);expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.isPaused('game'))).toBe(true);await page.waitForTimeout(700);expect(await snapshot(page)).toEqual(before);
+  const cards=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('upgrade');return{alpha:s.cards.map((c:any)=>c.alpha),veil:s.children.getByName('upgrade-veil').fillAlpha,actions:s.cards.map((c:any)=>c.getByName('card-action').text)};});expect(cards.alpha).toEqual([1,1,1]);expect(cards.veil).toBe(.55);expect(cards.actions).toEqual(['MOVE UPGRADE','ITEM UPGRADE','ITEM UPGRADE']);
+  await page.screenshot({path:`${folder}/after-upgrade-battle.png`});await page.keyboard.press('1');await page.waitForFunction(()=>!(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').overlay);await page.waitForTimeout(150);
+  const resumed=await snapshot(page);expect(resumed.sim-before.sim).toBeGreaterThan(0);expect(resumed.sim-before.sim).toBeLessThan(.5);expect(resumed.timer).toBe(1);expect(errors).toEqual([]);
+});
+
+test('queued levels remain paused between decisions and resume exactly once after the final choice',async({page})=>{
+  await boot(page);await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.enemies=[];s.qaResumes=[];s.events.on('resume',()=>s.qaResumes.push(s.state.time));s.state.xp=61;});await waitChoice(page);
+  const start=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{time:s.state.time,queued:s.pendingChoices.length+1,level:s.state.level};});expect(start.queued).toBe(3);expect(start.level).toBe(4);
+  for(let i=0;i<3;i++){
+    const id=await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').activeChoice.request.id);await page.keyboard.press('1');
+    if(i<2){await page.waitForFunction(old=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').activeChoice?.request.id!==old,id);await waitChoice(page);await page.waitForTimeout(120);expect(await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.step();return{time:s.state.time,resumes:s.qaResumes.length,paused:s.scene.isPaused('game')};})).toEqual({time:start.time,resumes:0,paused:true});}
+  }
+  await page.waitForFunction(()=>!(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').overlay);expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').qaResumes)).toEqual([start.time]);await page.waitForTimeout(140);expect((await snapshot(page)).sim-start.time).toBeLessThan(.4);
+});
+
+test('both Charmander evolutions preserve rank and immediately update capacity, HUD and notifications',async({page})=>{
+  await boot(page);await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.enemies=[];s.state.moveSlots[0].rank=4;s.state.items=[{id:'magnet',rank:3},{id:'leftovers',rank:4}];s.state.vitamins.iron=5;});
+  const stages=[];
+  for(const [level,species,move,capacity] of [[15,'charmeleon','metalClaw',4],[35,'charizard','dragonClaw',5]] as const){
+    await page.evaluate(level=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.cancelChoices();s.state.level=level;s.state.nextXp=s.state.xp=1;},level);await page.waitForFunction(species=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').state.pokemonId===species,species);await waitChoice(page);await page.waitForTimeout(350);
+    const stage=await page.evaluate(()=>{const g=(window as any).__POKEMON_SURVIVORS__,s=g.scene.getScene('game');return{species:s.state.pokemonId,moves:s.state.moveSlots.map((m:any)=>({id:m.id,rank:m.rank})),items:s.state.items,iron:s.state.vitamins.iron,capacity:s.state.unlockedMoveSlots,hud:[1,2,3,4,5].map(i=>{const c=s.children.getByName(`move-slot-${i}`);return{status:c.getData('status'),text:c.list.filter((v:any)=>v.type==='Text').map((v:any)=>v.text).join(' ')};}),notice:g.scene.getScene('upgrade').children.getByName('progression-notice').text};});
+    expect(stage).toMatchObject({species,capacity,moves:[{id:move,rank:4}],items:[{id:'magnet',rank:3},{id:'leftovers',rank:4}],iron:5});expect(stage.hud[capacity-1].status).toBe('empty');expect(stage.hud[0].text).toContain('R4');expect(stage.notice).toContain('Rank 4 Preserved');expect(stage.notice).toContain(capacity===4?'FOURTH MOVE SLOT UNLOCKED!':'FIFTH MOVE SLOT UNLOCKED!');stages.push(stage);await page.screenshot({path:`${folder}/evolution-${species}.png`});
+  }writeFileSync(`${folder}/evolution-diagnostics.json`,JSON.stringify(stages,null,2));
+});
+
+test('duplicate move investment is refunded as selectable move rewards without unpausing the queue',async({page})=>{
+  await boot(page,'bulbasaur');await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.enemies=[];s.state.moveSlots=[{id:'tackle',rank:4,starter:true},{id:'vineWhip',rank:3},{id:'leechSeed',rank:2}];s.state.level=15;s.state.nextXp=s.state.xp=1;});await waitChoice(page);
+  const frozen=(await snapshot(page)).sim;expect(await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{moves:s.state.moveSlots.map((m:any)=>m.id),credits:s.state.moveUpgradeCredits};})).toEqual({moves:['vineWhip','leechSeed'],credits:3});
+  for(let index=0;index<4;index++){
+    await waitChoice(page);const current=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{id:s.activeChoice.request.id,kind:s.activeChoice.request.kind,kinds:s.activeChoice.options.map((u:any)=>u.kind),time:s.state.time};});expect(current.time).toBe(frozen);if(index>0){expect(current.kind).toBe('credit');expect(current.kinds.every((kind:string)=>kind==='move')).toBe(true);}
+    await page.keyboard.press('1');if(index<3)await page.waitForFunction(id=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').activeChoice?.request.id!==id,current.id);
+  }await page.waitForFunction(()=>!(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').overlay);expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').state.moveUpgradeCredits)).toBe(0);
+});
+
+test('compact cards fit all moves, forty items, vitamins and mastery without text overlap or clipping',async({page})=>{
+  await boot(page);const diagnostics=await page.evaluate(async()=>{
+    const contentPath='/src/content.ts',content=await import(contentPath),s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),g=s.game;
+    s.state.enemies=[];s.cancelChoices();g.scene.pause('game');const options=[...Object.keys(content.MOVES).map(id=>({kind:'move',id,label:id})),...Object.keys(content.ITEMS).map(id=>({kind:'item',id,label:id})),...Object.keys(s.state.vitamins).map(id=>({kind:'vitamin',id,label:id})),...['overcharge','multicast','expansion','sustain','efficiency'].map(id=>({kind:'mastery',id,label:id}))];
+    g.scene.start('upgrade',{title:'CARD CONTENT AUDIT',state:s.state,options,onSelect:()=>{}});await new Promise<void>(r=>requestAnimationFrame(()=>r()));const u=g.scene.getScene('upgrade'),results=[];
+    for(let page=0;page<Math.ceil(options.length/3);page++){u.page=page;u.focus=page*3;u.drawCards(false);for(const c of u.cards){const desc=c.getByName('card-description').getBounds(),rank=c.getByName('card-rank').getBounds(),benefit=c.getByName('card-benefit').getBounds();results.push({id:options[c.getData('index')].id,width:c.getData('width'),height:c.getData('height'),descBottom:desc.bottom,rankTop:rank.top,rankBottom:rank.bottom,benefitTop:benefit.top,benefitBottom:benefit.bottom,cardBottom:c.y+197,textBounds:c.list.filter((v:any)=>v.type==='Text').every((t:any)=>{const b=t.getBounds();return b.left>=c.x-140&&b.right<=c.x+140&&b.top>=c.y-197&&b.bottom<=c.y+197;})});}}
+    return results;
+  });expect(diagnostics.length).toBe(65);for(const card of diagnostics){expect(card.width).toBe(280);expect(card.height).toBe(394);expect(card.textBounds,card.id).toBe(true);expect(card.descBottom,card.id).toBeLessThan(card.rankTop-2);expect(card.rankBottom).toBeLessThan(card.benefitTop);expect(card.benefitBottom).toBeLessThan(card.cardBottom-8);}
+  writeFileSync(`${folder}/card-layout-diagnostics.json`,JSON.stringify(diagnostics,null,2));
+  await page.evaluate(()=>{const u=(window as any).__POKEMON_SURVIVORS__.scene.getScene('upgrade');u.config.options=['heavyDutyBoots','safetyGoggles','lifeOrb'].map(id=>({kind:'item',id,label:id}));u.page=0;u.focus=0;u.drawCards(false);});await page.screenshot({path:`${folder}/compact-item-cards.png`});
+});
+
+test('five-slot HUD distinguishes locked, vacant and occupied slots and final forms fill all five',async({page})=>{
+  await boot(page);const initial=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return[1,2,3,4,5].map(i=>s.children.getByName(`move-slot-${i}`).getData('status'));});expect(initial).toEqual(['filled','empty','empty','locked','locked']);await page.screenshot({path:`${folder}/base-move-hud.png`});
+  await page.evaluate(async()=>{const path='/src/simulation.ts',sim=await import(path),s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.enemies=[];sim.evolveTo(s.state,'charmeleon');sim.evolveTo(s.state,'charizard');for(const id of ['ember','dragonRage','tackle','metalClaw'])sim.applyUpgrade(s.state,{kind:'move',id,label:id});s.showEvolution('charizard');s.renderMoveHud();});
+  expect(await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return[1,2,3,4,5].map(i=>s.children.getByName(`move-slot-${i}`).getData('status'));})).toEqual(['filled','filled','filled','filled','filled']);await page.waitForTimeout(1900);await page.screenshot({path:`${folder}/final-five-moves.png`});
+});
+
+test('consumable silhouettes shrink to 25–30px while candies, balls and collection radii stay intact',async({page})=>{
+  await boot(page);const result=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),home=s.state.player;s.state.enemies=[];s.state.pickups=[{id:++s.state.eventId,x:home.x-110,y:home.y,value:5,kind:'xp'},{id:++s.state.eventId,x:home.x+110,y:home.y,value:1,kind:'ball',tier:2},...['potion','superPotion','hyperPotion','fullRestore','rareCandy','oranBerry','sitrusBerry','lumBerry'].map((id,i)=>({id:++s.state.eventId,x:home.x-175+i*50,y:home.y+100,value:1,kind:'consumable',consumableId:id}))];s.syncViews(1);return[...s.pickupViews.values()].map((v:any)=>({asset:v.getData('assetId'),scale:v.scaleX,frame:v.width,display:v.displayWidth}));});
+  expect(result.filter(p=>p.asset.startsWith('consumable:')).every(p=>p.scale===1.25&&p.display===40)).toBe(true);expect(result.filter(p=>!p.asset.startsWith('consumable:')).every(p=>p.scale===2)).toBe(true);await page.screenshot({path:`${folder}/smaller-consumables.png`});
+  await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.hp=20;s.state.pickups=[{id:++s.state.eventId,x:s.state.player.x+21,y:s.state.player.y,value:1,kind:'consumable',consumableId:'potion'}];});await page.waitForTimeout(120);expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').state.hp)).toBe(20);await page.keyboard.down('d');await page.waitForTimeout(80);await page.keyboard.up('d');expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').state.hp)).toBe(40);
+});
+
+test('evolved attacks use their real combat events, types, damage and distinctive visuals',async({page})=>{
+  const results=[];for(const [pokemon,id,type] of [['charmeleon','metalClaw','Steel'],['charizard','dragonClaw','Dragon'],['venusaur','razorLeaf','Grass'],['blastoise','hydroPump','Water']]){
+    await boot(page,pokemon);const attack=await page.evaluate(async id=>{const path='/src/simulation.ts',sim=await import(path),s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.enemies=[];s.state.moveSlots=[{id,rank:4,starter:true}];for(const [index,distance] of [40,75,105].entries()){sim.spawnSpecies(s.state,'caterpie');Object.assign(s.state.enemies[index],{x:s.state.player.x+distance,y:s.state.player.y,hp:1000,maxHp:1000,baseSpeed:0,speed:0});}s.state.time=sim.moveCooldown(s.state,s.state.moveSlots[0])-.01;s.step();s.syncViews(1);s.renderMoveHud();s.scene.manager.pause(s);return s.state.attacks[0];},id);
+    expect(attack.moveId).toBe(id);expect(attack.type).toBe(type);expect(attack.damage).toBeGreaterThan(0);expect(attack.hits.length).toBeGreaterThan(1);await page.screenshot({path:`${folder}/attack-${id}.png`});results.push(attack);
+  }writeFileSync(`${folder}/attack-diagnostics.json`,JSON.stringify(results,null,2));
+});
+
+test('reduced-motion pagination, exit during a paused choice, and a fresh run stay usable',async({page})=>{
+  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await boot(page);await page.emulateMedia({reducedMotion:'reduce'});
+  await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.enemies=[];s.showChoices('PAGINATED REWARD',['protein','iron','calcium','zinc','carbos'].map(id=>({kind:'vitamin',id,label:id})));});await waitChoice(page);
+  expect(await page.evaluate(()=>{const u=(window as any).__POKEMON_SURVIVORS__.scene.getScene('upgrade');return u.cards.map((c:any)=>c.alpha);})).toEqual([1,1,1]);
+  await page.mouse.click(640,637);await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('upgrade').page===1);expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('upgrade').cards.length)).toBe(2);await page.screenshot({path:`folder/pagination-reduced-motion.png`.replace('folder',folder)});
+  await page.keyboard.press('2');await page.waitForFunction(()=>!(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').overlay);expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').state.vitamins.carbos)).toBe(1);
+  await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.showChoices('EXIT WHILE PAUSED',[{kind:'move',id:'scratch',label:'Scratch'}]);});await waitChoice(page);
+  await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').finish('defeat'));await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('results').returnButton?.active);expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.isActive('upgrade'))).toBe(false);await page.keyboard.press('Escape');await expect(page.locator('.frontend--menu')).toBeVisible();
+  await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'squirtle',seed:1337}));await page.waitForFunction(()=>{const g=(window as any).__POKEMON_SURVIVORS__,s=g.scene.getScene('game');return g.scene.isActive('game')&&s.state?.pokemonId==='squirtle'&&s.state.time>0;});expect(await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{paused:s.scene.isPaused('game'),overlay:!!s.overlay,level:s.state.level,queue:s.pendingChoices.length};})).toEqual({paused:false,overlay:false,level:1,queue:0});expect(errors).toEqual([]);
+});

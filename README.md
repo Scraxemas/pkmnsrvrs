@@ -48,12 +48,19 @@ Hover no longer changes selection. The separate Pokédex retains the numbered
 151-species grid, evolved discoveries, and family information. Saves and artwork
 are preserved; the same three starters remain playable.
 
-The latest [v0.4.0 item and candy overhaul](docs/V040_ITEMS_AND_CANDIES.md) adds
+The [v0.4.0 item and candy overhaul](docs/V040_ITEMS_AND_CANDIES.md) adds
 40 functional held items, actual local PokéSprite artwork, four item HUD slots,
 slotless consumables, and five EXP Candy sizes with smooth homing. Every Pokémon
 attracts nearby candy from 64 units; Magnet increases that to 289 at Rank 5.
 Zap Plate supplies Electric damage, and Lucky Egg supplies bonus EXP. Cards show
 the exact shared effect formulas. See the report for balance, provenance and QA.
+
+The latest [v0.4.1 progression and upgrade polish](docs/V041_MOVE_PROGRESSION.md)
+unlocks 3 → 4 → 5 move slots through evolution, preserves starter-move ranks through
+the three evolution chains, and guarantees an existing-build improvement in the
+draft whenever one is available. Selection now pauses the whole gameplay scene;
+280 × 394 cards sit over a lighter overlay. The HUD shows locked future slots,
+and world consumables use smaller sprites. Held items remain limited to four.
 
 ## FRLG asset library
 
