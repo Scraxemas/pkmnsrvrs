@@ -1,0 +1,1358 @@
+{
+  "repository": "https://github.com/msikma/pokesprite",
+  "revision": "c5aaa610ff2acdf7fd8e2dccd181bca8be9fcb3e",
+  "assets": [
+    {
+      "path": "items-outline/ball/great.png",
+      "sha256": "52cc8570547fe839ace978ad7f316ece9eb7d6f079cd148a1c22cba702eda593",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/ball/poke.png",
+      "sha256": "6cc7cc51b5eba0b6120b89fe5085f144f8bb83fe539cb4402082a0256e617b64",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/ball/ultra.png",
+      "sha256": "2977f520a667c788760de2a184145399bddcab6b23b4a2bc61eaa6c972aadcdf",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/berry/lum.png",
+      "sha256": "e5787dd5197ba461028606fa63986fb9429ea8db019acc57e4637bbd160f0740",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/berry/oran.png",
+      "sha256": "e6191b56a3e21feac01c890c963c879fddfbb16b41c653cf801a59dbcf81afd5",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/berry/sitrus.png",
+      "sha256": "5abc18bfa291a582a33e0b69793a243544470d843410032c9d5dcc2b0a9ef656",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/evo-item/metal-coat.png",
+      "sha256": "bed5d1ba4b6946b181ba5ef82db3b3429b2db787f342cfa392b16b8b67fa63ee",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/exp-candy/l.png",
+      "sha256": "aae0bd97073c3c1cb980776bb0784c9b1995fb87925438d85c47d69ee6301294",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/exp-candy/m.png",
+      "sha256": "ea1469e9050bce70c5dc54feffc99200c40b20b189a10d41ba73e1da7d23673d",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/exp-candy/s.png",
+      "sha256": "4443152182eabe39fa0068ec7aa6927157fa9eeb52f36ca12618c5ffd49514c3",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/exp-candy/xl.png",
+      "sha256": "0fc0a9159f1ffacdddbca3e074685aec0b858f1fc6afa58d69032e4b9f8c90a8",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/exp-candy/xs.png",
+      "sha256": "c9eeee3433ac3de4e3a6ed2edcea5dc9996fcffe8b2edd7344eaeaf6630c30f9",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/fossil/old-amber.png",
+      "sha256": "40534602fc2090fd8f2fc095d2f6872a1509da8e8b60553bf42d30c53185b9f0",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/assault-vest.png",
+      "sha256": "02cbc3825d6763ee8fadd78d0d4d25c8a50b6dbd4e53463f50be7fa50033a4b9",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/big-root.png",
+      "sha256": "d880525c043c9a76af4174a65a9e84eada9b244e3ec713d17f012e02dd670e8c",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/binding-band.png",
+      "sha256": "f32a2851447833f6930b66d1e2d4abebb7a9934007c1c42a26a1848672198077",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/black-belt.png",
+      "sha256": "613406f32537a87bf5ffcb6f366a0d2a593d7327aa44c1f5d71846afdfde233b",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/black-glasses.png",
+      "sha256": "0bd5ce7bfd5c00e59405beefa4bf3fc03208382b9d8c7684c4899af374f8ec1b",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/charcoal.png",
+      "sha256": "eb9a99621f7196552235941fabfbcbfea9eb3ac0ca8f96db93952f344f1eda5a",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/dragon-fang.png",
+      "sha256": "583a3d21c68635bdb9ea218f628047f9baf8caed15c93e0dd78d3e300ce66e95",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/expert-belt.png",
+      "sha256": "3e25fe5cc5905116c62bc94198ba72cc943c08762be26db1ee459aa0f6e0496b",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/float-stone.png",
+      "sha256": "c61e22351cab8a361f1b321bf559c2549a8aa4a28c3eeedf4d8a00111c2fb99e",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/focus-band.png",
+      "sha256": "90cc01769f3e10b9eb6a2bec4baa20763ce6178f749d7aa95130dbe20d5eaace",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/focus-sash.png",
+      "sha256": "eac0c55baa3c61acbe746ec14874e85791bf8d53728d7bac6040d5c630eecc47",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/hard-stone.png",
+      "sha256": "9f601d712f9bd68b8535a34cc1745e75c4bacb049716581798cdedc2a0952019",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/heavy-duty-boots.png",
+      "sha256": "3d71f0efa5c60021834ac8c4317ea07c9684c87f297538d9cb8ac124a190e0e1",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/kings-rock.png",
+      "sha256": "999fe76814c107c230285359022f3cbbec6365bc4fd608d98cbbf7ae5e186e69",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/leftovers.png",
+      "sha256": "5ff9cd1024b27bfc1413964b33429ce68593c7328530b447b133129223761439",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/life-orb.png",
+      "sha256": "58af420a3cc41a67fc07d7b50da3c66664d33e12fe38d6d9e005e530e904d814",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/light-clay.png",
+      "sha256": "30e1a26b284e5fa3b6ea4d2f548fbb6f9a098b4b4133a309ccd23f8cce01ded0",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/lucky-egg.png",
+      "sha256": "11154a8c42143c2404b81e94e051c49929e1e7e2e767acfaa54d667c20b3168b",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/magnet.png",
+      "sha256": "fe50710f6aec6b6df4ea9fe7c965ef65e8787719ee1f22e2a19f253b1cb49537",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/metal-coat.png",
+      "sha256": "a2c1f4dadd4ec1aea4aaebe3740fcd03383bbcb39be96b1ae43d464f01139971",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/miracle-seed.png",
+      "sha256": "fa4ea04ce3b23f6c7226e8deeb71ce82af81e812016f6d70c638bcd162949271",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/muscle-band.png",
+      "sha256": "bafdc48ada13f67305bb1ed531d611d7928442991b0aaca060a6ac22716b1b23",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/mystic-water.png",
+      "sha256": "21481c24bb8a9247e4c833864000de8abe635b467b482e9150f6d16580599a8c",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/never-melt-ice.png",
+      "sha256": "876175f7fcb65283664eee81b6745ac7fdafb72c44cf333f9d8d77bbbe204f89",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/poison-barb.png",
+      "sha256": "f571319b715e97f6f9645094f4cb9340b3f9113e7fe119e65b07447f828fe0a3",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/quick-claw.png",
+      "sha256": "0c037c43ad44d8ecbb52a69e7d46c16101b2458a85efd4dc44aa9e23276b48c1",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/rocky-helmet.png",
+      "sha256": "22dece2e76287fbc0ebd579882e10e3d91404dd7e24a5c37a97f3349ba76d730",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/safety-goggles.png",
+      "sha256": "1f79b313d133cc606edbda7a29a0f1f15991393d558ce435f8e18f8af21c2b5f",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/scope-lens.png",
+      "sha256": "89f60a702424b03af06565ab57889fd9d807d62e860c599845ca4b421b8b6320",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/sharp-beak.png",
+      "sha256": "36f7a31a3ad0da1ac3f6fdb5df9f0c58a3eee839aff63535e6714cca9e6e9f28",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/shell-bell.png",
+      "sha256": "cf3da72e0b62ed94c97d9164cb96ad39aaa3a7a58fa1f3b4358e5f62eb211c8c",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/silk-scarf.png",
+      "sha256": "f7c68b59957192c8b61b8f6b26a58b9180dea10f3dc62d3ec09718e93a4f268c",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/silver-powder.png",
+      "sha256": "6021a60c76e6649de0177eeb9602d04d494cd0ab6ef2ae18baa46a19d0d374bf",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/soft-sand.png",
+      "sha256": "7198a3817ed6e3c7e22258913c5502995786ed321ee6f412cbb286d4810b8c83",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/spell-tag.png",
+      "sha256": "81e5077765a5eb0f1b355e7e292bf7b546f8a3ab126058073a78834ee91e443a",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/twisted-spoon.png",
+      "sha256": "b82f60cc43b5af4fdc5281206a9b899b112d279cd62538f04c8e014ca8ae8a27",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/wide-lens.png",
+      "sha256": "26184375a2559a235cf642e2f2e73126b6b4c7c91c5a5daaf94c07ba835c0e73",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/hold-item/wise-glasses.png",
+      "sha256": "be2e1c8e33f7a476e0fb0bc40d6b9f9cf0f4402f56ffa8d491c6051e252e26f7",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/medicine/calcium.png",
+      "sha256": "dfbd93eb550324d4e47431df844b84afd63a25b2576fb418fc2be18324040d4b",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/medicine/carbos.png",
+      "sha256": "28e1b14fe104328996a74ec9d34c765b9d83376b706ed36ddc63f882d29d4907",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/medicine/full-restore.png",
+      "sha256": "89a7fdf33659c4f71f18a0d4799a3b0a2b5935120082b2c2896f498a3a54f9fb",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/medicine/hp-up.png",
+      "sha256": "ce98cc0b7bf94488b764e8c89aec740cdac6d04bdc352170baead76296dc89b9",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/medicine/hyper-potion.png",
+      "sha256": "87a279f1044197c59be932713eba43ee37fcc9c5dad168844f5e4dfa1eb7efe2",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/medicine/iron.png",
+      "sha256": "f9e40f4070b6a46405c3ce9b9926e864bd78a90b266e53fe7cfc7043f1e2db23",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/medicine/potion.png",
+      "sha256": "76a6b8a8c1976c9b7069871f248346eaeb97e71cdae8295688a8e43062d22718",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/medicine/protein.png",
+      "sha256": "b9579b97e9a77969bfe4713d89855451f4dc6190d161892b6dcecca1424865b5",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/medicine/rare-candy.png",
+      "sha256": "dee745b8747862fa98ffd4f299d1578ef664ccc2d353fff22730dc041c9b4f58",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/medicine/super-potion.png",
+      "sha256": "f94286b75c2c4acab36966f9bdb176c5a96504bf3dbc6fd3667b9d47f842bab3",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/medicine/zinc.png",
+      "sha256": "076a2cfcb7e3e592548dfcdd4456ccb86aa19167f0426d2ab212ea72b6f8095d",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/plate/pixie.png",
+      "sha256": "0ef9f4222a362c4e30a7c2516557d5861b341d67822473bf775aae7e2f4f6649",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items-outline/plate/zap.png",
+      "sha256": "6b7b36d3936e738ec0e641a9952f0f091a4fb5a64b578718dc92d903f5a898cd",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/ball/great.png",
+      "sha256": "7a4e84e7b071fa0b47a0c8ab1820c14b761ba556ee725e14cb1749ce5767a40e",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/ball/poke.png",
+      "sha256": "0c8b33402bf845b69e93b750cce37c509a1de4c00a9e6b8924f945bb9593111e",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/ball/ultra.png",
+      "sha256": "91888a9889a3d49e65f2361a32ce0ae6d848a0bf9bc4e295e110b02c63d42c84",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/berry/lum.png",
+      "sha256": "75654d52444e9cf90c93cfa109daa65c5d9e1eb7823942ab3733803ba3a50cc3",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/berry/oran.png",
+      "sha256": "8081b7e07dc97076220ca08ff89dc7d11dd165891d7583f691a6761490cb6668",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/berry/sitrus.png",
+      "sha256": "0eb1b5a8e62099759979e00efd21fd5ee5ea8f57f554299f44025f3b87934b55",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/evo-item/metal-coat.png",
+      "sha256": "0e050618c06c31109fcd5150f62964248d3de120689779a5b326457d5849609e",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/exp-candy/l.png",
+      "sha256": "352983ea584a4af483669d1a931d9bf32650e8a93aaeec4ff38f07e0b05163aa",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/exp-candy/m.png",
+      "sha256": "6dc62e60171d37bca8c82283fb82f50cab58acd35f95f619e41a30a822a4c2f2",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/exp-candy/s.png",
+      "sha256": "30b8f89992227cbdeb0f533a36705d787fd72ac202da12e90f3390c2f39aca80",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/exp-candy/xl.png",
+      "sha256": "260fea6cc9cbbc15db68ccdf82083aee618d3aa261788ac441a31e326cea9ba6",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/exp-candy/xs.png",
+      "sha256": "01dc2622aad680def124b292d17b749bbf27fc5001e94c9833d0cdaa48b4d00c",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/fossil/old-amber.png",
+      "sha256": "1d24d520e63bb33aa320ece17f13df2bddde06dc5e065b2ee22a03cada93620e",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/assault-vest.png",
+      "sha256": "9ba825a9baa39823373c76c727e84b3af90d72043427a9babd1000beb01d9044",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/big-root.png",
+      "sha256": "78cc751e921fb682a921a7fa9265a3c2ac44ccad3fbaea1821af0649169ba0f9",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/binding-band.png",
+      "sha256": "c1cd5ec00f3cc293a95980a15f7336b461a3abaad49628187613263a6131082b",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/black-belt.png",
+      "sha256": "baa097d021ee6a189540870f4dcb6aed7015f6226c7c4c6c23121ecc5f915f12",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/black-glasses.png",
+      "sha256": "a9f43d478f13eec7778bdebc1cd87a9ae2a3a0d9989f73934fb274090a394ec4",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/charcoal.png",
+      "sha256": "d9662fc9c2c8c7a4b63ba19e25d8d4446a4a196df9b17120c0ecdf1291636249",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/dragon-fang.png",
+      "sha256": "54f02b735ee750be31feb19011ebbad6a024ff7c8dd9e851c30bf4cbd265d3fd",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/expert-belt.png",
+      "sha256": "a01ab08a13dfcad0933e02731390711180636614d80a9c517a046a566c062dd9",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/float-stone.png",
+      "sha256": "f77d70d53bc5c85cbda92f990ffc75ad14632f5cdb3f66e15fb55f0f4f4d812e",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/focus-band.png",
+      "sha256": "15757751db3881e03374895b0c2edbb60344066beec2beb1c3485a829e7fa5d1",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/focus-sash.png",
+      "sha256": "767b01c259e1cc01bd2d5e90cc94e953971e697662425183eebd8f3b8916c2ba",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/hard-stone.png",
+      "sha256": "6380e956ab7d5785a2b951ee6d1e00d3d1fe58e0b9c1c36c0ef770ca8683ae0f",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/heavy-duty-boots.png",
+      "sha256": "6c8d61bb0cf5fec7d2bd8e8bddacc554af870e9b80683623a0cc07fd059b6728",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/kings-rock.png",
+      "sha256": "6a32792f277af9d41c050f3333f823e913e3e493bb8b7a6c08d8d42eadc3b8fd",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/leftovers.png",
+      "sha256": "b4bd6057335650f2506efa3f659f1b42b0c04dd36b376b835f4f67211dcf3f84",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/life-orb.png",
+      "sha256": "fe8e37b6956e2acd6582fe247c539845036a640917ed7a43d12901e90f21d7c0",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/light-clay.png",
+      "sha256": "b7282ab2625648d909406f7ed4a494dd5ae65d96131a1e80a1b5de8c732040c3",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/lucky-egg.png",
+      "sha256": "f185f67bb11aae57a47c584804ba620dc90da4db9a25ace8bca138d66a35e4cd",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/magnet.png",
+      "sha256": "486ee05407c24deafedd440397f5bc1bf4317df8c00198ae66b0613d3a243fcb",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/metal-coat.png",
+      "sha256": "58795f8020c687bf1d7d591615abccce0c00092ef8ffaaa3550d36594586ff97",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/miracle-seed.png",
+      "sha256": "092fe0ef46660f5d7f8e0e6ee4a271f579c72cdaef301ed5738c8e755b244dc7",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/muscle-band.png",
+      "sha256": "af943d67bcb7d6483432e933fbc7dbea8c18237fcc483f3e5f680bc30b56be30",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/mystic-water.png",
+      "sha256": "ea377d52314ad7402918c730295a3e6fe3115a96ee898e7c225b380543ce4b6c",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/never-melt-ice.png",
+      "sha256": "5723ab4cce0af92bf057add876886cfb83bdfe55a9d33b3b5142feacd6ff70eb",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/poison-barb.png",
+      "sha256": "985468a5e396da7fb3b983a6a7d2c5da2e093292ad1c4e0ead355233876cc925",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/quick-claw.png",
+      "sha256": "be3dd66884783f1d9c286e4dfddcc8bee5fc3536a2564a5f8bb18a8cf06efc8a",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/rocky-helmet.png",
+      "sha256": "6d49a251ba48fe27718e8da1f16ed08a171fafe4726a689c9129dce878a09ed6",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/safety-goggles.png",
+      "sha256": "75b7263f49a8a48d21e6aef35cdf095fc6f1274c35f15393f322db39a12b55a9",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/scope-lens.png",
+      "sha256": "55ff5fadffb313622669c5c2536a8c5dfb3d8e3e05a458b4049dd9f2634f298d",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/sharp-beak.png",
+      "sha256": "fc545b99f334dbb97e5808ec062775ff04cfd4a0af585850b27e8ccdc10d054c",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/shell-bell.png",
+      "sha256": "8483762b2d513402561af39b2e1c1f675ccc4f44d06bbd6399953493ec647d82",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/silk-scarf.png",
+      "sha256": "5f35ec6e05135fc8a39baad02b6c7de3546a17aeeace0fcc1a12cb6f270b537f",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/silver-powder.png",
+      "sha256": "c54a8e87900a0ac44e805572b69dc3bf643a9a30543f4e61e9b2f689da625e7d",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/soft-sand.png",
+      "sha256": "6c62bb9b62a6c06b0257b67b804fd7ece1962143950689f9fec5688605db9ece",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/spell-tag.png",
+      "sha256": "b835ceb49d5ee118b1b21a4ee9cc4a61a67308b622e7af70287b2ee899fd55ad",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/twisted-spoon.png",
+      "sha256": "193dc5fbc9712c579ff95263d26fe70c4b606e3134a06e9100911ae535979f6f",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/wide-lens.png",
+      "sha256": "973f8e4eadffee644e94c4d31038b21d221ce6581d838ef1b116478b750ee514",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/hold-item/wise-glasses.png",
+      "sha256": "d07d7866292d3795a05ed66a7241000a8033bf1cd458269d6e27e4bd87e564b7",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/medicine/calcium.png",
+      "sha256": "60b482de4e2ad3aa9776256449ea619d00456ebd3fca5d3365f3a616f0411e17",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/medicine/carbos.png",
+      "sha256": "0e6b3d56f474aea6375a3603edc688437e930c36d87776385d60f78b706b705c",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/medicine/full-restore.png",
+      "sha256": "e5184a01c71ef3589078e3af7e55aa5de643a54155a1b54ab3a07a6ffba763bc",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/medicine/hp-up.png",
+      "sha256": "9fa6a40b2b1626795b2ec25e1a452e646a625b57e77f49ee947e9c967a17710b",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/medicine/hyper-potion.png",
+      "sha256": "9355df04b787831c8b28d987051a06dee6634257f25dcf1ed70de7626f11b952",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/medicine/iron.png",
+      "sha256": "e3f5e77b57c72c84d0cee4f96ef6ea38aedb6efdc511a002050e81c7d784875f",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/medicine/potion.png",
+      "sha256": "f5e2572da58f825619cc3c4f026d9ad19d26b35db4c183e4fbbec91b265eb916",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/medicine/protein.png",
+      "sha256": "5f1f3946746770c604d5c0e3aaf80b459559e0b5a7fe44284b66097bf9e8070f",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/medicine/rare-candy.png",
+      "sha256": "d50db5505693fe4ba9584c07b1cea95dc11456694f3643a6e10c92b04ca324bb",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/medicine/super-potion.png",
+      "sha256": "988c598666ffe8cfa5045f17f97c967e7f0ac9383ac5b477de90447e2ab7b90b",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/medicine/zinc.png",
+      "sha256": "9b5767f73e8dd0a3fe26deeaf041d72c2b17086b94c089f5b0ffd5f25af89c3b",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/plate/pixie.png",
+      "sha256": "a0cf5c144dfc619b2ad3dc834948e3b069935bc93e8f5174b79a10873bd51b09",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "items/plate/zap.png",
+      "sha256": "ad61995ecb8ee5fe3f21bf280160cc5a80b1dfae3879a687e5a3163aabb8dc57",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "path": "misc/types/gen8/bug.png",
+      "sha256": "3b73c09a08c2cefb994e25acb62944b36b10ea2d1002ba14d13c944a6fe8b1b5",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/dark.png",
+      "sha256": "02df21caa625785b014588623b667996616d97eafc17a28840c413b12b76b198",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/dragon.png",
+      "sha256": "fe72cb00fa70bbef43dffdc6de4ccda03bff98c8975e9107662dc356c55ebce4",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/electric.png",
+      "sha256": "6dd7f75a58f93fa0625bd6d43deab27f9efecbd218f7fb656f7c058e89bc1727",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/fairy.png",
+      "sha256": "93e0bee4ccdc2e88f68554a334aa47ec5556e5abf8634ab6e18fb30331d36c8f",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/fighting.png",
+      "sha256": "08ab0180381f9b4749b8872c13ef648b35a52198f3e2184186beee4f906694bb",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/fire.png",
+      "sha256": "2cb97987e4d961cd3a9478cf12e96c9984496b243b034b07ddd2bd0c3cd8d275",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/flying.png",
+      "sha256": "f07e273c4bb87368022cfb306580f0573648c238f9eaa93495222109b70a69e5",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/ghost.png",
+      "sha256": "e26dac7c46c8cab84e5a6ae577c2ce59f352ad1138d53950d0ca2fe6c00e94bd",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/grass.png",
+      "sha256": "b1a0047f06979f24e6b019f65bdfa6ad46204c3b041ed2f35c351d3d9f9728cf",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/ground.png",
+      "sha256": "02e8853e2015023f5b672e77d56dcd635b0728d1711d4467674ba69a4fc3d081",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/ice.png",
+      "sha256": "e25a58a8aeb77ea83e141b3453dd4cbe9344e32c9f8219267dfc9bfa7db20c79",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/normal.png",
+      "sha256": "b811a612bd1094b727c3a2071562aec3d847b2f4ba114f369e71034dc5189b2c",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/poison.png",
+      "sha256": "7a58e1a368b028d96dbfb9084502ec7067d0f2e63976a1da93b5ac51869ab31d",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/psychic.png",
+      "sha256": "2b80673ba531df18363a34b913e49eea7a404626f40a8834d9bdd0a118bd90f8",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/rock.png",
+      "sha256": "3eb77b25c1ab071ea7e6363bf33afc1c5ce35b2c2afd479c2782f0815a58d6bc",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/steel.png",
+      "sha256": "e7a976fb6c4fb0ab13ae46a649a1cd540eb3816798869701d2c6c6099854359f",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "path": "misc/types/gen8/water.png",
+      "sha256": "aaf6d4ce07b483e6f9b7350c368ade4498e617cf67cf18688a3371aa11d863de",
+      "width": 128,
+      "height": 128
+    }
+  ],
+  "registry": {
+    "silkScarf": {
+      "normal": "items/hold-item/silk-scarf.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/silk-scarf.png"
+    },
+    "charcoal": {
+      "normal": "items/hold-item/charcoal.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/charcoal.png"
+    },
+    "mysticWater": {
+      "normal": "items/hold-item/mystic-water.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/mystic-water.png"
+    },
+    "miracleSeed": {
+      "normal": "items/hold-item/miracle-seed.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/miracle-seed.png"
+    },
+    "neverMeltIce": {
+      "normal": "items/hold-item/never-melt-ice.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/never-melt-ice.png"
+    },
+    "blackBelt": {
+      "normal": "items/hold-item/black-belt.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/black-belt.png"
+    },
+    "poisonBarb": {
+      "normal": "items/hold-item/poison-barb.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/poison-barb.png"
+    },
+    "softSand": {
+      "normal": "items/hold-item/soft-sand.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/soft-sand.png"
+    },
+    "sharpBeak": {
+      "normal": "items/hold-item/sharp-beak.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/sharp-beak.png"
+    },
+    "twistedSpoon": {
+      "normal": "items/hold-item/twisted-spoon.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/twisted-spoon.png"
+    },
+    "silverPowder": {
+      "normal": "items/hold-item/silver-powder.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/silver-powder.png"
+    },
+    "hardStone": {
+      "normal": "items/hold-item/hard-stone.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/hard-stone.png"
+    },
+    "spellTag": {
+      "normal": "items/hold-item/spell-tag.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/spell-tag.png"
+    },
+    "dragonFang": {
+      "normal": "items/hold-item/dragon-fang.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/dragon-fang.png"
+    },
+    "blackGlasses": {
+      "normal": "items/hold-item/black-glasses.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/black-glasses.png"
+    },
+    "metalCoat": {
+      "normal": "items/hold-item/metal-coat.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/metal-coat.png"
+    },
+    "magnet": {
+      "normal": "items/hold-item/magnet.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/magnet.png"
+    },
+    "leftovers": {
+      "normal": "items/hold-item/leftovers.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/leftovers.png"
+    },
+    "scopeLens": {
+      "normal": "items/hold-item/scope-lens.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/scope-lens.png"
+    },
+    "quickClaw": {
+      "normal": "items/hold-item/quick-claw.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/quick-claw.png"
+    },
+    "bigRoot": {
+      "normal": "items/hold-item/big-root.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/big-root.png"
+    },
+    "luckyEgg": {
+      "normal": "items/hold-item/lucky-egg.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/lucky-egg.png"
+    },
+    "shellBell": {
+      "normal": "items/hold-item/shell-bell.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/shell-bell.png"
+    },
+    "rockyHelmet": {
+      "normal": "items/hold-item/rocky-helmet.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/rocky-helmet.png"
+    },
+    "focusSash": {
+      "normal": "items/hold-item/focus-sash.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/focus-sash.png"
+    },
+    "focusBand": {
+      "normal": "items/hold-item/focus-band.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/focus-band.png"
+    },
+    "floatStone": {
+      "normal": "items/hold-item/float-stone.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/float-stone.png"
+    },
+    "muscleBand": {
+      "normal": "items/hold-item/muscle-band.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/muscle-band.png"
+    },
+    "wiseGlasses": {
+      "normal": "items/hold-item/wise-glasses.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/wise-glasses.png"
+    },
+    "expertBelt": {
+      "normal": "items/hold-item/expert-belt.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/expert-belt.png"
+    },
+    "wideLens": {
+      "normal": "items/hold-item/wide-lens.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/wide-lens.png"
+    },
+    "lightClay": {
+      "normal": "items/hold-item/light-clay.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/light-clay.png"
+    },
+    "bindingBand": {
+      "normal": "items/hold-item/binding-band.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/binding-band.png"
+    },
+    "assaultVest": {
+      "normal": "items/hold-item/assault-vest.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/assault-vest.png"
+    },
+    "safetyGoggles": {
+      "normal": "items/hold-item/safety-goggles.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/safety-goggles.png"
+    },
+    "heavyDutyBoots": {
+      "normal": "items/hold-item/heavy-duty-boots.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/heavy-duty-boots.png"
+    },
+    "lifeOrb": {
+      "normal": "items/hold-item/life-orb.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/life-orb.png"
+    },
+    "kingsRock": {
+      "normal": "items/hold-item/kings-rock.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/hold-item/kings-rock.png"
+    },
+    "zapPlate": {
+      "normal": "items/plate/zap.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/plate/zap.png"
+    },
+    "pixiePlate": {
+      "normal": "items/plate/pixie.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/plate/pixie.png"
+    },
+    "vitamin:hpUp": {
+      "normal": "items/medicine/hp-up.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/medicine/hp-up.png"
+    },
+    "vitamin:protein": {
+      "normal": "items/medicine/protein.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/medicine/protein.png"
+    },
+    "vitamin:iron": {
+      "normal": "items/medicine/iron.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/medicine/iron.png"
+    },
+    "vitamin:calcium": {
+      "normal": "items/medicine/calcium.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/medicine/calcium.png"
+    },
+    "vitamin:zinc": {
+      "normal": "items/medicine/zinc.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/medicine/zinc.png"
+    },
+    "vitamin:carbos": {
+      "normal": "items/medicine/carbos.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/medicine/carbos.png"
+    },
+    "consumable:potion": {
+      "normal": "items/medicine/potion.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/medicine/potion.png"
+    },
+    "consumable:superPotion": {
+      "normal": "items/medicine/super-potion.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/medicine/super-potion.png"
+    },
+    "consumable:hyperPotion": {
+      "normal": "items/medicine/hyper-potion.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/medicine/hyper-potion.png"
+    },
+    "consumable:fullRestore": {
+      "normal": "items/medicine/full-restore.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/medicine/full-restore.png"
+    },
+    "consumable:rareCandy": {
+      "normal": "items/medicine/rare-candy.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/medicine/rare-candy.png"
+    },
+    "consumable:oranBerry": {
+      "normal": "items/berry/oran.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/berry/oran.png"
+    },
+    "consumable:sitrusBerry": {
+      "normal": "items/berry/sitrus.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/berry/sitrus.png"
+    },
+    "consumable:lumBerry": {
+      "normal": "items/berry/lum.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/berry/lum.png"
+    },
+    "candy:xs": {
+      "normal": "items/exp-candy/xs.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/exp-candy/xs.png"
+    },
+    "candy:s": {
+      "normal": "items/exp-candy/s.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/exp-candy/s.png"
+    },
+    "candy:m": {
+      "normal": "items/exp-candy/m.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/exp-candy/m.png"
+    },
+    "candy:l": {
+      "normal": "items/exp-candy/l.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/exp-candy/l.png"
+    },
+    "candy:xl": {
+      "normal": "items/exp-candy/xl.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/exp-candy/xl.png"
+    },
+    "ball:1": {
+      "normal": "items/ball/poke.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/ball/poke.png"
+    },
+    "ball:2": {
+      "normal": "items/ball/great.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/ball/great.png"
+    },
+    "ball:3": {
+      "normal": "items/ball/ultra.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/ball/ultra.png"
+    },
+    "type:normal": {
+      "normal": "misc/types/gen8/normal.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:fire": {
+      "normal": "misc/types/gen8/fire.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:water": {
+      "normal": "misc/types/gen8/water.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:electric": {
+      "normal": "misc/types/gen8/electric.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:grass": {
+      "normal": "misc/types/gen8/grass.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:ice": {
+      "normal": "misc/types/gen8/ice.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:fighting": {
+      "normal": "misc/types/gen8/fighting.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:poison": {
+      "normal": "misc/types/gen8/poison.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:ground": {
+      "normal": "misc/types/gen8/ground.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:flying": {
+      "normal": "misc/types/gen8/flying.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:psychic": {
+      "normal": "misc/types/gen8/psychic.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:bug": {
+      "normal": "misc/types/gen8/bug.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:rock": {
+      "normal": "misc/types/gen8/rock.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:ghost": {
+      "normal": "misc/types/gen8/ghost.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:dragon": {
+      "normal": "misc/types/gen8/dragon.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:dark": {
+      "normal": "misc/types/gen8/dark.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:steel": {
+      "normal": "misc/types/gen8/steel.png",
+      "width": 128,
+      "height": 128
+    },
+    "type:fairy": {
+      "normal": "misc/types/gen8/fairy.png",
+      "width": 128,
+      "height": 128
+    },
+    "reference:metalCoatEvolution": {
+      "normal": "items/evo-item/metal-coat.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/evo-item/metal-coat.png"
+    },
+    "reference:oldAmber": {
+      "normal": "items/fossil/old-amber.png",
+      "width": 32,
+      "height": 32,
+      "outline": "items-outline/fossil/old-amber.png"
+    }
+  }
+}

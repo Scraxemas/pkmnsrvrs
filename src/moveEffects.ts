@@ -1,0 +1,2 @@
+import type {MoveDef} from './content';
+export function rankEffect(move:MoveDef,rank:number){const out={damage:1,cooldown:1,range:1,count:1,duration:1,area:1,pierce:1,statusChance:.65};for(let i=0;i<rank;i++){const r=move.ranks[i]??{};for(const key of Object.keys(out) as (keyof typeof out)[]){const value=r[key];if(typeof value==='number'){if(key==='count'||key==='pierce')out[key]=Math.max(out[key],value);else if(key==='duration'||key==='statusChance')out[key]=value;else out[key]*=value;}}}return out;}

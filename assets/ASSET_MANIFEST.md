@@ -79,7 +79,7 @@
 - Project-authored SVG source: `public/assets/environment/viridian/original`.
 - Tents, camp logs, supplies, reeds, and white/yellow/pink flowers use original code-authored pixel shapes and transparent backgrounds, rasterized by Phaser's SVG loader.
 - Flower source generator: `tools/make_forest_variants.py`. Runtime contact-sheet rendering: `tools/render_svg_assets.mjs` through Chromium.
-- Upgrade illustrations are original Phaser drawing commands in `src/upgradeScene.ts`.
+- Move and mastery illustrations are original Phaser drawing commands in `src/upgradeScene.ts`. Item and vitamin illustrations use the PokéSprite import below.
 - These additions do not alter Pokémon sprite attribution or the supplied FRLG sheet's rights status.
 
 ## Retired generated Viridian atlas
@@ -89,3 +89,13 @@
 - Master: `public/assets/environment/viridian/forest-atlas-source.png`; extraction tool: `tools/extract_forest_atlas.py`.
 
 Do not remove attribution or treat these assets as commercially cleared. Keep the asset source, revision, and approval state updated as the content pipeline expands.
+
+## PokéSprite inventory import — v0.4.0
+
+- Source: [msikma/pokesprite](https://github.com/msikma/pokesprite), pinned revision [`c5aaa610ff2acdf7fd8e2dccd181bca8be9fcb3e`](https://github.com/msikma/pokesprite/tree/c5aaa610ff2acdf7fd8e2dccd181bca8be9fcb3e).
+- Runtime: `public/assets/pokesprite/`; 146 exact upstream PNGs, 82 logical asset mappings. Normal and available white-outlined versions retain their original transparent pixels and dimensions. No hotlinks, redrawing, background removal or recompression.
+- Exact paths, dimensions and SHA-256 hashes: [`pokesprite/imports.json`](pokesprite/imports.json). Registry: `src/data/pokespriteAssets.ts`. Reproducible importer: `tools/import_pokesprite.py`; validates selected filenames against the pinned upstream Git tree before downloading.
+- Categories: `items/hold-item`, `items-outline/hold-item`, `items/plate`, `items/exp-candy`, `items/medicine`, `items/berry`, `items/ball`, with available outlined counterparts; `misc/types/gen8` for all 18 type badges. The evolution Metal Coat and Old Amber in `items/evo-item` / `items/fossil` are reference entries for the content-pipeline asset audit, never offered as additional held items.
+- Use: 40 held-item illustrations and four-slot HUD, six slotless vitamin icons, eight world consumables, five EXP Candy tiers, three ball rewards and type badges. Pokémon sprites and portraits continue to use the existing PMD sources.
+- Upstream notices are archived without modification: [`pokesprite/license.md`](pokesprite/license.md), [`pokesprite/readme.md`](pokesprite/readme.md), [`pokesprite/contributors.md`](pokesprite/contributors.md).
+- The upstream README assigns the programming code and other non-sprite content to its MIT license, and identifies the sprite images as © Nintendo/Creatures Inc./GAME FREAK Inc. The upstream author and contributor notices are retained in the archived README and contributors file. These PNGs are **not independently MIT-licensed artwork**. This fan-project import records provenance and attribution, without claiming commercial redistribution clearance.

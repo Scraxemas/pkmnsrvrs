@@ -51,6 +51,7 @@ test('grounding, terrain transitions, pond boundary, and responsive HP HUD',asyn
 test('interpolated movement states and streamed forest motifs',async({page})=>{
   await page.setViewportSize({width:1280,height:720});await page.goto('/?fast=1&seed=1337');const canvas=page.locator('#app canvas');await expect(canvas).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur',fast:true});});await page.waitForTimeout(900);
+  await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').state?.encounterPhase==='opening');
   const opening=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{ranged:s.state.enemies.filter((e:any)=>e.behavior==='ranged').length,shots:s.state.projectiles.length,phase:s.state.encounterPhase};});expect(opening).toEqual({ranged:0,shots:0,phase:'opening'});
   await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.enemies=[];s.state.projectiles=[];s.state.pickups=[];s.nextSpawn=Infinity;s.miniIndex=99;});
   const move=async(keys:string[],name:string)=>{for(const key of keys)await page.keyboard.down(key);await page.waitForTimeout(260);await page.screenshot({path:`test-results/screenshots/motion-${name}.png`});for(const key of keys)await page.keyboard.up(key);await page.waitForTimeout(100);};

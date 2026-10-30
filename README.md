@@ -41,12 +41,19 @@ unlock states, sorting, filters, and saved favorites are supported. One Select
 button continues to Stage Selection. Only the three existing starters are
 playable; other catalogue slots do not grant new characters.
 
-The latest [v0.3.10 corrections](docs/V0310_CHARACTER_CORRECTIONS.md) restrict
+The [v0.3.10 corrections](docs/V0310_CHARACTER_CORRECTIONS.md) restrict
 Character Selection to registered base forms, remove roster numbers, and keep
 the complete portrait/move/stat summary visible without right-panel scrolling.
 Hover no longer changes selection. The separate Pokédex retains the numbered
 151-species grid, evolved discoveries, and family information. Saves and artwork
 are preserved; the same three starters remain playable.
+
+The latest [v0.4.0 item and candy overhaul](docs/V040_ITEMS_AND_CANDIES.md) adds
+40 functional held items, actual local PokéSprite artwork, four item HUD slots,
+slotless consumables, and five EXP Candy sizes with smooth homing. Every Pokémon
+attracts nearby candy from 64 units; Magnet increases that to 289 at Rank 5.
+Zap Plate supplies Electric damage, and Lucky Egg supplies bonus EXP. Cards show
+the exact shared effect formulas. See the report for balance, provenance and QA.
 
 ## FRLG asset library
 

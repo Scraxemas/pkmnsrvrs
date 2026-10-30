@@ -3,6 +3,7 @@ import {SimState,Upgrade} from './simulation';
 import {describeUpgrade,UpgradeDetails} from './upgrades';
 import {loadSave} from './save';
 import {motionReduced} from './preferences';
+import {itemTexture,POKESPRITE_ASSETS} from './itemAssets';
 
 interface ChoiceConfig {title:string;options:Upgrade[];state:SimState;onSelect:(upgrade:Upgrade)=>void;}
 
@@ -65,19 +66,24 @@ export class UpgradeScene extends Phaser.Scene {
     options.forEach((option,i)=>{
       const index=this.page*3+i,x=640+(i-(options.length-1)/2)*(width+gap),y=390,d=describeUpgrade(this.config.state,option),card=this.add.container(x,entrance?y+24:y);
       const frame=this.add.graphics().setName('frame');card.add(frame);
-      const icon=this.add.graphics().setPosition(0,-114);illustration(icon,d);card.add(icon);
+      if(d.artKey){
+        const backing=this.add.graphics().setPosition(0,-114);backing.fillStyle(0x102c32,1).fillRoundedRect(-76,-58,152,116,8).lineStyle(2,d.color,.25).strokeRoundedRect(-76,-58,152,116,8);card.add(backing);
+        const source=POKESPRITE_ASSETS[d.artKey],picture=this.add.image(0,-114,itemTexture(d.artKey,true)).setScale(Math.min(96/source.width,96/source.height)).setName('item-art');picture.setData('assetId',d.artKey);card.add(picture);
+      }else{const picture=this.add.graphics().setPosition(0,-114);illustration(picture,d);card.add(picture);}
+      if(d.type){const id=`type:${d.type.toLowerCase()}`,source=POKESPRITE_ASSETS[id];card.add(this.add.image(122,-206,itemTexture(id)).setScale(32/Math.max(source.width,source.height)).setName('type-badge'));}
+      if(d.rarity==='rare'){const sparkle=this.add.graphics();sparkle.fillStyle(0xffe19b,.8).fillRect(-139,-220,3,3).fillRect(-143,-216,11,2).fillRect(-139,-220,2,11);card.add(sparkle);}
       const text=(ty:number,value:string,size:number,color:string,bold=false)=>this.add.text(0,ty,value,{fontFamily:'Trebuchet MS',fontSize:`${size}px`,color,fontStyle:bold?'bold':'normal',align:'center',wordWrap:{width:width-42}}).setOrigin(.5,0);
       card.add([text(-height/2+18,`[ ${i+1} ]`,14,'#a7c8c7'),text(-42,d.name,25,'#fff1c6',true),text(0,d.category,13,'#b8dad6'),text(38,d.description,17,'#dbe9e3'),text(112,d.rank,16,'#ffe3a1',true),text(150,d.benefit,17,'#b9f1cd')]);
       const hit=this.add.zone(-width/2,-height/2,width,height).setOrigin(0).setInteractive({useHandCursor:true});
-      hit.on('pointerover',()=>{if(!this.locked){this.focus=index;this.refreshFocus();}});hit.on('pointerdown',()=>this.choose(index));card.add(hit);
+      hit.on('pointerover',()=>{if(!this.locked){this.focus=index;this.refreshFocus(true);}});hit.on('pointerdown',()=>this.choose(index));card.add(hit);
       card.setData('accent',d.color).setData('index',index);this.cards.push(card);
       if(entrance){card.setAlpha(0);this.tweens.add({targets:card,y,alpha:1,duration:250,delay:i*70,ease:'Cubic.easeOut'});}
     });
     if(this.config.options.length>3){const label=this.add.text(640,646,`MORE REWARDS  ·  PAGE ${this.page+1} / ${Math.ceil(this.config.options.length/3)}`,{fontFamily:'Trebuchet MS',fontSize:'14px',color:'#ffe3a1',backgroundColor:'#23404b',padding:{x:14,y:7}}).setOrigin(.5).setInteractive({useHandCursor:true});this.pager=label;label.once('pointerdown',()=>{if(!this.locked){this.page=(this.page+1)%Math.ceil(this.config.options.length/3);this.focus=this.page*3;this.drawCards(false);}});}
     this.refreshFocus();
   }
-  refreshFocus(){
-    for(const card of this.cards){const g=card.getByName('frame') as Phaser.GameObjects.Graphics,focused=card.getData('index')===this.focus,c=card.getData('accent');g.clear();g.fillStyle(0x050c15,1).fillRect(-169,-244,338,488);g.fillStyle(0x142d38,1).fillRect(-165,-240,330,480);g.lineStyle(focused?4:2,focused?0xffedb1:c,1).strokeRect(-163,-238,326,476);g.fillStyle(c,1).fillRect(-158,-232,316,5);g.fillStyle(c,.12).fillRect(-157,96,314,134);}
+  refreshFocus(lift=false){
+    for(const card of this.cards){const g=card.getByName('frame') as Phaser.GameObjects.Graphics,focused=card.getData('index')===this.focus,c=card.getData('accent');g.clear();g.fillStyle(0x050c15,1).fillRect(-169,-244,338,488);g.fillStyle(0x142d38,1).fillRect(-165,-240,330,480);g.lineStyle(focused?4:2,focused?0xffedb1:c,1).strokeRect(-163,-238,326,476);g.fillStyle(c,1).fillRect(-158,-232,316,5);g.fillStyle(c,.12).fillRect(-157,96,314,134);if(lift&&card.alpha===1&&!motionReduced(loadSave().settings))this.tweens.add({targets:card,y:focused?386:390,duration:100,ease:'Sine.easeOut'});}
   }
   choose(index:number){
     if(this.locked||!this.config.options[index])return;this.locked=true;this.focus=index;this.refreshFocus();
