@@ -1,0 +1,20 @@
+{
+  "canopy": 22926,
+  "water": 4109,
+  "rays": 2955,
+  "trunk": 0,
+  "path": 0,
+  "rock": 0,
+  "rect": {
+    "x": 0,
+    "y": 0,
+    "width": 1376,
+    "height": 768,
+    "scale": 1
+  },
+  "maskPixels": {
+    "foliage": 158525,
+    "water": 7204
+  },
+  "reducedDifferences": 0
+}

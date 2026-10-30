@@ -29,7 +29,8 @@ fullscreen reports the browser's actual state. Audio and later Kanto stages are
 clearly labeled as future content.
 
 The latest [v0.3.8 title screen](docs/V038_CENTERED_MENU.md) centers the logo and
-arcade controls over an animated forest. Play opens Single Player / Multiplayer
+arcade controls over a forest with local leaf sway, pond ripples, and sun shafts.
+The camera stays fixed. Play opens Single Player / Multiplayer
 mode selection; multiplayer is explicitly unavailable. Personal bests and saved
 totals are in Research → Statistics. The report includes actual animation footage.
 

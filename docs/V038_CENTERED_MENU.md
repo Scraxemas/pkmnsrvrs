@@ -27,34 +27,38 @@ layers behind the DOM controls. This keeps ultrawide rendering independent of
 the gameplay canvas's 1280 × 720 scaling. The source JPG, logo PNG, and location
 PNG are unchanged.
 
-- `menuBackgroundMath.ts`: a continuous 32-second pan cycle, approximately four
-  source pixels horizontally and two vertically, with 1.025 overscan. Rendering
-  snaps to whole viewport pixels and disables image smoothing. Unit tests check
-  every edge through two complete cycles at all four target resolutions.
+- `menuBackgroundMath.ts`: fixed cover framing at all resolutions. There is no
+  camera pan, zoom, overscan animation, or parallax. Motion and reduced-motion
+  modes use exactly the same image bounds.
+- `menuFoliageController.ts`: gentle wind moves leaf textures by at most two
+  native pixels inside four canopy/shrub regions. Green-pixel masks exclude
+  woody branches; erosion and feathering protect edges and avoid rectangle seams.
+  Trunks, paths, rocks, and the overall forest silhouette stay fixed.
+- `menuWaterController.ts`: reflection flow, three staggered expanding pixel
+  ripple rings, and small glints remain inside the pond. The native water-color
+  mask and hand-placed shoreline polygon keep its banks stationary.
 - `menuAmbientParticles.ts`: an independent decorative RNG, at most ten small
   pixel leaves, gently curved trajectories, natural fading, and seven faint
   illuminated motes. It never reads or advances the simulation RNG.
-- `menuLightingController.ts`: one cached soft illumination mask anchored to
-  the already-lit clearing, with a faint independent lighting cycle. It does not
-  distort the illustration or draw obvious beam triangles.
+- `menuLightingController.ts`: three cached soft sun shafts fall through the
+  canopy opening into the existing clearing. Their brightness varies slowly;
+  foliage and water render above them to keep the effects attached to the scene.
 - `menuBackgroundController.ts`: Phaser delta time, explicit pause/resume,
-  document visibility, resize handling, reduced motion, optional future layer
+  document visibility, resize handling, reduced motion,
   inputs, diagnostics, and deterministic resource cleanup on scene shutdown.
 
-Background motion is intentionally subtle. Nearest-neighbor, whole-pixel
-sampling keeps the art crisp, with occasional one-pixel position changes rather
-than fractional-pixel blur. Gameplay rendering/filter settings are untouched.
+The original whole-image drift was removed following visual feedback. Motion is
+now confined to the environmental details above. Nearest-neighbor sampling keeps
+the pixel illustration crisp. Masks and reusable buffers are built once from the
+supplied image; no replacement artwork or extra animation loop is needed.
 
-Reduced motion uses static framing, hides leaves/motes, disables light animation,
+Reduced motion displays the original still image, hides leaves/motes, disables
+foliage, water, and light effects,
 and removes entrance motion while preserving focus indicators. System preference
 changes are handled while the menu is open. Repeated scene navigation releases
 the decorative canvases, pixel/lighting buffers, observers, and event listeners.
-The canvas does not intercept pointer input. Proper transparent depth layers can
-be supplied through `setLayers`; none were fabricated from the flat illustration.
-
-Independent branch/foliage sway remains a future asset task: it needs vegetation
-masks or separated foreground layers with clean plates behind them. This pass
-uses the supported full-image motion and atmospheric overlays instead.
+The canvas does not intercept pointer input. This animates leaf surfaces within
+the flat illustration; it does not bend or move entire tree trunks.
 
 ## Navigation repairs and files
 
@@ -81,17 +85,18 @@ uses the supported full-image motion and atmospheric overlays instead.
 [3440 × 1440 menu](qa/v038/main-ultrawide.png) ·
 [Stage Selection](qa/v038/stage-selection.png)
 
-**[32-second actual animation recording](qa/v038/menu-ambience.webm)**
+**[18-second local forest animation recording](qa/v038/menu-ambience.webm)**
 
 The reviewed VP9 clip removes browser startup from the Playwright-managed Chromium
 capture. Sampled beginning/middle/end frames were inspected for sharpness, scene
-alignment, leaf density, lighting, and exposed edges. The artwork is not cut up or
-warped; the UI stays stationary. Loop closure and continuous framing are also
-checked numerically. [Frame diagnostics](qa/v038/animation-diagnostics.json) record
-34 samples over 33.83 simulation seconds: median render-loop rate 60.5 FPS, lowest
-sample 59.2 FPS, at most ten leaves, and about 0.09 ms average JavaScript drawing
-submission per frame. The recording itself is encoded at 25 FPS; these figures
-are local observations, not a cross-device performance guarantee.
+alignment, leaf density, lighting, and exposed edges. The camera and UI stay
+stationary. [Frame diagnostics](qa/v038/animation-diagnostics.json) record 20
+samples with identical background bounds throughout the capture.
+
+An actual canvas-pixel comparison at native resolution verifies changing canopy,
+water, and ray pixels while sampled trunks, rocks, and path have zero changed
+pixels. Reduced motion matches the source image pixel-for-pixel.
+[Pixel results](qa/v038/local-pixels.json) retain the measured counts.
 
 The raw recording and additional screenshots (focus states, Pokédex, Research,
 Settings, and reduced motion) remain under `test-results/screenshots/v038-*`.
@@ -101,9 +106,9 @@ Settings, and reduced motion) remain under `test-results/screenshots/v038-*`.
 Verified 2026-10-29:
 
 - **127 Vitest tests**, including seeded replay, 100 forest seeds, navigation,
-  progression, menu geometry, cycle/edge coverage, clock behavior, and statistics.
-- **30 Chromium checks**: 29 in the full regression run plus the separate recording
-  test. These cover four resolutions, actual menu input, mode/back behavior,
+  progression, menu geometry, cover framing, wind limits, clock behavior, and statistics.
+- **31 Chromium checks**, including the actual recording and pixel comparison.
+  These cover four resolutions, actual menu input, mode/back behavior,
   controller navigation, disabled multiplayer, saves/settings, reduced motion,
   pause/resume, repeated scene cleanup, starting/returning from runs, grass/movement,
   level-up cards, and an accelerated real Beedrill victory.

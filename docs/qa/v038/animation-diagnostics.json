@@ -1,784 +1,1002 @@
 [
   {
     "ready": true,
-    "time": 0.6524799999999995,
+    "time": 0.5360933333333325,
     "reduced": false,
     "paused": false,
-    "frames": 41,
+    "frames": 34,
     "leafCount": 4,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": 1.8549502043473711,
+        "y": 0.42825569282682474
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 8.10369824561403,
+          "alpha": 0.13722843978244517
+        },
+        {
+          "radius": 15.437031578947364,
+          "alpha": 0.31896650465442755
+        },
+        {
+          "radius": 22.770364912280694,
+          "alpha": 0.1817380648719825
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -21,
-      "y": -8,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.12926829188335232,
+    "averageDrawMs": 3.711764705093468,
     "active": 1,
     "fps": 60
   },
   {
     "ready": true,
-    "time": 1.7009799999999986,
+    "time": 1.5846599999999975,
     "reduced": false,
     "paused": false,
-    "frames": 104,
+    "frames": 97,
     "leafCount": 4,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": 1.39060579178425,
+        "y": 0.588131162546004
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 14.174347368421039,
+          "alpha": 0.3091869178864223
+        },
+        {
+          "radius": 21.507680701754374,
+          "alpha": 0.226025856046494
+        },
+        {
+          "radius": 6.841014035087705,
+          "alpha": 0.08316106183992827
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -20,
-      "y": -7,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.10480769179188289,
+    "averageDrawMs": 3.5092783495015705,
     "active": 1,
-    "fps": 59.25
+    "fps": 56.75
   },
   {
     "ready": true,
-    "time": 2.7336533333333284,
+    "time": 2.6457633333333326,
     "reduced": false,
     "paused": false,
-    "frames": 166,
+    "frames": 155,
     "leafCount": 4,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": -0.31228452291743,
+        "y": 0.5562201216719781
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 20.317577192982455,
+          "alpha": 0.2610812802139115
+        },
+        {
+          "radius": 5.650910526315785,
+          "alpha": 0.029701126737393287
+        },
+        {
+          "radius": 12.984243859649123,
+          "alpha": 0.2907824069513049
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -20,
-      "y": -7,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.0957831322967288,
+    "averageDrawMs": 3.6522580636124458,
     "active": 1,
-    "fps": 59.4375
+    "fps": 56.8125
   },
   {
     "ready": true,
-    "time": 3.7502933333333246,
+    "time": 3.754043333333333,
     "reduced": false,
     "paused": false,
-    "frames": 227,
+    "frames": 217,
     "leafCount": 5,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": -1.7289920125066507,
+        "y": 0.32724128380579
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 26.7339350877193,
+          "alpha": 0.012155148895661883
+        },
+        {
+          "radius": 12.067268421052633,
+          "alpha": 0.27085055569877087
+        },
+        {
+          "radius": 19.400601754385963,
+          "alpha": 0.28300570459443275
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -19,
-      "y": -7,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.09911894279692142,
+    "averageDrawMs": 3.7576036854960404,
     "active": 1,
-    "fps": 59.828125
+    "fps": 56.14453125
   },
   {
     "ready": true,
-    "time": 4.783593333333331,
+    "time": 4.847333333333333,
     "reduced": false,
     "paused": false,
-    "frames": 289,
+    "frames": 278,
     "leafCount": 5,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": -1.5353198887007566,
+        "y": -0.014662947933480728
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 11.063508771929827,
+          "alpha": 0.24373035729250245
+        },
+        {
+          "radius": 18.39684210526316,
+          "alpha": 0.30143865859402036
+        },
+        {
+          "radius": 25.73017543859649,
+          "alpha": 0.05770830130151805
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -18,
-      "y": -7,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.09930795853938199,
+    "averageDrawMs": 3.837769783390083,
     "active": 1,
-    "fps": 59.87109375
+    "fps": 56.1083984375
   },
   {
     "ready": true,
-    "time": 5.816893333333339,
+    "time": 5.953953333333328,
     "reduced": false,
     "paused": false,
-    "frames": 351,
+    "frames": 337,
     "leafCount": 6,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": -0.2827917139426499,
+        "y": -0.3549792231165232
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 17.47025614035085,
+          "alpha": 0.31297308856753747
+        },
+        {
+          "radius": 24.803589473684184,
+          "alpha": 0.09872942892667821
+        },
+        {
+          "radius": 10.13692280701752,
+          "alpha": 0.21424365964085937
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -18,
-      "y": -7,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.09999999972829791,
+    "averageDrawMs": 3.893768545295435,
     "active": 1,
-    "fps": 60.1533203125
+    "fps": 55.581298828125
   },
   {
     "ready": true,
-    "time": 6.850173333333349,
+    "time": 7.058943333333324,
     "reduced": false,
     "paused": false,
-    "frames": 413,
+    "frames": 397,
     "leafCount": 6,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": 0.7547359790869245,
+        "y": -0.567631210048028
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 23.86756666666661,
+          "alpha": 0.13841348860661384
+        },
+        {
+          "radius": 9.200899999999951,
+          "alpha": 0.18065577715361375
+        },
+        {
+          "radius": 16.534233333333276,
+          "alpha": 0.3190692657602275
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -18,
-      "y": -7,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.09975786911228955,
+    "averageDrawMs": 3.9367758180542616,
     "active": 1,
-    "fps": 60.114990234375
+    "fps": 55.43597412109375
   },
   {
     "ready": true,
-    "time": 7.866783333333358,
+    "time": 8.160533333333321,
     "reduced": false,
     "paused": false,
-    "frames": 474,
+    "frames": 458,
     "leafCount": 6,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": 1.163317630569003,
+        "y": -0.5773075378961023
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 8.245192982456075,
+          "alpha": 0.14304104710744317
+        },
+        {
+          "radius": 15.57852631578941,
+          "alpha": 0.3194205923955932
+        },
+        {
+          "radius": 22.91185964912274,
+          "alpha": 0.1763795452881502
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -18,
-      "y": -7,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.10126582262762489,
+    "averageDrawMs": 3.940611353184719,
     "active": 1,
-    "fps": 60.33624267578125
+    "fps": 55.32698059082031
   },
   {
     "ready": true,
-    "time": 8.900083333333342,
+    "time": 9.267153333333317,
     "reduced": false,
     "paused": false,
-    "frames": 536,
+    "frames": 522,
     "leafCount": 7,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": 1.144801706330612,
+        "y": -0.38018477651488963
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 14.651940350877103,
+          "alpha": 0.3140891351985482
+        },
+        {
+          "radius": 21.98527368421044,
+          "alpha": 0.21006353932328148
+        },
+        {
+          "radius": 7.3186070175437665,
+          "alpha": 0.10402559587526647
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -18,
-      "y": -8,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.10186567154726875,
+    "averageDrawMs": 3.9034482753368174,
     "active": 1,
-    "fps": 60.25218200683594
+    "fps": 55.995235443115234
   },
   {
     "ready": true,
-    "time": 9.933373333333325,
+    "time": 10.350433333333307,
     "reduced": false,
     "paused": false,
-    "frames": 598,
+    "frames": 586,
     "leafCount": 7,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": 0.5520041825778184,
+        "y": -0.05419422301724519
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 20.92356140350862,
+          "alpha": 0.24411279403990258
+        },
+        {
+          "radius": 6.256894736841956,
+          "alpha": 0.05712705042853417
+        },
+        {
+          "radius": 13.590228070175282,
+          "alpha": 0.3012398444684365
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -18,
-      "y": -8,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.0998327757502878,
+    "averageDrawMs": 3.8952218426118126,
     "active": 1,
-    "fps": 60.43913650512695
+    "fps": 57.246426582336426
   },
   {
     "ready": true,
-    "time": 10.95000333333331,
+    "time": 11.433733333333317,
     "reduced": false,
     "paused": false,
-    "frames": 659,
-    "leafCount": 7,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -18,
-      "y": -8,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.09999999980553871,
-    "active": 1,
-    "fps": 60.579352378845215
-  },
-  {
-    "ready": true,
-    "time": 11.98328333333329,
-    "reduced": false,
-    "paused": false,
-    "frames": 721,
+    "frames": 647,
     "leafCount": 8,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": -0.7238620836760639,
+        "y": 0.290477696788882
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 5.19529824561394,
+          "alpha": 0.008923170962186736
+        },
+        {
+          "radius": 12.528631578947277,
+          "alpha": 0.2814819507342363
+        },
+        {
+          "radius": 19.861964912280605,
+          "alpha": 0.2725587797720496
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -19,
-      "y": -9,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.09944521471465345,
+    "averageDrawMs": 3.8996908805884387,
     "active": 1,
-    "fps": 60.43451428413391
+    "fps": 57.43481993675232
   },
   {
     "ready": true,
-    "time": 12.999913333333273,
+    "time": 12.53368333333333,
     "reduced": false,
     "paused": false,
-    "frames": 782,
+    "frames": 708,
     "leafCount": 8,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": -1.8208568020048221,
+        "y": 0.537510031572837
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 11.563429824561391,
+          "alpha": 0.2578996606308368
+        },
+        {
+          "radius": 18.89676315789473,
+          "alpha": 0.2930102575514657
+        },
+        {
+          "radius": 26.230096491228053,
+          "alpha": 0.03511059692062916
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -19,
-      "y": -9,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.0966751915033516,
+    "averageDrawMs": 3.9173728810823234,
     "active": 1,
-    "fps": 60.32588571310043
+    "fps": 57.07611495256424
   },
   {
     "ready": true,
-    "time": 14.016543333333253,
+    "time": 13.60197333333333,
     "reduced": false,
     "paused": false,
-    "frames": 843,
+    "frames": 767,
     "leafCount": 8,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": -1.466422978194332,
+        "y": 0.5951599162537322
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 17.74826666666665,
+          "alpha": 0.31007951528363736
+        },
+        {
+          "radius": 25.081599999999987,
+          "alpha": 0.08657063576123376
+        },
+        {
+          "radius": 10.414933333333323,
+          "alpha": 0.22350887952240367
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -20,
-      "y": -10,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.09608540907590556,
+    "averageDrawMs": 3.9254237286736786,
     "active": 1,
-    "fps": 60.494414284825325
+    "fps": 57.05708621442318
   },
   {
     "ready": true,
-    "time": 15.033163333333237,
+    "time": 14.71691333333333,
     "reduced": false,
     "paused": false,
-    "frames": 904,
+    "frames": 828,
     "leafCount": 9,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": 0.2916087661370005,
+        "y": 0.44295136623439146
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 24.20318245614034,
+          "alpha": 0.12443246659382375
+        },
+        {
+          "radius": 9.536515789473675,
+          "alpha": 0.19310204051644594
+        },
+        {
+          "radius": 16.869849122807004,
+          "alpha": 0.3175345071102696
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -21,
-      "y": -10,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.09469026529881279,
+    "averageDrawMs": 3.933333333113775,
     "active": 1,
-    "fps": 60.465608035214245
+    "fps": 56.042814660817385
   },
   {
     "ready": true,
-    "time": 16.049793333333216,
+    "time": 15.816903333333308,
     "reduced": false,
     "paused": false,
-    "frames": 965,
+    "frames": 894,
     "leafCount": 9,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": 1.7165482742690341,
+        "y": 0.13414520188820378
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 8.571545614034948,
+          "alpha": 0.1562210536741747
+        },
+        {
+          "radius": 15.904878947368275,
+          "alpha": 0.3199704796852138
+        },
+        {
+          "radius": 23.23821228070162,
+          "alpha": 0.16374942601103892
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -22,
-      "y": -10,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.09388601024842633,
+    "averageDrawMs": 3.9077181206053537,
     "active": 1,
-    "fps": 60.599206026410684
+    "fps": 56.53211099561304
   },
   {
     "ready": true,
-    "time": 17.066413333333255,
+    "time": 16.90017333333332,
     "reduced": false,
     "paused": false,
-    "frames": 1026,
+    "frames": 959,
     "leafCount": 10,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": 1.560600723679387,
+        "y": -0.2171467853209131
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 14.843108771929753,
+          "alpha": 0.31564316153536554
+        },
+        {
+          "radius": 22.176442105263078,
+          "alpha": 0.20339620015138565
+        },
+        {
+          "radius": 7.509775438596426,
+          "alpha": 0.11224696138398046
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -22,
-      "y": -11,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.09366471722693007,
+    "averageDrawMs": 3.8839416057026797,
     "active": 1,
-    "fps": 60.44940451980801
+    "fps": 58.486812435032334
   },
   {
     "ready": true,
-    "time": 18.09970333333326,
+    "time": 17.98346333333332,
     "reduced": false,
     "paused": false,
-    "frames": 1088,
+    "frames": 1024,
     "leafCount": 10,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": 0.3467809452841124,
+        "y": -0.49361403275601784
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 21.114787719298157,
+          "alpha": 0.2383725699103337
+        },
+        {
+          "radius": 6.448121052631484,
+          "alpha": 0.0657025693215505
+        },
+        {
+          "radius": 13.78145438596483,
+          "alpha": 0.30407513923188456
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -23,
-      "y": -11,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.09393382338149582,
+    "averageDrawMs": 3.8557617187470896,
     "active": 1,
-    "fps": 60.33705338985601
+    "fps": 58.86510932627425
   },
   {
     "ready": true,
-    "time": 19.116333333333287,
+    "time": 19.066773333333366,
     "reduced": false,
     "paused": false,
-    "frames": 1149,
+    "frames": 1089,
     "leafCount": 10,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": -0.7054342132210041,
+        "y": -0.5999765089559932
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 5.38658245614055,
+          "alpha": 0.017656259613108776
+        },
+        {
+          "radius": 12.719915789473877,
+          "alpha": 0.2855340971660528
+        },
+        {
+          "radius": 20.053249122807223,
+          "alpha": 0.26787783755294403
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -24,
-      "y": -11,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.09347258468002106,
+    "averageDrawMs": 3.8342516069651964,
     "active": 1,
-    "fps": 60.50279004239201
+    "fps": 59.14883199470569
   },
   {
     "ready": true,
-    "time": 20.13295333333334,
+    "time": 20.13339333333343,
     "reduced": false,
     "paused": false,
-    "frames": 1210,
+    "frames": 1153,
     "leafCount": 9,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": -1.1438831446379607,
+        "y": -0.5026023730794867
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 11.561750877193557,
+          "alpha": 0.2578542342282089
+        },
+        {
+          "radius": 18.895084210526882,
+          "alpha": 0.29304108793297784
+        },
+        {
+          "radius": 26.228417543860232,
+          "alpha": 0.03518685370476857
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -24,
-      "y": -11,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.09289256176672692,
+    "averageDrawMs": 3.810667823046989,
     "active": 1,
-    "fps": 60.377092531794005
+    "fps": 59.611623996029266
   },
   {
     "ready": true,
-    "time": 21.182923333333388,
+    "time": 21.216673333333457,
     "reduced": false,
     "paused": false,
-    "frames": 1273,
+    "frames": 1218,
     "leafCount": 9,
     "maxLeaves": 10,
     "motes": 7,
+    "cameraMotion": false,
+    "foliage": {
+      "regions": 4,
+      "maskedPixels": 158525,
+      "wind": {
+        "x": -1.1708971178358352,
+        "y": -0.23210286451419535
+      }
+    },
+    "water": {
+      "maskedPixels": 7204,
+      "ripples": [
+        {
+          "radius": 17.83337192982529,
+          "alpha": 0.3090958079283539
+        },
+        {
+          "radius": 25.166705263158615,
+          "alpha": 0.08282039082703699
+        },
+        {
+          "radius": 10.500038596491962,
+          "alpha": 0.22627541710131738
+        }
+      ]
+    },
+    "rays": 3,
     "rect": {
-      "x": -25,
-      "y": -11,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
+      "x": -5,
+      "y": 0,
+      "width": 1290,
+      "height": 720,
+      "scale": 0.9375
     },
     "width": 1280,
     "height": 720,
     "smoothing": false,
-    "averageDrawMs": 0.09340141374158373,
+    "averageDrawMs": 3.786371100100586,
     "active": 1,
-    "fps": 60.532819398845504
-  },
-  {
-    "ready": true,
-    "time": 22.199533333333388,
-    "reduced": false,
-    "paused": false,
-    "frames": 1334,
-    "leafCount": 7,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -25,
-      "y": -11,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.09340329810061018,
-    "active": 1,
-    "fps": 60.64961454913413
-  },
-  {
-    "ready": true,
-    "time": 23.216163333333416,
-    "reduced": false,
-    "paused": false,
-    "frames": 1395,
-    "leafCount": 8,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -25,
-      "y": -11,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.09268817184860134,
-    "active": 1,
-    "fps": 60.487210911850596
-  },
-  {
-    "ready": true,
-    "time": 24.232783333333465,
-    "reduced": false,
-    "paused": false,
-    "frames": 1456,
-    "leafCount": 5,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -25,
-      "y": -10,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.09217032947792457,
-    "active": 1,
-    "fps": 60.61540818388795
-  },
-  {
-    "ready": true,
-    "time": 25.24942333333351,
-    "reduced": false,
-    "paused": false,
-    "frames": 1517,
-    "leafCount": 5,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -25,
-      "y": -10,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.09195781129319651,
-    "active": 1,
-    "fps": 60.71155613791596
-  },
-  {
-    "ready": true,
-    "time": 26.266063333333516,
-    "reduced": false,
-    "paused": false,
-    "frames": 1578,
-    "leafCount": 6,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -25,
-      "y": -10,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.09125475266284967,
-    "active": 1,
-    "fps": 60.53366710343697
-  },
-  {
-    "ready": true,
-    "time": 27.29934333333354,
-    "reduced": false,
-    "paused": false,
-    "frames": 1640,
-    "leafCount": 6,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -25,
-      "y": -9,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.09079268274874222,
-    "active": 1,
-    "fps": 60.65025032757772
-  },
-  {
-    "ready": true,
-    "time": 28.315963333333606,
-    "reduced": false,
-    "paused": false,
-    "frames": 1701,
-    "leafCount": 7,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -24,
-      "y": -9,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.09077013504287904,
-    "active": 1,
-    "fps": 60.48768774568329
-  },
-  {
-    "ready": true,
-    "time": 29.349273333333652,
-    "reduced": false,
-    "paused": false,
-    "frames": 1763,
-    "leafCount": 7,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -23,
-      "y": -9,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.09024390234266974,
-    "active": 1,
-    "fps": 60.61576580926247
-  },
-  {
-    "ready": true,
-    "time": 30.382563333333664,
-    "reduced": false,
-    "paused": false,
-    "frames": 1825,
-    "leafCount": 6,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -23,
-      "y": -8,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.09019178074516662,
-    "active": 1,
-    "fps": 60.46182435694685
-  },
-  {
-    "ready": true,
-    "time": 31.415863333333675,
-    "reduced": false,
-    "paused": false,
-    "frames": 1887,
-    "leafCount": 7,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -22,
-      "y": -8,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.0891361949332631,
-    "active": 1,
-    "fps": 60.59636826771013
-  },
-  {
-    "ready": true,
-    "time": 32.432483333333685,
-    "reduced": false,
-    "paused": false,
-    "frames": 1948,
-    "leafCount": 7,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -21,
-      "y": -8,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.0891170430492449,
-    "active": 1,
-    "fps": 60.697276200782596
-  },
-  {
-    "ready": true,
-    "time": 33.46578333333366,
-    "reduced": false,
-    "paused": false,
-    "frames": 2010,
-    "leafCount": 6,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -20,
-      "y": -7,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.08855721388586718,
-    "active": 1,
-    "fps": 60.77295715058695
-  },
-  {
-    "ready": true,
-    "time": 34.48239333333365,
-    "reduced": false,
-    "paused": false,
-    "frames": 2071,
-    "leafCount": 6,
-    "maxLeaves": 10,
-    "motes": 7,
-    "rect": {
-      "x": -20,
-      "y": -7,
-      "width": 1323,
-      "height": 738,
-      "scale": 0.9609374999999999
-    },
-    "width": 1280,
-    "height": 720,
-    "smoothing": false,
-    "averageDrawMs": 0.08870111054006491,
-    "active": 1,
-    "fps": 60.579717862940214
+    "fps": 59.70871799702195
   }
 ]

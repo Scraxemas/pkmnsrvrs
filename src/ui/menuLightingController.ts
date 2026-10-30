@@ -1,7 +1,12 @@
-/** One cached soft illumination mask, anchored to the illustration's sunlit clearing. */
+import type {BackgroundRect} from './menuBackgroundMath';
+/** Soft shafts through the existing canopy opening, rather than camera movement. */
 export class MenuLightingController {
-  private texture=document.createElement('canvas');
-  constructor(){const c=this.texture;c.width=128;c.height=128;const g=c.getContext('2d')!,light=g.createRadialGradient(64,64,2,64,64,64);light.addColorStop(0,'rgba(255,243,183,.5)');light.addColorStop(.45,'rgba(239,240,167,.18)');light.addColorStop(1,'rgba(238,238,170,0)');g.fillStyle=light;g.fillRect(0,0,128,128);}
-  draw(g:CanvasRenderingContext2D,x:number,y:number,width:number,height:number,time:number){g.save();g.globalCompositeOperation='screen';g.globalAlpha=.065+.025*Math.sin(time*Math.PI*2/26);g.drawImage(this.texture,Math.round(x-width/2),Math.round(y-height/2),Math.round(width),Math.round(height));g.restore();}
+  private texture=document.createElement('canvas');readonly rayCount=3;
+  constructor(){const c=this.texture;c.width=64;c.height=256;const g=c.getContext('2d')!,pixels=g.createImageData(64,256);for(let y=0;y<256;y++)for(let x=0;x<64;x++){const i=(y*64+x)*4,across=Math.sin(Math.PI*x/63)**2,along=Math.sin(Math.PI*y/255)**.7;pixels.data[i]=255;pixels.data[i+1]=245;pixels.data[i+2]=206;pixels.data[i+3]=Math.round(180*across*along);}g.putImageData(pixels,0,0);}
+  draw(g:CanvasRenderingContext2D,rect:BackgroundRect,time:number){
+    g.save();g.translate(rect.x,rect.y);g.scale(rect.width/1376,rect.height/768);g.globalCompositeOperation='screen';
+    const rays=[[1098,122,-130,385,32],[1130,133,-65,367,24],[1164,150,2,344,19]];
+    rays.forEach(([x,y,dx,dy,width],i)=>{g.save();g.translate(x,y);g.rotate(Math.atan2(-dx,dy)+Math.sin(time*.24+i)*.002);g.globalAlpha=.28+.065*Math.sin(time*.33+i*1.7);g.drawImage(this.texture,-width/2,0,width,Math.hypot(dx,dy));g.restore();});g.restore();
+  }
   destroy(){this.texture.width=0;this.texture.height=0;}
 }
