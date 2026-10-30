@@ -28,11 +28,18 @@ and controller. Settings save reduced motion, damage numbers, and screen shake;
 fullscreen reports the browser's actual state. Audio and later Kanto stages are
 clearly labeled as future content.
 
-The latest [v0.3.8 title screen](docs/V038_CENTERED_MENU.md) centers the logo and
+The [v0.3.8 title screen](docs/V038_CENTERED_MENU.md) centers the logo and
 arcade controls over a forest with local leaf sway, pond ripples, and sun shafts.
 The camera stays fixed. Play opens Single Player / Multiplayer
 mode selection; multiplayer is explicitly unavailable. Personal bests and saved
 totals are in Research → Statistics. The report includes actual animation footage.
+
+The latest [v0.3.9 character roster](docs/V039_CHARACTER_ROSTER.md) replaces the
+large partner cards with a scrollable portrait grid and selected-partner panel.
+Original PMD portraits, actual level-one stats and starting moves, discovery and
+unlock states, sorting, filters, and saved favorites are supported. One Select
+button continues to Stage Selection. Only the three existing starters are
+playable; other catalogue slots do not grant new characters.
 
 ## FRLG asset library
 

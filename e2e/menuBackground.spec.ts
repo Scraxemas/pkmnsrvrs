@@ -1,8 +1,9 @@
 import {test,expect} from '@playwright/test';
 import {mkdirSync,writeFileSync} from 'node:fs';
-import {readyMenu,singlePlayer} from './helpers/menu';
+import {readyMenu,singlePlayer,choosePartner} from './helpers/menu';
 
 test('top-centered logo and bottom-centered arcade layout keep the mode picker anchored',async({page})=>{
+  test.setTimeout(75_000);
   for(const [width,height] of [[1280,720],[1920,1080],[2560,1440],[3440,1440],[960,600],[844,390],[390,844]]){
     await page.setViewportSize({width,height});await page.goto('/?seed=1337');await readyMenu(page);
     await expect(page.locator('.location-card,.profile-strip,.menu-masthead,.menu-tagline')).toHaveCount(0);
@@ -64,7 +65,7 @@ test('repeated frontend navigation releases backgrounds, inputs, and run overlay
     await page.keyboard.press('Escape');await readyMenu(page);
     const active=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('menu');return{backgrounds:s.background.snapshot().active,inputs:s.navigation.constructor.activeCount,canvas:document.querySelectorAll('.menu-background-canvas').length};});expect(active).toEqual({backgrounds:1,inputs:1,canvas:1});
   }
-  await singlePlayer(page);await page.getByRole('button',{name:'Choose Bulbasaur'}).click();await page.getByRole('button',{name:'Enter Forest',exact:true}).click();
+  await singlePlayer(page);await choosePartner(page);await page.getByRole('button',{name:'Enter Forest',exact:true}).click();
   await page.waitForFunction(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return s.player?.active&&s.keys?.D;});await expect(page.locator('.menu-background-canvas')).toHaveCount(0);
   await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.finish('defeat');});
   await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('results').returnButton?.active);

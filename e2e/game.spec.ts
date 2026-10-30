@@ -1,13 +1,14 @@
 import {test,expect} from '@playwright/test';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
+import {choosePartner} from './helpers/menu';
 test('menu to deterministic Viridian Forest run with visual checkpoints',async({page})=>{
   await page.goto('/?fast=1&debug=1&seed=1337');
   const canvas=page.locator('#app canvas');await expect(canvas).toBeVisible();await page.waitForTimeout(500);
   await page.screenshot({path:'test-results/screenshots/01-main-menu.png'});
   await page.getByRole('button',{name:'Play',exact:true}).click();await page.getByRole('button',{name:'Single Player',exact:true}).click();await page.waitForTimeout(300);
   await page.screenshot({path:'test-results/screenshots/02-pokemon-selection.png'});
-  await page.getByRole('button',{name:'Choose Bulbasaur'}).click();await page.waitForTimeout(300);
+  await choosePartner(page);await page.waitForTimeout(300);
   await page.screenshot({path:'test-results/screenshots/03-stage-selection.png'});
   await page.getByRole('button',{name:'Enter Forest',exact:true}).click();await page.waitForTimeout(1000);
   await expect(canvas).toBeVisible();await page.screenshot({path:'test-results/screenshots/04-viridian-early.png'});

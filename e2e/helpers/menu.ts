@@ -8,3 +8,7 @@ export async function singlePlayer(page:Page){
   if(!await page.getByRole('button',{name:'Single Player',exact:true}).isVisible())await page.getByRole('button',{name:'Play',exact:true}).click();
   await page.getByRole('button',{name:'Single Player',exact:true}).click();
 }
+export async function choosePartner(page:Page,name='Bulbasaur'){
+  await page.getByRole('option',{name:new RegExp(`· ${name} ·`)}).click();
+  await page.getByRole('button',{name:`Select ${name}`,exact:true}).click();
+}

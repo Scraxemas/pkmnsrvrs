@@ -8,13 +8,17 @@ import {FRONTEND_VERSION,LocationCardData,locationCards,menuAsset,MENU_ART,resea
 import {MenuInput} from './ui/menuInput';
 import {arcadeButton} from './ui/arcadeButton';
 import {MenuBackgroundController} from './ui/menuBackgroundController';
+import {CharacterSelection,RosterFilter,RosterSort} from './ui/characterRoster';
+import {CharacterRosterView} from './ui/characterRosterView';
 import './menu.css';
 import './ui/titleMenu.css';
+import './ui/characterRoster.css';
 
 export function stopFrontendScenes(scene:Phaser.Scene){for(const key of ['menu','pokemon','stage','dex','research','settings'])if(key!==scene.scene.key&&scene.scene.isActive(key))scene.scene.stop(key);}
 
 abstract class FrontendScene extends Phaser.Scene {
   root!:HTMLElement;shell!:HTMLElement;content!:HTMLElement;footer!:HTMLElement;navigation?:MenuInput;
+  background?:MenuBackgroundController;
   mount(page:string,title?:string,subtitle?:string){
     stopFrontendScenes(this);
     this.cameras.main.setBackgroundColor('#0a1b17');
@@ -31,10 +35,17 @@ abstract class FrontendScene extends Phaser.Scene {
     const hints=element('span','input-hints');hints.append(element('span','keyboard-hint','↑ ↓ ← →  Move    Enter  Select    Esc  Back'),element('span','controller-hint','D-pad / Stick  Move    A  Select    B  Back'));this.footer.append(hints);
     this.navigation=new MenuInput(this.root,back);
   }
+  animateBackground(){
+    const image=this.root.querySelector<HTMLImageElement>('.frontend-background')!;
+    this.background=new MenuBackgroundController(this,this.root,image,motionReduced(loadSave().settings));
+    const query=matchMedia('(prefers-reduced-motion: reduce)'),changed=()=>{const value=motionReduced(loadSave().settings);this.root.dataset.reducedMotion=String(value);this.background?.setReducedMotion(value);};query.addEventListener('change',changed);
+    this.events.once('shutdown',()=>{query.removeEventListener('change',changed);this.background?.destroy();});
+  }
+  update(_time:number,delta:number){this.background?.update(delta);}
 }
 
 export class MenuScene extends FrontendScene {
-  background?:MenuBackgroundController;modeOpen=false;
+  modeOpen=false;
   private links!:HTMLElement;private modes!:HTMLElement;private play!:HTMLButtonElement;private single!:HTMLButtonElement;
   constructor(){super('menu');}
   init(data?:{mode?:boolean}){this.modeOpen=!!data?.mode;}
@@ -51,33 +62,25 @@ export class MenuScene extends FrontendScene {
     this.single=arcadeButton('Single Player',()=>this.scene.start('pokemon'),'single');
     const multi=arcadeButton('Multiplayer',()=>{},'multi');multi.disabled=!PLAY_MODES.multiplayer.available;multi.dataset.targetPlayers=String(PLAY_MODES.multiplayer.targetMaxPlayers);multi.setAttribute('aria-label','Multiplayer — Coming soon');multi.querySelector('.arcade-button__label')!.append(element('span','coming-soon','COMING SOON'));
     this.modes.append(this.single,multi,arcadeButton('Back',()=>this.setMode(false),'back'));area.append(this.links,this.modes);nav.append(area);stack.append(title,nav);stage.append(stack);this.content.append(stage);this.footer.append(element('span','title-build',FRONTEND_VERSION));
-    const image=this.root.querySelector<HTMLImageElement>('.frontend-background')!;
-    this.background=new MenuBackgroundController(this,this.root,image,motionReduced(loadSave().settings));
-    const query=matchMedia('(prefers-reduced-motion: reduce)'),changed=()=>{const value=motionReduced(loadSave().settings);this.root.dataset.reducedMotion=String(value);this.background?.setReducedMotion(value);};query.addEventListener('change',changed);
-    this.events.once('shutdown',()=>{query.removeEventListener('change',changed);this.background?.destroy();});
+    this.animateBackground();
     this.navigation=new MenuInput(this.root,()=>{if(this.modeOpen)this.setMode(false);});this.setMode(initialMode);
   }
   setMode(open:boolean){
     this.modeOpen=open;this.links.hidden=open;this.modes.hidden=!open;this.play.setAttribute('aria-expanded',String(open));
     queueMicrotask(()=>{if(this.root.isConnected)(open?this.single:this.play).focus({preventScroll:true});});
   }
-  update(_time:number,delta:number){this.background?.update(delta);}
 }
 
 export class PokemonScene extends FrontendScene {
+  selection=new CharacterSelection('local');roster?:CharacterRosterView;sort:RosterSort='dex';filter:RosterFilter='all';
   constructor(){super('pokemon');}
+  init(data?:{pokemon?:string}){if(data?.pokemon&&POKEMON[data.pokemon])this.selection.preview(POKEMON[data.pokemon].dex);}
   create(){
-    this.mount('pokemon','Choose your partner','Every adventure begins with a Pokémon at your side.');
-    const save=loadSave(),grid=element('div','partner-grid');
-    for(const id of STARTERS){
-      const pokemon=POKEMON[id],available=save.unlockedPokemon.includes(id),button=actionButton('',()=>{if(available)this.scene.start('stage',{pokemon:id});},'partner-card');button.replaceChildren();button.dataset.pokemon=id;button.setAttribute('aria-label',`Choose ${pokemon.name}`);button.disabled=!available;
-      button.style.setProperty('--partner-color',`#${pokemon.color.toString(16).padStart(6,'0')}`);
-      const portrait=element('img','partner-portrait');portrait.src=assetFor(id,'portrait');portrait.alt=pokemon.name;
-      const types=element('div','type-list');for(const type of pokemon.types)types.append(element('span',`type-chip type-${type.toLowerCase()}`,type));
-      const stats=element('div','partner-stats');for(const [label,value] of [['HP',pokemon.stats.hp],['ATK',pokemon.stats.attack],['SPD',pokemon.stats.speed]]){const stat=element('span');stat.append(element('small','',String(label)),element('strong','',String(value)));stats.append(stat);}
-      button.append(element('span','eyebrow',`NO. ${String(pokemon.dex).padStart(3,'0')}`),portrait,element('h2','',pokemon.name),types,element('p','',pokemon.description),stats,element('span','partner-move',`Starts with ${MOVES[pokemon.startingMove].name}`),element('span','partner-select',available?'Choose partner  ›':'Locked'));grid.append(button);
-    }
-    this.content.append(grid);this.controls(()=>this.scene.start('menu',{mode:true}));
+    this.mount('pokemon','Select Pokémon','Choose a partner for your next run.');this.selection.preview(this.selection.dex);
+    const back=()=>this.scene.start('menu',{mode:true});
+    this.roster=new CharacterRosterView(this.root,this.content,this.footer,loadSave(),this.selection,this.sort,this.filter,back,id=>this.scene.start('stage',{pokemon:id}),(sort,filter)=>{this.sort=sort;this.filter=filter;});
+    this.navigation=new MenuInput(this.root,back,{initialFocus:()=>{const tile=this.roster?.selectedTile();tile?.scrollIntoView({block:'nearest',inline:'nearest'});return tile;},move:direction=>this.roster?.move(direction)??false});
+    this.animateBackground();this.events.once('shutdown',()=>this.roster?.destroy());
   }
 }
 
@@ -90,7 +93,7 @@ export class StageScene extends FrontendScene {
     this.cards=locationCards(loadSave());const grid=element('div','location-grid');
     for(const data of this.cards)grid.append(locationCard(data,()=>this.select(data.id)));
     const summary=element('section','stage-summary');summary.setAttribute('aria-live','polite');summary.append(element('div','stage-summary__text'),actionButton('Enter Forest',()=>{const selected=this.cards.find(c=>c.id===this.selected)!;if(selected.unlocked&&selected.playable)this.scene.start('game',{pokemon:this.pokemon,fast:new URLSearchParams(location.search).has('fast')});},'ui-button ui-button--gold stage-enter','play'));
-    this.content.append(grid,summary);this.select(this.selected);this.controls(()=>this.scene.start('pokemon'));
+    this.content.append(grid,summary);this.select(this.selected);this.controls(()=>this.scene.start('pokemon',{pokemon:this.pokemon}));
   }
   select(id:string){
     this.selected=id;for(const card of this.root.querySelectorAll<HTMLButtonElement>('[data-stage-id]')){const selected=card.dataset.stageId===id;card.classList.toggle('is-selected',selected);card.setAttribute('aria-pressed',String(selected));}

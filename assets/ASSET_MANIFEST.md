@@ -1,5 +1,16 @@
 # Asset manifest
 
+## v0.3.9 character roster
+
+- Roster tiles and large previews reuse the existing PMDCollab portrait PNGs.
+  Bulbasaur, Charmander, and Squirtle are byte-identical to the prior release;
+  no portrait, sprite, forest background, or logo was replaced or regenerated.
+- Catalogue metadata references the 20 existing imported portrait species.
+  Unknown National Dex slots use a code-authored question-mark panel and request
+  no portrait. Broken portrait requests produce an explicit fallback and warning.
+- UI frames, stat bars, favorite markers, and transitions are HTML/CSS. Their
+  presentation does not grant playable unlocks or introduce new character art.
+
 ## v0.3.8 menu atmosphere and icons
 
 - The existing forest background, location card, and custom logo remain the same
