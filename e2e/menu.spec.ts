@@ -10,11 +10,13 @@ async function ready(page:Page){
 test('supplied artwork and responsive main menu render at standard and ultrawide resolutions',async({page,request})=>{
   for(const [width,height] of [[1280,720],[1920,1080],[2560,1440],[3440,1440]]){
     await page.setViewportSize({width,height});await page.goto('/?seed=1337');await ready(page);
+    const logo=page.getByRole('img',{name:'Pokémon Survivors',exact:true});await expect(logo).toBeVisible();await expect(logo).toHaveAttribute('src',/pokemon-survivors-logo.png/);
+    const logoBounds=(await logo.boundingBox())!;expect(logoBounds.width/logoBounds.height).toBeCloseTo(202/100,2);
     const layout=await page.evaluate(()=>{
       const root=document.querySelector('.frontend')!,nav=[...root.querySelectorAll<HTMLElement>('.menu-option')];
-      return{scroll:root.scrollWidth>innerWidth,buttons:nav.map(button=>{const r=button.getBoundingClientRect();return{left:r.left,right:r.right,top:r.top,bottom:r.bottom};}),font:document.fonts.check('16px Silkscreen'),background:(root.querySelector('.frontend-background') as HTMLImageElement).src};
+      return{scroll:root.scrollWidth>innerWidth,vertical:root.scrollHeight>innerHeight+1,buttons:nav.map(button=>{const r=button.getBoundingClientRect();return{left:r.left,right:r.right,top:r.top,bottom:r.bottom};}),font:document.fonts.check('16px Silkscreen'),background:(root.querySelector('.frontend-background') as HTMLImageElement).src};
     });
-    expect(layout.scroll).toBe(false);expect(layout.font).toBe(true);expect(layout.background).toContain('viridian-forest-main-menu.jpg');
+    expect(layout.scroll).toBe(false);expect(layout.vertical).toBe(false);expect(layout.font).toBe(true);expect(layout.background).toContain('viridian-forest-main-menu.jpg');
     for(const button of layout.buttons){expect(button.left).toBeGreaterThanOrEqual(0);expect(button.right).toBeLessThanOrEqual(width);expect(button.top).toBeGreaterThanOrEqual(0);expect(button.bottom).toBeLessThanOrEqual(height);}
     await page.screenshot({animations:'disabled',path:`test-results/screenshots/menu-main-${width}.png`});
   }

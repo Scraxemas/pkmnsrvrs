@@ -1,7 +1,7 @@
 # v0.3.7 — Viridian Forest menu redesign
 
-The title screen now uses the supplied forest background, a custom pixel-font
-title treatment, framed navigation, a featured milestone card, and actual save
+The title screen now uses the supplied forest background and Pokémon Survivors
+logo, framed navigation, a featured milestone card, and actual save
 statistics. Starter selection, stage selection, Pokédex, Research, and Settings
 share the same forest palette and controls. The first milestone is **Viridian
 Forest**. No gameplay terrain or procedural-generation assets were replaced.
@@ -12,8 +12,9 @@ Forest**. No gameplay terrain or procedural-generation assets were replaced.
 | --- | --- | --- |
 | `viridian_forest_main_menu.jpg` | `public/assets/menu/viridian-forest-main-menu.jpg` | 1376 × 768 main-menu background. Aspect-preserving cover, with shading concentrated behind navigation and the footer. |
 | `FL_Viridian_Forest_card.png` | `public/assets/menu/viridian-forest-card.png` | 240 × 128 hero image in both the featured milestone and stage-selection cards. The frame retains the native 15:8 ratio and nearest-neighbor rendering. |
+| `logo.png` | `public/assets/menu/pokemon-survivors-logo.png` | 202 × 100 transparent main-menu logo. Aspect-preserving responsive sizing replaces the text title. |
 
-Both files are byte-identical imports. `assets/menu-imports.json` records their
+All three files are byte-identical imports. `assets/menu-imports.json` records their
 original filenames, dimensions, roles, and SHA-256 hashes. Browser checks compare
 the served image bytes with these hashes. The title screen contains no Pokémon
 sprites, enemies, pickups, or gameplay overlays.
@@ -72,6 +73,10 @@ Verified on 2026-10-29: **119 Vitest tests, 26 Chromium Playwright tests,
 TypeScript, and production build pass.** The full browser run includes all prior
 gameplay regressions, the 100-seed world checks remain in Vitest, and the
 accelerated Beedrill victory/save test remains green.
+
+The subsequent logo import was checked with the two focused artwork/navigation
+browser tests and a production build. All four main-menu resolutions retain the
+logo's proportions and fit without horizontal or vertical scrolling.
 
 ![Main menu at 1280 × 720](qa/v037/main-menu-1280.png)
 

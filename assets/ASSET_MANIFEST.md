@@ -6,6 +6,8 @@
   are imported byte-for-byte under `public/assets/menu`. They serve as menu
   background and location-card artwork only.
 - `assets/menu-imports.json` records original names, dimensions, roles, and hashes.
+- User-supplied `logo.png` is preserved as `public/assets/menu/pokemon-survivors-logo.png`
+  and replaces the main-menu text title. Its transparency and 202 × 100 aspect ratio are retained.
 - Attribution/licensing beyond the user's supplied files was not provided. The
   import does not assert new redistribution rights.
 - Local pixel typography: Google Fonts Silkscreen Regular/Bold, with original

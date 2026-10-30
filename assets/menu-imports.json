@@ -14,5 +14,13 @@
     "width": 240,
     "height": 128,
     "sha256": "f85c2c448e1f99930ebfffd4dbba94f77f6f399fda2e3a3d74b14bfcf9649950"
+  },
+  {
+    "source": "logo.png",
+    "path": "assets/menu/pokemon-survivors-logo.png",
+    "role": "Main-menu Pokémon Survivors logo",
+    "width": 202,
+    "height": 100,
+    "sha256": "1d1455c58ddb1e36b7c61d9a1920b6ed1658998283599ccfb8c9797b17a18646"
   }
 ]

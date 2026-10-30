@@ -2,7 +2,7 @@ import {POKEMON,STAGES} from '../content';
 import type {SaveData} from '../save';
 
 export const FRONTEND_VERSION='v0.3.7';
-export const MENU_ART={background:'assets/menu/viridian-forest-main-menu.jpg',viridian:'assets/menu/viridian-forest-card.png'} as const;
+export const MENU_ART={background:'assets/menu/viridian-forest-main-menu.jpg',viridian:'assets/menu/viridian-forest-card.png',logo:'assets/menu/pokemon-survivors-logo.png'} as const;
 export const menuAsset=(path:string)=>`${import.meta.env.BASE_URL}${path}`;
 export const STARTERS=['bulbasaur','charmander','squirtle'] as const;
 export interface LocationCardData {
