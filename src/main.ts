@@ -22,6 +22,8 @@ import {chunkKey,FOREST_CHUNK_CELLS} from './worldgen';
 import {MenuScene,PokemonScene,StageScene,DexScene,ResearchScene,SettingsScene,stopFrontendScenes} from './menuScenes';
 import {motionReduced,PlayerSettings} from './preferences';
 import {preloadItemArt} from './itemAssets';
+import {hasMoveArt,moveTexture,preloadMoveArt} from './moveAssets';
+import {pixelArt} from './ui/pixelArt';
 import {PickupRenderer} from './pickupRenderer';
 import {ItemHud} from './ui/itemHud';
 import {MoveHud} from './ui/moveHud';
@@ -54,7 +56,7 @@ class GameScene extends Phaser.Scene {
   this.previousPickups.clear();
   this.pendingChoices=[];this.activeChoice=undefined;this.choiceSerial=0;
  }
- preload(){preloadItemArt(this);const ids=new Set([...Object.keys(POKEMON),...Object.keys(ENEMIES)]);for(const id of ids){const f=SPRITE_FRAMES[id];if(f)this.load.spritesheet(`${id}-sprite`,assetFor(id,'sprite'),{frameWidth:f.width,frameHeight:f.height});this.load.image(`${id}-portrait`,assetFor(id,'portrait'));}for(const name of new Set(Object.values(ENVIRONMENT_ASSETS))){if(ENVIRONMENT_ATLASES.has(name))this.load.spritesheet(environmentKey(name),environmentUrl(name),{frameWidth:16,frameHeight:16});else if(name.startsWith('original/'))this.load.svg(environmentKey(name),environmentUrl(name));else this.load.image(environmentKey(name),environmentUrl(name));}}
+ preload(){preloadItemArt(this);preloadMoveArt(this);const ids=new Set([...Object.keys(POKEMON),...Object.keys(ENEMIES)]);for(const id of ids){const f=SPRITE_FRAMES[id];if(f)this.load.spritesheet(`${id}-sprite`,assetFor(id,'sprite'),{frameWidth:f.width,frameHeight:f.height});this.load.image(`${id}-portrait`,assetFor(id,'portrait'));}for(const name of new Set(Object.values(ENVIRONMENT_ASSETS))){if(ENVIRONMENT_ATLASES.has(name))this.load.spritesheet(environmentKey(name),environmentUrl(name),{frameWidth:16,frameHeight:16});else if(name.startsWith('original/'))this.load.svg(environmentKey(name),environmentUrl(name));else this.load.image(environmentKey(name),environmentUrl(name));}}
  create(){
   stopFrontendScenes(this);
   this.events.once('shutdown',()=>{this.scene.stop('upgrade');this.scene.stop('results');this.pickupRenderer.destroy();this.itemHud.destroy();this.moveHud.destroy();});
@@ -222,8 +224,14 @@ class GameScene extends Phaser.Scene {
  }
  showProgressionNotices(){
   if(!this.state.progressionNotices.length)return;this.renderMoveHud();
-  const text=this.add.text(W/2,176,this.state.progressionNotices.map(progressionNoticeText).join('\n'),{fontFamily:FONT,fontSize:'16px',fontStyle:'bold',color:'#ffe9a0',backgroundColor:'#102019ed',padding:{x:12,y:8},align:'center',wordWrap:{width:950}}).setOrigin(.5,0).setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);
-  this.time.delayedCall(2800,()=>text.destroy());
+  const text=this.add.text(0,0,this.state.progressionNotices.map(progressionNoticeText).join('\n'),{fontFamily:FONT,fontSize:'16px',fontStyle:'bold',color:'#ffe9a0',backgroundColor:'#102019ed',padding:{x:12,y:8},align:'center',wordWrap:{width:950}}).setOrigin(.5,0);
+  const notice=this.add.container(W/2,176,[text]).setName('move-progression-notice').setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);
+  let row=0;for(const change of this.state.progressionNotices){
+   if(change.kind!=='move'||!hasMoveArt(this,change.from)||!hasMoveArt(this,change.to))continue;
+   const y=text.height+20+row++*40;
+   notice.add([pixelArt(this,-32,y,moveTexture(change.from),32,'move-evolution-from').setData('assetId',change.from),this.add.text(0,y,'→',{fontFamily:FONT,fontSize:'21px',color:'#ffe9a0',stroke:'#102019',strokeThickness:3}).setOrigin(.5),pixelArt(this,32,y,moveTexture(change.to),32,'move-evolution-to').setData('assetId',change.to)]);
+  }
+  this.time.delayedCall(2800,()=>notice.destroy(true));
  }
  showEvolution(id:string){const p=POKEMON[id],profile=renderProfile(id);recordEvolution(id);this.player.setTexture(`${id}-sprite`,0);this.playerAnimation.setSpecies(id);this.playerAnimation.trigger('evolution',this.state.time,1.8);this.playerShadow.setSize(profile.shadowWidth,profile.shadowHeight);this.portrait.setTexture(`${id}-portrait`);const text=this.add.text(W/2,H/2,`Congratulations!\nYour Pokémon evolved into ${p.name}!`,{fontFamily:FONT,fontSize:'30px',color:'#ffe26b',backgroundColor:'#102019ee',padding:{x:30,y:24},align:'center'}).setOrigin(.5).setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);this.time.delayedCall(1800,()=>text.destroy());}
  showReward(tier:1|2|3){const options=rewardRoll(this.state,tier);this.showChoices(`${tier===3?'ULTRA':tier===2?'GREAT':'POKÉ'} BALL OPENED!`,options);}

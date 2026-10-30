@@ -1,0 +1,314 @@
+[
+  {
+    "id": "rapidSpin",
+    "style": "A",
+    "colors": 11,
+    "opaquePixels": 354,
+    "bounds": [
+      3,
+      4,
+      29,
+      28
+    ]
+  },
+  {
+    "id": "tackle",
+    "style": "A",
+    "colors": 11,
+    "opaquePixels": 310,
+    "bounds": [
+      3,
+      4,
+      29,
+      27
+    ]
+  },
+  {
+    "id": "dragonRage",
+    "style": "A",
+    "colors": 10,
+    "opaquePixels": 375,
+    "bounds": [
+      4,
+      3,
+      27,
+      29
+    ]
+  },
+  {
+    "id": "dragonClaw",
+    "style": "A",
+    "colors": 12,
+    "opaquePixels": 286,
+    "bounds": [
+      3,
+      3,
+      28,
+      29
+    ]
+  },
+  {
+    "id": "waterGun",
+    "style": "A",
+    "colors": 9,
+    "opaquePixels": 147,
+    "bounds": [
+      3,
+      4,
+      29,
+      28
+    ]
+  },
+  {
+    "id": "hydroPump",
+    "style": "A",
+    "colors": 11,
+    "opaquePixels": 325,
+    "bounds": [
+      3,
+      3,
+      29,
+      28
+    ]
+  },
+  {
+    "id": "vineWhip",
+    "style": "A",
+    "colors": 11,
+    "opaquePixels": 266,
+    "bounds": [
+      3,
+      3,
+      28,
+      29
+    ]
+  },
+  {
+    "id": "leechSeed",
+    "style": "A",
+    "colors": 10,
+    "opaquePixels": 305,
+    "bounds": [
+      3,
+      3,
+      28,
+      29
+    ]
+  },
+  {
+    "id": "scratch",
+    "style": "A",
+    "colors": 8,
+    "opaquePixels": 230,
+    "bounds": [
+      3,
+      3,
+      29,
+      29
+    ]
+  },
+  {
+    "id": "scratch",
+    "style": "B",
+    "colors": 16,
+    "opaquePixels": 291,
+    "bounds": [
+      2,
+      2,
+      30,
+      29
+    ]
+  },
+  {
+    "id": "scratch",
+    "style": "C",
+    "colors": 4,
+    "opaquePixels": 174,
+    "bounds": [
+      4,
+      5,
+      28,
+      27
+    ]
+  },
+  {
+    "id": "ember",
+    "style": "A",
+    "colors": 11,
+    "opaquePixels": 292,
+    "bounds": [
+      3,
+      3,
+      29,
+      29
+    ]
+  },
+  {
+    "id": "bubble",
+    "style": "A",
+    "colors": 11,
+    "opaquePixels": 265,
+    "bounds": [
+      3,
+      3,
+      29,
+      28
+    ]
+  },
+  {
+    "id": "razorLeaf",
+    "style": "A",
+    "colors": 12,
+    "opaquePixels": 317,
+    "bounds": [
+      3,
+      3,
+      29,
+      29
+    ]
+  },
+  {
+    "id": "metalClaw",
+    "style": "A",
+    "colors": 12,
+    "opaquePixels": 309,
+    "bounds": [
+      3,
+      4,
+      29,
+      28
+    ]
+  },
+  {
+    "id": "poisonPowder",
+    "style": "A",
+    "colors": 12,
+    "opaquePixels": 304,
+    "bounds": [
+      3,
+      4,
+      29,
+      28
+    ]
+  },
+  {
+    "id": "ember",
+    "style": "B",
+    "colors": 19,
+    "opaquePixels": 386,
+    "bounds": [
+      2,
+      2,
+      30,
+      30
+    ]
+  },
+  {
+    "id": "bubble",
+    "style": "B",
+    "colors": 19,
+    "opaquePixels": 294,
+    "bounds": [
+      2,
+      3,
+      30,
+      28
+    ]
+  },
+  {
+    "id": "razorLeaf",
+    "style": "B",
+    "colors": 19,
+    "opaquePixels": 459,
+    "bounds": [
+      2,
+      2,
+      29,
+      30
+    ]
+  },
+  {
+    "id": "metalClaw",
+    "style": "B",
+    "colors": 16,
+    "opaquePixels": 374,
+    "bounds": [
+      2,
+      2,
+      30,
+      29
+    ]
+  },
+  {
+    "id": "poisonPowder",
+    "style": "B",
+    "colors": 17,
+    "opaquePixels": 335,
+    "bounds": [
+      2,
+      4,
+      30,
+      28
+    ]
+  },
+  {
+    "id": "ember",
+    "style": "C",
+    "colors": 5,
+    "opaquePixels": 272,
+    "bounds": [
+      4,
+      5,
+      28,
+      27
+    ]
+  },
+  {
+    "id": "bubble",
+    "style": "C",
+    "colors": 6,
+    "opaquePixels": 208,
+    "bounds": [
+      4,
+      4,
+      27,
+      28
+    ]
+  },
+  {
+    "id": "razorLeaf",
+    "style": "C",
+    "colors": 5,
+    "opaquePixels": 271,
+    "bounds": [
+      4,
+      4,
+      28,
+      27
+    ]
+  },
+  {
+    "id": "metalClaw",
+    "style": "C",
+    "colors": 6,
+    "opaquePixels": 293,
+    "bounds": [
+      4,
+      4,
+      28,
+      28
+    ]
+  },
+  {
+    "id": "poisonPowder",
+    "style": "C",
+    "colors": 5,
+    "opaquePixels": 216,
+    "bounds": [
+      4,
+      5,
+      28,
+      26
+    ]
+  }
+]

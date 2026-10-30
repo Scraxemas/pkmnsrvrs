@@ -4,6 +4,8 @@ import {describeUpgrade,UpgradeDetails,progressionNoticeText} from './upgrades';
 import {loadSave} from './save';
 import {motionReduced} from './preferences';
 import {itemTexture,POKESPRITE_ASSETS} from './itemAssets';
+import {hasMoveArt,moveTexture} from './moveAssets';
+import {pixelArt,UPGRADE_ART_DISPLAY_SIZE} from './ui/pixelArt';
 
 interface ChoiceConfig {title:string;options:Upgrade[];state:SimState;onSelect:(upgrade:Upgrade)=>void;}
 
@@ -76,10 +78,11 @@ export class UpgradeScene extends Phaser.Scene {
       const index=this.page*3+i,x=640+(i-(options.length-1)/2)*(width+gap),d=describeUpgrade(this.config.state,option),card=this.add.container(x,entrance?y+14:y);
       card.setData('width',width).setData('height',height);
       const frame=this.add.graphics().setName('frame');card.add(frame);
-      if(d.artKey){
+      const moveReady=!!d.moveId&&hasMoveArt(this,d.moveId);
+      if(d.artKey||moveReady){
         const backing=this.add.graphics().setPosition(0,-110);backing.fillStyle(0x102c32,1).fillRoundedRect(-60,-40,120,80,6).lineStyle(1,d.color,.3).strokeRoundedRect(-60,-40,120,80,6);card.add(backing);
-        const source=POKESPRITE_ASSETS[d.artKey],picture=this.add.image(0,-110,itemTexture(d.artKey,true)).setScale(Math.min(64/source.width,64/source.height)).setName('item-art');picture.setData('assetId',d.artKey);card.add(picture);
-      }else{const picture=this.add.graphics().setPosition(0,-110).setScale(.72);illustration(picture,d);card.add(picture);}
+        const picture=pixelArt(this,0,-110,d.artKey?itemTexture(d.artKey,true):moveTexture(d.moveId!),UPGRADE_ART_DISPLAY_SIZE,d.artKey?'item-art':'move-art');picture.setData('assetId',d.artKey??d.moveId);card.add(picture);
+      }else{const picture=this.add.graphics().setPosition(0,-110).setScale(.72).setName(d.moveId?'move-art-fallback':'upgrade-illustration');illustration(picture,d);card.add(picture);}
       if(d.type){const id=`type:${d.type.toLowerCase()}`,source=POKESPRITE_ASSETS[id];card.add(this.add.image(112,-171,itemTexture(id)).setScale(28/Math.max(source.width,source.height)).setName('type-badge'));}
       if(d.rarity==='rare'){const sparkle=this.add.graphics();sparkle.fillStyle(0xffe19b,.8).fillRect(-119,-175,2,9).fillRect(-122,-172,9,2);card.add(sparkle);}
       const text=(ty:number,value:string,size:number,color:string,bold=false,name='',maxHeight=40,minSize=12)=>{

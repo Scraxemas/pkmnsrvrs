@@ -62,7 +62,7 @@ draft whenever one is available. Selection now pauses the whole gameplay scene;
 280 × 394 cards sit over a lighter overlay. The HUD shows locked future slots,
 and world consumables use smaller sprites. Held items remain limited to four.
 
-The latest [v0.4.2 Kanto adventure atlas](docs/V042_CAMPAIGN_ATLAS.md) replaces
+The [v0.4.2 Kanto adventure atlas](docs/V042_CAMPAIGN_ATLAS.md) replaces
 the stage grid with a left-to-right 20-stop journey and seven vertical side trails.
 Drag, wheel, keyboard and controller navigation keep the selected destination in
 view beside its information panel. Future locations remain previews; Viridian
@@ -75,6 +75,12 @@ all 27 map cards and detail panels, with lazy loading and original-file provenan
 [Character Selection and Pokédex now use a compact charcoal interface](docs/CHARCOAL_ROSTER.md),
 with flat portrait tiles, shared neutral controls and responsive roster scrolling.
 The animated forest, Pokémon artwork and existing progression are preserved.
+
+The [v0.4.3 move artwork pass](docs/V043_MOVE_ICONS.md) adds original AI-generated
+32×32 transparent pixel-art icons for every registered move. Upgrade cards, the
+five-slot move HUD, and evolution notifications share one asset registry. Browse
+the [style study and comparison gallery](docs/qa/v043/index.html) for native-size
+and enlarged previews, before/after cards, and existing-item comparisons.
 
 ## FRLG asset library
 

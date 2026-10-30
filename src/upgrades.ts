@@ -6,7 +6,7 @@ import type {ProgressionNotice} from './moveEvolution';
 export function progressionNoticeText(notice:ProgressionNotice){return notice.kind==='slot'?`${notice.slot===4?'FOURTH':'FIFTH'} MOVE SLOT UNLOCKED!`:`MOVE EVOLVED! ${MOVES[notice.from].name} → ${MOVES[notice.to].name} · Rank ${notice.rank} Preserved${notice.refund?` · ${notice.refund} move choices refunded`:''}`;}
 
 export const TYPE_COLORS:Record<PokemonType,number>={Normal:0xc5bfa4,Grass:0x70cf70,Poison:0xc17bdd,Fire:0xff9759,Water:0x63cfff,Dragon:0xa795ff,Electric:0xffdc67,Ice:0x96e8ea,Fighting:0xd6825b,Ground:0xd8bb73,Flying:0xa5b5e7,Psychic:0xf488b6,Bug:0xb6c84e,Rock:0xc8b985,Ghost:0x9893ca,Dark:0xa59d98,Steel:0xacc3ca,Fairy:0xf0b1d6};
-export interface UpgradeDetails {name:string;action:string;category:string;description:string;rank:string;benefit:string;color:number;icon:string;artKey?:string;type?:PokemonType;rarity?:'common'|'uncommon'|'rare';}
+export interface UpgradeDetails {name:string;action:string;category:string;description:string;rank:string;benefit:string;color:number;icon:string;artKey?:string;moveId?:string;type?:PokemonType;rarity?:'common'|'uncommon'|'rare';}
 const pct=(value:number)=>`${Math.round(value*100)}%`;
 const vitaminInfo:Record<string,[string,string]>={hpUp:['HP Up','Maximum HP +5. Also restores 5 HP.'],protein:['Protein','Physical move damage +2.5%.'],iron:['Iron','Contact damage taken reduced by 0.15 HP/s.'],calcium:['Calcium','Special move damage +2.5%.'],zinc:['Zinc','Projectile damage taken reduced by 2.5%.'],carbos:['Carbos','Movement speed +1.5%.']};
 const masteryInfo:Record<string,[string,string]>={overcharge:['Overcharge','Move damage +12% of base.'],multicast:['Multicast','Adds 0.5 to target count, rounded on activation.'],expansion:['Expansion','Move range +12% of base.'],sustain:['Sustain','Restore an additional 0.2 HP per second.'],efficiency:['Efficiency','Move cooldowns reduced by 6% of base.']};
@@ -26,7 +26,7 @@ export function describeUpgrade(state:SimState,u:Upgrade):UpgradeDetails {
       if(b.area!==a.area)changes.push(`Area +${pct(b.area/a.area-1)}.`);
       if(b.statusChance!==a.statusChance)changes.push(`Status chance ${pct(a.statusChance)} → ${pct(b.statusChance)}.`);
     }
-    return{name:move.name.toUpperCase(),action:rank?'MOVE UPGRADE':'NEW MOVE',category:`${move.type} · ${move.damageClass}`,description:move.description,rank:rank?`RANK ${rank} → ${next}`:'NEW MOVE · RANK 1',benefit:changes.join(' '),color:TYPE_COLORS[move.type],icon:u.id,type:move.type};
+    return{name:move.name.toUpperCase(),action:rank?'MOVE UPGRADE':'NEW MOVE',category:`${move.type} · ${move.damageClass}`,description:move.description,rank:rank?`RANK ${rank} → ${next}`:'NEW MOVE · RANK 1',benefit:changes.join(' '),color:TYPE_COLORS[move.type],icon:u.id,moveId:u.id,type:move.type};
   }
   if(u.kind==='item'){
     const item=ITEMS[u.id],rank=state.items.find(i=>i.id===u.id)?.rank??0;

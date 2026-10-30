@@ -1,0 +1,14 @@
+[
+  {
+    "url": "file:///D:/Projects/Pokemon%20Survivors/docs/qa/v043/index.html",
+    "images": 28,
+    "links": 6,
+    "brokenImages": 0
+  },
+  {
+    "url": "http://127.0.0.1:5198/docs/qa/v043/index.html",
+    "images": 28,
+    "links": 6,
+    "brokenImages": 0
+  }
+]

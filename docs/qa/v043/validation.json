@@ -1,0 +1,251 @@
+{
+  "version": "0.4.3",
+  "reviewDate": "2026-10-30",
+  "runtimeMoveCount": 14,
+  "originalGenerationCount": 26,
+  "checks": {
+    "typescript": {
+      "status": "passed",
+      "command": "pnpm typecheck"
+    },
+    "vitest": {
+      "status": "passed",
+      "command": "pnpm test",
+      "tests": 284,
+      "files": 26,
+      "newAssetTests": 17,
+      "existingTests": 267
+    },
+    "productionBuild": {
+      "status": "passed",
+      "command": "pnpm build",
+      "notes": [
+        "Existing large JavaScript chunk warning remains."
+      ]
+    },
+    "playwright": {
+      "status": "passed",
+      "distinctTestsPassed": 82,
+      "existingTests": 74,
+      "newMoveArtTests": 8,
+      "baselineRun": {
+        "command": "node node_modules/@playwright/test/cli.js test --config .v043-playwright.config.ts --grep-invert \"every move loads|five equipped PNGs|evolution immediately switches|a missing texture\" --workers=2",
+        "passed": 73,
+        "pendingAtThatTime": 1,
+        "reason": "The preliminary production build requested 14 move PNGs before generation had completed."
+      },
+      "productionRetry": {
+        "command": "node node_modules/@playwright/test/cli.js test e2e/campaign.spec.ts --config .v043-playwright.config.ts --grep \"production assets and atlas\" --workers=1",
+        "passed": 1,
+        "repositorySubpath": "/pkmnsrvrs/",
+        "brokenAssetRequests": 0
+      },
+      "newMoveArtRun": {
+        "command": "node node_modules/@playwright/test/cli.js test e2e/v043MoveIcons.spec.ts --config .v043-playwright.config.ts --workers=1",
+        "passed": 8,
+        "durationSeconds": 23.4
+      },
+      "runNote": "82 distinct passing checks across the baseline run, resolved production retry, and final eight-case move-art run; not claimed as one uninterrupted 82-test run.",
+      "testFixtureCorrection": "Simulate a missing texture key by renaming the texture registry entry, preserving live GPU references. Destroying an actively displayed texture in the initial test fixture stopped Phaser before the fallback could be exercised. No runtime change was needed.",
+      "temporaryConfigRemovedAfterAudit": true
+    }
+  },
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "width": 1920,
+      "height": 1080
+    }
+  ],
+  "visualAudit": {
+    "screenshotsInspected": [
+      "upgrade-before.png",
+      "upgrade-after-1280.png",
+      "upgrade-after-1920.png",
+      "mixed-upgrade-cards-1280.png",
+      "mixed-upgrade-cards-1920.png",
+      "move-hud-1280.png",
+      "move-hud-1920.png",
+      "evolution-icons.png",
+      "upgrade-before-after.png"
+    ],
+    "findings": [
+      "Move icons are centered with uniform 64px card sizing and nearest sampling.",
+      "All five equipped HUD icons are native 32px, fit beside names and ranks, and remain aligned at both viewports.",
+      "Existing item textures and aspect ratios remain intact in mixed move/item cards.",
+      "Real level-16 and level-36 evolutions update species portraits, HUD textures and transformation notification icons.",
+      "Evolution preserves the original move-slot object, rank 4, nextAttackAt 123 and cooldownDuration 0.65 in the focused identity test.",
+      "Missing move-art key uses the controlled legacy fallback and emits exactly one development warning.",
+      "No broken images, stretching, text overlap or unexpected card layout changes found."
+    ],
+    "beforeAfterComposition": "Two unscaled 1280x720 screenshots placed side by side under labels; original procedural BEFORE captured before renderer replacement."
+  },
+  "gallery": {
+    "status": "passed",
+    "audits": [
+      {
+        "url": "file:///D:/Projects/Pokemon%20Survivors/docs/qa/v043/index.html",
+        "images": 28,
+        "links": 6,
+        "brokenImages": 0
+      },
+      {
+        "url": "http://127.0.0.1:5198/docs/qa/v043/index.html",
+        "images": 28,
+        "links": 6,
+        "brokenImages": 0
+      }
+    ],
+    "notes": "28 native/enlarged image elements and all six review links load from both a local file URL and Vite. Each source image decodes at 32x32 and CSS uses pixelated rendering."
+  },
+  "artifacts": [
+    {
+      "path": "docs/qa/v043/all-move-icons.png",
+      "dimensions": [
+        1080,
+        962
+      ],
+      "bytes": 62792,
+      "sha256": "d0e4391de63cecc6ffab60ca6ad8e97012b31777361ae14d056f6759bb36d94f"
+    },
+    {
+      "path": "docs/qa/v043/evolution-charizard.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "bytes": 83098,
+      "sha256": "43d3eec4bf68d533cd1ce645709971c8031ee995d3787e427bcf1b9e453fbf47"
+    },
+    {
+      "path": "docs/qa/v043/evolution-charmeleon.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "bytes": 82351,
+      "sha256": "a3490104fee5bfbb6b260744dca3b39866631f0095d66a0040eb4198ddebf711"
+    },
+    {
+      "path": "docs/qa/v043/evolution-icons.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "bytes": 83098,
+      "sha256": "43d3eec4bf68d533cd1ce645709971c8031ee995d3787e427bcf1b9e453fbf47"
+    },
+    {
+      "path": "docs/qa/v043/mixed-upgrade-cards-1280.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "bytes": 101037,
+      "sha256": "231eec3cdbc44ea50975dc2fd4a6deba5af0ed88ef6b030205d46e667fc7d940"
+    },
+    {
+      "path": "docs/qa/v043/mixed-upgrade-cards-1920.png",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "bytes": 128563,
+      "sha256": "8830dbe4cd420ed6a58bc89bfb583d24f8b86efba7c492f0e6faaca02a6f448c"
+    },
+    {
+      "path": "docs/qa/v043/move-hud-1280.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "bytes": 70385,
+      "sha256": "21b9c5e34b0d1bd14cb315035d71e331afcbfc9d42903ad365611af292f19426"
+    },
+    {
+      "path": "docs/qa/v043/move-hud-1920.png",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "bytes": 88061,
+      "sha256": "78c064cf3c7d89fd1fa4c9249ada32905df54607cf393ccc6cf555732daff7d3"
+    },
+    {
+      "path": "docs/qa/v043/move-hud.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "bytes": 70385,
+      "sha256": "21b9c5e34b0d1bd14cb315035d71e331afcbfc9d42903ad365611af292f19426"
+    },
+    {
+      "path": "docs/qa/v043/move-item-comparison.png",
+      "dimensions": [
+        900,
+        800
+      ],
+      "bytes": 39830,
+      "sha256": "e72d3371320e4dd37fcacf17e70e5f2ecedc2ba7e22e6e0c4c64c2e38a20d0fa"
+    },
+    {
+      "path": "docs/qa/v043/style-comparison.png",
+      "dimensions": [
+        990,
+        1210
+      ],
+      "bytes": 63891,
+      "sha256": "43d069185752f753d6dc75a579c4daba90a87fd25408aaff81bcb5eec67ef52f"
+    },
+    {
+      "path": "docs/qa/v043/upgrade-after-1280.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "bytes": 101372,
+      "sha256": "2a733292e3678e5a506880e8a4b2632cc15a3e8638af32574f85cb29141005d8"
+    },
+    {
+      "path": "docs/qa/v043/upgrade-after-1920.png",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "bytes": 128302,
+      "sha256": "47f4dbc220dbc35a862ebf7bca5f63af053e2bb2e1d4ffbd41ab8ab1d50e591d"
+    },
+    {
+      "path": "docs/qa/v043/upgrade-after.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "bytes": 101372,
+      "sha256": "2a733292e3678e5a506880e8a4b2632cc15a3e8638af32574f85cb29141005d8"
+    },
+    {
+      "path": "docs/qa/v043/upgrade-before-after.png",
+      "dimensions": [
+        2560,
+        784
+      ],
+      "bytes": 136831,
+      "sha256": "53275c6c75b318a3ed1a213eef56b173a4f4e2be283e366f64e234f7b6636ead"
+    },
+    {
+      "path": "docs/qa/v043/upgrade-before.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "bytes": 92563,
+      "sha256": "217c1d93d0c1995ad3bda9a1627ee4021bfcb27c72287dd9a26d5f37dad0337b"
+    }
+  ],
+  "remainingFailures": []
+}

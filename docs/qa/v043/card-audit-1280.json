@@ -1,0 +1,394 @@
+{
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "cards": [
+    {
+      "id": "tackle",
+      "texture": "move:tackle",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "scratch",
+      "texture": "move:scratch",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "vineWhip",
+      "texture": "move:vineWhip",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "poisonPowder",
+      "texture": "move:poisonPowder",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "leechSeed",
+      "texture": "move:leechSeed",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "ember",
+      "texture": "move:ember",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "dragonRage",
+      "texture": "move:dragonRage",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "metalClaw",
+      "texture": "move:metalClaw",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "dragonClaw",
+      "texture": "move:dragonClaw",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "razorLeaf",
+      "texture": "move:razorLeaf",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "hydroPump",
+      "texture": "move:hydroPump",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "waterGun",
+      "texture": "move:waterGun",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "bubble",
+      "texture": "move:bubble",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "rapidSpin",
+      "texture": "move:rapidSpin",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    }
+  ],
+  "count": 14,
+  "pixelArt": true,
+  "antialias": false,
+  "mixed": [
+    {
+      "id": "ember",
+      "key": "move:ember",
+      "width": 32,
+      "height": 32,
+      "display": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0
+    },
+    {
+      "id": "charcoal",
+      "key": "pokesprite:charcoal:outline",
+      "width": 32,
+      "height": 32,
+      "display": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0
+    },
+    {
+      "id": "magnet",
+      "key": "pokesprite:magnet:outline",
+      "width": 32,
+      "height": 32,
+      "display": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0
+    }
+  ]
+}

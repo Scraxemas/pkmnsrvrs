@@ -1,0 +1,512 @@
+{
+  "version": "0.4.3",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed by built-in tool",
+  "transparentBackground": true,
+  "created": "2026-10-30",
+  "provenance": "Original AI-generated icons; third-party references used only for art direction. No paid API/CLI generation.",
+  "selectedStyle": "A — Classic Pokémon Inventory; chosen after inspecting all 18 candidates against existing item artwork",
+  "generations": [
+    {
+      "id": "rapidSpin",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent final game move icon\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Rapid Spin. A small ochre turtle shell seen from above with segmented hexagonal plates, surrounded by two pale circular motion trails.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-b0315800-0c02-4b82-aad3-0b98b59f20d8.png",
+      "sourceSha256": "7d17cbe8ff3ac69773d454334b700b0430214cb3d8e794bb0f2c5bfaac9e56c6",
+      "outputSha256": "0bd4a951a4800f0551b5e11290c884cc1eddacf5824cb1b0391cee816c9dcf87",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "tackle",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent final game move icon\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Tackle. A strong cream-white physical impact with a distinctive compact motion burst and forceful forward collision, no fist.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-2200b447-adce-4032-85b6-34a01791271e.png",
+      "sourceSha256": "54b32cb3fb21d9db7cdb4f5c81c4408ca0e78f1a04b625c8bf4c191a768a5fa1",
+      "outputSha256": "bd061da29846b686cd514fe813d64096a9feb9d75629311d124252fbe5a42aeb",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "dragonRage",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent final game move icon\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Dragon Rage. A concentrated blue-violet dragon-energy orb, compact luminous core with jagged violet flame crown, distinct from an orange fireball, no actual dragon.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-76e3ffba-eea0-49ea-a805-0e4f30d599e2.png",
+      "sourceSha256": "6848c4485d78286606601a409b352afd7302b1fb0dbc8584c9ab0cbc88619cdb",
+      "outputSha256": "4187c6e63198d163465fdc7dbb30e23a27e8a55820e4e0e1987f1014969d8eae",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "dragonClaw",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent final game move icon\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Dragon Claw. Powerful intersecting violet dragon-energy claw slashes forming a crossing X composition, magenta cores and indigo outer edges, no metal.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-1be9181c-1576-486e-b5e6-2718cf6611c6.png",
+      "sourceSha256": "fa88880ad8a8ff052239c3b5cfb1298fb88616d96bba9cf52d5b6a5288b4957e",
+      "outputSha256": "77e37a8be552ff65a89f3f4ee1351ac01952cacce1c697a9b39f2d9c616a7c04",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "waterGun",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent final game move icon\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Water Gun. A narrow pressurized diagonal stream of bright blue water, long thin clear jet with a tiny splash at its tip, distinctly much narrower than Hydro Pump.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-f5769c87-ed22-496a-82ea-560666850c0c.png",
+      "sourceSha256": "3966cd0691a6d6d76285bc85a9f87f27c8a03076b4110d7ecc1444770ebb6dd9",
+      "outputSha256": "be9972f14abf579a726007c9c94527815b913678d4546d2406e69571684559ed",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "hydroPump",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent final game move icon\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Hydro Pump. A broad forceful blue water jet expanding into a large explosive cyan splash; thick water column and heavy outward splash crown.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-e0bcd100-ac75-4d58-966c-1462e836fd4c.png",
+      "sourceSha256": "ce297a8f9783fca2be1f6f274ef22d3d1ea91fd6b602c7142ab19918135b96ee",
+      "outputSha256": "b3b6565486dc309b8980515867f5415074853a3bc80c45fc046d0836ad0f3258",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "vineWhip",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent final game move icon\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Vine Whip. One twisting green vine lashing in a dynamic hooked S curve with a sharp striking tip; no leaves flying.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-f57613f8-997e-457d-97a4-c51031dd584b.png",
+      "sourceSha256": "e4bd5f973bc0f6a7d8e4ab8fc2ecb87fbe04a4ea66d1083158631a6dfca2f53e",
+      "outputSha256": "211e88641d1dcb7b31fc2876b1790e44cf45be91b203e0fc869b9289d3fcfe02",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "leechSeed",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent final game move icon\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Leech Seed. One glowing amber seed with two curling green draining tendrils, recognizable seed body and small sprout.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-9d48c705-601b-4cf5-9f44-3232b0f4b57f.png",
+      "sourceSha256": "029a531305ccec625ef5688e8e844387f93c4927e356b63802b0849f9d8d25c1",
+      "outputSha256": "2f229c5084307695b822cdc5e761646c99b109d7a3def5325e2156adaa6fa4dc",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "scratch",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, final production candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Scratch. Three sharp ivory-white claw marks cutting diagonally, slightly curved, separated negative space, plain physical scratches without metal claws or colored energy.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-d406913a-4b57-439d-a2c2-3d451021a4cd.png",
+      "sourceSha256": "7cbdb9d7c6b6095ef70c4811cc5f9e76af0722b5cfdda4cfeed484b5d1dfc3a8",
+      "outputSha256": "4e4ca2c26e59bfcbf979015dc4b19f49eadf32328a750c2dce5fad9d11400cb5",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "scratch",
+      "style": "B",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, style comparison candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style B — Detailed Fantasy Abilities. Original dramatic classic RPG skill sprite; richer 16–20 color palette and stepped shading, strong elemental particles and dramatic highlights, still strict authentic 32×32 pixel clusters with dark outlines, no continuous tone. Subject occupies about 28×28 logical pixels with 2 transparent pixels margin. Enlarge the logical grid without smoothing.\nSubject: Scratch. Three sharp ivory-white claw marks cutting diagonally, slightly curved, separated negative space, plain physical scratches without metal claws or colored energy.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-d950f86b-8ddb-415c-a4fb-300c606a9636.png",
+      "sourceSha256": "94bae0cf4c5106c01c4416af6c413e53eeb405365f790179a3ab19e20fb443ab",
+      "outputSha256": "5083a270c68ec5ee0f95f0181a9a09f446cae83f17b8a51fd280018a783476cf",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 20,
+        "subject_max_extent": 28
+      }
+    },
+    {
+      "id": "scratch",
+      "style": "C",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, style comparison candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style C — Minimalist Pixel Icons. Maximum readability at native 32×32: exceptionally simple recognizable silhouette, only 4–6 flat colors, strong one-pixel dark outline, minimal shading and tiny number of effects. Subject occupies about 24×24 logical pixels with 4 transparent pixels margin. Strict logical 32×32 pixel grid enlarged without smoothing.\nSubject: Scratch. Three sharp ivory-white claw marks cutting diagonally, slightly curved, separated negative space, plain physical scratches without metal claws or colored energy.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-abd25b93-8373-42e7-85e1-cb3cc80cb929.png",
+      "sourceSha256": "c0fa3e39bcd1fc3089d55767de60b396b538dbfee9677c83dac951306274b7c6",
+      "outputSha256": "635f365e11e466e38e1d05e5b0f9e208a4ee028ffbc10d4055c894a78d7a6c2f",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 6,
+        "subject_max_extent": 24
+      }
+    },
+    {
+      "id": "ember",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, final production candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Ember. A small orange fireball with yellow-hot core and a short red-orange tapering flame tail trailing a few square sparks.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-279d84bf-33df-4d2f-ae2f-70f5444f506c.png",
+      "sourceSha256": "58616ea7e652c9132d82500fa32d2a3db23d1319789ad69f32e4f1c4e2ebaee6",
+      "outputSha256": "489b0f1ec33ff44cec2a82f7d99d959df80dcd33fc77ce9ccc5ddece3505c00e",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "bubble",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, final production candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Bubble. Several separate translucent blue bubbles, one large and two small with cyan rims, white square highlights and open transparent centers, no water stream.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-9bb843d7-1852-4529-a499-24f49daea7a2.png",
+      "sourceSha256": "a0ff0664392450845d621c4b7af82acf896d2e970a307d0abecba4727085ee92",
+      "outputSha256": "e4b8ade77e97812fb5eeca86cc8f351d3a7f2ad020926da0246b544f3e910a4c",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "razorLeaf",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, final production candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Razor Leaf. Three separate spinning razor-sharp green leaves with pale serrated cutting edges, distinct sizes and short motion dashes.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-c8a3776c-aa59-472a-90ab-41007c229179.png",
+      "sourceSha256": "a2145b7d1f783406fa08da79d0641077c0fe2aa63af882d271ba17697a093019",
+      "outputSha256": "c39f2bc3fd494d58f5fbebbe722c8a563988c30694b2cd134a1f3aa6787a13f4",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "metalClaw",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, final production candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Metal Claw. Three sharp solid metallic claws with silver highlights, dark blue-steel shadow planes and a compact gauntlet-like base, distinct from white scratch marks.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-c756a363-0967-42ed-9f8c-1ca955200673.png",
+      "sourceSha256": "380fc18949d0f798708011c8fed35d67a75b8671cf0b126f007c714f55ed33ab",
+      "outputSha256": "05ec3c8777f0cb89e91ac87b7f30c6e5a67d6d2625435d27958d10e800e17068",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "poisonPowder",
+      "style": "A",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, final production candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style A — Classic Pokémon Inventory. Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: Poison Powder. A scattering cluster of purple toxic spores, several irregular round violet puffs with small magenta spore dots radiating outward; airy silhouette.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-bcc68b57-c0f2-4aed-a0cb-e5ed4b078615.png",
+      "sourceSha256": "a2d625ec00a22a8bcff7398136909aebcb903121a08aa69d7088d9c999e288ed",
+      "outputSha256": "0a07e81f057561ca95d90cd2350b274af02f14af69cd4d70d906d0eb09764e9a",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 12,
+        "subject_max_extent": 26
+      }
+    },
+    {
+      "id": "ember",
+      "style": "B",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, style comparison candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style B — Detailed Fantasy Abilities. Original dramatic classic RPG skill sprite; richer 16–20 color palette and stepped shading, strong elemental particles and dramatic highlights, still strict authentic 32×32 pixel clusters with dark outlines, no continuous tone. Subject occupies about 28×28 logical pixels with 2 transparent pixels margin. Enlarge the logical grid without smoothing.\nSubject: Ember. A small orange fireball with yellow-hot core and a short red-orange tapering flame tail trailing a few square sparks.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-cd6c9467-32fd-4775-b563-893fcaf1a341.png",
+      "sourceSha256": "45c81ae5c91c345b6f20ae6d9bed3cdbdc735badf64ab43ef37bfc6c18618bc0",
+      "outputSha256": "33e810d572d4eae695bdaa8658755daeb49acbe8c5841f23cd2fb3ea5d67bbaf",
+      "sourceSize": [
+        1275,
+        1234
+      ],
+      "processingOverrides": {
+        "opaque_colors": 20,
+        "subject_max_extent": 28
+      }
+    },
+    {
+      "id": "bubble",
+      "style": "B",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, style comparison candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style B — Detailed Fantasy Abilities. Original dramatic classic RPG skill sprite; richer 16–20 color palette and stepped shading, strong elemental particles and dramatic highlights, still strict authentic 32×32 pixel clusters with dark outlines, no continuous tone. Subject occupies about 28×28 logical pixels with 2 transparent pixels margin. Enlarge the logical grid without smoothing.\nSubject: Bubble. Several separate translucent blue bubbles, one large and two small with cyan rims, white square highlights and open transparent centers, no water stream.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-6e150946-2dc6-4cf7-9cc8-ee50b8af39a9.png",
+      "sourceSha256": "3ae84923d41324a782a037eadbfb33f85fc4877d128e3e1cdab341938d9590c6",
+      "outputSha256": "ce901a7a7abb0b86d047f18361eba9dcf8bace71395f345c324995864bb2f821",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 20,
+        "subject_max_extent": 28
+      }
+    },
+    {
+      "id": "razorLeaf",
+      "style": "B",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, style comparison candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style B — Detailed Fantasy Abilities. Original dramatic classic RPG skill sprite; richer 16–20 color palette and stepped shading, strong elemental particles and dramatic highlights, still strict authentic 32×32 pixel clusters with dark outlines, no continuous tone. Subject occupies about 28×28 logical pixels with 2 transparent pixels margin. Enlarge the logical grid without smoothing.\nSubject: Razor Leaf. Three separate spinning razor-sharp green leaves with pale serrated cutting edges, distinct sizes and short motion dashes.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-52da75ef-ea6f-4215-b9d2-ac7ed9b360ed.png",
+      "sourceSha256": "1cc9fa24ddf4adad8afee3ad9bf9bedb72c4214c0c80c66bdc345295f2337c2a",
+      "outputSha256": "ada2595888f944c0720442d752e1e84a411f1d1cc7621c00a328e6aebf117ef4",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 20,
+        "subject_max_extent": 28
+      }
+    },
+    {
+      "id": "metalClaw",
+      "style": "B",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, style comparison candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style B — Detailed Fantasy Abilities. Original dramatic classic RPG skill sprite; richer 16–20 color palette and stepped shading, strong elemental particles and dramatic highlights, still strict authentic 32×32 pixel clusters with dark outlines, no continuous tone. Subject occupies about 28×28 logical pixels with 2 transparent pixels margin. Enlarge the logical grid without smoothing.\nSubject: Metal Claw. Three sharp solid metallic claws with silver highlights, dark blue-steel shadow planes and a compact gauntlet-like base, distinct from white scratch marks.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-d9b049ab-86a9-4564-a198-9362e957fb83.png",
+      "sourceSha256": "163e83e6f0ec95c9346c7a820b80ff08f6526692f23aaf6d50441a34a11edd41",
+      "outputSha256": "288add9f94e9b2ae4847d2851270108d952f660c1c62e54985a87295666c9e20",
+      "sourceSize": [
+        1288,
+        1221
+      ],
+      "processingOverrides": {
+        "opaque_colors": 20,
+        "subject_max_extent": 28
+      }
+    },
+    {
+      "id": "poisonPowder",
+      "style": "B",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, style comparison candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style B — Detailed Fantasy Abilities. Original dramatic classic RPG skill sprite; richer 16–20 color palette and stepped shading, strong elemental particles and dramatic highlights, still strict authentic 32×32 pixel clusters with dark outlines, no continuous tone. Subject occupies about 28×28 logical pixels with 2 transparent pixels margin. Enlarge the logical grid without smoothing.\nSubject: Poison Powder. A scattering cluster of purple toxic spores, several irregular round violet puffs with small magenta spore dots radiating outward; airy silhouette.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-a165c8e4-3a45-4133-a488-020091ee7e5c.png",
+      "sourceSha256": "5c0d4ea6c4da6c10590c53a6472affe3545770847265212236bf9e7ce6afc196",
+      "outputSha256": "b83f4804e1d1fba14725a6046284e0fcba67a6abb7b3936770d2f39bf69ec373",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 20,
+        "subject_max_extent": 28
+      }
+    },
+    {
+      "id": "ember",
+      "style": "C",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, style comparison candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style C — Minimalist Pixel Icons. Maximum readability at native 32×32: exceptionally simple recognizable silhouette, only 4–6 flat colors, strong one-pixel dark outline, minimal shading and tiny number of effects. Subject occupies about 24×24 logical pixels with 4 transparent pixels margin. Strict logical 32×32 pixel grid enlarged without smoothing.\nSubject: Ember. A small orange fireball with yellow-hot core and a short red-orange tapering flame tail trailing a few square sparks.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-d38425c7-1d44-437d-ac0e-536853e77e38.png",
+      "sourceSha256": "cc573728913ddf868d6c6138147d4689b82f9d355e90762e67ce43eca9bafe0a",
+      "outputSha256": "6ed426b2f4bec3bf1948d9662b2c577d0ad0876d4966751308e0615ac9ba5613",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 6,
+        "subject_max_extent": 24
+      }
+    },
+    {
+      "id": "bubble",
+      "style": "C",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, style comparison candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style C — Minimalist Pixel Icons. Maximum readability at native 32×32: exceptionally simple recognizable silhouette, only 4–6 flat colors, strong one-pixel dark outline, minimal shading and tiny number of effects. Subject occupies about 24×24 logical pixels with 4 transparent pixels margin. Strict logical 32×32 pixel grid enlarged without smoothing.\nSubject: Bubble. Several separate translucent blue bubbles, one large and two small with cyan rims, white square highlights and open transparent centers, no water stream.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-24bdefe6-914a-414d-8fa0-e7c96197c458.png",
+      "sourceSha256": "1604f6dadd3c95a6759f13a89d0a0e73f52772950b075fcd2429d98d5a17f445",
+      "outputSha256": "543ad1d71600fbe671c955d62ade72b4e3e823c827bdc735004b7a5ecb0dd736",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 6,
+        "subject_max_extent": 24
+      }
+    },
+    {
+      "id": "razorLeaf",
+      "style": "C",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, style comparison candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style C — Minimalist Pixel Icons. Maximum readability at native 32×32: exceptionally simple recognizable silhouette, only 4–6 flat colors, strong one-pixel dark outline, minimal shading and tiny number of effects. Subject occupies about 24×24 logical pixels with 4 transparent pixels margin. Strict logical 32×32 pixel grid enlarged without smoothing.\nSubject: Razor Leaf. Three separate spinning razor-sharp green leaves with pale serrated cutting edges, distinct sizes and short motion dashes.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-9acfa7e7-d143-418f-b669-72580c4e98ea.png",
+      "sourceSha256": "821e7c3fa791867bacaf0fb19dcd4a3df60bd5a60504a6a3dbe6ee28e88f3885",
+      "outputSha256": "c9d3cf9f55248c427afeb93c6d041675def9824551f89b8579a75f8361b0d05f",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 6,
+        "subject_max_extent": 24
+      }
+    },
+    {
+      "id": "metalClaw",
+      "style": "C",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, style comparison candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style C — Minimalist Pixel Icons. Maximum readability at native 32×32: exceptionally simple recognizable silhouette, only 4–6 flat colors, strong one-pixel dark outline, minimal shading and tiny number of effects. Subject occupies about 24×24 logical pixels with 4 transparent pixels margin. Strict logical 32×32 pixel grid enlarged without smoothing.\nSubject: Metal Claw. Three sharp solid metallic claws with silver highlights, dark blue-steel shadow planes and a compact gauntlet-like base, distinct from white scratch marks.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-a4b531a0-627d-4608-b2a0-a779cd22f8a8.png",
+      "sourceSha256": "7805a824672760e7044ac55f6cffca1433189b61291131d848655a13a4b3cf0c",
+      "outputSha256": "752c1c97ba91a4933450d3b1912ddc8b843054ccfd637f3f850256305e4b887c",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 6,
+        "subject_max_extent": 24
+      }
+    },
+    {
+      "id": "poisonPowder",
+      "style": "C",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent game move icon, style comparison candidate\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Style C — Minimalist Pixel Icons. Maximum readability at native 32×32: exceptionally simple recognizable silhouette, only 4–6 flat colors, strong one-pixel dark outline, minimal shading and tiny number of effects. Subject occupies about 24×24 logical pixels with 4 transparent pixels margin. Strict logical 32×32 pixel grid enlarged without smoothing.\nSubject: Poison Powder. A scattering cluster of purple toxic spores, several irregular round violet puffs with small magenta spore dots radiating outward; airy silhouette.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-afe52aa3-a153-47b7-a2c0-651ac2b6824d.png",
+      "sourceSha256": "ba6f5ea2f04a687e428a382114783dcd7fd403546918b430fa2610421417d0ec",
+      "outputSha256": "69d80f5d1d114716ce0ffbe4359dbee2cb6c1b1f64eb032869c625fde4c8bff6",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "processingOverrides": {
+        "opaque_colors": 6,
+        "subject_max_extent": 24
+      }
+    }
+  ],
+  "processing": {
+    "canvas": [
+      32,
+      32
+    ],
+    "subject_max_extent": 26,
+    "source_alpha_threshold": 192,
+    "cell_coverage_threshold": 0.35,
+    "opaque_colors": 12,
+    "color_sampling": "modal quantized source color per logical pixel cell",
+    "alpha": "binary, transparent RGB cleared",
+    "presentation_resampling": "nearest"
+  },
+  "moves": [
+    {
+      "id": "tackle",
+      "name": "Tackle",
+      "type": "Normal"
+    },
+    {
+      "id": "scratch",
+      "name": "Scratch",
+      "type": "Normal"
+    },
+    {
+      "id": "vineWhip",
+      "name": "Vine Whip",
+      "type": "Grass"
+    },
+    {
+      "id": "poisonPowder",
+      "name": "Poison Powder",
+      "type": "Poison"
+    },
+    {
+      "id": "leechSeed",
+      "name": "Leech Seed",
+      "type": "Grass"
+    },
+    {
+      "id": "ember",
+      "name": "Ember",
+      "type": "Fire"
+    },
+    {
+      "id": "dragonRage",
+      "name": "Dragon Rage",
+      "type": "Dragon"
+    },
+    {
+      "id": "metalClaw",
+      "name": "Metal Claw",
+      "type": "Steel"
+    },
+    {
+      "id": "dragonClaw",
+      "name": "Dragon Claw",
+      "type": "Dragon"
+    },
+    {
+      "id": "razorLeaf",
+      "name": "Razor Leaf",
+      "type": "Grass"
+    },
+    {
+      "id": "hydroPump",
+      "name": "Hydro Pump",
+      "type": "Water"
+    },
+    {
+      "id": "waterGun",
+      "name": "Water Gun",
+      "type": "Water"
+    },
+    {
+      "id": "bubble",
+      "name": "Bubble",
+      "type": "Water"
+    },
+    {
+      "id": "rapidSpin",
+      "name": "Rapid Spin",
+      "type": "Normal"
+    }
+  ]
+}
