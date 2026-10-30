@@ -1,3 +1,4 @@
+import {KANTO_STAGE_ARTWORK} from './artwork';
 export type CampaignKind='survival'|'gym'|'expedition'|'challenge'|'minigames'|'research'|'finale';
 export type CampaignArt='forest'|'stoneGym'|'moon'|'waterGym'|'ship'|'electricGym'|'tunnel'|'rocket'|'grassGym'|'tower'|'safari'|'poisonGym'|'office'|'psychicGym'|'mansion'|'fireGym'|'groundGym'|'victory'|'league'|'cave'|'burrow'|'arcade'|'power'|'dojo'|'islands'|'lab'|'volcano'|'garden'|'bridge'|'harbor';
 export type CampaignRequirement={kind:'clear';stage:string}|{kind:'discover';location:string};
@@ -35,10 +36,10 @@ const story:StorySeed[]=[
 const main:CampaignNode[]=story.map(([id,name,kind,boss,bossId,art,description,badge],index)=>({
   id,name,route:'main',region:'Kanto',kind,boss,bossId,art,description,badge,duration:kind==='gym'?1200:id==='rockTunnel'?[600,720]:1800,
   implementation:id==='viridian'?'ready':id==='mtMoon'?'development':'planned',requires:index?[{kind:'clear',stage:story[index-1][0]}]:[],
-  ...(id==='viridian'?{artwork:'assets/menu/viridian-forest-card.png'}:{}),...(id==='ceruleanCave'?{nextRegion:'Johto'}:{}),
+  artwork:KANTO_STAGE_ARTWORK[id],...(id==='ceruleanCave'?{nextRegion:'Johto'}:{}),
 }));
 function optional(id:string,name:string,parent:string,kind:CampaignKind,boss:string,bossId:string,art:CampaignArt,description:string,extra:Partial<CampaignNode>={}):CampaignNode{
-  return{id,name,parent,route:'optional',region:'Kanto',kind,boss,bossId,art,description,duration:kind==='survival'?1800:kind==='expedition'?[600,720]:null,implementation:'planned',requires:[{kind:'clear',stage:parent}],...extra};
+  return{id,name,parent,route:'optional',region:'Kanto',kind,boss,bossId,art,artwork:KANTO_STAGE_ARTWORK[id],description,duration:kind==='survival'?1800:kind==='expedition'?[600,720]:null,implementation:'planned',requires:[{kind:'clear',stage:parent}],...extra};
 }
 const branches:CampaignNode[]=[
   optional('diglettCave',"Diglett’s Cave",'vermilionGym','expedition','Diglett','diglett','burrow','An optional underground expedition linking the coast and the northern roads.'),

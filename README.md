@@ -69,6 +69,9 @@ view beside its information panel. Future locations remain previews; Viridian
 Forest is the only playable stage. Legacy progress and starter selection remain
 compatible, and the production build is tested under a repository subpath.
 
+The [Stage Art follow-up](docs/STAGE_ART.md) adds the supplied location artwork to
+all 27 map cards and detail panels, with lazy loading and original-file provenance.
+
 ## FRLG asset library
 
 The complete supplied tileset is extracted into [assets/extracted/frlg](assets/extracted/frlg/README.md). Open its `index.html` locally to browse all 4,792 native cells, complete props, and reusable terrain. Names include dimensions and source coordinates; unverified semantic identities are explicitly labeled for review. Complete assembled props are separated from raw prop parts.

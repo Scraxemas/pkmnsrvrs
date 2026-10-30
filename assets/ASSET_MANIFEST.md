@@ -106,3 +106,11 @@ Do not remove attribution or treat these assets as commercially cleared. Keep th
 - Future-location thumbnails are original code-authored SVG pixel silhouettes in `src/ui/campaignArt.ts`; they are visibly labelled as unfinished previews. Gym badge symbols, map terrain/river silhouettes and trail geometry are also code-authored.
 - The atlas reuses the complete `frlg/tree.png` environment crop through `environmentUrl`; its FRLG provenance and rights remain as documented above. The original PNG is unchanged.
 - No external map art or new Pokémon sprites are imported. Existing PMD, FRLG and PokéSprite source/runtime files retain their prior attribution and contents.
+
+## User-supplied Stage Art — v0.4.2 follow-up
+
+- All 27 visible campaign destinations now use the images supplied in the user's `Stage Art` folder for their map cards and detail panels. The existing identical Viridian Forest PNG is reused; the other 26 files are copied unchanged into `public/assets/stages/`.
+- Source filenames, destination IDs, runtime paths, original dimensions and SHA-256 hashes are recorded in [`stages/imports.json`](stages/imports.json). JPGs remain JPGs and PNGs retain their original pixels/palettes; nothing is cropped, resampled or recompressed on disk.
+- The supplied `SS_Anne.jpg` is used for S.S. Anne as explicitly confirmed by the user. The source spelling `fuschiagym.jpg` maps to the correctly named Fuchsia Gym.
+- Campaign mapping lives in `src/campaign/artwork.ts`. Native lazy loading defers offscreen card images; the selected detail image loads eagerly. Existing silhouettes remain the fallback for future destinations without supplied art.
+- This imports presentation assets only. Implementation flags, story requirements, saves, PMD Pokémon art and gameplay remain unchanged. See [`docs/STAGE_ART.md`](../docs/STAGE_ART.md) for visual checks.

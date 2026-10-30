@@ -33,9 +33,9 @@ export function campaignArtSvg(art:CampaignArt){
   else{for(const [x,y] of [[9,38],[36,27],[63,44],[165,40],[194,25],[219,43]])s+=tree(x,y);s+=poly('81,96 99,45 132,45 155,96','#b7ad7b');if(art==='safari')s+=rect(104,24,31,24,'#a79d70')+poly('96,27 120,11 143,27','#817658');}
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 240 96');svg.setAttribute('shape-rendering','crispEdges');svg.setAttribute('aria-hidden','true');svg.innerHTML=s;svg.classList.add('campaign-illustration');return svg;
 }
-export function campaignArtwork(node:CampaignNode){
+export function campaignArtwork(node:CampaignNode,{lazy=false}:{lazy?:boolean}={}){
   const art=element('div','campaign-art');
-  if(node.artwork){const image=element('img');image.src=menuAsset(node.artwork);image.alt=`${node.name} location artwork`;image.draggable=false;art.append(image);}
+  if(node.artwork){const image=element('img');image.loading=lazy?'lazy':'eager';image.decoding='async';image.src=menuAsset(node.artwork);image.alt=`${node.name} location artwork`;image.draggable=false;art.append(image);}
   else{const svg=campaignArtSvg(node.art);svg.setAttribute('role','img');svg.setAttribute('aria-label',`${node.name} · unfinished preview illustration`);svg.removeAttribute('aria-hidden');art.append(svg);}
   return art;
 }

@@ -45,7 +45,7 @@ Mt. Moon Fossil Chamber and Pokémon Mansion Secret Laboratory are **hidden in-s
 
 The palette uses dark emerald, cream, earth tones and muted gold with the existing Silkscreen fonts. Gym cards have bronze frames, Gym Rush labels, leader names and a badge symbol with a separate locked/recorded state. Selected cards receive gold outlines; completed trails illuminate gold.
 
-Viridian uses the original supplied location image. Other locations use cohesive, code-authored SVG pixel silhouettes, labelled as unfinished previews. The atlas backdrop reuses complete existing FRLG tree props, with original SVG terrain, rivers and mountain silhouettes. No new internet artwork is imported and the main-menu painting is not reused as every destination thumbnail.
+Viridian uses the original supplied location image. The atlas initially shipped with code-authored SVG silhouettes for future locations; the subsequent [Stage Art import](STAGE_ART.md) replaces them with the user's supplied images for all 27 visible destinations. Silhouettes remain available for future locations without artwork. The atlas backdrop reuses complete existing FRLG tree props, with original SVG terrain, rivers and mountain silhouettes. The main-menu painting is not reused as every destination thumbnail.
 
 The side panel includes the location artwork, region/type, duration, boss or leader, badge reward where applicable, description, completion, requirement/build status and primary action. The action remains visible without scrolling the whole screen; the required details fit at 1280 × 720, 1600 × 900 and 1920 × 1080.
 

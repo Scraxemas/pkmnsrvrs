@@ -1,11 +1,13 @@
 import {test,expect,Page} from '@playwright/test';
 import {mkdirSync,readFileSync,writeFileSync,existsSync} from 'node:fs';
 import {createServer} from 'node:http';
+import {createHash} from 'node:crypto';
 import {resolve,extname,sep} from 'node:path';
 import {KANTO_CAMPAIGN,visibleCampaignNodes} from '../src/campaign/data';
 import {singlePlayer,choosePartner,readyMenu} from './helpers/menu';
 
 const folder='test-results/v042-visual';
+const stageArt: {stageId:string;runtimePath:string;width:number;height:number;sha256:string}[]=JSON.parse(readFileSync('assets/stages/imports.json','utf8')).imports;
 async function openCampaign(page:Page,pokemon='bulbasaur'){
   await page.goto('/?seed=1337');await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__);await page.evaluate(pokemon=>(window as any).__POKEMON_SURVIVORS__.scene.start('stage',{pokemon}),pokemon);
   await expect(page.locator('.campaign-workbench')).toBeVisible();await page.evaluate(()=>document.fonts.ready);await expect(page.locator('.campaign-node')).toHaveCount(27);mkdirSync(folder,{recursive:true});
@@ -18,6 +20,20 @@ test('real menu flow opens the connected 20-stop map with the correct demo state
   await expect(page.locator('.location-grid,.location-card,.stage-summary')).toHaveCount(0);await expect(page.locator('.campaign-node[data-route=main]')).toHaveCount(20);await expect(page.locator('.campaign-node[data-route=optional]')).toHaveCount(7);
   const main=await page.locator('.campaign-node[data-route=main]').evaluateAll(nodes=>nodes.map(n=>({id:(n as HTMLElement).dataset.stageId,x:parseFloat((n as HTMLElement).style.left)})));expect(main.map(n=>n.id)).toEqual(KANTO_CAMPAIGN.mainOrder);expect(main[1].id).toBe('pewterGym');for(let i=1;i<main.length;i++)expect(main[i].x).toBeGreaterThan(main[i-1].x);
   await expect(node(page,'viridian')).toHaveAttribute('data-state','available');await expect(node(page,'viridian').getByRole('img')).toHaveAttribute('src',/viridian-forest-card.png/);await expect(page.locator('.campaign-detail')).toContainText('30 Minutes');await expect(page.locator('.stage-enter')).toBeEnabled();await expect(page.locator('.campaign-link[data-route=main]')).toHaveCount(19);await page.screenshot({path:`${folder}/initial-1280.png`});
+});
+
+test('supplied stage artwork loads intact on every card and detail without changing stage availability',async({page})=>{
+  test.setTimeout(60_000);await page.emulateMedia({reducedMotion:'reduce'});await page.setViewportSize({width:1280,height:720});await openCampaign(page);const evidence='test-results/stage-art';mkdirSync(evidence,{recursive:true});
+  expect(stageArt.map(art=>art.stageId).sort()).toEqual(visibleCampaignNodes().map(n=>n.id).sort());await expect(page.locator('.campaign-node .campaign-art>img')).toHaveCount(27);
+  for(const art of stageArt){
+    const response=await page.request.get(art.runtimePath);expect(response.ok(),art.runtimePath).toBe(true);expect(createHash('sha256').update(await response.body()).digest('hex'),art.runtimePath).toBe(art.sha256);
+    await select(page,art.stageId);const cardImage=node(page,art.stageId).getByRole('img'),detail=page.locator('.campaign-detail'),detailImage=detail.getByRole('img');
+    for(const image of [cardImage,detailImage]){await expect(image).toHaveAttribute('src',`/${art.runtimePath}`);await expect.poll(()=>image.evaluate(image=>{const im=image as HTMLImageElement;return im.complete&&im.naturalWidth>0?`${im.naturalWidth}x${im.naturalHeight}`:'';})).toBe(`${art.width}x${art.height}`);}
+    await expect(cardImage).toHaveAttribute('loading','lazy');await expect(detailImage).toHaveAttribute('loading','eager');await expect(page.locator('.stage-enter')).toBeEnabled({enabled:art.stageId==='viridian'});
+    if(art.stageId!=='viridian')await expect(detail.locator('.campaign-preview-label')).toHaveText('STAGE PREVIEW');
+    if(['viridian','pewterGym','ssAnne','gameCorner','ceruleanCave'].includes(art.stageId))await page.screenshot({path:`${evidence}/${art.stageId}-1280.png`});
+  }
+  for(const [width,height] of [[1280,720],[1600,900],[1920,1080]]){await page.setViewportSize({width,height});for(const id of ['pewterGym','fossilLab']){await select(page,id);const bounds=await page.locator('.campaign-detail').evaluate(panel=>{const body=panel.querySelector('.campaign-detail__body')!;return{height:body.clientHeight,content:body.scrollHeight};});expect(bounds.content).toBeLessThanOrEqual(bounds.height+1);await page.screenshot({path:`${evidence}/${id}-${width}.png`});}}
 });
 
 test('main/optional links follow the layout and keyboard navigation keeps selections in view',async({page})=>{
@@ -81,6 +97,7 @@ test('production assets and atlas work from a GitHub Pages repository subpath',a
   const server=createServer((request,response)=>{const pathname=decodeURIComponent(new URL(request.url!,'http://localhost').pathname);if(!pathname.startsWith(prefix)){response.writeHead(404).end();return;}const file=resolve(root,pathname.slice(prefix.length)||'index.html');if(!file.startsWith(root+sep)||!existsSync(file)){response.writeHead(404).end();return;}response.setHeader('Content-Type',mime[extname(file)]??'application/octet-stream');response.end(readFileSync(file));});await new Promise<void>(done=>server.listen(0,'127.0.0.1',done));
   const address=server.address() as {port:number},base=`http://127.0.0.1:${address.port}${prefix}`,failed:string[]=[];page.on('response',r=>{if(r.status()>=400&&r.url().includes('/assets/'))failed.push(r.url());});
   try{await page.goto(base);await readyMenu(page);await singlePlayer(page);await choosePartner(page);await expect(page.locator('.campaign-workbench')).toBeVisible();await expect(node(page,'viridian').getByRole('img')).toHaveJSProperty('complete',true);expect(await node(page,'viridian').getByRole('img').evaluate(image=>(image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+    for(const art of stageArt){const response=await page.request.get(base+art.runtimePath);expect(response.ok(),art.runtimePath).toBe(true);expect(createHash('sha256').update(await response.body()).digest('hex')).toBe(art.sha256);}
     const paths=await page.evaluate(()=>({forest:(document.querySelector('.campaign-node[data-stage-id=viridian] img') as HTMLImageElement).currentSrc,tree:document.querySelector('.campaign-scenery image')!.getAttribute('href')}));expect(paths.forest).toContain(prefix+'assets/menu/viridian-forest-card.png');expect(new URL(paths.tree!,base).pathname).toContain(prefix+'assets/environment/');await page.keyboard.press('ArrowRight');await expect(page.locator('.campaign-detail')).toContainText('Brock');await page.getByRole('button',{name:'Center on current stage',exact:true}).click();await page.getByRole('button',{name:'Enter Forest',exact:true}).click();await page.waitForFunction(()=>{const s=(window as any).__POKEMON_SURVIVORS__;return s?.scene.getScene('game').player?.active;});expect(failed).toEqual([]);await page.screenshot({path:`${folder}/github-pages-run.png`});
   }finally{await page.goto('about:blank');server.closeAllConnections();await new Promise<void>(done=>server.close(()=>done()));}
 });
