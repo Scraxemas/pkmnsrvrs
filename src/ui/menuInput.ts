@@ -4,11 +4,13 @@ export interface FocusBox {left:number;top:number;width:number;height:number;}
 export function spatialFocus(boxes:FocusBox[],current:number,direction:Direction){
   const origin=boxes[current];if(!origin)return 0;const horizontal=direction==='left'||direction==='right',sign=direction==='left'||direction==='up'?-1:1;
   const x=origin.left+origin.width/2,y=origin.top+origin.height/2;let best=current,score=Infinity;
-  boxes.forEach((box,i)=>{if(i===current)return;const dx=box.left+box.width/2-x,dy=box.top+box.height/2-y,along=(horizontal?dx:dy)*sign,cross=Math.abs(horizontal?dy:dx);if(along<8)return;const cost=along+cross*2.5;if(cost<score){score=cost;best=i;}});return best;
+  boxes.forEach((box,i)=>{if(i===current)return;const dx=box.left+box.width/2-x,dy=box.top+box.height/2-y,along=(horizontal?dx:dy)*sign,cross=Math.abs(horizontal?dy:dx);if(along<8)return;const gap=horizontal?Math.max(0,origin.top-box.top-box.height,box.top-origin.top-origin.height):Math.max(0,origin.left-box.left-box.width,box.left-origin.left-origin.width);const cost=(gap>0?1e6+gap*2.5:0)+along+cross*.001;if(cost<score){score=cost;best=i;}});return best;
 }
 export class MenuInput {
+  static activeCount=0;
   private controller=new AbortController();private frame=0;private active=true;private padDirection='';private padConfirm=false;private padBack=false;private nextRepeat=0;
   constructor(private root:HTMLElement,private back?:()=>void){
+    MenuInput.activeCount++;
     const held=gamepad();
     this.padConfirm=!!held&&(!!held.buttons[0]?.pressed||!!held.buttons[9]?.pressed);this.padBack=!!held?.buttons[1]?.pressed;
     root.addEventListener('focusin',event=>{for(const node of this.buttons())node.classList.toggle('is-focused',node===event.target);},{signal:this.controller.signal});
@@ -35,5 +37,5 @@ export class MenuInput {
     }else{this.padDirection='';this.padConfirm=false;this.padBack=false;}
     if(this.active)this.frame=requestAnimationFrame(this.poll);
   };
-  destroy(){this.active=false;this.controller.abort();cancelAnimationFrame(this.frame);}
+  destroy(){if(!this.active)return;this.active=false;this.controller.abort();cancelAnimationFrame(this.frame);MenuInput.activeCount--;}
 }

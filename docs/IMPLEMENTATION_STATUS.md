@@ -1,6 +1,12 @@
-# v0.3.7 implementation status
+# v0.3.8 implementation status
 
-Latest frontend: supplied Viridian Forest background and reusable location art,
+Latest frontend: centered arcade controls, in-place Play mode selection, original
+pixel icons, Phaser-driven forest motion/leaves/lighting, reduced-motion support,
+Research statistics, stable directional focus, and a stationary run-results UI
+with reliable Return to Menu input. See [the v0.3.8 report](V038_CENTERED_MENU.md)
+for recordings, controller lifecycle, supported layers, and validation.
+
+Previous frontend: supplied Viridian Forest background and reusable location art,
 responsive title screen and subpages, spatial keyboard/controller menu navigation,
 real save summaries, and persistent presentation settings. See [the menu report](V037_MENU_REDESIGN.md)
 for artwork hashes, source files, screenshots, and browser verification.

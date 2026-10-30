@@ -3,9 +3,9 @@ import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 test('menu to deterministic Viridian Forest run with visual checkpoints',async({page})=>{
   await page.goto('/?fast=1&debug=1&seed=1337');
-  const canvas=page.locator('canvas');await expect(canvas).toBeVisible();await page.waitForTimeout(500);
+  const canvas=page.locator('#app canvas');await expect(canvas).toBeVisible();await page.waitForTimeout(500);
   await page.screenshot({path:'test-results/screenshots/01-main-menu.png'});
-  await page.getByRole('button',{name:'New Run',exact:true}).click();await page.waitForTimeout(300);
+  await page.getByRole('button',{name:'Play',exact:true}).click();await page.getByRole('button',{name:'Single Player',exact:true}).click();await page.waitForTimeout(300);
   await page.screenshot({path:'test-results/screenshots/02-pokemon-selection.png'});
   await page.getByRole('button',{name:'Choose Bulbasaur'}).click();await page.waitForTimeout(300);
   await page.screenshot({path:'test-results/screenshots/03-stage-selection.png'});
@@ -28,10 +28,10 @@ test('menu to deterministic Viridian Forest run with visual checkpoints',async({
   await page.waitForTimeout(200);await page.screenshot({path:'test-results/screenshots/09-victory.png'});
 });
 
-test('Pokédex and Research screens render',async({page})=>{await page.goto('/?seed=1337');const canvas=page.locator('canvas');await expect(canvas).toBeVisible();await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('dex');});await page.waitForTimeout(250);await page.screenshot({path:'test-results/screenshots/10-pokedex.png'});await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('research');});await page.waitForTimeout(250);await page.screenshot({path:'test-results/screenshots/11-research.png'});});
+test('Pokédex and Research screens render',async({page})=>{await page.goto('/?seed=1337');const canvas=page.locator('#app canvas');await expect(canvas).toBeVisible();await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('dex');});await page.waitForTimeout(250);await page.screenshot({path:'test-results/screenshots/10-pokedex.png'});await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('research');});await page.waitForTimeout(250);await page.screenshot({path:'test-results/screenshots/11-research.png'});});
 
 test('grounding, terrain transitions, pond boundary, and responsive HP HUD',async({page})=>{
-  await page.setViewportSize({width:1280,height:720});await page.goto('/?fast=1&seed=1337');const canvas=page.locator('canvas');await expect(canvas).toBeVisible();
+  await page.setViewportSize({width:1280,height:720});await page.goto('/?fast=1&seed=1337');const canvas=page.locator('#app canvas');await expect(canvas).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur',fast:true});});await page.waitForTimeout(700);
   await page.screenshot({path:'test-results/screenshots/12-grounding-idle-1280.png'});
   await page.keyboard.down('d');await page.waitForTimeout(220);await page.screenshot({path:'test-results/screenshots/13-grounding-walk-east-1280.png'});await page.keyboard.up('d');
@@ -48,7 +48,7 @@ test('grounding, terrain transitions, pond boundary, and responsive HP HUD',asyn
 });
 
 test('interpolated movement states and streamed forest motifs',async({page})=>{
-  await page.setViewportSize({width:1280,height:720});await page.goto('/?fast=1&seed=1337');const canvas=page.locator('canvas');await expect(canvas).toBeVisible();
+  await page.setViewportSize({width:1280,height:720});await page.goto('/?fast=1&seed=1337');const canvas=page.locator('#app canvas');await expect(canvas).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur',fast:true});});await page.waitForTimeout(900);
   const opening=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{ranged:s.state.enemies.filter((e:any)=>e.behavior==='ranged').length,shots:s.state.projectiles.length,phase:s.state.encounterPhase};});expect(opening).toEqual({ranged:0,shots:0,phase:'opening'});
   await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.enemies=[];s.state.projectiles=[];s.state.pickups=[];s.nextSpawn=Infinity;s.miniIndex=99;});
@@ -66,7 +66,7 @@ test('interpolated movement states and streamed forest motifs',async({page})=>{
 test('complete trees and clean foliage survive chunk transitions',async({page})=>{
   await page.setViewportSize({width:1280,height:720});
   await page.goto('/?seed=1337');
-  await expect(page.locator('canvas')).toBeVisible();
+  await expect(page.locator('#app canvas')).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur'});});
   await page.waitForFunction(()=>{
     const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
@@ -153,7 +153,7 @@ test('complete trees and clean foliage survive chunk transitions',async({page})=
 test('full forest survey covers every chunk with complete reviewed props',async({page})=>{
   test.setTimeout(120_000);
   await page.setViewportSize({width:1280,height:720});await page.goto('/?seed=1337');
-  await expect(page.locator('canvas')).toBeVisible();
+  await expect(page.locator('#app canvas')).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur'});});
   await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player);
   const survey=await page.evaluate(()=>{
@@ -204,7 +204,7 @@ test('full tile catalog browses complete props and terrain separately',async({pa
 
 test('complete grass brushes around walking feet and settles when idle',async({page})=>{
   await page.setViewportSize({width:1280,height:720});await page.goto('/?seed=1337');
-  await expect(page.locator('canvas')).toBeVisible();
+  await expect(page.locator('#app canvas')).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur'});});
   await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player);
   await page.evaluate(()=>{
@@ -238,7 +238,7 @@ test('complete grass brushes around walking feet and settles when idle',async({p
 });
 
 test('walking animation restarts after stopping in every direction',async({page})=>{
-  await page.goto('/?seed=1337');await expect(page.locator('canvas')).toBeVisible();
+  await page.goto('/?seed=1337');await expect(page.locator('#app canvas')).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur'});});
   await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player);
   await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.enemies=[];s.state.moveSlots=[];s.nextSpawn=Infinity;});
@@ -267,7 +267,7 @@ test('walking animation restarts after stopping in every direction',async({page}
 
 test('grass makes only the bottom fifth of the visible body transparent',async({page})=>{
   await page.setViewportSize({width:1280,height:720});await page.goto('/?seed=1337');
-  await expect(page.locator('canvas')).toBeVisible();
+  await expect(page.locator('#app canvas')).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'charmander'});});
   await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player);
   await page.evaluate(()=>{

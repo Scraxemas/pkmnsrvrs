@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { assetFor, ENEMIES, ITEMS, MOVES, POKEMON, SPRITE_FRAMES, STAGES } from './content';
+import { assetFor, ENEMIES, ITEMS, MOVES, POKEMON, SPRITE_FRAMES } from './content';
 import { FACINGS, Facing, facingRow } from './direction';
 import { ENVIRONMENT_ASSETS, ENVIRONMENT_ATLASES, environmentKey, environmentUrl } from './environmentAssets';
 import {cliffFrame,decorationVisual,visibleChunkRange} from './worldPresentation';
@@ -11,6 +11,7 @@ import {RENDER_SETTINGS} from './renderSettings';
 import {renderProfile} from './renderProfiles';
 import { applyUpgrade, AttackEvent, isUpgradeAvailable, makeState, masteryOptions, rewardRoll, SimState, spawnSpecies, stateHash, tick, Upgrade, upgradeOptions } from './simulation';
 import {UpgradeScene} from './upgradeScene';
+import {RunResultsScene} from './ui/runResultsScene';
 import { discover, loadSave, recordEvolution, recordRun, recordSessionEvents } from './save';
 import {adjacencyMask,TERRAIN,terrainAt} from './terrain';
 import {PokemonAnimationController} from './animationState';
@@ -25,7 +26,6 @@ import './style.css';
 const W=1280,H=720,FONT='Trebuchet MS, monospace';
 interface GrassView {back:Phaser.GameObjects.Image;front:Phaser.GameObjects.Image;x:number;y:number;}
 interface ChoiceRequest {id:number;title:string;kind:'level'|'mastery'|'fixed';options?:Upgrade[];onDone?:()=>void;}
-const button=(scene:Phaser.Scene,x:number,y:number,label:string,action:()=>void,w=260)=>{const t=scene.add.text(x,y,label,{fontFamily:FONT,fontSize:'22px',color:'#fff',backgroundColor:'#244c37',padding:{x:18,y:12},align:'center',fixedWidth:w}).setOrigin(.5).setInteractive({useHandCursor:true});t.on('pointerover',()=>t.setBackgroundColor('#3c7652'));t.on('pointerout',()=>t.setBackgroundColor('#244c37'));t.on('pointerdown',action);return t;};
 class GameScene extends Phaser.Scene {
  preferences!:PlayerSettings;
  state!:SimState;keys!:Record<string,Phaser.Input.Keyboard.Key>;player!:Phaser.GameObjects.Sprite;playerShadow!:Phaser.GameObjects.Ellipse;cameraTarget!:Phaser.GameObjects.Zone;
@@ -50,7 +50,7 @@ class GameScene extends Phaser.Scene {
  preload(){const ids=new Set([...Object.keys(POKEMON),...Object.keys(ENEMIES)]);for(const id of ids){const f=SPRITE_FRAMES[id];if(f)this.load.spritesheet(`${id}-sprite`,assetFor(id,'sprite'),{frameWidth:f.width,frameHeight:f.height});this.load.image(`${id}-portrait`,assetFor(id,'portrait'));}for(const name of new Set(Object.values(ENVIRONMENT_ASSETS))){if(ENVIRONMENT_ATLASES.has(name))this.load.spritesheet(environmentKey(name),environmentUrl(name),{frameWidth:16,frameHeight:16});else if(name.startsWith('original/'))this.load.svg(environmentKey(name),environmentUrl(name));else this.load.image(environmentKey(name),environmentUrl(name));}}
  create(){
   stopFrontendScenes(this);
-  this.events.once('shutdown',()=>this.scene.stop('upgrade'));
+  this.events.once('shutdown',()=>{this.scene.stop('upgrade');this.scene.stop('results');});
   this.cameras.main.centerOn(this.state.player.x,this.state.player.y);this.drawForest();
   for(const id of Object.keys(SPRITE_FRAMES)){const f=SPRITE_FRAMES[id];if(!this.textures.exists(`${id}-sprite`))continue;for(const facing of FACINGS){const row=facingRow(facing),key=`${id}-walk-${facing}`;if(!this.anims.exists(key))this.anims.create({key,frames:this.anims.generateFrameNumbers(`${id}-sprite`,{start:row*f.frames,end:row*f.frames+f.frames-1}),frameRate:Math.max(6,Math.min(10,f.frames*1.5)),repeat:-1});}}
   this.keys=this.input.keyboard!.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT,ESC') as Record<string,Phaser.Input.Keyboard.Key>;
@@ -214,7 +214,7 @@ class GameScene extends Phaser.Scene {
   const progress=this.state.time/this.duration;if(this.miniIndex<this.miniProgress.length&&progress>=this.miniProgress[this.miniIndex]){spawnSpecies(this.state,this.miniIndex%2?'pidgeotto':'butterfree',1,true);this.miniIndex++;}
   if(!this.state.bossSpawned&&this.state.time>=this.duration){spawnSpecies(this.state,'beedrill',1,false,true);this.state.bossSpawned=true;}
  }
- finish(result:'victory'|'defeat'){if(this.ended)return;this.cancelChoices();this.ended=true;this.playerAnimation.trigger('defeat',this.state.time);recordSessionEvents(this.sessionDefeats,this.sessionBalls);recordRun({result,pokemon:this.state.pokemonId,stage:'viridian',level:this.state.level,time:this.state.time,defeated:this.state.defeated});const title=result==='victory'?'VIRIDIAN FOREST CLEARED!':'RUN DEFEATED';const panel=this.add.rectangle(W/2,H/2,680,360,0x102019,.98),t=this.add.text(W/2,260,`${title}\n\nLevel ${this.state.level} · ${this.state.defeated} defeated\nTime ${Math.floor(this.state.time/60)}:${String(Math.floor(this.state.time%60)).padStart(2,'0')}\nSeed ${this.state.world.seed}`,{fontFamily:FONT,fontSize:'28px',color:result==='victory'?'#ffe26b':'#ff8f8f',align:'center'}).setOrigin(.5),b=button(this,W/2,485,'RETURN TO MENU',()=>this.scene.start('menu'));this.overlay=this.add.container(0,0,[panel,t,b]).setDepth(30000).setScrollFactor(0);}
+ finish(result:'victory'|'defeat'){if(this.ended)return;this.cancelChoices();this.ended=true;this.playerAnimation.trigger('defeat',this.state.time);recordSessionEvents(this.sessionDefeats,this.sessionBalls);recordRun({result,pokemon:this.state.pokemonId,stage:'viridian',level:this.state.level,time:this.state.time,defeated:this.state.defeated});this.overlay=this.add.container(0,0).setScrollFactor(0);this.scene.launch('results',{result,level:this.state.level,defeated:this.state.defeated,time:this.state.time,seed:this.state.world.seed,onReturn:()=>this.scene.start('menu')});}
  step(){
   this.previousPlayer={x:this.state.player.x,y:this.state.player.y};this.previousEnemies=new Map(this.state.enemies.map(e=>[e.id,{x:e.x,y:e.y}]));this.previousProjectiles=new Map(this.state.projectiles.map(p=>[p.id,{x:p.x,y:p.y}]));const previousHp=this.state.hp;
   const previousLevel=this.state.level;this.schedule();const events=tick(this.state,this.fixedStep,this.moveInput());if(this.state.attacks.length)this.playerAnimation.trigger('attack',this.state.time,.18);if(this.state.hp<previousHp){this.playerAnimation.trigger('hit',this.state.time,.12);if(this.preferences.screenShake&&!motionReduced(this.preferences))this.cameras.main.shake(80,.002);}
@@ -230,5 +230,5 @@ class GameScene extends Phaser.Scene {
   if(this.debugText){const ranged=this.state.enemies.filter(e=>e.behavior==='ranged').length;this.debugText.setText(`DEBUG\nFPS ${Math.round(this.game.loop.actualFps)}  SIM 30 Hz  α ${alpha.toFixed(2)}\nAnim ${this.playerAnimation.state}  Key ${this.player.anims.currentAnim?.key??'idle'}  Frame ${String(this.player.frame.name)}\nFacing ${this.state.player.facing}  Ground offset ${playerOffset.toFixed(1)}\nSim ${this.state.player.x.toFixed(1)},${this.state.player.y.toFixed(1)}  Prev ${this.previousPlayer.x.toFixed(1)},${this.previousPlayer.y.toFixed(1)}\nRender ${this.renderPlayer.x.toFixed(1)},${this.renderPlayer.y.toFixed(1)}  Shadow ${this.playerShadow.x.toFixed(1)},${this.playerShadow.y.toFixed(1)}\nCamera ${this.cameraTarget.x.toFixed(1)},${this.cameraTarget.y.toFixed(1)}  Chunk ${this.activeChunk.cx},${this.activeChunk.cy}\nPhase ${this.state.encounterPhase}  Ranged ${ranged}/${this.state.maxRangedEnemies}  Shots ${this.state.projectiles.length}/${this.state.maxEnemyProjectiles}\nEnemies ${this.state.enemies.length}  Checks ${this.state.collisionChecks}  Nav ${this.state.navigationRebuilds}\nWorld ${this.state.world.seed}  RNG ${this.state.seed}  Hash ${stateHash(this.state)}`);}
  }
 }
-const game=new Phaser.Game({type:Phaser.AUTO,width:W,height:H,parent:'app',scene:[MenuScene,PokemonScene,StageScene,DexScene,ResearchScene,SettingsScene,GameScene,UpgradeScene],render:{pixelArt:true,antialias:false},scale:{mode:Phaser.Scale.FIT,autoCenter:Phaser.Scale.CENTER_BOTH}});
+const game=new Phaser.Game({type:Phaser.AUTO,width:W,height:H,parent:'app',scene:[MenuScene,PokemonScene,StageScene,DexScene,ResearchScene,SettingsScene,GameScene,UpgradeScene,RunResultsScene],render:{pixelArt:true,antialias:false},scale:{mode:Phaser.Scale.FIT,autoCenter:Phaser.Scale.CENTER_BOTH}});
 (window as unknown as {__POKEMON_SURVIVORS__:Phaser.Game}).__POKEMON_SURVIVORS__=game;

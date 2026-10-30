@@ -1,7 +1,7 @@
 import {test,expect,Page} from '@playwright/test';
 
 async function boot(page:Page,seed=1337){
-  await page.goto(`/?seed=${seed}`);await expect(page.locator('canvas')).toBeVisible();
+  await page.goto(`/?seed=${seed}`);await expect(page.locator('#app canvas')).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur'});});
   await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player);
   await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.enemies=[];s.state.moveSlots=[{id:'tackle',rank:1}];s.nextSpawn=Infinity;});
@@ -12,7 +12,7 @@ async function clickCard(page:Page,index:number){
   const bounds=await page.evaluate(i=>{
     const scene=(window as any).__POKEMON_SURVIVORS__.scene.getScene('upgrade'),card=scene.cards[i],hit=card.list.find((child:any)=>child.type==='Zone');const b=hit.getBounds();return{x:b.centerX,y:b.centerY};
   },index);
-  const box=(await page.locator('canvas').boundingBox())!;
+  const box=(await page.locator('#app canvas').boundingBox())!;
   await page.mouse.click(box.x+bounds.x/1280*box.width,box.y+bounds.y/720*box.height);
 }
 
@@ -53,7 +53,7 @@ test('level-up queue, keyboard, mastery, and double-click protection work',async
   await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.moveSlots.find((m:any)=>m.id==='tackle').rank=1;s.showChoices('DOUBLE CLICK CHECK',[{kind:'move',id:'tackle',label:'Tackle'}]);});
   await page.waitForTimeout(450);
   const before=await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').state.moveSlots[0].rank);
-  const box=(await page.locator('canvas').boundingBox())!;await page.mouse.dblclick(box.x+box.width/2,box.y+box.height*390/720,{delay:30});
+  const box=(await page.locator('#app canvas').boundingBox())!;await page.mouse.dblclick(box.x+box.width/2,box.y+box.height*390/720,{delay:30});
   await page.waitForTimeout(230);
   expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').state.moveSlots[0].rank)).toBe(before+1);
 });
@@ -98,7 +98,7 @@ test('EXP is independent of damage and overhead HP auto-hides and follows evolut
 });
 
 test('wild, elite, and boss shadows stay hidden and a ball survives chunk unloading',async({page})=>{
-  await page.goto('/?seed=1337');await expect(page.locator('canvas')).toBeVisible();
+  await page.goto('/?seed=1337');await expect(page.locator('#app canvas')).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur'});});
   await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player?.active);
   const result=await page.evaluate(()=>{

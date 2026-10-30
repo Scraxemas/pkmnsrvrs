@@ -33,5 +33,7 @@ describe('menu data and saved presentation preferences',()=>{
   it('navigates visual columns and rows without focusing diagonal cards first',()=>{
     const boxes=[{left:0,top:0,width:200,height:60},{left:0,top:80,width:200,height:60},{left:500,top:0,width:300,height:200}];
     expect(spatialFocus(boxes,0,'down')).toBe(1);expect(spatialFocus(boxes,0,'right')).toBe(2);expect(spatialFocus(boxes,1,'up')).toBe(0);
+    const arcade=[{left:468,top:310,width:344,height:78},{left:380,top:410,width:250,height:68},{left:650,top:410,width:250,height:68},{left:522,top:500,width:236,height:54}];
+    expect(spatialFocus(arcade,0,'down')).toBe(1);expect(spatialFocus(arcade,1,'right')).toBe(2);expect(spatialFocus(arcade,2,'down')).toBe(3);
   });
 });

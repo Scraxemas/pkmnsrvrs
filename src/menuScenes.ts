@@ -4,9 +4,12 @@ import {loadSave,updateSettings} from './save';
 import {motionReduced,PlayerSettings} from './preferences';
 import {actionButton,element,icon} from './ui/dom';
 import {locationCard} from './ui/locationCard';
-import {FRONTEND_VERSION,LocationCardData,locationCards,menuAsset,MENU_ART,menuProfile,STARTERS} from './ui/menuData';
+import {FRONTEND_VERSION,LocationCardData,locationCards,menuAsset,MENU_ART,researchStatistics,PLAY_MODES,STARTERS} from './ui/menuData';
 import {MenuInput} from './ui/menuInput';
+import {arcadeButton} from './ui/arcadeButton';
+import {MenuBackgroundController} from './ui/menuBackgroundController';
 import './menu.css';
+import './ui/titleMenu.css';
 
 export function stopFrontendScenes(scene:Phaser.Scene){for(const key of ['menu','pokemon','stage','dex','research','settings'])if(key!==scene.scene.key&&scene.scene.isActive(key))scene.scene.stop(key);}
 
@@ -31,21 +34,34 @@ abstract class FrontendScene extends Phaser.Scene {
 }
 
 export class MenuScene extends FrontendScene {
+  background?:MenuBackgroundController;modeOpen=false;
+  private links!:HTMLElement;private modes!:HTMLElement;private play!:HTMLButtonElement;private single!:HTMLButtonElement;
   constructor(){super('menu');}
+  init(data?:{mode?:boolean}){this.modeOpen=!!data?.mode;}
   create(){
-    this.mount('menu');const save=loadSave(),profile=menuProfile(save),layout=element('div','menu-layout'),left=element('section','title-column');
-    const masthead=element('div','menu-masthead');masthead.append(element('span','milestone-mark','I'),element('span','eyebrow','KANTO / FIRST MILESTONE'));left.append(masthead);
-    const title=element('h1','game-title'),logo=element('img','menu-logo');logo.src=menuAsset(MENU_ART.logo);logo.alt='Pokémon Survivors';logo.width=202;logo.height=100;logo.draggable=false;title.append(logo);left.append(title,element('p','menu-tagline','A new trail. A new challenge. A new run.'));
-    const nav=element('nav','main-navigation');nav.setAttribute('aria-label','Main menu');
-    const entries=[['New Run','Choose your Pokémon. Find your way.','play','pokemon'],['Pokédex','Your encounters, discoveries, and evolutions.','book','dex'],['Research','Track your progress through Kanto.','flask','research'],['Settings','Make the adventure your own.','settings','settings']] as const;
-    entries.forEach(([name,description,symbol,scene],i)=>{const button=actionButton('',()=>this.scene.start(scene),`menu-option${i===0?' menu-option--primary':''}`);button.replaceChildren(icon(symbol));const text=element('span','menu-option__text');text.append(element('span','menu-option__name',name),element('span','menu-option__description',description));button.append(text,element('span','menu-option__arrow','›'));button.setAttribute('aria-label',name);nav.append(button);});left.append(nav);
-    const featured=element('aside','featured-milestone');featured.append(element('div','eyebrow featured-label','YOUR ADVENTURE BEGINS HERE'));
-    featured.append(locationCard(locationCards(save)[0],()=>this.scene.start('pokemon'),true));
-    layout.append(left,featured);this.content.append(layout);
-    const stats=element('div','profile-strip');
-    for(const [label,value] of [['AVAILABLE STARTERS',`${profile.starters} / ${profile.totalStarters}`],['FOREST CLEARS',String(profile.clears)],['PERSONAL BEST',profile.best]]){const stat=element('div','profile-stat');stat.append(element('span','eyebrow',label),element('strong','',value));stats.append(stat);}
-    const bottom=element('div','menu-bottom');bottom.append(element('span','','Viridian Forest · First Milestone'),element('span','',`${FRONTEND_VERSION} · Pokémon fan project`));this.footer.append(stats,bottom);this.controls();
+    this.mount('menu');const initialMode=this.modeOpen;
+    const stage=element('div','title-stage'),stack=element('section','title-stack'),title=element('h1','game-title'),logo=element('img','menu-logo');
+    logo.src=menuAsset(MENU_ART.logo);logo.alt='Pokémon Survivors';logo.width=202;logo.height=100;logo.draggable=false;title.append(logo);
+    const nav=element('nav','title-navigation');nav.setAttribute('aria-label','Main menu');
+    this.play=arcadeButton('Play',()=>this.setMode(!this.modeOpen),'play');this.play.setAttribute('aria-controls','play-modes');nav.append(this.play);
+    const area=element('div','title-mode-area');this.links=element('div','title-links');
+    const secondary=element('div','title-secondary');secondary.append(arcadeButton('Pokédex',()=>this.scene.start('dex'),'pokedex'),arcadeButton('Research',()=>this.scene.start('research'),'research'));
+    this.links.append(secondary,arcadeButton('Settings',()=>this.scene.start('settings'),'settings'));
+    this.modes=element('section','mode-panel');this.modes.id='play-modes';this.modes.setAttribute('aria-label','Choose play mode');
+    this.single=arcadeButton('Single Player',()=>this.scene.start('pokemon'),'single');
+    const multi=arcadeButton('Multiplayer',()=>{},'multi');multi.disabled=!PLAY_MODES.multiplayer.available;multi.dataset.targetPlayers=String(PLAY_MODES.multiplayer.targetMaxPlayers);multi.setAttribute('aria-label','Multiplayer — Coming soon');multi.querySelector('.arcade-button__label')!.append(element('span','coming-soon','COMING SOON'));
+    this.modes.append(this.single,multi,arcadeButton('Back',()=>this.setMode(false),'back'));area.append(this.links,this.modes);nav.append(area);stack.append(title,nav);stage.append(stack);this.content.append(stage);this.footer.append(element('span','title-build',FRONTEND_VERSION));
+    const image=this.root.querySelector<HTMLImageElement>('.frontend-background')!;
+    this.background=new MenuBackgroundController(this,this.root,image,motionReduced(loadSave().settings));
+    const query=matchMedia('(prefers-reduced-motion: reduce)'),changed=()=>{const value=motionReduced(loadSave().settings);this.root.dataset.reducedMotion=String(value);this.background?.setReducedMotion(value);};query.addEventListener('change',changed);
+    this.events.once('shutdown',()=>{query.removeEventListener('change',changed);this.background?.destroy();});
+    this.navigation=new MenuInput(this.root,()=>{if(this.modeOpen)this.setMode(false);});this.setMode(initialMode);
   }
+  setMode(open:boolean){
+    this.modeOpen=open;this.links.hidden=open;this.modes.hidden=!open;this.play.setAttribute('aria-expanded',String(open));
+    queueMicrotask(()=>{if(this.root.isConnected)(open?this.single:this.play).focus({preventScroll:true});});
+  }
+  update(_time:number,delta:number){this.background?.update(delta);}
 }
 
 export class PokemonScene extends FrontendScene {
@@ -61,7 +77,7 @@ export class PokemonScene extends FrontendScene {
       const stats=element('div','partner-stats');for(const [label,value] of [['HP',pokemon.stats.hp],['ATK',pokemon.stats.attack],['SPD',pokemon.stats.speed]]){const stat=element('span');stat.append(element('small','',String(label)),element('strong','',String(value)));stats.append(stat);}
       button.append(element('span','eyebrow',`NO. ${String(pokemon.dex).padStart(3,'0')}`),portrait,element('h2','',pokemon.name),types,element('p','',pokemon.description),stats,element('span','partner-move',`Starts with ${MOVES[pokemon.startingMove].name}`),element('span','partner-select',available?'Choose partner  ›':'Locked'));grid.append(button);
     }
-    this.content.append(grid);this.controls(()=>this.scene.start('menu'));
+    this.content.append(grid);this.controls(()=>this.scene.start('menu',{mode:true}));
   }
 }
 
@@ -101,10 +117,19 @@ export class DexScene extends FrontendScene {
 export class ResearchScene extends FrontendScene {
   constructor(){super('research');}
   create(){
-    this.mount('research','Research board','Small discoveries. Lasting progress.');const r=loadSave().research;
+    this.mount('research','Research board','Small discoveries. Lasting progress.');const save=loadSave(),r=save.research;
+    const tabs=element('div','research-tabs');tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Research views');
+    const challenges=element('section','research-panel'),statistics=element('section','research-panel');challenges.id='research-challenges';statistics.id='research-statistics';
+    for(const [panel,name] of [[challenges,'Challenges'],[statistics,'Statistics']] as const){panel.setAttribute('role','tabpanel');panel.setAttribute('aria-label',name);}
+    const select=(name:string)=>{challenges.hidden=name!=='Challenges';statistics.hidden=name!=='Statistics';for(const tab of tabs.querySelectorAll('button'))tab.setAttribute('aria-selected',String(tab.textContent===name));};
+    for(const name of ['Challenges','Statistics']){const tab=actionButton(name,()=>select(name));tab.setAttribute('role','tab');tab.setAttribute('aria-controls',name==='Challenges'?challenges.id:statistics.id);tabs.append(tab);}
     const tasks=[['Defeat 100 Pokémon',r.enemiesDefeated,100],['Defeat 100 Caterpie',r.caterpie,100],['Defeat 100 Weedle',r.weedle,100],['Defeat Beedrill',r.beedrill,1],['Evolve a starter',r.evolutions,1],['Complete Viridian Forest',r.viridianWins,1]] as const;
-    const grid=element('div','research-grid');tasks.forEach(([label,value,max],i)=>{const count=Math.min(value??0,max),card=element('article',`research-entry${count>=max?' is-complete':''}`),header=element('div','research-entry__heading');header.append(element('span','eyebrow',`FIELD NOTES ${String(i+1).padStart(2,'0')}`),icon(count>=max?'check':'flask'));const progress=element('progress');progress.max=max;progress.value=count;progress.setAttribute('aria-label',label);card.append(header,element('h2','',label),progress,element('span','research-count',`${count} / ${max}${count>=max?' · Complete':''}`));grid.append(card);});
-    this.content.append(grid);this.controls(()=>this.scene.start('menu'));
+    const grid=element('div','research-grid');tasks.forEach(([label,value,max],i)=>{const count=Math.min(value??0,max),card=element('article',`research-entry${count>=max?' is-complete':''}`),header=element('div','research-entry__heading');header.append(element('span','eyebrow',`FIELD NOTES ${String(i+1).padStart(2,'0')}`),icon(count>=max?'check':'flask'));const progress=element('progress');progress.max=max;progress.value=count;progress.setAttribute('aria-label',label);card.append(header,element('h2','',label),progress,element('span','research-count',`${count} / ${max}${count>=max?' · Complete':''}`));grid.append(card);});challenges.append(grid);
+    const stats=researchStatistics(save),totals=element('div','statistics-grid');
+    for(const [name,value] of stats.totals){const stat=element('article','statistic');stat.append(element('span','eyebrow',name),element('strong','',String(value)));totals.append(stat);}statistics.append(totals);
+    const best=element('article','saved-run');best.append(element('div','eyebrow','VIRIDIAN FOREST'),element('h2','','Personal best'),element('p','',stats.best?`Level ${stats.best.level} · ${stats.best.defeated} KO · ${stats.best.time} survived`:'No recorded run yet.'));statistics.append(best);
+    if(stats.lastRun){const last=element('article','saved-run'),run=stats.lastRun;last.append(element('h2','','Last run'),element('p','',`${run.pokemon} · ${run.result==='victory'?'Victory':'Defeat'} · Level ${run.level} · ${run.defeated} KO · ${run.timeLabel}`));statistics.append(last);}
+    this.content.append(tabs,challenges,statistics);select('Challenges');this.controls(()=>this.scene.start('menu'));
   }
 }
 

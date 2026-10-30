@@ -28,6 +28,11 @@ and controller. Settings save reduced motion, damage numbers, and screen shake;
 fullscreen reports the browser's actual state. Audio and later Kanto stages are
 clearly labeled as future content.
 
+The latest [v0.3.8 title screen](docs/V038_CENTERED_MENU.md) centers the logo and
+arcade controls over an animated forest. Play opens Single Player / Multiplayer
+mode selection; multiplayer is explicitly unavailable. Personal bests and saved
+totals are in Research → Statistics. The report includes actual animation footage.
+
 ## FRLG asset library
 
 The complete supplied tileset is extracted into [assets/extracted/frlg](assets/extracted/frlg/README.md). Open its `index.html` locally to browse all 4,792 native cells, complete props, and reusable terrain. Names include dimensions and source coordinates; unverified semantic identities are explicitly labeled for review. Complete assembled props are separated from raw prop parts.

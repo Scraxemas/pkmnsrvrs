@@ -15,7 +15,7 @@ async function freezeCamera(page:Page,point:{x:number;y:number},zoom=1){
 }
 
 test('new normal runs use fresh world seeds and different terrain',async({page})=>{
-  await page.goto('/');await expect(page.locator('canvas')).toBeVisible();const samples=[] as {seed:number;hash:number}[];
+  await page.goto('/');await expect(page.locator('#app canvas')).toBeVisible();const samples=[] as {seed:number;hash:number}[];
   for(let i=0;i<3;i++){
     await start(page);
     samples.push(await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');let h=2166136261;for(const v of s.state.world.terrain.cells){h^=v;h=Math.imul(h,16777619);}return{seed:s.state.world.seed,hash:h>>>0};}));
@@ -25,7 +25,7 @@ test('new normal runs use fresh world seeds and different terrain',async({page})
 });
 
 test('ten-seed environment gallery and required feature demonstrations',async({page})=>{
-  test.setTimeout(120_000);await page.setViewportSize({width:1280,height:720});await page.goto('/?seed=1');await expect(page.locator('canvas')).toBeVisible();
+  test.setTimeout(120_000);await page.setViewportSize({width:1280,height:720});await page.goto('/?seed=1');await expect(page.locator('#app canvas')).toBeVisible();
   for(const seed of [1,7,42,1337,2026,12345,24680,90210,500123,876543]){
     await start(page,seed);
     const point=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{x:s.state.world.playerStart.x+450,y:s.state.world.playerStart.y+350};});
@@ -46,7 +46,7 @@ test('ten-seed environment gallery and required feature demonstrations',async({p
 });
 
 test('cliff terrain blocks actual player movement',async({page})=>{
-  await page.goto('/?seed=1337');await expect(page.locator('canvas')).toBeVisible();await start(page,1337);
+  await page.goto('/?seed=1337');await expect(page.locator('#app canvas')).toBeVisible();await start(page,1337);
   const edge=await page.evaluate(()=>{
     const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),grid=s.state.world.terrain;
     const i=grid.cells.findIndex((v:number,index:number)=>v===4&&index%grid.cols>1&&grid.cells[index-1]===0&&s.state.world.decorations.every((d:any)=>!d.solid||Math.hypot(d.x-((index%grid.cols)-.5)*32,d.y-(Math.floor(index/grid.cols)+.5)*32)>80));
@@ -59,7 +59,7 @@ test('cliff terrain blocks actual player movement',async({page})=>{
 });
 
 test('accelerated fixed-step run reaches a real Beedrill victory and persists it',async({page})=>{
-  test.setTimeout(120_000);await page.goto('/?fast=1&seed=1337');await expect(page.locator('canvas')).toBeVisible();
+  test.setTimeout(120_000);await page.goto('/?fast=1&seed=1337');await expect(page.locator('#app canvas')).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur',fast:true});});
   await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player?.active);
   await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.maxHp=100000;s.state.hp=100000;s.state.powerBonus=20;s.state.moveSlots=['tackle','vineWhip','ember','waterGun'].map(id=>({id,rank:5}));});
