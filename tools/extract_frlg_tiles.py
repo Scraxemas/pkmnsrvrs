@@ -10,7 +10,7 @@ import argparse
 import shutil
 from pathlib import Path
 
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageFilter
 
 
 TILE = 16
@@ -109,6 +109,24 @@ def terrain_atlas(image: Image.Image, prefix: str) -> Image.Image:
     rim = Counter(p for p in edge.getdata() if p[:3] not in excluded).most_common(1)[0][0]
     for mask in range(256):
         coverage = terrain_coverage(mask)
+        water_bands = None
+        if prefix == 'water':
+            # Erode an extended adjacency neighborhood, not an isolated tile:
+            # shore shadows continue through tile and chunk boundaries.
+            neighbors = {(0,0)} | {(dx,dy) for dx,dy,bit in
+                ((0,-1,1),(1,-1,2),(1,0,4),(1,1,8),(0,1,16),(-1,1,32),(-1,0,64),(-1,-1,128)) if mask & bit}
+            area = Image.new('L',(48,48))
+            directions = ((0,-1,1),(1,-1,2),(1,0,4),(1,1,8),(0,1,16),(-1,1,32),(-1,0,64),(-1,-1,128))
+            for cx,cy in neighbors:
+                adjacent=sum(bit for dx,dy,bit in directions if (cx+dx,cy+dy) in neighbors)
+                local=terrain_coverage(adjacent)
+                for py in range(16):
+                    for px in range(16):
+                        if local[py][px]:area.putpixel(((cx+1)*16+px,(cy+1)*16+py),255)
+            water_bands=[area.filter(ImageFilter.MinFilter(3)),area.filter(ImageFilter.MinFilter(5))]
+            # Both colors are sampled from FRLG water artwork, including the
+            # deep shore shadow. No aquatic artwork enters the land-rock class.
+            shore_shadow=image.getpixel((3*16+9,53*16+8))
         tile = ground.copy()
         for y in range(TILE):
             for x in range(TILE):
@@ -116,7 +134,11 @@ def terrain_atlas(image: Image.Image, prefix: str) -> Image.Image:
                     continue
                 boundary = any(0 <= nx < TILE and 0 <= ny < TILE and not coverage[ny][nx]
                                for nx, ny in ((x-1,y),(x+1,y),(x,y-1),(x,y+1)))
-                tile.putpixel((x,y), rim if boundary else centre.getpixel((x,y)))
+                color = rim if boundary else centre.getpixel((x,y))
+                if water_bands is not None:
+                    if not water_bands[0].getpixel((x+16,y+16)):color=rim
+                    elif not water_bands[1].getpixel((x+16,y+16)):color=shore_shadow
+                tile.putpixel((x,y), color)
         atlas.alpha_composite(tile, ((mask % 16) * TILE, (mask // 16) * TILE))
     return atlas
 
@@ -183,6 +205,13 @@ def main() -> None:
     for prefix in ('path', 'water'):
         terrain_atlas(image, prefix).save(args.runtime / f'{prefix}_atlas.png')
 
+    # A complete DRY LAND formation, not an aquatic boulder with its water
+    # background removed. The warm brown outline belongs to the source art.
+    land=clear_connected_grass(crop(image,(0,13,3,3)),grass_palette)
+    pad_sprite(land).save(args.runtime/'land_boulder.png')
+    pad_sprite(land.resize((24,24),Image.Resampling.NEAREST)).save(args.runtime/'land_rock_small.png')
+    crop(image,(0,13,3,3)).save(args.runtime/'cliff_atlas.png')
+
     # Cell (2, 203) contains the COMPLETE tuft, including its tapered lower
     # leaves. The earlier (2, 1) sample overlaps a tree and cannot be repaired
     # by chopping off its lower rows without flattening the grass silhouette.
@@ -210,7 +239,7 @@ def main() -> None:
         padded.save(args.runtime / f"{name}.png")
 
     print(f"Archived {args.source} -> {args.archive}")
-    print(f"Extracted {len(TILES) + len(TREE_PARTS) + len(PROP_CROPS) + 5} runtime assets -> {args.runtime}")
+    print(f"Extracted {len(TILES) + len(TREE_PARTS) + len(PROP_CROPS) + 8} runtime assets -> {args.runtime}")
 
 
 if __name__ == "__main__":

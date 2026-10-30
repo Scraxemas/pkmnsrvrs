@@ -2,6 +2,7 @@
 
 import argparse
 import re
+import subprocess
 from pathlib import Path
 
 from PIL import Image, ImageDraw
@@ -16,11 +17,14 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     registry = (ROOT / 'src/environmentAssets.ts').read_text().split('} as const')[0]
     names = sorted(set(re.findall(r":'([^']+)'", registry)))
+    if any(name.startswith('original/') for name in names):
+        subprocess.run(['node',str(ROOT/'tools/render_svg_assets.mjs'),str(args.output/'svg')],cwd=ROOT,check=True)
     width, height = 240, 200
     contact = Image.new('RGBA', (width * 6, height * ((len(names) + 5) // 6)), '#72c9a6')
     draw = ImageDraw.Draw(contact)
     for i, name in enumerate(names):
-        image = Image.open(ROOT / 'public/assets/environment/viridian' / f'{name}.png').convert('RGBA')
+        path=args.output/'svg'/f'{Path(name).name}.png' if name.startswith('original/') else ROOT/'public/assets/environment/viridian'/f'{name}.png'
+        image = Image.open(path).convert('RGBA')
         scale = min(4, 184 / image.width, 156 / image.height)
         image = image.resize((round(image.width * scale), round(image.height * scale)), Image.Resampling.NEAREST)
         x, y = (i % 6) * width, (i // 6) * height

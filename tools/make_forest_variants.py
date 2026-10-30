@@ -1,0 +1,15 @@
+"""Create original code-authored pixel flower variants; no source tiles edited."""
+from pathlib import Path
+
+OUTPUT=Path(__file__).resolve().parents[1]/'public/assets/environment/viridian/original'
+
+for name,light,dark in [('white','#f1efdb','#afc9c2'),('yellow','#f5d56f','#c69b43'),('pink','#efb1c3','#bb718e')]:
+    svg=f'''<svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" shape-rendering="crispEdges">
+<path fill="#2d693f" d="M8 7h2v10H8zM3 14h5v3H3zM10 12h5v3h-5z"/>
+<path fill="#82b95e" d="M3 13h4v2H3zM11 11h4v2h-4z"/>
+<path fill="{dark}" d="M5 3h8v9H5zM3 5h12v5H3z"/>
+<path fill="{light}" d="M6 2h5v4H6zM3 5h4v4H3zM11 5h4v4h-4zM6 9h5v4H6z"/>
+<path fill="#e5b25a" d="M7 6h4v4H7z"/><path fill="#f7e0a1" d="M8 6h2v2H8z"/>
+</svg>'''
+    OUTPUT.mkdir(parents=True,exist_ok=True)
+    (OUTPUT/f'flowers_{name}.svg').write_text(svg,encoding='utf-8')

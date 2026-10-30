@@ -18,10 +18,10 @@ describe('reviewed map presentation',()=>{
   it('has reviewed complete art for every generated decoration',()=>{
     for(const seed of [1,1337,90210])for(const d of generateMap(seed).decorations){
       const visual=decorationVisual(d.id,d.x,d.y,seed);
-      expect(visual.name.startsWith('frlg/')).toBe(true);
+      expect(Object.values(ENVIRONMENT_ASSETS)).toContain(visual.name);
       expect(Number.isInteger(visual.scale)).toBe(true);
     }
-    expect(Object.values(ENVIRONMENT_ASSETS).every(name=>name.startsWith('frlg/'))).toBe(true);
+    expect(Object.values(ENVIRONMENT_ASSETS).every(name=>name.startsWith('frlg/')||name.startsWith('original/'))).toBe(true);
     expect(()=>decorationVisual('unreviewed',0,0,1)).toThrow('No reviewed map artwork');
   });
 });

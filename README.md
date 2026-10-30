@@ -13,6 +13,15 @@ pnpm build
 
 Current slice: Bulbasaur, Charmander, and Squirtle content records; deterministic 30 Hz simulation; automatic moves; seeded spawning; XP/level progression; elite and boss encounters; eight-direction PMD animation; asset-rendered Viridian Forest terrain; shared flow-field navigation; and a playable WASD/arrow-key arena. Add `?debug=1` for collision, velocity, facing, and simulation diagnostics.
 
+Double-click `Launch Pokemon Survivors.bat` on Windows to select an available
+local port and open the browser. New runs receive fresh seeds. Add `?seed=12345`
+to replay a specific forest, or combine it with `?debug=1&seed=12345`. Upgrade cards
+support clicking, 1/2/3, arrow focus, and Enter. The top blue bar displays EXP;
+damaged Pokémon show a small overhead HP bar that hides after full healing.
+
+See [the v0.3.6 world and UI report](docs/V036_WORLD_AND_UI.md) for the ten-seed
+gallery, asset classification, campsite/cliff features, and browser validation.
+
 ## FRLG asset library
 
 The complete supplied tileset is extracted into [assets/extracted/frlg](assets/extracted/frlg/README.md). Open its `index.html` locally to browse all 4,792 native cells, complete props, and reusable terrain. Names include dimensions and source coordinates; unverified semantic identities are explicitly labeled for review. Complete assembled props are separated from raw prop parts.

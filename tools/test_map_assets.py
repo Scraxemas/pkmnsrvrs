@@ -14,6 +14,20 @@ DIRECTIONS=[(0,-1,1),(1,-1,2),(1,0,4),(1,1,8),(0,1,16),(-1,1,32),(-1,0,64),(-1,-
 
 
 class MapAssetTests(unittest.TestCase):
+    def test_land_rocks_use_the_complete_dry_source_formation(self):
+        with Image.open(ROOT/'assets/source/frlg/outdoors-c.png') as source:
+            image=source.convert('RGBA')
+            palette={pixel[:3] for pixel in crop(image,TILES['grass']).getdata()}
+            expected=pad_sprite(clear_connected_grass(crop(image,(0,13,3,3)),palette))
+        with Image.open(ROOT/'public/assets/environment/viridian/frlg/land_boulder.png') as actual:
+            self.assertEqual(actual.convert('RGBA').tobytes(),expected.tobytes())
+        for name in ('land_boulder','land_rock_small'):
+            with self.subTest(name=name),Image.open(ROOT/f'public/assets/environment/viridian/frlg/{name}.png') as rock:
+                self.assertFalse(any(b>r+20 for r,g,b,a in rock.convert('RGBA').getdata() if a))
+                bounds=rock.getchannel('A').getbbox()
+                self.assertGreaterEqual(bounds[0],2)
+                self.assertLessEqual(bounds[2],rock.width-2)
+
     def test_grass_keeps_the_complete_native_lower_leaves(self):
         with Image.open(ROOT/'assets/source/frlg/outdoors-c.png') as source:
             image=source.convert('RGBA')
@@ -56,6 +70,7 @@ class MapAssetTests(unittest.TestCase):
                 self.assertLessEqual(bounds[3],image.height-2)
 
     def test_all_terrain_adjacencies_connect_across_shared_edges(self):
+        water=Image.open(ROOT/'public/assets/environment/viridian/frlg/water_atlas.png').convert('RGBA')
         for vertical in (False,True):
             centres=((0,0),(0,1)) if vertical else ((0,0),(1,0))
             positions=sorted({(cx+dx,cy+dy) for cx,cy in centres for dx,dy,_ in DIRECTIONS}-set(centres))
@@ -66,6 +81,10 @@ class MapAssetTests(unittest.TestCase):
                 edge_a=a[-1] if vertical else [row[-1] for row in a]
                 edge_b=b[0] if vertical else [row[0] for row in b]
                 self.assertEqual(edge_a,edge_b,(vertical,masks))
+                tiles=[water.crop(((m%16)*16,(m//16)*16,(m%16+1)*16,(m//16+1)*16)) for m in masks]
+                pixels_a=[tiles[0].getpixel((i,15) if vertical else (15,i)) for i in range(16)]
+                pixels_b=[tiles[1].getpixel((i,0) if vertical else (0,i)) for i in range(16)]
+                self.assertEqual(pixels_a,pixels_b,('shore colors',vertical,masks))
 
 
 if __name__=='__main__':unittest.main()

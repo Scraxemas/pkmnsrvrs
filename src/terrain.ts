@@ -1,4 +1,4 @@
-export const TERRAIN={grass:0,path:1,water:2,tallGrass:3} as const;
+export const TERRAIN={grass:0,path:1,water:2,tallGrass:3,cliff:4} as const;
 export type TerrainCode=typeof TERRAIN[keyof typeof TERRAIN];
 
 export interface TerrainGrid { tileSize:number;cols:number;rows:number;cells:number[]; }

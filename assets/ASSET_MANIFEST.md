@@ -24,11 +24,20 @@
 - Extraction: `tools/extract_frlg_tiles.py`; crops exact native cells and clears only border-connected pixels from the known grass palette on object sprites.
 - Audit: `tools/audit_frlg_sheet.py`; emits coordinate-labelled pages and a candidate-metatile sheet under `test-results/frlg-sheet-audit`.
 - Current use: 2× integer-scaled grass, detail cells, nine-piece dirt paths, nine-piece pond shoreline/water, single trees, tree clusters, and the ancient-tree landmark.
+- v0.3.6: complete dry boulders from native cells `(0,13,3,3)`, a whole-formation small variant, and a nine-piece cliff atlas. Aquatic gray rock crops are restricted to pond terrain. Source selection and transparent grass removal are reproducible in `extract_frlg_tiles.py`; the source sheet remains unchanged.
 - Rights status: imported at the project owner's direction for this fan project. Pokémon and the FireRed/LeafGreen artwork remain property of their respective rights holders. This manifest records provenance; it does not claim a commercial redistribution license.
+
+## Original campsite and flower pixel artwork
+
+- Project-authored SVG source: `public/assets/environment/viridian/original`.
+- Tents, camp logs, supplies, reeds, and white/yellow/pink flowers use original code-authored pixel shapes and transparent backgrounds, rasterized by Phaser's SVG loader.
+- Flower source generator: `tools/make_forest_variants.py`. Runtime contact-sheet rendering: `tools/render_svg_assets.mjs` through Chromium.
+- Upgrade illustrations are original Phaser drawing commands in `src/upgradeScene.ts`.
+- These additions do not alter Pokémon sprite attribution or the supplied FRLG sheet's rights status.
 
 ## Retired generated Viridian atlas
 
-- The project-owned generated atlas remains under `public/assets/environment/viridian` for temporary fallback objects only.
+- The project-owned generated atlas remains under `public/assets/environment/viridian` as archival material.
 - It is no longer used for base grass, paths, water, or trees.
 - Master: `public/assets/environment/viridian/forest-atlas-source.png`; extraction tool: `tools/extract_forest_atlas.py`.
 
