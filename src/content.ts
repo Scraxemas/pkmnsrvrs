@@ -1,4 +1,5 @@
-﻿export const TYPES=['Normal','Fire','Water','Electric','Grass','Ice','Fighting','Poison','Ground','Flying','Psychic','Bug','Rock','Ghost','Dragon','Dark','Steel','Fairy'] as const;
+import {visibleCampaignNodes} from './campaign/data';
+export const TYPES=['Normal','Fire','Water','Electric','Grass','Ice','Fighting','Poison','Ground','Flying','Psychic','Bug','Rock','Ghost','Dragon','Dark','Steel','Fairy'] as const;
 export type PokemonType=typeof TYPES[number];
 export type DamageClass='Physical'|'Special'|'Status';
 export type MoveKind='charge'|'slash'|'sweep'|'cloud'|'drain'|'projectile'|'fixed'|'piercing'|'spread'|'spin';
@@ -39,22 +40,8 @@ export const POKEMON:Record<string,PokemonDef>={
  blastoise:{id:'blastoise',dex:9,name:'Blastoise',types:['Water'],stats:S(79,83,100,85,105,78),speed:172,startingMove:'hydroPump',learnset:['hydroPump','waterGun','bubble','rapidSpin','tackle'],description:'A heavily armored piercing attacker.',color:0x4479b3}
 };
 export const ENEMIES:Record<string,EnemyDef>={caterpie:{id:'caterpie',name:'Caterpie',types:['Bug'],hp:34,speed:42,behavior:'pursue',xp:5,color:0x74b84e},weedle:{id:'weedle',name:'Weedle',types:['Bug','Poison'],hp:30,speed:58,behavior:'fast',xp:5,color:0xc7a84e},metapod:{id:'metapod',name:'Metapod',types:['Bug'],hp:70,speed:20,behavior:'defend',xp:8,color:0x7ab85b},kakuna:{id:'kakuna',name:'Kakuna',types:['Bug','Poison'],hp:65,speed:22,behavior:'defend',xp:8,color:0xd5c75a},pidgey:{id:'pidgey',name:'Pidgey',types:['Normal','Flying'],hp:40,speed:68,behavior:'ranged',xp:7,color:0xb99a72},butterfree:{id:'butterfree',name:'Butterfree',types:['Bug','Flying'],hp:90,speed:55,behavior:'ranged',xp:18,color:0x9b8cc4},pidgeotto:{id:'pidgeotto',name:'Pidgeotto',types:['Normal','Flying'],hp:155,speed:90,behavior:'charge',xp:28,color:0xa97952},beedrill:{id:'beedrill',name:'Beedrill',types:['Bug','Poison'],hp:1400,speed:62,behavior:'charge',xp:100,color:0xe3c33d}};
-export const STAGES={
- viridian:{id:'viridian',name:'Viridian Forest',region:'Kanto',biome:'forest',status:'available',duration:1800,boss:'beedrill',identity:'Dense woodland paths, Bug habitats, tall grass and forest clearings.'},
- mtMoon:{id:'mtMoon',name:'Mt. Moon',region:'Kanto',biome:'cave',status:'locked',duration:1800,boss:'clefable',identity:'Moonlit caverns, fossils, mineral chambers and rockfall hazards.'},
- ssAnne:{id:'ssAnne',name:'S.S. Anne',region:'Kanto',biome:'ship',status:'future',duration:1800,boss:'rival',identity:'Ship decks, cabins, dining rooms and moving cargo.'},
- pokemonTower:{id:'pokemonTower',name:'PokÃ©mon Tower',region:'Kanto',biome:'tower',status:'future',duration:1800,boss:'marowak',identity:'Spectral floors, grave markers and curse zones.'},
- rocketHideout:{id:'rocketHideout',name:'Rocket Hideout',region:'Kanto',biome:'facility',status:'future',duration:1800,boss:'giovanni',identity:'Mechanical traps, rotating floors and guarded vaults.'},
- safariZone:{id:'safariZone',name:'Safari Zone',region:'Kanto',biome:'wetland',status:'future',duration:1800,boss:'tauros',identity:'Open habitats, ponds, stampedes and rare encounters.'},
- silphCo:{id:'silphCo',name:'Silph Co.',region:'Kanto',biome:'facility',status:'future',duration:1800,boss:'giovanni',identity:'Office floors, laboratories and teleport networks.'},
- powerPlant:{id:'powerPlant',name:'Power Plant',region:'Kanto',biome:'industrial',status:'future',duration:1800,boss:'zapdos',identity:'Generators, electrical fields and machinery corridors.'},
- seafoam:{id:'seafoam',name:'Seafoam Islands',region:'Kanto',biome:'ice-cave',status:'future',duration:1800,boss:'articuno',identity:'Frozen caverns, currents and sliding ice.'},
- mansion:{id:'mansion',name:'PokÃ©mon Mansion',region:'Kanto',biome:'ruin',status:'future',duration:1800,boss:'ditto',identity:'Abandoned laboratories, toxic rooms and experiments.'},
- mtEmber:{id:'mtEmber',name:'Mt. Ember',region:'Kanto',biome:'volcano',status:'future',duration:1800,boss:'moltres',identity:'Lava channels, ash fields and volcanic ledges.'},
- victoryRoad:{id:'victoryRoad',name:'Victory Road',region:'Kanto',biome:'cave',status:'future',duration:1800,boss:'machamp',identity:'Advanced caves, strength puzzles and evolved PokÃ©mon.'},
- indigo:{id:'indigo',name:'Indigo Plateau',region:'Kanto',biome:'arena',status:'future',duration:1800,boss:'elite-four',identity:'Elite battle arenas with escalating specialist waves.'},
- ceruleanCave:{id:'ceruleanCave',name:'Cerulean Cave',region:'Kanto',biome:'crystal-cave',status:'future',duration:1800,boss:'mewtwo',identity:'Powerful wild PokÃ©mon, psychic distortions and crystal chambers.'}
-} as const;
+// Campaign metadata is shared with the map; only the existing forest has a game implementation.
+export const STAGES:Record<string,{id:string;name:string;region:string;biome:string;status:'available'|'locked'|'future';duration:number;boss:string;identity:string}>=Object.fromEntries(visibleCampaignNodes().map(node=>[node.id,{id:node.id,name:node.name,region:node.region,biome:node.art,status:node.implementation==='ready'?'available':node.implementation==='development'?'locked':'future',duration:Array.isArray(node.duration)?Math.round((node.duration[0]+node.duration[1])/2):node.duration??0,boss:node.bossId,identity:node.description}]));
 export const assetFor=(id:string,kind:'sprite'|'portrait')=>`${import.meta.env.BASE_URL}assets/pmdcollab/${kind}s/${id}.png`;
 export const SPRITE_FRAMES:Record<string,{width:number;height:number;frames:number}>={
  beedrill:{width:32,height:48,frames:4},bellsprout:{width:24,height:32,frames:4},blastoise:{width:32,height:40,frames:4},bulbasaur:{width:40,height:40,frames:6},butterfree:{width:32,height:56,frames:12},caterpie:{width:32,height:32,frames:3},charizard:{width:40,height:48,frames:4},charmander:{width:32,height:32,frames:4},charmeleon:{width:24,height:32,frames:4},ivysaur:{width:32,height:32,frames:4},kakuna:{width:24,height:40,frames:5},metapod:{width:32,height:48,frames:10},oddish:{width:24,height:40,frames:8},pidgeotto:{width:32,height:40,frames:4},pidgey:{width:32,height:32,frames:5},pikachu:{width:32,height:40,frames:4},squirtle:{width:32,height:32,frames:4},venusaur:{width:32,height:32,frames:4},wartortle:{width:32,height:40,frames:4},weedle:{width:32,height:40,frames:3}

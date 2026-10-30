@@ -99,3 +99,10 @@ Do not remove attribution or treat these assets as commercially cleared. Keep th
 - Use: 40 held-item illustrations and four-slot HUD, six slotless vitamin icons, eight world consumables, five EXP Candy tiers, three ball rewards and type badges. Pokémon sprites and portraits continue to use the existing PMD sources.
 - Upstream notices are archived without modification: [`pokesprite/license.md`](pokesprite/license.md), [`pokesprite/readme.md`](pokesprite/readme.md), [`pokesprite/contributors.md`](pokesprite/contributors.md).
 - The upstream README assigns the programming code and other non-sprite content to its MIT license, and identifies the sprite images as © Nintendo/Creatures Inc./GAME FREAK Inc. The upstream author and contributor notices are retained in the archived README and contributors file. These PNGs are **not independently MIT-licensed artwork**. This fan-project import records provenance and attribution, without claiming commercial redistribution clearance.
+
+## Campaign atlas illustrations — v0.4.2
+
+- Viridian Forest continues to use the supplied `public/assets/menu/viridian-forest-card.png` under its existing attribution.
+- Future-location thumbnails are original code-authored SVG pixel silhouettes in `src/ui/campaignArt.ts`; they are visibly labelled as unfinished previews. Gym badge symbols, map terrain/river silhouettes and trail geometry are also code-authored.
+- The atlas reuses the complete `frlg/tree.png` environment crop through `environmentUrl`; its FRLG provenance and rights remain as documented above. The original PNG is unchanged.
+- No external map art or new Pokémon sprites are imported. Existing PMD, FRLG and PokéSprite source/runtime files retain their prior attribution and contents.

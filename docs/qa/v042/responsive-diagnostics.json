@@ -1,0 +1,182 @@
+[
+  {
+    "width": 1280,
+    "height": 720,
+    "id": "viridian",
+    "rootWidth": 1280,
+    "rootHeight": 720,
+    "bodyHeight": 326,
+    "bodyScroll": 326,
+    "action": {
+      "left": 970,
+      "right": 1242,
+      "top": 575.5,
+      "bottom": 617.5
+    },
+    "panel": {
+      "left": 956,
+      "right": 1256,
+      "bottom": 650
+    }
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "id": "pewterGym",
+    "rootWidth": 1280,
+    "rootHeight": 720,
+    "bodyHeight": 326,
+    "bodyScroll": 326,
+    "action": {
+      "left": 970,
+      "right": 1242,
+      "top": 575.5,
+      "bottom": 617.5
+    },
+    "panel": {
+      "left": 956,
+      "right": 1256,
+      "bottom": 650
+    }
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "id": "fossilLab",
+    "rootWidth": 1280,
+    "rootHeight": 720,
+    "bodyHeight": 326,
+    "bodyScroll": 326,
+    "action": {
+      "left": 970,
+      "right": 1242,
+      "top": 575.5,
+      "bottom": 617.5
+    },
+    "panel": {
+      "left": 956,
+      "right": 1256,
+      "bottom": 650
+    }
+  },
+  {
+    "width": 1600,
+    "height": 900,
+    "id": "viridian",
+    "rootWidth": 1600,
+    "rootHeight": 900,
+    "bodyHeight": 426,
+    "bodyScroll": 426,
+    "action": {
+      "left": 1265,
+      "right": 1559,
+      "top": 744.5,
+      "bottom": 786.5
+    },
+    "panel": {
+      "left": 1248,
+      "right": 1576,
+      "bottom": 820
+    }
+  },
+  {
+    "width": 1600,
+    "height": 900,
+    "id": "pewterGym",
+    "rootWidth": 1600,
+    "rootHeight": 900,
+    "bodyHeight": 426,
+    "bodyScroll": 426,
+    "action": {
+      "left": 1265,
+      "right": 1559,
+      "top": 744.5,
+      "bottom": 786.5
+    },
+    "panel": {
+      "left": 1248,
+      "right": 1576,
+      "bottom": 820
+    }
+  },
+  {
+    "width": 1600,
+    "height": 900,
+    "id": "fossilLab",
+    "rootWidth": 1600,
+    "rootHeight": 900,
+    "bodyHeight": 426,
+    "bodyScroll": 426,
+    "action": {
+      "left": 1265,
+      "right": 1559,
+      "top": 744.5,
+      "bottom": 786.5
+    },
+    "panel": {
+      "left": 1248,
+      "right": 1576,
+      "bottom": 820
+    }
+  },
+  {
+    "width": 1920,
+    "height": 1080,
+    "id": "viridian",
+    "rootWidth": 1920,
+    "rootHeight": 1080,
+    "bodyHeight": 606,
+    "bodyScroll": 606,
+    "action": {
+      "left": 1585,
+      "right": 1879,
+      "top": 924.5,
+      "bottom": 966.5
+    },
+    "panel": {
+      "left": 1568,
+      "right": 1896,
+      "bottom": 1000
+    }
+  },
+  {
+    "width": 1920,
+    "height": 1080,
+    "id": "pewterGym",
+    "rootWidth": 1920,
+    "rootHeight": 1080,
+    "bodyHeight": 606,
+    "bodyScroll": 606,
+    "action": {
+      "left": 1585,
+      "right": 1879,
+      "top": 924.5,
+      "bottom": 966.5
+    },
+    "panel": {
+      "left": 1568,
+      "right": 1896,
+      "bottom": 1000
+    }
+  },
+  {
+    "width": 1920,
+    "height": 1080,
+    "id": "fossilLab",
+    "rootWidth": 1920,
+    "rootHeight": 1080,
+    "bodyHeight": 606,
+    "bodyScroll": 606,
+    "action": {
+      "left": 1585,
+      "right": 1879,
+      "top": 924.5,
+      "bottom": 966.5
+    },
+    "panel": {
+      "left": 1568,
+      "right": 1896,
+      "bottom": 1000
+    }
+  }
+]

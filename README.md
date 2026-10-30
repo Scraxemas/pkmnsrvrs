@@ -55,12 +55,19 @@ attracts nearby candy from 64 units; Magnet increases that to 289 at Rank 5.
 Zap Plate supplies Electric damage, and Lucky Egg supplies bonus EXP. Cards show
 the exact shared effect formulas. See the report for balance, provenance and QA.
 
-The latest [v0.4.1 progression and upgrade polish](docs/V041_MOVE_PROGRESSION.md)
+The [v0.4.1 progression and upgrade polish](docs/V041_MOVE_PROGRESSION.md)
 unlocks 3 → 4 → 5 move slots through evolution, preserves starter-move ranks through
 the three evolution chains, and guarantees an existing-build improvement in the
 draft whenever one is available. Selection now pauses the whole gameplay scene;
 280 × 394 cards sit over a lighter overlay. The HUD shows locked future slots,
 and world consumables use smaller sprites. Held items remain limited to four.
+
+The latest [v0.4.2 Kanto adventure atlas](docs/V042_CAMPAIGN_ATLAS.md) replaces
+the stage grid with a left-to-right 20-stop journey and seven vertical side trails.
+Drag, wheel, keyboard and controller navigation keep the selected destination in
+view beside its information panel. Future locations remain previews; Viridian
+Forest is the only playable stage. Legacy progress and starter selection remain
+compatible, and the production build is tested under a repository subpath.
 
 ## FRLG asset library
 

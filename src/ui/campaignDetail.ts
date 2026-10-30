@@ -1,0 +1,17 @@
+import {CampaignNode,CAMPAIGN_KIND_LABELS,CampaignDefinition} from '../campaign/data';
+import type {SaveData} from '../save';
+import {campaignArtwork} from './campaignArt';
+import {CampaignNodeState,badgeSymbol} from './campaignNode';
+import {actionButton,element,icon} from './dom';
+export function campaignDuration(duration:CampaignNode['duration']){return duration===null?'At your pace':Array.isArray(duration)?`${duration[0]/60}–${duration[1]/60} Minutes`:`${duration/60} Minutes`;}
+export function renderCampaignDetail(panel:HTMLElement,node:CampaignNode,state:CampaignNodeState,save:SaveData,campaign:CampaignDefinition,onLaunch:()=>void){
+  panel.replaceChildren();panel.dataset.selectedStage=node.id;panel.setAttribute('aria-label',`${node.name} information`);
+  const art=campaignArtwork(node);art.classList.add('campaign-detail__art');if(!state.implemented)art.append(element('span','campaign-preview-label','PREVIEW · ART IN DEVELOPMENT'));panel.append(art);
+  const body=element('div','campaign-detail__body'),meta=element('div','eyebrow',`${node.region} · ${CAMPAIGN_KIND_LABELS[node.kind]}`),title=element('h2','',node.name);title.id='campaign-location-title';body.append(meta,title);
+  const facts=element('dl','campaign-facts');const fact=(name:string,value:string)=>{facts.append(element('dt','',name),element('dd','',value));};fact('DURATION',campaignDuration(node.duration));fact(node.kind==='gym'?'LEADER':node.kind==='research'?'ACTIVITY':'BOSS',node.boss);if(node.badge)fact('REWARD',node.badge);if(node.reward)fact('REWARD',node.reward);body.append(facts,element('p','campaign-detail__description',node.description));
+  const progress=element('p','campaign-completion',state.completed?'✓ Journey milestone complete':node.route==='optional'?'Optional destination · Future content':'Journey milestone not yet complete');body.append(progress);
+  const status=element('div',`campaign-availability${state.launchable?' is-available':''}`);status.append(element('strong','',state.launchable?(state.completed?'READY TO REPLAY':'READY TO EXPLORE'):state.status.toUpperCase()),element('p','',state.launchable?'The playable demo begins in Viridian Forest.':state.savedUnlock&&!state.requirementsMet?'Saved unlock preserved. This destination is not playable in this build.':state.unlocked?'Story requirement met. Gameplay is not implemented yet.':`${state.requirement}. Gameplay is not implemented yet.`));body.append(status);
+  if(state.secrets){const secrets=element('p','campaign-secrets',`${state.found}/${state.secrets} Secrets Found`);secrets.prepend(icon('mountain'));const known=campaign.secrets.filter(secret=>secret.parent===node.id&&(save.discoveredLocations??[]).includes(secret.id));secrets.title=known.length?known.map(secret=>secret.name).join(' · '):'A hidden entrance may be discovered during this stage. No discovery is recorded.';body.append(secrets);}
+  if(node.nextRegion)body.append(element('p','campaign-next-region',`Beyond Kanto: ${node.nextRegion} · Future region`));
+  panel.append(body);const action=element('div','campaign-detail__action'),button=actionButton(state.launchable?'Enter Forest':state.status,onLaunch,'ui-button ui-button--gold stage-enter',state.launchable?'play':'lock');button.disabled=!state.launchable;action.append(button,element('small','',state.launchable?'Single player · Your selected Pokémon':`${node.region} campaign preview · Not launchable`));panel.append(action);
+}

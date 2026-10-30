@@ -1,14 +1,17 @@
 import {describe,it,expect} from 'vitest';
 import {freshSave,loadSave,recordRun,updateSettings} from '../src/save';
-import {locationCards,menuProfile,MENU_ART} from '../src/ui/menuData';
+import {menuProfile,MENU_ART} from '../src/ui/menuData';
+import {KANTO_CAMPAIGN,campaignNode} from '../src/campaign/data';
+import {resolveCampaignNode} from '../src/campaign/state';
 import {spatialFocus} from '../src/ui/menuInput';
 
 function storage():Storage{const values=new Map<string,string>();return{get length(){return values.size;},getItem:key=>values.get(key)??null,setItem:(key,value)=>{values.set(key,value);},clear:()=>values.clear(),removeItem:key=>{values.delete(key);},key:i=>[...values.keys()][i]??null};}
 describe('menu data and saved presentation preferences',()=>{
   it('uses the supplied forest card and distinguishes playable, future, locked, and completed states',()=>{
-    const save=freshSave(),first=locationCards(save);expect(first[0]).toMatchObject({id:'viridian',artwork:MENU_ART.viridian,unlocked:true,completed:false,featured:true,playable:true});
-    expect(first[1]).toMatchObject({id:'mtMoon',unlocked:false,playable:false});expect(first[1].artwork).toBeUndefined();
-    save.unlockedStages.push('mtMoon');save.research.viridianWins=2;expect(locationCards(save)[0].completed).toBe(true);expect(locationCards(save)[1]).toMatchObject({unlocked:true,playable:false});
+    const save=freshSave(),first=campaignNode('viridian')!;expect(first.artwork).toBe(MENU_ART.viridian);expect(resolveCampaignNode(first,save)).toMatchObject({unlocked:true,completed:false,launchable:true});
+    expect(resolveCampaignNode(campaignNode('mtMoon')!,save)).toMatchObject({unlocked:false,launchable:false});
+    save.unlockedStages.push('mtMoon');save.research.viridianWins=2;expect(resolveCampaignNode(first,save).completed).toBe(true);expect(resolveCampaignNode(campaignNode('mtMoon')!,save)).toMatchObject({unlocked:true,launchable:false});
+
   });
   it('reads actual progress without treating evolved discoveries as selectable starters',()=>{
     const save=freshSave();save.unlockedPokemon.push('ivysaur');save.pokedex.push('beedrill');save.research.viridianWins=3;save.best.viridian={level:17,defeated:50,time:120};

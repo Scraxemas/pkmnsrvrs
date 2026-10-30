@@ -3,8 +3,8 @@ import {POKEMON} from './content';
 import {loadSave,updateSettings} from './save';
 import {motionReduced,PlayerSettings} from './preferences';
 import {actionButton,element,icon} from './ui/dom';
-import {locationCard} from './ui/locationCard';
-import {FRONTEND_VERSION,LocationCardData,locationCards,menuAsset,MENU_ART,researchStatistics,PLAY_MODES} from './ui/menuData';
+import {CampaignView} from './ui/campaignView';
+import {FRONTEND_VERSION,menuAsset,MENU_ART,researchStatistics,PLAY_MODES} from './ui/menuData';
 import {MenuInput} from './ui/menuInput';
 import {arcadeButton} from './ui/arcadeButton';
 import {MenuBackgroundController} from './ui/menuBackgroundController';
@@ -85,22 +85,19 @@ export class PokemonScene extends FrontendScene {
 }
 
 export class StageScene extends FrontendScene {
-  pokemon='bulbasaur';cards:LocationCardData[]=[];selected='viridian';
+  pokemon='bulbasaur';campaign?:CampaignView;
   constructor(){super('stage');}
-  init(data:{pokemon?:string}){this.pokemon=data?.pokemon??'bulbasaur';this.selected='viridian';}
+  init(data?:{pokemon?:string}){this.pokemon=data?.pokemon&&POKEMON[data.pokemon]?data.pokemon:'bulbasaur';}
   create(){
-    this.mount('stage','Choose your destination',`Kanto campaign · Travelling with ${POKEMON[this.pokemon]?.name??'Bulbasaur'}`);
-    this.cards=locationCards(loadSave());const grid=element('div','location-grid');
-    for(const data of this.cards)grid.append(locationCard(data,()=>this.select(data.id)));
-    const summary=element('section','stage-summary');summary.setAttribute('aria-live','polite');summary.append(element('div','stage-summary__text'),actionButton('Enter Forest',()=>{const selected=this.cards.find(c=>c.id===this.selected)!;if(selected.unlocked&&selected.playable)this.scene.start('game',{pokemon:this.pokemon,fast:new URLSearchParams(location.search).has('fast')});},'ui-button ui-button--gold stage-enter','play'));
-    this.content.append(grid,summary);this.select(this.selected);this.controls(()=>this.scene.start('pokemon',{pokemon:this.pokemon}));
+    this.mount('stage','Choose your destination',`Kanto campaign · Travelling with ${POKEMON[this.pokemon].name} · Viridian Forest demo`);
+    const back=()=>this.scene.start('pokemon',{pokemon:this.pokemon});
+    this.campaign=new CampaignView(this.root,this.content,loadSave(),id=>{if(id==='viridian')this.scene.start('game',{pokemon:this.pokemon,fast:new URLSearchParams(location.search).has('fast')});});
+    this.footer.append(actionButton('Back',back,'ui-button ui-button--back','back'));
+    const hints=element('span','input-hints');hints.append(element('span','keyboard-hint','← → Story   ↑ ↓ Side trails   Enter Select / Enter   Esc Back   ·   Drag / Wheel to explore'),element('span','controller-hint','D-pad / Stick Travel   A Inspect / Enter   B Back'));this.footer.append(hints);
+    this.navigation=new MenuInput(this.root,back,{focusOnHover:false,initialFocus:()=>this.campaign?.selectedButton(),move:direction=>this.campaign?.move(direction)??false});this.events.once('shutdown',()=>this.campaign?.destroy());
   }
-  select(id:string){
-    this.selected=id;for(const card of this.root.querySelectorAll<HTMLButtonElement>('[data-stage-id]')){const selected=card.dataset.stageId===id;card.classList.toggle('is-selected',selected);card.setAttribute('aria-pressed',String(selected));}
-    const data=this.cards.find(c=>c.id===id)!,text=this.root.querySelector('.stage-summary__text')!,enter=this.root.querySelector<HTMLButtonElement>('.stage-enter')!;
-    text.replaceChildren(element('div','eyebrow',data.playable?'SURVIVAL STAGE · 30 MINUTES':data.unlocked?'UNLOCKED · IN DEVELOPMENT':'LOCKED DESTINATION'),element('h2','',data.title),element('p','',data.playable?'Survive the woodland. Defeat Beedrill. Begin your Kanto journey.':data.description));
-    enter.disabled=!data.playable||!data.unlocked;enter.querySelector('.button-label')!.textContent=data.playable?'Enter Forest':data.unlocked?'Coming Later':'Locked';
-  }
+  select(id:string){this.campaign?.select(id,true);}
+  get selected(){return this.campaign?.selected??'viridian';}
 }
 
 export class DexScene extends FrontendScene {
