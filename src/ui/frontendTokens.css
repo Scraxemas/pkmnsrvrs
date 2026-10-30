@@ -1,0 +1,11 @@
+/* Shared neutral menu palette. Artwork and type badges keep their own colors. */
+.frontend {
+  --ui-background: #1B1D21;
+  --ui-surface: #292D32;
+  --ui-border: #444951;
+  --ui-text: #F1EEE6;
+  --ui-muted: #A8ABB1;
+  --ui-accent: #D9B96E;
+  --ui-stat-fill: color-mix(in srgb, var(--ui-muted) 65%, var(--ui-accent));
+  --ui-backdrop: rgb(0 0 0 / .48);
+}

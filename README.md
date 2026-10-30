@@ -72,6 +72,10 @@ compatible, and the production build is tested under a repository subpath.
 The [Stage Art follow-up](docs/STAGE_ART.md) adds the supplied location artwork to
 all 27 map cards and detail panels, with lazy loading and original-file provenance.
 
+[Character Selection and Pokédex now use a compact charcoal interface](docs/CHARCOAL_ROSTER.md),
+with flat portrait tiles, shared neutral controls and responsive roster scrolling.
+The animated forest, Pokémon artwork and existing progression are preserved.
+
 ## FRLG asset library
 
 The complete supplied tileset is extracted into [assets/extracted/frlg](assets/extracted/frlg/README.md). Open its `index.html` locally to browse all 4,792 native cells, complete props, and reusable terrain. Names include dimensions and source coordinates; unverified semantic identities are explicitly labeled for review. Complete assembled props are separated from raw prop parts.

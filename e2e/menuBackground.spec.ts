@@ -74,9 +74,9 @@ test('repeated frontend navigation releases backgrounds, inputs, and run overlay
   expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('menu').background.snapshot().active)).toBe(1);
 });
 
-test('menu motion recording captures localized wind, ripples and rays with a fixed camera',async({browser})=>{
+test('menu motion recording captures localized wind, ripples and rays with a fixed camera',async({browser,baseURL})=>{
   test.setTimeout(70_000);
-  const context=await browser.newContext({viewport:{width:1280,height:720},baseURL:'http://127.0.0.1:5197',recordVideo:{dir:'test-results/menu-motion',size:{width:1280,height:720}},reducedMotion:'no-preference'}),created=Date.now(),page=await context.newPage(),video=page.video()!;
+  const context=await browser.newContext({viewport:{width:1280,height:720},baseURL,recordVideo:{dir:'test-results/menu-motion',size:{width:1280,height:720}},reducedMotion:'no-preference'}),created=Date.now(),page=await context.newPage(),video=page.video()!;
   try{
     await page.goto('/?seed=1337');await readyMenu(page);const frames=[];writeFileSync('test-results/menu-motion/capture-timing.json',JSON.stringify({readySeconds:(Date.now()-created)/1000}));
     for(let i=0;i<20;i++){

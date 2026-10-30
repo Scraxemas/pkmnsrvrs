@@ -1,0 +1,278 @@
+[
+  {
+    "width": 1280,
+    "height": 720,
+    "mode": "selection",
+    "horizontal": false,
+    "vertical": false,
+    "panel": {
+      "left": 784.078125,
+      "right": 1240,
+      "top": 160.390625,
+      "bottom": 509.765625,
+      "width": 455.921875,
+      "height": 349.375
+    },
+    "footer": {
+      "left": 40,
+      "right": 1240,
+      "top": 523.765625,
+      "bottom": 567.765625,
+      "width": 1200,
+      "height": 44
+    },
+    "grid": {
+      "left": 41,
+      "right": 763.078125,
+      "top": 200.890625,
+      "bottom": 457.890625,
+      "width": 722.078125,
+      "height": 257
+    },
+    "contentBottom": 494.765625,
+    "parts": [
+      {
+        "left": 799.078125,
+        "right": 1225,
+        "top": 216.390625,
+        "bottom": 312.390625,
+        "width": 425.921875,
+        "height": 96
+      },
+      {
+        "left": 799.078125,
+        "right": 1225,
+        "top": 324.390625,
+        "bottom": 414.390625,
+        "width": 425.921875,
+        "height": 90
+      },
+      {
+        "left": 799.078125,
+        "right": 1225,
+        "top": 426.390625,
+        "bottom": 494.765625,
+        "width": 425.921875,
+        "height": 68.375
+      }
+    ],
+    "colors": {
+      "panel": "rgb(27, 29, 33)",
+      "text": "rgb(241, 238, 230)",
+      "border": "rgb(68, 73, 81)",
+      "shade": "rgba(0, 0, 0, 0.48)"
+    },
+    "columns": 6
+  },
+  {
+    "width": 1280,
+    "height": 720,
+    "mode": "pokedex",
+    "horizontal": false,
+    "vertical": false,
+    "panel": {
+      "left": 784.078125,
+      "right": 1240,
+      "top": 160.390625,
+      "bottom": 551.578125,
+      "width": 455.921875,
+      "height": 391.1875
+    },
+    "footer": {
+      "left": 40,
+      "right": 1240,
+      "top": 646.890625,
+      "bottom": 690.890625,
+      "width": 1200,
+      "height": 44
+    },
+    "grid": {
+      "left": 41,
+      "right": 763.078125,
+      "top": 200.890625,
+      "bottom": 596.890625,
+      "width": 722.078125,
+      "height": 396
+    },
+    "contentBottom": 536.578125,
+    "parts": [
+      {
+        "left": 799.078125,
+        "right": 1225,
+        "top": 216.390625,
+        "bottom": 312.390625,
+        "width": 425.921875,
+        "height": 96
+      },
+      {
+        "left": 799.078125,
+        "right": 1225,
+        "top": 324.390625,
+        "bottom": 378.890625,
+        "width": 425.921875,
+        "height": 54.5
+      },
+      {
+        "left": 799.078125,
+        "right": 1225,
+        "top": 390.890625,
+        "bottom": 445.390625,
+        "width": 425.921875,
+        "height": 54.5
+      },
+      {
+        "left": 799.078125,
+        "right": 1225,
+        "top": 457.390625,
+        "bottom": 536.578125,
+        "width": 425.921875,
+        "height": 79.1875
+      }
+    ],
+    "colors": {
+      "panel": "rgb(27, 29, 33)",
+      "text": "rgb(241, 238, 230)",
+      "border": "rgb(68, 73, 81)",
+      "shade": "rgba(0, 0, 0, 0.48)"
+    },
+    "columns": 6
+  },
+  {
+    "width": 1920,
+    "height": 1080,
+    "mode": "selection",
+    "horizontal": false,
+    "vertical": false,
+    "panel": {
+      "left": 1117.71875,
+      "right": 1619.984375,
+      "top": 185.1875,
+      "bottom": 578.0625,
+      "width": 502.265625,
+      "height": 392.875
+    },
+    "footer": {
+      "left": 300,
+      "right": 1620,
+      "top": 598.0625,
+      "bottom": 642.0625,
+      "width": 1320,
+      "height": 44
+    },
+    "grid": {
+      "left": 301,
+      "right": 1096.71875,
+      "top": 225.6875,
+      "bottom": 487.6875,
+      "width": 795.71875,
+      "height": 262
+    },
+    "contentBottom": 561.0625,
+    "parts": [
+      {
+        "left": 1134.71875,
+        "right": 1602.984375,
+        "top": 243.1875,
+        "bottom": 363.1875,
+        "width": 468.265625,
+        "height": 120
+      },
+      {
+        "left": 1134.71875,
+        "right": 1602.984375,
+        "top": 379.1875,
+        "bottom": 476.6875,
+        "width": 468.265625,
+        "height": 97.5
+      },
+      {
+        "left": 1134.71875,
+        "right": 1602.984375,
+        "top": 492.6875,
+        "bottom": 561.0625,
+        "width": 468.265625,
+        "height": 68.375
+      }
+    ],
+    "colors": {
+      "panel": "rgb(27, 29, 33)",
+      "text": "rgb(241, 238, 230)",
+      "border": "rgb(68, 73, 81)",
+      "shade": "rgba(0, 0, 0, 0.48)"
+    },
+    "columns": 6
+  },
+  {
+    "width": 1920,
+    "height": 1080,
+    "mode": "pokedex",
+    "horizontal": false,
+    "vertical": false,
+    "panel": {
+      "left": 1117.71875,
+      "right": 1619.984375,
+      "top": 185.1875,
+      "bottom": 616.375,
+      "width": 502.265625,
+      "height": 431.1875
+    },
+    "footer": {
+      "left": 300,
+      "right": 1620,
+      "top": 781.6875,
+      "bottom": 825.6875,
+      "width": 1320,
+      "height": 44
+    },
+    "grid": {
+      "left": 301,
+      "right": 1096.71875,
+      "top": 225.6875,
+      "bottom": 725.6875,
+      "width": 795.71875,
+      "height": 500
+    },
+    "contentBottom": 599.375,
+    "parts": [
+      {
+        "left": 1134.71875,
+        "right": 1602.984375,
+        "top": 243.1875,
+        "bottom": 363.1875,
+        "width": 468.265625,
+        "height": 120
+      },
+      {
+        "left": 1134.71875,
+        "right": 1602.984375,
+        "top": 379.1875,
+        "bottom": 433.6875,
+        "width": 468.265625,
+        "height": 54.5
+      },
+      {
+        "left": 1134.71875,
+        "right": 1602.984375,
+        "top": 449.6875,
+        "bottom": 504.1875,
+        "width": 468.265625,
+        "height": 54.5
+      },
+      {
+        "left": 1134.71875,
+        "right": 1602.984375,
+        "top": 520.1875,
+        "bottom": 599.375,
+        "width": 468.265625,
+        "height": 79.1875
+      }
+    ],
+    "colors": {
+      "panel": "rgb(27, 29, 33)",
+      "text": "rgb(241, 238, 230)",
+      "border": "rgb(68, 73, 81)",
+      "shade": "rgba(0, 0, 0, 0.48)"
+    },
+    "columns": 6
+  }
+]
