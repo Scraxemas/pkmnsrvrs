@@ -71,7 +71,7 @@ test('protection, critical hits, returned damage and visible hazard warnings hav
     s.renderAttack({id:++s.state.eventId,moveId:'tackle',kind:'charge',type:'Normal',x:s.state.player.x,y:s.state.player.y,tx:enemy.x,ty:enemy.y,radius:70,hits:[enemy.id],damage:hit.amount,critical:hit.critical});
     sim.createGroundHazard(s.state,'spikes',s.state.player.x-100,s.state.player.y+60);sim.createGroundHazard(s.state,'powder',s.state.player.x+100,s.state.player.y+100);
     s.pickupRenderer.onStep(s.state);s.syncViews(1);s.itemHud.update(s.state,false);s.renderHealthBars();s.scene.pause();
-    return{hp:s.state.hp,sash:s.state.itemRuntime.sashUsed,reflected,critical:hit.critical,hazards:s.state.hazards.length,text:s.children.list.filter((v:any)=>v.type==='Text').map((v:any)=>v.text).join('|')};
+    return{hp:s.state.hp,sash:s.state.itemRuntime.sashUsed,reflected,critical:hit.critical,hazards:s.state.hazards.length,text:s.effectsLayer.list.filter((v:any)=>v.type==='Text').map((v:any)=>v.text).join('|')};
   });
   expect(result).toMatchObject({hp:1,sash:true,reflected:10,critical:true,hazards:2,text:expect.stringContaining('CRIT ')});await page.screenshot({path:`${folder}/combat-feedback-hazards.png`});
 });

@@ -1,4 +1,5 @@
 import type Phaser from 'phaser';
+import {PRIMARY_FONT_FAMILY} from './ui/fonts';
 import type {SimState,Upgrade} from './simulation';
 import {candyTier,itemTexture} from './itemAssets';
 import {CONSUMABLES} from './consumables';
@@ -15,9 +16,10 @@ export class PickupRenderer {
   private graphics:Phaser.GameObjects.Graphics;
   private notice:Phaser.GameObjects.Text;
   private noticeUntil=0;
-  constructor(private scene:Phaser.Scene){
+  constructor(private scene:Phaser.Scene,private worldLayer?:Phaser.GameObjects.Layer,effectsLayer?:Phaser.GameObjects.Layer){
     this.graphics=scene.add.graphics().setDepth(16010);
-    this.notice=scene.add.text(640,646,'',{fontFamily:'Trebuchet MS',fontSize:'16px',fontStyle:'bold',color:'#d5f8ff',stroke:'#102c32',strokeThickness:4,align:'center'}).setOrigin(.5).setScrollFactor(0).setDepth(20005).setVisible(false);
+    effectsLayer?.add(this.graphics);
+    this.notice=scene.add.text(640,646,'',{fontFamily:PRIMARY_FONT_FAMILY,fontSize:'16px',fontStyle:'bold',color:'#d5f8ff',stroke:'#102c32',strokeThickness:4,align:'center'}).setOrigin(.5).setScrollFactor(0).setDepth(20005).setVisible(false);
   }
   onStep(state:SimState){
     let exp=0,base=0;const names:string[]=[];
@@ -41,7 +43,7 @@ export class PickupRenderer {
     for(const pickup of state.pickups){
       alive.add(pickup.id);
       const art=pickup.kind==='xp'?`candy:${candyTier(pickup.value)}`:pickup.kind==='ball'?`ball:${pickup.tier??1}`:CONSUMABLES[pickup.consumableId!].art,key=itemTexture(art,true);
-      let image=this.views.get(pickup.id);if(!image){image=this.scene.add.image(pickup.x,pickup.y,key).setName('world-pickup');this.views.set(pickup.id,image);}else if(image.texture.key!==key)image.setTexture(key);image.setScale(pickupScale(pickup.kind));
+      let image=this.views.get(pickup.id);if(!image){image=this.scene.add.image(pickup.x,pickup.y,key).setName('world-pickup');this.worldLayer?.add(image);this.views.set(pickup.id,image);}else if(image.texture.key!==key)image.setTexture(key);image.setScale(pickupScale(pickup.kind));
       const p=interpolatePosition(previous.get(pickup.id),pickup,alpha),phase=state.time*3+pickup.id*1.71,bob=reduced?0:Math.sin(phase)*2;
       image.setPosition(p.x,p.y-7+bob).setDepth(p.y+6).setAlpha(reduced?1:.94+Math.sin(phase*.7)*.06).setData('assetId',art);
       if(!reduced&&pickup.kind==='xp'&&sparkleBudget>0&&Math.sin(phase*.43)>.975){this.star(p.x+11,p.y-18,2,0xdafaff,.65);sparkleBudget--;}

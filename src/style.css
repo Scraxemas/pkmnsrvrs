@@ -1,1 +1,11 @@
+@import './ui/fonts.css';
+
 html,body,#app{margin:0;width:100%;height:100%;overflow:hidden;background:#11162b}canvas{display:block;margin:auto;image-rendering:pixelated}
+
+/* Gesture suppression is scoped to the live gameplay canvas. */
+canvas.gameplay-surface{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;overscroll-behavior:contain}
+.movement-joystick-layer{position:fixed;z-index:10;overflow:hidden;pointer-events:none;user-select:none;contain:layout paint}
+.movement-joystick{position:absolute;box-sizing:border-box;width:calc(var(--joystick-radius)*2);height:calc(var(--joystick-radius)*2);transform:translate(-50%,-50%);border:2px solid #e6edcc;border-radius:50%;background:#142e28a6;box-shadow:inset 0 0 0 2px #142e2870;opacity:0;transition:opacity var(--joystick-fade) ease-out}
+.movement-joystick[data-active=true]{opacity:var(--joystick-opacity);transition:none}
+.movement-joystick-handle{position:absolute;box-sizing:border-box;left:50%;top:50%;width:calc(var(--joystick-handle-radius)*2);height:calc(var(--joystick-handle-radius)*2);margin-left:calc(var(--joystick-handle-radius)*-1);margin-top:calc(var(--joystick-handle-radius)*-1);border:2px solid #f0e7bb;border-radius:50%;background:#c3d4ab;box-shadow:0 2px 0 #11281b80}
+@media(prefers-reduced-motion:reduce){.movement-joystick{transition:none}}

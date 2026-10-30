@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import {PRIMARY_FONT_FAMILY} from './ui/fonts';
 import {SimState,Upgrade} from './simulation';
 import {describeUpgrade,UpgradeDetails,progressionNoticeText} from './upgrades';
 import {loadSave} from './save';
@@ -57,11 +58,11 @@ export class UpgradeScene extends Phaser.Scene {
   init(config:ChoiceConfig){this.config=config;this.focus=0;this.page=0;this.locked=false;this.cards=[];}
   create(){
     this.cameras.main.setScroll(0,0);this.add.rectangle(640,360,1280,720,0x10251c,UPGRADE_LAYOUT.veil).setName('upgrade-veil');
-    this.add.text(640,69,this.config.title,{fontFamily:'Trebuchet MS',fontSize:'29px',fontStyle:'bold',color:'#ffe4a0',stroke:'#14291c',strokeThickness:4}).setOrigin(.5);
+    this.add.text(640,69,this.config.title,{fontFamily:PRIMARY_FONT_FAMILY,fontSize:'29px',fontStyle:'bold',color:'#ffe4a0',stroke:'#14291c',strokeThickness:4}).setOrigin(.5);
     const notices=this.config.state.progressionNotices.slice(-3).map(progressionNoticeText).join('  ·  ');
-    this.add.text(640,106,'CHOOSE ONE UPGRADE',{fontFamily:'Trebuchet MS',fontSize:'13px',fontStyle:'bold',color:'#fff0be',stroke:'#10251c',strokeThickness:4}).setOrigin(.5,0);
-    this.add.text(640,172,notices,{fontFamily:'Trebuchet MS',fontSize:'13px',fontStyle:'bold',color:'#fff0be',stroke:'#10251c',strokeThickness:4,align:'center',wordWrap:{width:1080},lineSpacing:1}).setOrigin(.5,0).setName('progression-notice');
-    this.add.text(640,674,'1 / 2 / 3  ·  SELECT      ← / →  ·  FOCUS      ENTER  ·  CONFIRM',{fontFamily:'Trebuchet MS',fontSize:'14px',color:'#eef6ed',stroke:'#10251c',strokeThickness:3}).setOrigin(.5);
+    this.add.text(640,106,'CHOOSE ONE UPGRADE',{fontFamily:PRIMARY_FONT_FAMILY,fontSize:'13px',fontStyle:'bold',color:'#fff0be',stroke:'#10251c',strokeThickness:4}).setOrigin(.5,0);
+    this.add.text(640,172,notices,{fontFamily:PRIMARY_FONT_FAMILY,fontSize:'13px',fontStyle:'bold',color:'#fff0be',stroke:'#10251c',strokeThickness:4,align:'center',wordWrap:{width:1080},lineSpacing:1}).setOrigin(.5,0).setName('progression-notice');
+    this.add.text(640,674,'1 / 2 / 3  ·  SELECT      ← / →  ·  FOCUS      ENTER  ·  CONFIRM',{fontFamily:PRIMARY_FONT_FAMILY,fontSize:'14px',color:'#eef6ed',stroke:'#10251c',strokeThickness:3}).setOrigin(.5);
     this.input.keyboard!.on('keydown',(event:KeyboardEvent)=>{
       if(this.locked||event.repeat)return;
       if(['1','2','3'].includes(event.key))this.choose(this.page*3+Number(event.key)-1);
@@ -79,23 +80,31 @@ export class UpgradeScene extends Phaser.Scene {
       card.setData('width',width).setData('height',height);
       const frame=this.add.graphics().setName('frame');card.add(frame);
       const moveReady=!!d.moveId&&hasMoveArt(this,d.moveId);
-      if(d.artKey||moveReady){
+      if(d.transition&&moveReady){
+        const backing=this.add.graphics().setPosition(0,-110);backing.fillStyle(0x102c32,1).fillRoundedRect(-121,-40,242,80,6).lineStyle(1,d.color,.5).strokeRoundedRect(-121,-40,242,80,6);card.add(backing);
+        const xs=d.transition.from.length===2?[-89,-35]:[-68];
+        d.transition.from.forEach((id,index)=>{if(hasMoveArt(this,id))card.add(pixelArt(this,xs[index],-112,moveTexture(id),32,'ingredient-art').setData('assetId',id));card.add(this.add.text(xs[index],-88,`R${d.transition!.ranks[index]}`,{fontFamily:PRIMARY_FONT_FAMILY,fontSize:'10px',color:'#cce0d6'}).setOrigin(.5));});
+        if(d.transition.from.length===2)card.add(this.add.text(-62,-113,'+',{fontFamily:PRIMARY_FONT_FAMILY,fontSize:'16px',color:'#fff1c6'}).setOrigin(.5));
+        card.add(this.add.text(13,-112,'→',{fontFamily:PRIMARY_FONT_FAMILY,fontSize:'21px',color:'#ffe3a1'}).setOrigin(.5));
+        card.add(pixelArt(this,76,-110,moveTexture(d.transition.to),64,'move-art').setData('assetId',d.transition.to));
+        card.setData('transition',d.transition.kind).setData('ingredients',d.transition.from);
+      }else if(d.artKey||moveReady){
         const backing=this.add.graphics().setPosition(0,-110);backing.fillStyle(0x102c32,1).fillRoundedRect(-60,-40,120,80,6).lineStyle(1,d.color,.3).strokeRoundedRect(-60,-40,120,80,6);card.add(backing);
         const picture=pixelArt(this,0,-110,d.artKey?itemTexture(d.artKey,true):moveTexture(d.moveId!),UPGRADE_ART_DISPLAY_SIZE,d.artKey?'item-art':'move-art');picture.setData('assetId',d.artKey??d.moveId);card.add(picture);
       }else{const picture=this.add.graphics().setPosition(0,-110).setScale(.72).setName(d.moveId?'move-art-fallback':'upgrade-illustration');illustration(picture,d);card.add(picture);}
       if(d.type){const id=`type:${d.type.toLowerCase()}`,source=POKESPRITE_ASSETS[id];card.add(this.add.image(112,-171,itemTexture(id)).setScale(28/Math.max(source.width,source.height)).setName('type-badge'));}
       if(d.rarity==='rare'){const sparkle=this.add.graphics();sparkle.fillStyle(0xffe19b,.8).fillRect(-119,-175,2,9).fillRect(-122,-172,9,2);card.add(sparkle);}
       const text=(ty:number,value:string,size:number,color:string,bold=false,name='',maxHeight=40,minSize=12)=>{
-        const t=this.add.text(0,ty,value,{fontFamily:'Trebuchet MS',fontSize:`${size}px`,color,fontStyle:bold?'bold':'normal',align:'center',wordWrap:{width:width-34}}).setOrigin(.5,0).setName(name);
+        const t=this.add.text(0,ty,value,{fontFamily:PRIMARY_FONT_FAMILY,fontSize:`${size}px`,color,fontStyle:bold?'bold':'normal',align:'center',wordWrap:{width:width-34}}).setOrigin(.5,0).setName(name);
         while(t.height>maxHeight&&size>minSize)t.setFontSize(--size);return t;
       };
-      card.add([text(-181,`[ ${i+1} ]`,12,'#a7c8c7'),text(-160,d.action,11,'#ffe2a1',true,'card-action'),text(-65,d.name,21,'#fff1c6',true,'card-name',28,17),text(-36,d.category,11,'#b8dad6',false,'card-category'),text(-9,d.description,14,'#dbe9e3',false,'card-description',54,12),text(53,d.rank,13,'#ffe3a1',true,'card-rank'),text(80,d.benefit,14,'#b9f1cd',false,'card-benefit',99,12)]);
+      card.add([text(-181,`[ ${i+1} ]`,12,'#a7c8c7'),text(-160,d.action,11,'#ffe2a1',true,'card-action'),text(-65,d.name,21,'#fff1c6',true,'card-name',28,17),text(-36,d.category,11,'#b8dad6',false,'card-category'),text(-9,d.description,14,'#dbe9e3',false,'card-description',54,12),text(53,d.rank,13,'#ffe3a1',true,'card-rank'),text(80,d.benefit,d.transition?12:14,'#b9f1cd',false,'card-benefit',99,d.transition?10:12)]);
       const hit=this.add.zone(-width/2,-height/2,width,height).setOrigin(0).setInteractive({useHandCursor:true});
       hit.on('pointerover',()=>{if(!this.locked){this.focus=index;this.refreshFocus(true);}});hit.on('pointerdown',()=>this.choose(index));card.add(hit);
       card.setData('accent',d.color).setData('index',index);this.cards.push(card);
       if(entrance){card.setAlpha(0);this.tweens.add({targets:card,y,alpha:1,duration:210,delay:i*50,ease:'Cubic.easeOut'});}
     });
-    if(this.config.options.length>3){const label=this.add.text(640,637,`MORE REWARDS  ·  PAGE ${this.page+1} / ${Math.ceil(this.config.options.length/3)}`,{fontFamily:'Trebuchet MS',fontSize:'14px',color:'#ffe3a1',backgroundColor:'#23404b',padding:{x:14,y:7}}).setOrigin(.5).setInteractive({useHandCursor:true});this.pager=label;label.once('pointerdown',()=>{if(!this.locked){this.page=(this.page+1)%Math.ceil(this.config.options.length/3);this.focus=this.page*3;this.drawCards(false);}});}
+    if(this.config.options.length>3){const label=this.add.text(640,637,`MORE REWARDS  ·  PAGE ${this.page+1} / ${Math.ceil(this.config.options.length/3)}`,{fontFamily:PRIMARY_FONT_FAMILY,fontSize:'14px',color:'#ffe3a1',backgroundColor:'#23404b',padding:{x:14,y:7}}).setOrigin(.5).setInteractive({useHandCursor:true});this.pager=label;label.once('pointerdown',()=>{if(!this.locked){this.page=(this.page+1)%Math.ceil(this.config.options.length/3);this.focus=this.page*3;this.drawCards(false);}});}
     this.refreshFocus();
   }
   refreshFocus(lift=false){

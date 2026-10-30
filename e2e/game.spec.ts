@@ -60,9 +60,9 @@ test('interpolated movement states and streamed forest motifs',async({page})=>{
   await page.keyboard.down('d');await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').playerAnimation.state==='walk');
   const samples=await page.evaluate(async()=>{const result=[];for(let i=0;i<12;i++){await new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');result.push({sim:s.state.player.x,render:s.renderPlayer.x,camera:s.cameraTarget.x,state:s.playerAnimation.state});}return result;});await page.keyboard.up('d');
   expect(samples.every(sample=>sample.state==='walk'||sample.state==='attack')).toBe(true);expect(new Set(samples.map(sample=>sample.render.toFixed(2))).size).toBeGreaterThan(6);expect(samples.every(sample=>Math.abs(sample.camera-sample.render)<.01)).toBe(true);
-  for(const motif of ['clearing','forest-wall','tall-grass','pond','rocky','corridor'] as const){await page.evaluate((wanted)=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');const chunk=Object.values(s.state.world.chunks).find((c:any)=>c.motif===wanted) as any;s.state.enemies=[];s.state.projectiles=[];s.state.player.x=(chunk.cx+.5)*s.state.world.chunkSize;s.state.player.y=(chunk.cy+.5)*s.state.world.chunkSize;s.previousPlayer={x:s.state.player.x,y:s.state.player.y};},motif);await page.waitForTimeout(220);await page.screenshot({path:`test-results/screenshots/motif-${motif}.png`});}
+  for(const motif of ['clearing','forest-wall','tall-grass','pond','rocky','corridor'] as const){await page.evaluate(async(wanted)=>{const {motifForChunk}=await import('/src/worldgen.ts'),s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');let chunk:{cx:number;cy:number}|undefined;for(let cy=-5;cy<5&&!chunk;cy++)for(let cx=-5;cx<5;cx++)if(motifForChunk(s.state.world.seed,cx,cy)===wanted){chunk={cx,cy};break;}if(!chunk)throw new Error(`Missing template ${wanted}`);s.state.enemies=[];s.state.projectiles=[];s.state.player.x=(chunk.cx+.5)*s.state.world.chunkSize;s.state.player.y=(chunk.cy+.5)*s.state.world.chunkSize;s.previousPlayer={x:s.state.player.x,y:s.state.player.y};},motif);await page.waitForTimeout(220);await page.screenshot({path:`test-results/screenshots/motif-${motif}.png`});}
   await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.player.x+=1600;s.state.player.y+=900;s.previousPlayer={x:s.state.player.x,y:s.state.player.y};});await page.waitForTimeout(300);await page.screenshot({path:'test-results/screenshots/long-travel-streamed-world.png'});
-  const streaming=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{loaded:s.chunkViews.size,total:Object.keys(s.state.world.chunks).length,chunk:s.activeChunk};});expect(streaming.loaded).toBeLessThan(streaming.total);expect(streaming.loaded).toBeGreaterThanOrEqual(9);
+  const streaming=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return{loaded:s.chunkViews.size,total:Object.keys(s.state.world.chunks).length,cache:s.state.world.stream.cache.size,chunk:s.activeChunk};});expect(streaming.total).toBe(9);expect(streaming.loaded).toBeLessThanOrEqual(25);expect(streaming.loaded).toBeGreaterThan(0);expect(streaming.cache).toBeLessThanOrEqual(18);
 });
 
 test('complete trees and clean foliage survive chunk transitions',async({page})=>{
@@ -116,8 +116,10 @@ test('complete trees and clean foliage survive chunk transitions',async({page})=
       const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),map=s.state.world;
       const chunk=Object.values(map.chunks).filter((c:any)=>c.motif==='forest-wall').sort((a:any,b:any)=>Math.hypot(a.cx-8,a.cy-8)-Math.hypot(b.cx-8,b.cy-8))[0] as any;
       const landmark=map.landmarks.find((l:any)=>l.id==='ancient-tree');
-      const x=wanted==='landmark'?landmark.x:wanted.startsWith('seam')?8*map.chunkSize+(wanted==='seam-left'?-4:4):(chunk.cx+.5)*map.chunkSize;
-      const y=wanted==='landmark'?landmark.y-50:wanted.startsWith('seam')?7.5*map.chunkSize:(chunk.cy+.5)*map.chunkSize;
+      if(wanted==='seam-left'){const tree=map.decorations.find((d:any)=>d.id==='tree');(window as any).__TREE_SEAM_POINT__={x:Math.round(tree.x/512)*512,y:tree.y};}
+      const seam=(window as any).__TREE_SEAM_POINT__;
+      const x=wanted==='landmark'?landmark.x:wanted.startsWith('seam')?seam.x+(wanted==='seam-left'?-4:4):(chunk.cx+.5)*map.chunkSize;
+      const y=wanted==='landmark'?landmark.y-50:wanted.startsWith('seam')?seam.y:(chunk.cy+.5)*map.chunkSize;
       s.overlay??=s.add.container(0,0);s.state.enemies=[];s.state.projectiles=[];s.syncViews(1);
       s.state.player.x=x;s.state.player.y=y;s.previousPlayer={x,y};
       s.applyPokemonAnimation(s.player,s.playerAnimation,s.state.pokemonId,'south',0,{x,y});
@@ -140,7 +142,7 @@ test('complete trees and clean foliage survive chunk transitions',async({page})=
   await position('seam-left');
   await page.evaluate(()=>{
     const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
-    (window as any).__TREE_SEAM_CHECK__=[...s.chunkViews.entries()].filter(([key]:[string,unknown])=>{const x=Number(key.split(',')[0]);return x>=7&&x<=8;}).flatMap(([,objects]:[string,any[]])=>objects.filter(object=>object.getData?.('forestTree')));
+    (window as any).__TREE_SEAM_CHECK__=[...s.chunkViews.values()].flat().filter((object:any)=>object.getData?.('forestTree')&&Math.abs(object.x-s.state.player.x)<320&&Math.abs(object.y-s.state.player.y)<250);
   });
   await page.screenshot({path:'test-results/screenshots/trees-seam-before.png'});
   await position('seam-right');
@@ -152,39 +154,45 @@ test('complete trees and clean foliage survive chunk transitions',async({page})=
   await page.screenshot({path:'test-results/screenshots/trees-seam-after.png'});
 });
 
-test('full forest survey covers every chunk with complete reviewed props',async({page})=>{
+test('streamed forest survey covers authored props and distant wilderness with bounded views',async({page})=>{
   test.setTimeout(120_000);
   await page.setViewportSize({width:1280,height:720});await page.goto('/?seed=1337');
   await expect(page.locator('#app canvas')).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur'});});
   await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player);
-  const survey=await page.evaluate(()=>{
+  const survey=await page.evaluate(async()=>{
+    const {syncWorldChunks}=await import('/src/worldgen.ts');
     const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),map=s.state.world,errors:string[]=[],seen=new Set<string>();
     s.overlay=s.add.container(0,0);s.cameras.main.stopFollow();
     let visited=0;
-    for(const chunk of Object.values(map.chunks) as any[]){
-      const x=(chunk.cx+.5)*map.chunkSize,y=(chunk.cy+.5)*map.chunkSize;
+    const destinations=[...map.features.camps,...map.features.ponds.slice(0,3),...map.decorations.filter((d:any)=>['tree','landRock','waterRock','bush','sapling'].includes(d.id)).slice(0,20),{x:-24000,y:-24000},{x:32000,y:32000}];
+    for(const {x,y} of destinations){
+      Object.assign(s.state.player,{x,y});syncWorldChunks(map,x,y);
       s.cameras.main.centerOn(x,y);s.syncWorldChunks(true);visited++;
-      if(!s.chunkViews.has(chunk.key))errors.push(`missing ${chunk.key}`);
+      if(!s.chunkViews.size)errors.push('missing render pages');
+      if(Object.keys(map.chunks).length!==9||map.stream.cache.size>18||s.chunkViews.size>25)errors.push('unbounded residency');
       for(const objects of s.chunkViews.values())for(const image of objects){
-        if(!image.texture?.key.startsWith('viridian-frlg/')&&!image.texture?.key.startsWith('viridian-original/'))errors.push(`legacy texture ${image.texture?.key}`);
+        if(image.type==='Image'&&!image.texture.key.startsWith('viridian-frlg/')&&!image.texture.key.startsWith('viridian-original/')&&image.texture.key!=='viridian-grass-opaque-blades')errors.push(`legacy texture ${image.texture?.key}`);
         if(image.getData?.('mapProp')||image.getData?.('forestTree')||image.getData?.('grass')){
           seen.add(image.getData('mapProp')??(image.getData('grass')?'grass':'ancient-tree'));
           const b=image.getBounds();
-          if(b.left<0||b.top<0||b.right>map.width||b.bottom>map.height)errors.push(`outside world ${image.texture.key}`);
+          if(!Number.isFinite(b.left)||!Number.isFinite(b.top)||b.width<=0||b.height<=0)errors.push(`invalid prop ${image.texture.key}`);
+          if(image.mask||image.isCropped)errors.push(`clipped prop ${image.texture.key}`);
         }
       }
     }
     return{visited,errors:[...new Set(errors)],seen:[...seen]};
   });
-  expect(survey.visited).toBe(256);expect(survey.errors).toEqual([]);
+  expect(survey.visited).toBeGreaterThanOrEqual(20);expect(survey.errors).toEqual([]);
   for(const kind of ['tree','landRock','waterRock','tent','bush','sapling'])expect(survey.seen).toContain(kind);
-  for(const destination of ['pond','rocky','landmark','forest-wall','corridor','tall-grass','northwest','northeast','southwest','southeast']){
-    await page.evaluate(wanted=>{
+  for(const destination of ['pond','rocky','forest-wall','corridor','tall-grass','northwest','northeast','southwest','southeast']){
+    await page.evaluate(async(wanted)=>{
+      const {motifForChunk}=await import('/src/worldgen.ts');
       const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),map=s.state.world;
-      const corners:Record<string,[number,number]>={northwest:[640,360],northeast:[map.width-640,360],southwest:[640,map.height-360],southeast:[map.width-640,map.height-360]};
-      const chunk=Object.values(map.chunks).filter((c:any)=>c.motif===wanted).sort((a:any,b:any)=>Math.hypot(a.cx-8,a.cy-8)-Math.hypot(b.cx-8,b.cy-8))[0] as any;
-      const [x,y]=corners[wanted]??[(chunk.cx+.5)*map.chunkSize,(chunk.cy+.5)*map.chunkSize];
+      const corners:Record<string,[number,number]>={northwest:[-16000,-16000],northeast:[16000,-16000],southwest:[-16000,16000],southeast:[16000,16000]};
+      let chunk:{cx:number;cy:number}|undefined;for(let cy=-5;cy<5&&!chunk;cy++)for(let cx=-5;cx<5;cx++)if(motifForChunk(map.seed,cx,cy)===wanted){chunk={cx,cy};break;}
+      const [x,y]=corners[wanted]??[(chunk!.cx+.25)*map.chunkSize,(chunk!.cy+.25)*map.chunkSize];
+      Object.assign(s.state.player,{x,y});
       s.cameras.main.centerOn(x,y);s.syncWorldChunks(true);
     },destination);
     await page.waitForTimeout(60);await page.screenshot({path:`test-results/screenshots/map-pass-${destination}.png`});
@@ -210,13 +218,11 @@ test('complete grass brushes around walking feet and settles when idle',async({p
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur'});});
   await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player);
   await page.evaluate(()=>{
-    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),map=s.state.world,grid=map.terrain;
-    const index=grid.cells.findIndex((value:number,i:number)=>value===3&&grid.cells[i-1]===3&&grid.cells[i+1]===3&&grid.cells[i+2]===3&&map.decorations.every((d:any)=>Math.hypot(d.x-((i%grid.cols)+.5)*grid.tileSize,d.y-(Math.floor(i/grid.cols)+.5)*grid.tileSize)>90));
-    if(index<0)throw new Error('No open grass patch for walk-through check');
-    const x=((index%grid.cols)+.5)*grid.tileSize,y=(Math.floor(index/grid.cols)+.5)*grid.tileSize;
+    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),map=s.state.world,{x,y}=map.playerStart;
     s.state.player.x=x;s.state.player.y=y;s.state.player.vx=0;s.state.player.vy=0;s.previousPlayer={x,y};s.renderPlayer={x,y};
     s.state.enemies=[];s.state.projectiles=[];s.state.moveSlots=[];s.nextSpawn=Infinity;
     s.cameras.main.stopFollow();s.cameras.main.centerOn(x,y);s.syncWorldChunks(true);
+    for(let offset=-32;offset<=160;offset+=32)s.addGrass(x+offset,y+8,Math.floor((x+offset)/32),Math.floor(y/32));
   });
   await page.waitForTimeout(200);
   await page.screenshot({path:'test-results/screenshots/grass-complete-idle.png'});
@@ -267,51 +273,41 @@ test('walking animation restarts after stopping in every direction',async({page}
   }
 });
 
-test('grass makes only the bottom fifth of the visible body transparent',async({page})=>{
+test('foreground grass preserves complete player and NPC bodies in every direction',async({page})=>{
   await page.setViewportSize({width:1280,height:720});await page.goto('/?seed=1337');
   await expect(page.locator('#app canvas')).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'charmander'});});
   await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player);
   await page.evaluate(()=>{
-    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),map=s.state.world,grid=map.terrain;
-    const index=grid.cells.findIndex((value:number,i:number)=>value===3&&grid.cells[i-1]===3&&grid.cells[i+1]===3&&map.decorations.every((d:any)=>Math.hypot(d.x-((i%grid.cols)+.5)*32,d.y-(Math.floor(i/grid.cols)+.5)*32)>90));
-    const x=((index%grid.cols)+.5)*32,y=(Math.floor(index/grid.cols)+.5)*32;
-    Object.assign(s.state.player,{x,y,vx:0,vy:0});s.previousPlayer={x,y};s.state.enemies=[];s.state.moveSlots=[];s.nextSpawn=Infinity;
+    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),{x,y}=s.state.world.playerStart;
+    Object.assign(s.state.player,{x:x-48,y,vx:0,vy:0});s.previousPlayer={x:x-48,y};s.state.moveSlots=[];s.nextSpawn=Infinity;
+    const enemy=s.state.enemies[0];Object.assign(enemy,{x:x+48,y,vx:0,vy:0});s.state.enemies=[enemy];s.previousEnemies.clear();s.syncViews(1);
     s.cameras.main.stopFollow();s.cameras.main.centerOn(x,y);s.syncWorldChunks(true);
+    s.addGrass(x-48,y+8,Math.floor((x-48)/32),Math.floor(y/32));s.addGrass(x+48,y+8,Math.floor((x+48)/32),Math.floor(y/32));
+    s.overlay=s.add.container(0,0);s.scene.manager.pause(s);
   });
-  await page.waitForTimeout(150);
-  const pixels=await page.evaluate(async()=>{
+  const audit=await page.evaluate(async()=>{
     const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
-    s.overlay=s.add.container(0,0);s.player.anims.stop();
-    for(const view of s.grassViews.values())view.front.setVisible(false);
-    const sprite=s.player,box=sprite.getBounds(),cam=s.cameras.main;
-    const x=Math.floor(box.x-cam.scrollX),y=Math.floor(box.y-cam.scrollY),width=Math.ceil(box.width),height=Math.ceil(box.height);
-    const cutoff=sprite.getData('grassMaskBottom')-cam.scrollY-y;
-    const hidden=sprite.getData('grassHiddenFraction'),cropped=!!sprite.mask,alpha=sprite.alpha;
-    const snapshot=()=>new Promise<Uint8ClampedArray>(resolve=>s.game.renderer.snapshotArea(x,y,width,height,(image:any)=>{
+    const enemy=s.state.enemies[0],npc=s.enemyViews.get(enemy.id),results=[];
+    const snapshot=(x:number,y:number,width:number,height:number)=>new Promise<Uint8ClampedArray>(resolve=>s.game.renderer.snapshotArea(x,y,width,height,(image:any)=>{
       const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;const context=canvas.getContext('2d')!;
       context.drawImage(image,0,0);resolve(context.getImageData(0,0,width,height).data);
     }));
-    const masked=await snapshot();sprite.clearMask();const full=await snapshot();let changedUpper=0,changedLower=0;
-    for(let py=0;py<height;py++)for(let px=0;px<width;px++){
-      const p=(py*width+px)*4;
-      if(masked[p]!==full[p]||masked[p+1]!==full[p+1]||masked[p+2]!==full[p+2]){if(py<cutoff-2)changedUpper++;else changedLower++;}
+    for(const facing of ['south','southeast','east','northeast','north','northwest','west','southwest'])for(const [sprite,controller,species,ground] of [[s.player,s.playerAnimation,s.state.pokemonId,s.state.player],[npc,s.enemyAnimations.get(enemy.id),enemy.species,enemy]]){
+      s.applyPokemonAnimation(sprite,controller,species,facing,0,ground);sprite.anims.stop();sprite.setAlpha(1);
+      const box=sprite.getBounds(),cam=s.cameras.main,x=Math.floor(box.x-cam.scrollX),y=Math.floor(box.y-cam.scrollY),width=Math.ceil(box.width),height=Math.ceil(box.height),rows=s.visibleRows(sprite,species);
+      const bottom=box.y+(rows.bottom)*sprite.scaleY-cam.scrollY-y,lower=bottom-(rows.bottom-rows.top)*sprite.scaleY*.25;
+      const combined=await snapshot(x,y,width,height);sprite.setVisible(false);const foliage=await snapshot(x,y,width,height);sprite.setVisible(true);
+      let visibleLegPixels=0;
+      for(let py=Math.max(0,Math.floor(lower));py<Math.min(height,Math.ceil(bottom));py++)for(let px=0;px<width;px++){
+        const p=(py*width+px)*4;if(combined[p]!==foliage[p]||combined[p+1]!==foliage[p+1]||combined[p+2]!==foliage[p+2])visibleLegPixels++;
+      }
+      results.push({species,facing,masked:!!sprite.mask,cropped:sprite.isCropped,alpha:sprite.alpha,coverage:sprite.getData('grassCoverage'),visibleLegPixels});
     }
-    s.applyGrassOcclusion(sprite,s.state.pokemonId,s.state.player);
-    for(const view of s.grassViews.values())view.front.setVisible(true);s.overlay.destroy();s.overlay=undefined;
-    return{cropped,hidden,alpha,changedUpper,changedLower};
+    return{results,layers:[...s.grassViews.values()].map((v:any)=>({alpha:v.front.alpha,opaque:v.blades.alpha,back:v.back.depth,front:v.front.depth,blades:v.blades.depth}))};
   });
-  expect(pixels.cropped).toBe(true);expect(pixels.hidden).toBeCloseTo(.2);expect(pixels.alpha).toBe(1);
-  expect(pixels.changedUpper).toBe(0);expect(pixels.changedLower).toBeGreaterThan(0);
-  await page.screenshot({path:'test-results/screenshots/grass-bottom-fifth-mask.png'});
-  await page.evaluate(()=>{
-    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
-    for(let offset=0;offset<256;offset+=32){
-      const x=s.state.world.playerStart.x+offset,y=s.state.world.playerStart.y;
-      s.applyGrassOcclusion(s.player,s.state.pokemonId,{x,y});
-      if(!s.player.mask){Object.assign(s.state.player,{x,y,vx:0,vy:0});s.previousPlayer={x,y};s.cameras.main.centerOn(x,y);break;}
-    }
-  });
-  await page.waitForTimeout(100);
-  expect(await page.evaluate(()=>!!(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player.mask)).toBe(false);
+  expect(audit.results).toHaveLength(16);
+  for(const result of audit.results){expect(result.masked,`${result.species} ${result.facing}`).toBe(false);expect(result.cropped).toBe(false);expect(result.alpha).toBe(1);expect(result.coverage).toBe(1);expect(result.visibleLegPixels).toBeGreaterThan(0);}
+  for(const layer of audit.layers){expect(layer.alpha).toBeCloseTo(.58);expect(layer.opaque).toBe(1);expect(layer.front).toBeGreaterThan(layer.back);expect(layer.blades).toBeGreaterThan(layer.front);}
+  await page.screenshot({path:'test-results/screenshots/grass-translucent-player-npc.png'});
 });

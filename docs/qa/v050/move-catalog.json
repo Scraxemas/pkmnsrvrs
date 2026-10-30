@@ -1,0 +1,1885 @@
+{
+  "familyCount": 43,
+  "globalCount": 52,
+  "moves": [
+    {
+      "id": "vineWhip",
+      "name": "Vine Whip",
+      "type": "Grass",
+      "damageClass": "Physical",
+      "kind": "sweep",
+      "power": 23,
+      "cooldown": 1.1,
+      "range": 145,
+      "description": "A long sweeping vine that hits a line of foes.",
+      "ranks": [
+        {},
+        {
+          "range": 1.2
+        },
+        {
+          "count": 2
+        },
+        {
+          "damage": 1.3
+        },
+        {
+          "count": 3,
+          "range": 1.15
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Bulbasaur starter",
+      "requiredTms": []
+    },
+    {
+      "id": "powerWhip",
+      "name": "Power Whip",
+      "type": "Grass",
+      "damageClass": "Physical",
+      "kind": "sweep",
+      "power": 38,
+      "cooldown": 1.25,
+      "range": 195,
+      "description": "A heavy sweeping vine snaps across a broad line of foes.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "area": 1.2
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "damage": 1.2,
+          "count": 3
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Automatic Ivysaur evolution",
+      "requiredTms": []
+    },
+    {
+      "id": "magicalLeaf",
+      "name": "Magical Leaf",
+      "type": "Grass",
+      "damageClass": "Special",
+      "kind": "projectile",
+      "power": 26,
+      "cooldown": 0.95,
+      "range": 300,
+      "description": "Glowing leaves home into nearby targets.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "count": 2
+        },
+        {
+          "cooldown": 0.88
+        },
+        {
+          "damage": 1.2,
+          "range": 1.15
+        }
+      ],
+      "tm": "SV TM033",
+      "species": null,
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM033"
+      ]
+    },
+    {
+      "id": "leafStorm",
+      "name": "Leaf Storm",
+      "type": "Grass",
+      "damageClass": "Special",
+      "kind": "spin",
+      "power": 48,
+      "cooldown": 4.5,
+      "range": 260,
+      "description": "A powerful leaf cyclone followed by a brief offensive recovery.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "area": 1.2
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "damage": 1.2,
+          "count": 3
+        }
+      ],
+      "tm": "SV TM159",
+      "species": null,
+      "rare": false,
+      "acquisition": "Magical Leaf Rank 5 transformation",
+      "requiredTms": [
+        "SV TM159",
+        "SV TM033"
+      ]
+    },
+    {
+      "id": "bulletSeed",
+      "name": "Bullet Seed",
+      "type": "Grass",
+      "damageClass": "Physical",
+      "kind": "spread",
+      "power": 9,
+      "cooldown": 0.7,
+      "range": 290,
+      "description": "A rapid burst of small physical seeds.",
+      "ranks": [
+        {
+          "count": 3
+        },
+        {
+          "count": 4
+        },
+        {
+          "damage": 1.15
+        },
+        {
+          "cooldown": 0.85
+        },
+        {
+          "count": 6,
+          "range": 1.15
+        }
+      ],
+      "tm": "SV TM056",
+      "species": null,
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM056"
+      ]
+    },
+    {
+      "id": "seedBomb",
+      "name": "Seed Bomb",
+      "type": "Grass",
+      "damageClass": "Physical",
+      "kind": "projectile",
+      "power": 38,
+      "cooldown": 1.8,
+      "range": 320,
+      "description": "A heavy seed explodes into a physical blast.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "area": 1.2
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "damage": 1.2,
+          "count": 3
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Bullet Seed Rank 5 transformation",
+      "requiredTms": [
+        "SV TM056"
+      ]
+    },
+    {
+      "id": "acidSpray",
+      "name": "Acid Spray",
+      "type": "Poison",
+      "damageClass": "Special",
+      "kind": "spread",
+      "power": 17,
+      "cooldown": 1.2,
+      "range": 220,
+      "description": "Corrosive droplets briefly weaken enemy defenses.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "count": 2
+        },
+        {
+          "cooldown": 0.88
+        },
+        {
+          "damage": 1.2,
+          "range": 1.15
+        }
+      ],
+      "tm": "SV TM013",
+      "species": null,
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM013"
+      ]
+    },
+    {
+      "id": "venoshock",
+      "name": "Venoshock",
+      "type": "Poison",
+      "damageClass": "Special",
+      "kind": "projectile",
+      "power": 34,
+      "cooldown": 1.3,
+      "range": 250,
+      "description": "A toxic burst deals amplified damage to poisoned targets.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "count": 2
+        },
+        {
+          "cooldown": 0.88
+        },
+        {
+          "damage": 1.2,
+          "range": 1.15
+        }
+      ],
+      "tm": "SV TM045",
+      "species": null,
+      "rare": false,
+      "acquisition": "Acid Spray Rank 5 transformation",
+      "requiredTms": [
+        "SV TM045",
+        "SV TM013"
+      ]
+    },
+    {
+      "id": "sludgeBomb",
+      "name": "Sludge Bomb",
+      "type": "Poison",
+      "damageClass": "Special",
+      "kind": "projectile",
+      "power": 46,
+      "cooldown": 2.2,
+      "range": 280,
+      "description": "Explosive sludge splashes poison across clustered enemies.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "area": 1.2
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "damage": 1.2,
+          "count": 3
+        }
+      ],
+      "status": "poison",
+      "tm": "SV TM148",
+      "species": null,
+      "rare": false,
+      "acquisition": "Venoshock Rank 5 transformation",
+      "requiredTms": [
+        "SV TM148",
+        "SV TM045",
+        "SV TM013"
+      ]
+    },
+    {
+      "id": "poisonPowder",
+      "name": "Poison Powder",
+      "type": "Poison",
+      "damageClass": "Status",
+      "kind": "cloud",
+      "power": 0,
+      "cooldown": 2.5,
+      "range": 105,
+      "status": "poison",
+      "description": "A lingering cloud that applies poison.",
+      "ranks": [
+        {
+          "duration": 2
+        },
+        {
+          "range": 1.2,
+          "duration": 2.5
+        },
+        {
+          "statusChance": 1,
+          "duration": 3
+        },
+        {
+          "range": 1.25,
+          "duration": 3.5
+        },
+        {
+          "duration": 5,
+          "count": 2
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Natural",
+      "requiredTms": []
+    },
+    {
+      "id": "toxic",
+      "name": "Toxic",
+      "type": "Poison",
+      "damageClass": "Status",
+      "kind": "cloud",
+      "power": 0,
+      "cooldown": 4,
+      "range": 150,
+      "description": "Severe poison escalates over a limited duration.",
+      "ranks": [
+        {
+          "duration": 1
+        },
+        {
+          "duration": 1.15
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "range": 1.15
+        },
+        {
+          "duration": 1.3
+        }
+      ],
+      "status": "poison",
+      "tm": "SV TM175",
+      "species": null,
+      "rare": false,
+      "acquisition": "Poison Powder Rank 5 transformation",
+      "requiredTms": [
+        "SV TM175"
+      ]
+    },
+    {
+      "id": "leechSeed",
+      "name": "Leech Seed",
+      "type": "Grass",
+      "damageClass": "Status",
+      "kind": "drain",
+      "power": 8,
+      "cooldown": 2,
+      "range": 220,
+      "status": "seeded",
+      "description": "Seeds targets, draining HP back to the user.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.2
+        },
+        {
+          "count": 2
+        },
+        {
+          "cooldown": 0.8
+        },
+        {
+          "damage": 1.4,
+          "count": 2
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Natural",
+      "requiredTms": []
+    },
+    {
+      "id": "megaDrain",
+      "name": "Mega Drain",
+      "type": "Grass",
+      "damageClass": "Special",
+      "kind": "drain",
+      "power": 24,
+      "cooldown": 1.7,
+      "range": 240,
+      "description": "Damaging energy tendrils return a bounded portion of HP.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "count": 2
+        },
+        {
+          "cooldown": 0.88
+        },
+        {
+          "damage": 1.2,
+          "range": 1.15
+        }
+      ],
+      "tm": "Generation I TM21",
+      "species": null,
+      "rare": false,
+      "acquisition": "Leech Seed Rank 5 transformation",
+      "requiredTms": [
+        "Generation I TM21"
+      ]
+    },
+    {
+      "id": "gigaDrain",
+      "name": "Giga Drain",
+      "type": "Grass",
+      "damageClass": "Special",
+      "kind": "drain",
+      "power": 38,
+      "cooldown": 2.2,
+      "range": 285,
+      "description": "Several draining tendrils absorb HP from multiple enemies.",
+      "ranks": [
+        {
+          "count": 3
+        },
+        {
+          "damage": 1.15
+        },
+        {
+          "count": 4
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "count": 5,
+          "damage": 1.2
+        }
+      ],
+      "tm": "SV TM111",
+      "species": null,
+      "rare": false,
+      "acquisition": "Mega Drain Rank 5 transformation",
+      "requiredTms": [
+        "SV TM111",
+        "Generation I TM21"
+      ]
+    },
+    {
+      "id": "tackle",
+      "name": "Tackle",
+      "type": "Normal",
+      "damageClass": "Physical",
+      "kind": "charge",
+      "power": 18,
+      "cooldown": 0.75,
+      "range": 70,
+      "description": "A controlled forward impact with knockback.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.18,
+          "range": 1.15
+        },
+        {
+          "cooldown": 0.85
+        },
+        {
+          "damage": 1.25,
+          "range": 1.2
+        },
+        {
+          "damage": 1.2,
+          "count": 2
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Natural",
+      "requiredTms": []
+    },
+    {
+      "id": "takeDown",
+      "name": "Take Down",
+      "type": "Normal",
+      "damageClass": "Physical",
+      "kind": "charge",
+      "power": 32,
+      "cooldown": 1.2,
+      "range": 110,
+      "description": "A forceful short charge with modest nonlethal recoil.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "count": 2
+        },
+        {
+          "cooldown": 0.88
+        },
+        {
+          "damage": 1.2,
+          "range": 1.15
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Tackle Rank 5 transformation",
+      "requiredTms": []
+    },
+    {
+      "id": "bodySlam",
+      "name": "Body Slam",
+      "type": "Normal",
+      "damageClass": "Physical",
+      "kind": "spin",
+      "power": 42,
+      "cooldown": 2.5,
+      "range": 145,
+      "description": "A broad radial body impact knocks nearby foes away.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "area": 1.2
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "damage": 1.2,
+          "count": 3
+        }
+      ],
+      "tm": "SV TM066",
+      "species": null,
+      "rare": false,
+      "acquisition": "Take Down Rank 5 transformation",
+      "requiredTms": [
+        "SV TM066"
+      ]
+    },
+    {
+      "id": "razorLeaf",
+      "name": "Razor Leaf",
+      "type": "Grass",
+      "damageClass": "Physical",
+      "kind": "piercing",
+      "power": 32,
+      "cooldown": 1.05,
+      "range": 300,
+      "description": "Sharp spinning leaves pierce a line of enemies.",
+      "ranks": [
+        {
+          "pierce": 2
+        },
+        {
+          "range": 1.15,
+          "pierce": 3
+        },
+        {
+          "damage": 1.2
+        },
+        {
+          "cooldown": 0.85
+        },
+        {
+          "pierce": 5,
+          "damage": 1.2
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Natural",
+      "requiredTms": []
+    },
+    {
+      "id": "petalDance",
+      "name": "Petal Dance",
+      "type": "Grass",
+      "damageClass": "Special",
+      "kind": "spin",
+      "power": 25,
+      "cooldown": 2.8,
+      "range": 190,
+      "description": "Swirling petals repeatedly strike a nearby circle.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "area": 1.2
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "damage": 1.2,
+          "count": 3
+        }
+      ],
+      "tm": null,
+      "species": [
+        "venusaur"
+      ],
+      "rare": false,
+      "acquisition": "Natural",
+      "requiredTms": []
+    },
+    {
+      "id": "petalBlizzard",
+      "name": "Petal Blizzard",
+      "type": "Grass",
+      "damageClass": "Physical",
+      "kind": "spin",
+      "power": 65,
+      "cooldown": 3.1,
+      "range": 250,
+      "description": "Fusion: a massive circular storm of cutting petals.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "area": 1.2
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "damage": 1.2,
+          "count": 3
+        }
+      ],
+      "tm": null,
+      "species": [
+        "venusaur"
+      ],
+      "rare": true,
+      "acquisition": "Razor Leaf + Petal Dance fusion",
+      "requiredTms": []
+    },
+    {
+      "id": "energyBall",
+      "name": "Energy Ball",
+      "type": "Grass",
+      "damageClass": "Special",
+      "kind": "projectile",
+      "power": 34,
+      "cooldown": 1.5,
+      "range": 330,
+      "description": "A concentrated Grass-energy sphere bursts on impact.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "count": 2
+        },
+        {
+          "cooldown": 0.88
+        },
+        {
+          "damage": 1.2,
+          "range": 1.15
+        }
+      ],
+      "tm": "SV TM119",
+      "species": null,
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM119"
+      ]
+    },
+    {
+      "id": "sunnyDay",
+      "name": "Sunny Day",
+      "type": "Fire",
+      "damageClass": "Status",
+      "kind": "cloud",
+      "power": 0,
+      "cooldown": 10,
+      "range": 150,
+      "description": "Timed sunlight strengthens compatible Grass attacks.",
+      "ranks": [
+        {
+          "duration": 1
+        },
+        {
+          "duration": 1.15
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "range": 1.15
+        },
+        {
+          "duration": 1.3
+        }
+      ],
+      "tm": "SV TM049",
+      "species": null,
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM049"
+      ]
+    },
+    {
+      "id": "solarBeam",
+      "name": "Solar Beam",
+      "type": "Grass",
+      "damageClass": "Special",
+      "kind": "piercing",
+      "power": 82,
+      "cooldown": 5.5,
+      "range": 620,
+      "description": "Fusion: sunlight charges a devastating piercing beam.",
+      "ranks": [
+        {
+          "pierce": 8
+        },
+        {
+          "damage": 1.15
+        },
+        {
+          "pierce": 10
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "damage": 1.2,
+          "pierce": 12
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": true,
+      "acquisition": "Energy Ball + Sunny Day fusion",
+      "requiredTms": [
+        "SV TM119",
+        "SV TM049"
+      ]
+    },
+    {
+      "id": "sludgeWave",
+      "name": "Sludge Wave",
+      "type": "Poison",
+      "damageClass": "Special",
+      "kind": "cloud",
+      "power": 68,
+      "cooldown": 4,
+      "range": 260,
+      "description": "Fusion: an expanding toxic shockwave inflicts escalating poison.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "area": 1.2
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "damage": 1.2,
+          "count": 3
+        }
+      ],
+      "status": "poison",
+      "tm": null,
+      "species": null,
+      "rare": true,
+      "acquisition": "Toxic + Sludge Bomb fusion",
+      "requiredTms": [
+        "SV TM175",
+        "SV TM148",
+        "SV TM045",
+        "SV TM013"
+      ]
+    },
+    {
+      "id": "synthesis",
+      "name": "Synthesis",
+      "type": "Grass",
+      "damageClass": "Status",
+      "kind": "drain",
+      "power": 0,
+      "cooldown": 8,
+      "range": 120,
+      "description": "Periodic recovery restores a limited amount of maximum HP.",
+      "ranks": [
+        {
+          "duration": 1
+        },
+        {
+          "duration": 1.15
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "range": 1.15
+        },
+        {
+          "duration": 1.3
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Natural",
+      "requiredTms": []
+    },
+    {
+      "id": "grassyTerrain",
+      "name": "Grassy Terrain",
+      "type": "Grass",
+      "damageClass": "Status",
+      "kind": "cloud",
+      "power": 0,
+      "cooldown": 12,
+      "range": 125,
+      "description": "A temporary healing field supports the Pokémon within it.",
+      "ranks": [
+        {
+          "duration": 1
+        },
+        {
+          "duration": 1.15
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "range": 1.15
+        },
+        {
+          "duration": 1.3
+        }
+      ],
+      "tm": "SV TM137",
+      "species": null,
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM137"
+      ]
+    },
+    {
+      "id": "ingrain",
+      "name": "Ingrain",
+      "type": "Grass",
+      "damageClass": "Status",
+      "kind": "cloud",
+      "power": 0,
+      "cooldown": 8,
+      "range": 115,
+      "description": "Fusion: reforming roots follow the player, healing and softening damage.",
+      "ranks": [
+        {
+          "duration": 1
+        },
+        {
+          "duration": 1.15
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "range": 1.15
+        },
+        {
+          "duration": 1.3
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": true,
+      "acquisition": "Synthesis + Grassy Terrain fusion",
+      "requiredTms": [
+        "SV TM137"
+      ]
+    },
+    {
+      "id": "grassKnot",
+      "name": "Grass Knot",
+      "type": "Grass",
+      "damageClass": "Special",
+      "kind": "sweep",
+      "power": 28,
+      "cooldown": 1.8,
+      "range": 230,
+      "description": "Entangling plants deal more damage to large foes and briefly slow them.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "count": 2
+        },
+        {
+          "cooldown": 0.88
+        },
+        {
+          "damage": 1.2,
+          "range": 1.15
+        }
+      ],
+      "tm": "SV TM081",
+      "species": null,
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM081"
+      ]
+    },
+    {
+      "id": "grassyGlide",
+      "name": "Grassy Glide",
+      "type": "Grass",
+      "damageClass": "Physical",
+      "kind": "charge",
+      "power": 27,
+      "cooldown": 0.8,
+      "range": 105,
+      "description": "A quick advancing grass strike brushes through close enemies.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "count": 2
+        },
+        {
+          "cooldown": 0.88
+        },
+        {
+          "damage": 1.2,
+          "range": 1.15
+        }
+      ],
+      "tm": "SV TM194",
+      "species": null,
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM194"
+      ]
+    },
+    {
+      "id": "trailblaze",
+      "name": "Trailblaze",
+      "type": "Grass",
+      "damageClass": "Physical",
+      "kind": "charge",
+      "power": 20,
+      "cooldown": 1.35,
+      "range": 115,
+      "description": "A moving physical strike grants a short, capped speed benefit.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "count": 2
+        },
+        {
+          "cooldown": 0.88
+        },
+        {
+          "damage": 1.2,
+          "range": 1.15
+        }
+      ],
+      "tm": "SV TM020",
+      "species": null,
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM020"
+      ]
+    },
+    {
+      "id": "grassPledge",
+      "name": "Grass Pledge",
+      "type": "Grass",
+      "damageClass": "Special",
+      "kind": "sweep",
+      "power": 35,
+      "cooldown": 2.3,
+      "range": 280,
+      "description": "Several plant-energy columns erupt at enemy positions.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "area": 1.2
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "damage": 1.2,
+          "count": 3
+        }
+      ],
+      "tm": "SV TM146",
+      "species": null,
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM146"
+      ]
+    },
+    {
+      "id": "frenzyPlant",
+      "name": "Frenzy Plant",
+      "type": "Grass",
+      "damageClass": "Special",
+      "kind": "sweep",
+      "power": 95,
+      "cooldown": 9,
+      "range": 350,
+      "description": "Rare ultimate: immense root eruptions followed by a long recovery.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "area": 1.2
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "damage": 1.2,
+          "count": 3
+        }
+      ],
+      "tm": "SV TM155",
+      "species": [
+        "venusaur"
+      ],
+      "rare": true,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM155"
+      ]
+    },
+    {
+      "id": "poisonJab",
+      "name": "Poison Jab",
+      "type": "Poison",
+      "damageClass": "Physical",
+      "kind": "slash",
+      "power": 36,
+      "cooldown": 1.1,
+      "range": 100,
+      "description": "A sharp physical toxic strike can poison its target.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "count": 2
+        },
+        {
+          "cooldown": 0.88
+        },
+        {
+          "damage": 1.2,
+          "range": 1.15
+        }
+      ],
+      "status": "poison",
+      "tm": "SV TM083",
+      "species": [
+        "venusaur"
+      ],
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM083"
+      ]
+    },
+    {
+      "id": "earthPower",
+      "name": "Earth Power",
+      "type": "Ground",
+      "damageClass": "Special",
+      "kind": "sweep",
+      "power": 46,
+      "cooldown": 2.8,
+      "range": 280,
+      "description": "Focused columns of earth energy erupt beneath selected foes.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "area": 1.2
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "damage": 1.2,
+          "count": 3
+        }
+      ],
+      "tm": "SV TM133",
+      "species": [
+        "venusaur"
+      ],
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM133"
+      ]
+    },
+    {
+      "id": "earthquake",
+      "name": "Earthquake",
+      "type": "Ground",
+      "damageClass": "Physical",
+      "kind": "spin",
+      "power": 53,
+      "cooldown": 3.8,
+      "range": 230,
+      "description": "A broad physical ground shock strikes a surrounding ring.",
+      "ranks": [
+        {},
+        {
+          "damage": 1.15
+        },
+        {
+          "area": 1.2
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "damage": 1.2,
+          "count": 3
+        }
+      ],
+      "tm": "SV TM149",
+      "species": [
+        "venusaur"
+      ],
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM149"
+      ]
+    },
+    {
+      "id": "growl",
+      "name": "Growl",
+      "type": "Normal",
+      "damageClass": "Status",
+      "kind": "cloud",
+      "power": 0,
+      "cooldown": 6,
+      "range": 150,
+      "description": "Nearby enemies briefly deal less damage.",
+      "ranks": [
+        {
+          "duration": 1
+        },
+        {
+          "duration": 1.15
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "range": 1.15
+        },
+        {
+          "duration": 1.3
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Natural",
+      "requiredTms": []
+    },
+    {
+      "id": "growth",
+      "name": "Growth",
+      "type": "Normal",
+      "damageClass": "Status",
+      "kind": "cloud",
+      "power": 0,
+      "cooldown": 9,
+      "range": 120,
+      "description": "Temporarily raises Physical and Special offense without stacking.",
+      "ranks": [
+        {
+          "duration": 1
+        },
+        {
+          "duration": 1.15
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "range": 1.15
+        },
+        {
+          "duration": 1.3
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Natural",
+      "requiredTms": []
+    },
+    {
+      "id": "sleepPowder",
+      "name": "Sleep Powder",
+      "type": "Grass",
+      "damageClass": "Status",
+      "kind": "cloud",
+      "power": 0,
+      "cooldown": 6.5,
+      "range": 135,
+      "description": "Sleep spores stop ordinary foes briefly; bosses resist control.",
+      "ranks": [
+        {
+          "duration": 1
+        },
+        {
+          "duration": 1.15
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "range": 1.15
+        },
+        {
+          "duration": 1.3
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Natural",
+      "requiredTms": []
+    },
+    {
+      "id": "sweetScent",
+      "name": "Sweet Scent",
+      "type": "Normal",
+      "damageClass": "Status",
+      "kind": "cloud",
+      "power": 0,
+      "cooldown": 7,
+      "range": 180,
+      "description": "A sweet haze briefly weakens nearby enemy resistance.",
+      "ranks": [
+        {
+          "duration": 1
+        },
+        {
+          "duration": 1.15
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "range": 1.15
+        },
+        {
+          "duration": 1.3
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Natural",
+      "requiredTms": []
+    },
+    {
+      "id": "worrySeed",
+      "name": "Worry Seed",
+      "type": "Grass",
+      "damageClass": "Status",
+      "kind": "projectile",
+      "power": 0,
+      "cooldown": 5,
+      "range": 260,
+      "description": "Disruptive seeds briefly weaken an enemy and its movement.",
+      "ranks": [
+        {
+          "duration": 1
+        },
+        {
+          "duration": 1.15
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "range": 1.15
+        },
+        {
+          "duration": 1.3
+        }
+      ],
+      "tm": null,
+      "species": null,
+      "rare": false,
+      "acquisition": "Natural",
+      "requiredTms": []
+    },
+    {
+      "id": "protect",
+      "name": "Protect",
+      "type": "Normal",
+      "damageClass": "Status",
+      "kind": "cloud",
+      "power": 0,
+      "cooldown": 8,
+      "range": 100,
+      "description": "A brief defensive barrier absorbs a capped amount of damage.",
+      "ranks": [
+        {
+          "duration": 1
+        },
+        {
+          "duration": 1.15
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "range": 1.15
+        },
+        {
+          "duration": 1.3
+        }
+      ],
+      "tm": "SV TM007",
+      "species": null,
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM007"
+      ]
+    },
+    {
+      "id": "swordsDance",
+      "name": "Swords Dance",
+      "type": "Normal",
+      "damageClass": "Status",
+      "kind": "cloud",
+      "power": 0,
+      "cooldown": 10,
+      "range": 100,
+      "description": "A timed stance increases Physical damage without infinite stacking.",
+      "ranks": [
+        {
+          "duration": 1
+        },
+        {
+          "duration": 1.15
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "range": 1.15
+        },
+        {
+          "duration": 1.3
+        }
+      ],
+      "tm": "SV TM088",
+      "species": null,
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM088"
+      ]
+    },
+    {
+      "id": "helpingHand",
+      "name": "Helping Hand",
+      "type": "Normal",
+      "damageClass": "Status",
+      "kind": "cloud",
+      "power": 0,
+      "cooldown": 10,
+      "range": 150,
+      "description": "A capped ally-ready offensive boost also benefits the solo user.",
+      "ranks": [
+        {
+          "duration": 1
+        },
+        {
+          "duration": 1.15
+        },
+        {
+          "cooldown": 0.9
+        },
+        {
+          "range": 1.15
+        },
+        {
+          "duration": 1.3
+        }
+      ],
+      "tm": "SV TM130",
+      "species": null,
+      "rare": false,
+      "acquisition": "TM discovery",
+      "requiredTms": [
+        "SV TM130"
+      ]
+    }
+  ],
+  "chains": [
+    {
+      "id": "grass-signature",
+      "kind": "signature",
+      "family": [
+        "bulbasaur",
+        "ivysaur",
+        "venusaur"
+      ],
+      "stages": [
+        "vineWhip",
+        "powerWhip"
+      ],
+      "requiredRank": 0,
+      "independentAncestors": false
+    },
+    {
+      "id": "fire-signature",
+      "kind": "signature",
+      "family": [
+        "charmander",
+        "charmeleon",
+        "charizard"
+      ],
+      "stages": [
+        "scratch",
+        "metalClaw",
+        "dragonClaw"
+      ],
+      "requiredRank": 0,
+      "independentAncestors": false
+    },
+    {
+      "id": "water-signature",
+      "kind": "signature",
+      "family": [
+        "squirtle",
+        "wartortle",
+        "blastoise"
+      ],
+      "stages": [
+        "tackle",
+        "waterGun",
+        "hydroPump"
+      ],
+      "requiredRank": 0,
+      "independentAncestors": false
+    },
+    {
+      "id": "special-grass",
+      "kind": "upgrade",
+      "family": [
+        "bulbasaur",
+        "ivysaur",
+        "venusaur"
+      ],
+      "stages": [
+        "magicalLeaf",
+        "leafStorm"
+      ],
+      "requiredRank": 5,
+      "independentAncestors": false
+    },
+    {
+      "id": "seed-artillery",
+      "kind": "upgrade",
+      "family": [
+        "bulbasaur",
+        "ivysaur",
+        "venusaur"
+      ],
+      "stages": [
+        "bulletSeed",
+        "seedBomb"
+      ],
+      "requiredRank": 5,
+      "independentAncestors": false
+    },
+    {
+      "id": "poison-offense",
+      "kind": "upgrade",
+      "family": [
+        "bulbasaur",
+        "ivysaur",
+        "venusaur"
+      ],
+      "stages": [
+        "acidSpray",
+        "venoshock",
+        "sludgeBomb"
+      ],
+      "requiredRank": 5,
+      "independentAncestors": false
+    },
+    {
+      "id": "poison-status",
+      "kind": "upgrade",
+      "family": [
+        "bulbasaur",
+        "ivysaur",
+        "venusaur"
+      ],
+      "stages": [
+        "poisonPowder",
+        "toxic"
+      ],
+      "requiredRank": 5,
+      "independentAncestors": false
+    },
+    {
+      "id": "lifesteal",
+      "kind": "upgrade",
+      "family": [
+        "bulbasaur",
+        "ivysaur",
+        "venusaur"
+      ],
+      "stages": [
+        "leechSeed",
+        "megaDrain",
+        "gigaDrain"
+      ],
+      "requiredRank": 5,
+      "independentAncestors": false
+    },
+    {
+      "id": "physical-impact",
+      "kind": "upgrade",
+      "family": [
+        "bulbasaur",
+        "ivysaur",
+        "venusaur"
+      ],
+      "stages": [
+        "tackle",
+        "takeDown",
+        "bodySlam"
+      ],
+      "requiredRank": 5,
+      "independentAncestors": false
+    }
+  ],
+  "fusions": [
+    {
+      "id": "petalBlizzard",
+      "ingredients": [
+        "razorLeaf",
+        "petalDance"
+      ],
+      "result": "petalBlizzard",
+      "requiredRank": 5,
+      "family": [
+        "bulbasaur",
+        "ivysaur",
+        "venusaur"
+      ],
+      "species": [
+        "venusaur"
+      ],
+      "rarity": "rare"
+    },
+    {
+      "id": "solarBeam",
+      "ingredients": [
+        "energyBall",
+        "sunnyDay"
+      ],
+      "result": "solarBeam",
+      "requiredRank": 5,
+      "family": [
+        "bulbasaur",
+        "ivysaur",
+        "venusaur"
+      ],
+      "rarity": "rare"
+    },
+    {
+      "id": "sludgeWave",
+      "ingredients": [
+        "toxic",
+        "sludgeBomb"
+      ],
+      "result": "sludgeWave",
+      "requiredRank": 5,
+      "family": [
+        "bulbasaur",
+        "ivysaur",
+        "venusaur"
+      ],
+      "rarity": "rare"
+    },
+    {
+      "id": "ingrain",
+      "ingredients": [
+        "synthesis",
+        "grassyTerrain"
+      ],
+      "result": "ingrain",
+      "requiredRank": 5,
+      "family": [
+        "bulbasaur",
+        "ivysaur",
+        "venusaur"
+      ],
+      "rarity": "rare"
+    }
+  ],
+  "technicalMachines": [
+    {
+      "id": "sv:033",
+      "generation": "sv",
+      "number": 33,
+      "moveId": "magicalLeaf",
+      "label": "SV TM033"
+    },
+    {
+      "id": "sv:159",
+      "generation": "sv",
+      "number": 159,
+      "moveId": "leafStorm",
+      "label": "SV TM159"
+    },
+    {
+      "id": "sv:056",
+      "generation": "sv",
+      "number": 56,
+      "moveId": "bulletSeed",
+      "label": "SV TM056"
+    },
+    {
+      "id": "sv:013",
+      "generation": "sv",
+      "number": 13,
+      "moveId": "acidSpray",
+      "label": "SV TM013"
+    },
+    {
+      "id": "sv:045",
+      "generation": "sv",
+      "number": 45,
+      "moveId": "venoshock",
+      "label": "SV TM045"
+    },
+    {
+      "id": "sv:148",
+      "generation": "sv",
+      "number": 148,
+      "moveId": "sludgeBomb",
+      "label": "SV TM148"
+    },
+    {
+      "id": "sv:175",
+      "generation": "sv",
+      "number": 175,
+      "moveId": "toxic",
+      "label": "SV TM175"
+    },
+    {
+      "id": "gen1:021",
+      "generation": "gen1",
+      "number": 21,
+      "moveId": "megaDrain",
+      "label": "Generation I TM21"
+    },
+    {
+      "id": "sv:111",
+      "generation": "sv",
+      "number": 111,
+      "moveId": "gigaDrain",
+      "label": "SV TM111"
+    },
+    {
+      "id": "sv:066",
+      "generation": "sv",
+      "number": 66,
+      "moveId": "bodySlam",
+      "label": "SV TM066"
+    },
+    {
+      "id": "sv:119",
+      "generation": "sv",
+      "number": 119,
+      "moveId": "energyBall",
+      "label": "SV TM119"
+    },
+    {
+      "id": "sv:049",
+      "generation": "sv",
+      "number": 49,
+      "moveId": "sunnyDay",
+      "label": "SV TM049"
+    },
+    {
+      "id": "sv:137",
+      "generation": "sv",
+      "number": 137,
+      "moveId": "grassyTerrain",
+      "label": "SV TM137"
+    },
+    {
+      "id": "sv:081",
+      "generation": "sv",
+      "number": 81,
+      "moveId": "grassKnot",
+      "label": "SV TM081"
+    },
+    {
+      "id": "sv:194",
+      "generation": "sv",
+      "number": 194,
+      "moveId": "grassyGlide",
+      "label": "SV TM194"
+    },
+    {
+      "id": "sv:020",
+      "generation": "sv",
+      "number": 20,
+      "moveId": "trailblaze",
+      "label": "SV TM020"
+    },
+    {
+      "id": "sv:146",
+      "generation": "sv",
+      "number": 146,
+      "moveId": "grassPledge",
+      "label": "SV TM146"
+    },
+    {
+      "id": "sv:155",
+      "generation": "sv",
+      "number": 155,
+      "moveId": "frenzyPlant",
+      "label": "SV TM155"
+    },
+    {
+      "id": "sv:083",
+      "generation": "sv",
+      "number": 83,
+      "moveId": "poisonJab",
+      "label": "SV TM083"
+    },
+    {
+      "id": "sv:133",
+      "generation": "sv",
+      "number": 133,
+      "moveId": "earthPower",
+      "label": "SV TM133"
+    },
+    {
+      "id": "sv:149",
+      "generation": "sv",
+      "number": 149,
+      "moveId": "earthquake",
+      "label": "SV TM149"
+    },
+    {
+      "id": "sv:007",
+      "generation": "sv",
+      "number": 7,
+      "moveId": "protect",
+      "label": "SV TM007"
+    },
+    {
+      "id": "sv:088",
+      "generation": "sv",
+      "number": 88,
+      "moveId": "swordsDance",
+      "label": "SV TM088"
+    },
+    {
+      "id": "sv:130",
+      "generation": "sv",
+      "number": 130,
+      "moveId": "helpingHand",
+      "label": "SV TM130"
+    }
+  ],
+  "tmResearchRewards": [
+    {
+      "research": "caterpie",
+      "count": 25,
+      "tm": "sv:056",
+      "label": "Seed Study"
+    },
+    {
+      "research": "weedle",
+      "count": 25,
+      "tm": "sv:013",
+      "label": "Poison Study"
+    }
+  ]
+}

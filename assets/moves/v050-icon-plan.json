@@ -1,0 +1,192 @@
+[
+  {
+    "id": "powerWhip",
+    "subject": "A thick coiled emerald vine striking with a dramatic pale-lime impact star, heavier hooked shape than Vine Whip.",
+    "kind": "icon"
+  },
+  {
+    "id": "magicalLeaf",
+    "subject": "Two floating emerald leaves with a luminous pale mint magical sparkle between them; round enchanted composition, distinct from physical cutting leaves.",
+    "kind": "icon"
+  },
+  {
+    "id": "leafStorm",
+    "subject": "A vertical cyclone of dark and light green razor leaves circling a strong pale-green center, readable spiral silhouette.",
+    "kind": "icon"
+  },
+  {
+    "id": "bulletSeed",
+    "subject": "Three small golden-brown seeds in a straight rapid-fire diagonal trail with tiny green speed dashes.",
+    "kind": "icon"
+  },
+  {
+    "id": "seedBomb",
+    "subject": "One large brown seed with a split green shell and a bright yellow-green explosive impact crown.",
+    "kind": "icon"
+  },
+  {
+    "id": "acidSpray",
+    "subject": "A diagonal fan of three corrosive purple liquid droplets with pale green acidic highlights, splashing at the tip.",
+    "kind": "icon"
+  },
+  {
+    "id": "venoshock",
+    "subject": "A violet electric-toxic burst with a jagged purple lightning fork piercing a magenta poison droplet.",
+    "kind": "icon"
+  },
+  {
+    "id": "sludgeBomb",
+    "subject": "A heavy dark-purple toxic sludge sphere exploding into thick rounded purple splashes with magenta highlights.",
+    "kind": "icon"
+  },
+  {
+    "id": "toxic",
+    "subject": "A dark violet skull-shaped toxic vapor puff surrounded by small intense magenta spore dots.",
+    "kind": "icon"
+  },
+  {
+    "id": "megaDrain",
+    "subject": "One curling bright-green energy tendril pulling a tiny mint life-light from a target spark toward a green orb.",
+    "kind": "icon"
+  },
+  {
+    "id": "gigaDrain",
+    "subject": "Three strong green life-draining tendrils converging into a bright mint core, a wide three-pronged absorption silhouette.",
+    "kind": "icon"
+  },
+  {
+    "id": "takeDown",
+    "subject": "A powerful golden-brown shoulder-charge motion wedge with a heavy cream impact burst and short trailing dust.",
+    "kind": "icon"
+  },
+  {
+    "id": "bodySlam",
+    "subject": "A broad low cream physical impact radiating outward with chunky brown ground fragments and a strong central downward collision.",
+    "kind": "icon"
+  },
+  {
+    "id": "petalDance",
+    "subject": "A graceful spiral of five pink petals with light rose highlights around an open center, clear dancing motion.",
+    "kind": "icon"
+  },
+  {
+    "id": "petalBlizzard",
+    "subject": "A broad circular fusion storm of sharp pink petals and emerald cutting leaves, strong full-circle silhouette distinct from Petal Dance.",
+    "kind": "icon"
+  },
+  {
+    "id": "energyBall",
+    "subject": "A compact saturated green energy sphere with a bright pale-mint core and two curved orbiting lime energy arcs.",
+    "kind": "icon"
+  },
+  {
+    "id": "sunnyDay",
+    "subject": "A cheerful golden sun with a warm amber center and eight short angular yellow rays. No scene or sky.",
+    "kind": "icon"
+  },
+  {
+    "id": "solarBeam",
+    "subject": "A long concentrated yellow-green solar beam ending in a bright pale-gold starburst, a small green charging orb at its base.",
+    "kind": "icon"
+  },
+  {
+    "id": "sludgeWave",
+    "subject": "An expanding crescent of dark purple toxic water with bright magenta crest spikes and tiny purple droplets, broad low wave silhouette.",
+    "kind": "icon"
+  },
+  {
+    "id": "synthesis",
+    "subject": "A fresh green two-leaf sprout supporting a bright warm sunlight sparkle, gentle recovery identity.",
+    "kind": "icon"
+  },
+  {
+    "id": "grassyTerrain",
+    "subject": "A small vivid green tuft of healing grasses growing from a compact earthy patch, with two pale-mint recovery sparkles.",
+    "kind": "icon"
+  },
+  {
+    "id": "ingrain",
+    "subject": "Two strong brown roots curling under a green sprout with a warm healing glow, rooted defensive silhouette.",
+    "kind": "icon"
+  },
+  {
+    "id": "grassKnot",
+    "subject": "Two long green blades tied into a recognizable tight entangling knot, dark-green outlines and lime edges.",
+    "kind": "icon"
+  },
+  {
+    "id": "grassyGlide",
+    "subject": "A sharp green leaf shaped like a gliding forward blade, short mint speed streaks behind it.",
+    "kind": "icon"
+  },
+  {
+    "id": "trailblaze",
+    "subject": "An orange-gold forward flame streak intertwined with a bright green leaf, energetic sprinting diagonal silhouette.",
+    "kind": "icon"
+  },
+  {
+    "id": "grassPledge",
+    "subject": "Three erupting columns of pale-green plant energy rising from pointed green leaves.",
+    "kind": "icon"
+  },
+  {
+    "id": "frenzyPlant",
+    "subject": "Huge branching brown roots bursting upward around a bright emerald plant-energy core, angular powerful ultimate silhouette.",
+    "kind": "icon"
+  },
+  {
+    "id": "poisonJab",
+    "subject": "A sharp violet thorn-like striking spike with a magenta toxic droplet on its point and a short physical thrust trail.",
+    "kind": "icon"
+  },
+  {
+    "id": "earthPower",
+    "subject": "A tall glowing orange-gold fissure erupting between two jagged ochre rock pillars, concentrated upward earth-energy attack.",
+    "kind": "icon"
+  },
+  {
+    "id": "earthquake",
+    "subject": "Three broad jagged brown ground cracks radiating outward with small bouncing ochre rock chunks, horizontal shaking composition.",
+    "kind": "icon"
+  },
+  {
+    "id": "growl",
+    "subject": "Three pale cream sound-wave arcs expanding outward from a compact amber vibration spark; no face.",
+    "kind": "icon"
+  },
+  {
+    "id": "growth",
+    "subject": "A sturdy green sprout with two larger ascending leaves and a small golden upward growth sparkle.",
+    "kind": "icon"
+  },
+  {
+    "id": "sleepPowder",
+    "subject": "A cloud of soft lavender spores with a small pale-blue crescent moon and two tiny white glints, sleepy airy silhouette. No letters.",
+    "kind": "icon"
+  },
+  {
+    "id": "sweetScent",
+    "subject": "A small pink blossom with three curling rosy aroma trails and a pale golden center.",
+    "kind": "icon"
+  },
+  {
+    "id": "worrySeed",
+    "subject": "A single amber seed bearing a tiny green sprout, encircled by two dark violet disruptive energy arcs.",
+    "kind": "icon"
+  },
+  {
+    "id": "protect",
+    "subject": "A crisp translucent-looking mint-green shield silhouette with an open darker-green center and one small pale-white glint.",
+    "kind": "icon"
+  },
+  {
+    "id": "swordsDance",
+    "subject": "Two crossed silver swords with small golden hilts and an arc of red-orange offensive energy, distinct crossing blade silhouettes.",
+    "kind": "icon"
+  },
+  {
+    "id": "helpingHand",
+    "subject": "Two small cream hands reaching toward each other with a bright warm-gold cooperative sparkle between them, no arms or characters.",
+    "kind": "icon"
+  }
+]

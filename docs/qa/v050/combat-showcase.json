@@ -1,0 +1,115 @@
+{
+  "version": "0.5.0",
+  "seed": 5050,
+  "method": "The real 30 Hz scheduler activated all five equipped Rank 5 moves. Actual D-key movement for 350 ms leaves the recovery bloom visible beside Venusaur; enemies remain stationary. Paused at Synthesis frame 2 with all five effects visible, actual healing, and enemy poison. No manual VFX or code changes. The same paused state was captured at both viewports.",
+  "before": {
+    "time": 0.16666666666666666,
+    "hp": 144,
+    "maxHp": 240,
+    "player": {
+      "x": 3993.8609286546707,
+      "y": 4046.7023168206215
+    },
+    "equipped": [
+      {
+        "id": "powerWhip",
+        "rank": 5
+      },
+      {
+        "id": "sludgeBomb",
+        "rank": 5
+      },
+      {
+        "id": "synthesis",
+        "rank": 5
+      },
+      {
+        "id": "earthPower",
+        "rank": 5
+      },
+      {
+        "id": "poisonPowder",
+        "rank": 5
+      }
+    ],
+    "enemyCount": 10,
+    "enemyInitialRadius": [
+      112,
+      130
+    ],
+    "enemyHp": 100000
+  },
+  "captured": {
+    "time": 0.7,
+    "hp": 167,
+    "maxHp": 240,
+    "player": {
+      "x": 4041.8609286546707,
+      "y": 4046.7023168206215
+    },
+    "paused": true,
+    "enemyCount": 10,
+    "poisonedEnemies": 10,
+    "visibleMoveEffects": [
+      "earthPower",
+      "poisonPowder",
+      "synthesis",
+      "powerWhip",
+      "sludgeBomb"
+    ],
+    "visibleSynthesisFrames": [
+      2,
+      2,
+      2
+    ],
+    "vfx": {
+      "active": 18,
+      "pooled": 0,
+      "created": 18,
+      "capacity": 192,
+      "emitted": 5,
+      "culled": 0
+    },
+    "playerTexture": "venusaur-sprite",
+    "hash": "c33c0e65"
+  },
+  "healedHp": 23,
+  "playerMoved": {
+    "x": 48,
+    "y": 0
+  },
+  "captures": [
+    {
+      "path": "docs/qa/v050/combat-showcase-1280.png",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "hash": "c33c0e65",
+      "canvas": {
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720
+      },
+      "time": 0.7
+    },
+    {
+      "path": "docs/qa/v050/combat-showcase-1920.png",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "hash": "c33c0e65",
+      "canvas": {
+        "left": 0,
+        "top": 0,
+        "width": 1920,
+        "height": 1080
+      },
+      "time": 0.7
+    }
+  ],
+  "pageErrors": [],
+  "status": "passed"
+}

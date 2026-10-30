@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'Pokemon Pixel Font';
+  src: url('./fonts/PokemonPixel-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  /* Match the existing UI's text scale while keeping the font's pixel shapes. */
+  size-adjust: 150%;
+}
+
+:root {
+  --font-primary: 'Pokemon Pixel Font', monospace;
+  font-family: var(--font-primary);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}

@@ -18,19 +18,30 @@ export class PokemonAnimationController {
   lockUntil=0;
   revision=0;
   species:string;
+  actionKind:'physical'|'special'='physical';
+  actionFacing:Facing='south';
+  startedAt=0;
+  actionSignature=false;
 
   constructor(species:string){this.species=species;}
 
   setSpecies(species:string){
     if(species===this.species)return;
-    this.species=species;this.state='idle';this.lockUntil=0;this.revision++;
+    this.species=species;this.state='idle';this.lockUntil=0;this.startedAt=0;this.actionSignature=false;this.revision++;
   }
 
   trigger(state:PokemonAnimationState,now:number,duration=DEFAULT_DURATION[state]){
     const locked=now<this.lockUntil;
     if(locked&&PRIORITY[state]<PRIORITY[this.state])return false;
-    if(state!==this.state||duration>0){this.state=state;this.lockUntil=duration>0?now+duration:0;this.revision++;}
+    if(state!==this.state||duration>0){this.state=state;this.startedAt=now;this.lockUntil=duration>0?now+duration:0;this.revision++;}
     return true;
+  }
+
+  /** A real activation starts one action; simultaneous automatic attacks cannot restart it. */
+  attack(now:number,kind:'physical'|'special',facing:Facing,duration:number,signature=false){
+    if(this.state==='attack'&&now<this.lockUntil&&(!signature||this.actionSignature))return false;
+    if(!this.trigger('attack',now,duration))return false;
+    this.actionKind=kind;this.actionFacing=facing;this.actionSignature=signature;return true;
   }
 
   update(now:number,facing:Facing,speed:number,movementThreshold=4):AnimationDecision {

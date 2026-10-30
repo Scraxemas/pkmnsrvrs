@@ -1,6 +1,14 @@
 export interface VisibleRows {top:number;bottom:number;}
 export interface GrassPoint {x:number;y:number;}
 
+/** Alpha belongs to foliage, never to the Pokémon or its sprite geometry. */
+export const GRASS_FOREGROUND_ALPHA=.58;
+
+/** A few native-pixel blade strips remain opaque over the translucent tuft. */
+export function opaqueGrassBladeColumn(x:number,width:number){
+  return x===Math.floor(width*.25)||x===Math.floor(width*.7);
+}
+
 /** Measure opaque body rows, excluding the transparent PMD frame padding. */
 export function measureVisibleRows(pixels:Uint8ClampedArray,sheetWidth:number,sheetHeight:number,frameWidth:number,frameHeight:number):VisibleRows[]{
   const columns=Math.floor(sheetWidth/frameWidth),rows=Math.floor(sheetHeight/frameHeight),result:VisibleRows[]=[];
@@ -24,9 +32,4 @@ export function grassFootCoverage(x:number,y:number,tileSize:number,lookup:(cx:n
     coverage=Math.max(coverage,across*along);
   }
   return coverage;
-}
-
-export function grassBodyCrop(visible:VisibleRows,coverage:number){
-  const hiddenFraction=.20*Math.max(0,Math.min(1,coverage));
-  return{bottom:visible.bottom-(visible.bottom-visible.top)*hiddenFraction,hiddenFraction};
 }

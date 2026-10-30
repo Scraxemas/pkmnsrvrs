@@ -1,0 +1,11 @@
+Pokemon Pixel Font Regular
+Copyright SpyroSteak 2010
+
+The font's embedded metadata identifies its license as Creative Commons
+Attribution Share Alike 3.0:
+http://creativecommons.org/licenses/by-sa/3.0/
+
+Imported from pokemon-pixel-font-regular.zip supplied by the user.
+The character map was normalized with fontTools to correct invalid format 4
+ranges rejected by browser font validation. Glyph outlines are unchanged.
+The archive's accompanying readme is preserved in PokemonPixel-README.txt.

@@ -3,6 +3,7 @@ import {ITEMS,ItemModifiers} from './items';
 import {rankEffect} from './moveEffects';
 import {seededRoll} from './random';
 import type {Entity,SimState} from './simulation';
+import {moveGuardFactor,moveOffenseFactor} from './combatRuntime';
 
 export interface ItemRuntime {sashUsed:boolean;bandReadyAt:number;graceUntil:number;bellReadyAt:number;helmetReadyAt:number;orbReadyAt:number;healFeedbackAt:number;}
 export const freshItemRuntime=():ItemRuntime=>({sashUsed:false,bandReadyAt:0,graceUntil:0,bellReadyAt:0,helmetReadyAt:0,orbReadyAt:0,healFeedbackAt:-1});
@@ -16,7 +17,10 @@ export function restoreHp(state:SimState,amount:number,source:string){
 /** Shared damage entry for contacts, projectiles, poison and visible ground hazards. */
 export function hurtPlayer(state:SimState,amount:number,source:DamageSource,mods:ItemModifiers,attacker?:Entity){
   if(state.hp<=0||state.time<state.itemRuntime.graceUntil)return 0;
-  let damage=amount;if(source==='ranged'||source==='powderProjectile')damage*=1-mods.rangedGuard;
+  let damage=amount*moveGuardFactor(state);
+  if(attacker?.statuses.some(status=>status.kind==='weaken'&&status.remaining>0))damage*=.75;
+  if(attacker?.statuses.some(status=>status.kind==='worried'&&status.remaining>0))damage*=.85;
+  if(source==='ranged'||source==='powderProjectile')damage*=1-mods.rangedGuard;
   if(source==='powder'||source==='poison'||source==='powderProjectile')damage*=1-mods.powderGuard;
   if(source==='terrain')damage*=1-mods.terrainGuard;
   const before=state.hp;
@@ -30,12 +34,13 @@ export function hurtPlayer(state:SimState,amount:number,source:DamageSource,mods
   return Math.max(0,before-state.hp);
 }
 export function moveDamage(state:SimState,move:MoveDef,target:Entity,rank:number,mods:ItemModifiers,statusPower=false){
-  const fixed=move.kind==='fixed',fx=rankEffect(move,rank),base=fixed?move.power*fx.power*fx.damage:damageAmount(move,state.pokemon,{hp:target.maxHp/3,attack:40,defense:45,specialAttack:40,specialDefense:45,speed:target.speed},target.types,1)*fx.damage*fx.power;
+  const broken=target.statuses.some(status=>status.kind==='defenseBreak'&&status.remaining>0),fixed=move.kind==='fixed',fx=rankEffect(move,rank),base=fixed?move.power*fx.power*fx.damage:damageAmount(move,state.pokemon,{hp:target.maxHp/3,attack:40,defense:broken?38:45,specialAttack:40,specialDefense:broken?31:45,speed:target.speed},target.types,1)*fx.damage*fx.power;
   const vitamin=fixed?1:1+(move.damageClass==='Physical'?state.vitamins.protein:state.vitamins.calcium)*.025;
   const classBonus=move.damageClass==='Physical'?mods.physical:move.damageClass==='Special'?mods.special:0;
   const effective=typeMultiplier(move.type,target.types)>1?1+mods.effective:1;
   const critical=!statusPower&&mods.crit>0&&seededRoll(state)<mods.crit;
-  const raw=base*(state.moveSlots.find(slot=>slot.id===move.id)?.evolutionPower??1)*state.powerBonus*(1+(state.masteries.overcharge??0)*.12)*vitamin*(1+(mods.typeDamage[move.type]??0))*(1+classBonus)*(1+mods.damage)*effective*(critical?1.5:1);
+  const exposed=target.statuses.some(status=>status.kind==='exposed'&&status.remaining>0)?1.15:1;
+  const raw=base*(state.moveSlots.find(slot=>slot.id===move.id)?.evolutionPower??1)*state.powerBonus*(1+(state.masteries.overcharge??0)*.12)*vitamin*(1+(mods.typeDamage[move.type]??0))*(1+classBonus)*(1+mods.damage)*effective*(critical?1.5:1)*moveOffenseFactor(state,move.damageClass,move.type)*exposed;
   return{amount:statusPower?raw:Math.max(0,Math.round(raw)),critical};
 }
 export function staggerEnemy(state:SimState,target:Entity,mods:ItemModifiers){

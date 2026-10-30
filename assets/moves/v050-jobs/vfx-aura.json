@@ -1,0 +1,92 @@
+{
+  "id": "aura",
+  "subject": "A defensive and offensive green-gold support aura. Four stages: a small light at bottom, two rising curved leafy ribbons, full pointed arching green shield canopy with golden glints, thinning leaf sparks. Open transparent center suitable around a character, do not draw a character.",
+  "kind": "vfx",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 4,
+  "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A defensive and offensive green-gold support aura. Four stages: a small light at bottom, two rising curved leafy ribbons, full pointed arching green shield canopy with golden glints, thinning leaf sparks. Open transparent center suitable around a character, do not draw a character.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+  "sourceFile": "exec-dbb7cc1d-8d32-4401-92cf-0613ecef5455.png",
+  "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed",
+  "sourceSha256": "07d6f94fe21d5b6221852406e73dd61a96b3a51021e55d300a0e2e5a4f822bb0",
+  "sourceSize": [
+    1983,
+    793
+  ],
+  "output": "public/assets/vfx/aura.png",
+  "outputSha256": "072b331e768a7d3c381f45606006d455bf7bdd835f1fc9a4e6d165a8320d335b",
+  "processing": {
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "layout": "horizontal",
+    "colorsPerFrame": 24,
+    "alphaThreshold": 160,
+    "cellCoverage": 0.3,
+    "isolation": {
+      "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+      "sourceFrameBoxes": [
+        [
+          42,
+          133,
+          349,
+          719
+        ],
+        [
+          430,
+          133,
+          856,
+          719
+        ],
+        [
+          902,
+          133,
+          1479,
+          719
+        ],
+        [
+          1519,
+          133,
+          1955,
+          719
+        ]
+      ],
+      "sourceGutters": [
+        [
+          349,
+          430
+        ],
+        [
+          856,
+          902
+        ],
+        [
+          1479,
+          1519
+        ]
+      ],
+      "sourceCuts": [
+        0,
+        389,
+        879,
+        1499,
+        1983
+      ],
+      "sharedCanvasSize": [
+        586,
+        586
+      ],
+      "maxSubjectSourceWidth": 577,
+      "sharedSourceY": [
+        133,
+        719
+      ],
+      "sharedScale": 0.10238907849829351,
+      "preservesRelativeFrameSizes": true,
+      "retainsAllParticlesInsideEachGroup": true
+    },
+    "sampling": "modal palette clusters / fixed frame canvas"
+  }
+}

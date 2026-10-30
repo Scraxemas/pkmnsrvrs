@@ -1,0 +1,92 @@
+{
+  "id": "bloom",
+  "subject": "A green healing blossom light. Four stages: small lime seed of light, gently opening four green leaflike rays, symmetrical mint recovery bloom with several bright square motes, fading separated green sparkles.",
+  "kind": "vfx",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 4,
+  "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A green healing blossom light. Four stages: small lime seed of light, gently opening four green leaflike rays, symmetrical mint recovery bloom with several bright square motes, fading separated green sparkles.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+  "sourceFile": "exec-68b73560-30c6-4af3-b1be-9bfa5557798a.png",
+  "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed",
+  "sourceSha256": "b1e992d7b726c935124607eb88c5eb5b79e4d6ddac5c5d3b966861a8bb4588e6",
+  "sourceSize": [
+    1983,
+    793
+  ],
+  "output": "public/assets/vfx/bloom.png",
+  "outputSha256": "3da126717999a5a587f20ced8fa7bffea2b06ff94e83847073c506fac7ec27da",
+  "processing": {
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "layout": "horizontal",
+    "colorsPerFrame": 24,
+    "alphaThreshold": 160,
+    "cellCoverage": 0.3,
+    "isolation": {
+      "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+      "sourceFrameBoxes": [
+        [
+          139,
+          117,
+          308,
+          697
+        ],
+        [
+          459,
+          117,
+          798,
+          697
+        ],
+        [
+          850,
+          117,
+          1425,
+          697
+        ],
+        [
+          1507,
+          117,
+          1887,
+          697
+        ]
+      ],
+      "sourceGutters": [
+        [
+          308,
+          459
+        ],
+        [
+          798,
+          850
+        ],
+        [
+          1425,
+          1507
+        ]
+      ],
+      "sourceCuts": [
+        0,
+        383,
+        824,
+        1466,
+        1983
+      ],
+      "sharedCanvasSize": [
+        580,
+        580
+      ],
+      "maxSubjectSourceWidth": 575,
+      "sharedSourceY": [
+        117,
+        697
+      ],
+      "sharedScale": 0.10344827586206896,
+      "preservesRelativeFrameSizes": true,
+      "retainsAllParticlesInsideEachGroup": true
+    },
+    "sampling": "modal palette clusters / fixed frame canvas"
+  }
+}

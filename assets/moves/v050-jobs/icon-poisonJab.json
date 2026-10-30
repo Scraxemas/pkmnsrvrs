@@ -1,0 +1,27 @@
+{
+  "id": "poisonJab",
+  "subject": "A sharp violet thorn-like striking spike with a magenta toxic droplet on its point and a short physical thrust trail.",
+  "kind": "icon",
+  "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: poisonJab. A sharp violet thorn-like striking spike with a magenta toxic droplet on its point and a short physical thrust trail.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+  "sourceFile": "exec-88cb0cdd-17f1-4f55-be04-764a193bf9d2.png",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed",
+  "sourceSha256": "cc29cbc6e255bae85d33f09ca7c4dbb43019547e1205891f99fedc8315b99186",
+  "sourceSize": [
+    1254,
+    1254
+  ],
+  "output": "public/assets/moves/poisonJab.png",
+  "outputSha256": "6625dfc45db8b9bf93449367f23296f34964e43c8f3667e69d6f00ea31d0e1b3",
+  "processing": {
+    "canvas": [
+      32,
+      32
+    ],
+    "colors": 12,
+    "maxSubjectExtent": 26,
+    "alphaThreshold": 192,
+    "cellCoverage": 0.35,
+    "sampling": "modal palette cluster / no interpolation"
+  }
+}

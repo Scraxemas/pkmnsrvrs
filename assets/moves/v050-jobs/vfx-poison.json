@@ -1,0 +1,92 @@
+{
+  "id": "poison",
+  "subject": "Purple toxic spore cloud. Four stages: three tiny purple spores, separated rising rounded violet puffs, larger spreading purple cloud with magenta spores, thinning cloud with several separated dots. Crisp stepped cloud contours.",
+  "kind": "vfx",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 4,
+  "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: Purple toxic spore cloud. Four stages: three tiny purple spores, separated rising rounded violet puffs, larger spreading purple cloud with magenta spores, thinning cloud with several separated dots. Crisp stepped cloud contours.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+  "sourceFile": "exec-1e21d72e-7b07-4239-964e-0888a280e629.png",
+  "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed",
+  "sourceSha256": "85c509022e30e451102a75b2d7c94b9fdd2654f025429193d5417c96344cdb4c",
+  "sourceSize": [
+    1983,
+    793
+  ],
+  "output": "public/assets/vfx/poison.png",
+  "outputSha256": "6879d40910d8ac5efa0f6432cae63871f38b750dd2c57b15ba05dfb5a887280e",
+  "processing": {
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "layout": "horizontal",
+    "colorsPerFrame": 24,
+    "alphaThreshold": 160,
+    "cellCoverage": 0.3,
+    "isolation": {
+      "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+      "sourceFrameBoxes": [
+        [
+          85,
+          202,
+          322,
+          672
+        ],
+        [
+          441,
+          202,
+          805,
+          672
+        ],
+        [
+          866,
+          202,
+          1486,
+          672
+        ],
+        [
+          1556,
+          202,
+          1925,
+          672
+        ]
+      ],
+      "sourceGutters": [
+        [
+          322,
+          441
+        ],
+        [
+          805,
+          866
+        ],
+        [
+          1486,
+          1556
+        ]
+      ],
+      "sourceCuts": [
+        0,
+        381,
+        835,
+        1521,
+        1983
+      ],
+      "sharedCanvasSize": [
+        620,
+        620
+      ],
+      "maxSubjectSourceWidth": 620,
+      "sharedSourceY": [
+        202,
+        672
+      ],
+      "sharedScale": 0.0967741935483871,
+      "preservesRelativeFrameSizes": true,
+      "retainsAllParticlesInsideEachGroup": true
+    },
+    "sampling": "modal palette clusters / fixed frame canvas"
+  }
+}

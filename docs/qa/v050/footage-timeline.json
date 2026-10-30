@@ -1,0 +1,47 @@
+[
+  {
+    "species": "charmander",
+    "move": "scratch",
+    "startSeconds": 2.1
+  },
+  {
+    "species": "charmeleon",
+    "move": "metalClaw",
+    "startSeconds": 3.782
+  },
+  {
+    "species": "charizard",
+    "move": "dragonClaw",
+    "startSeconds": 5.447
+  },
+  {
+    "species": "bulbasaur",
+    "move": "vineWhip",
+    "startSeconds": 7.049
+  },
+  {
+    "species": "ivysaur",
+    "move": "powerWhip",
+    "startSeconds": 8.716
+  },
+  {
+    "species": "venusaur",
+    "move": "powerWhip",
+    "startSeconds": 10.365
+  },
+  {
+    "species": "squirtle",
+    "move": "tackle",
+    "startSeconds": 12.037
+  },
+  {
+    "species": "wartortle",
+    "move": "waterGun",
+    "startSeconds": 13.697
+  },
+  {
+    "species": "blastoise",
+    "move": "hydroPump",
+    "startSeconds": 15.324
+  }
+]

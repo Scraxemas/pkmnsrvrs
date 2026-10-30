@@ -11,8 +11,8 @@ describe('v0.3.6 forest composition',()=>{
       expect(report.errors,`seed ${seed}`).toEqual([]);expect(report.counts.camps,`seed ${seed}`).toBeGreaterThanOrEqual(1);
       expect(report.counts.ponds).toBeGreaterThanOrEqual(6);expect(report.counts.cliffs).toBeGreaterThanOrEqual(6);
       expect(report.walkableFraction).toBeGreaterThan(.55);fingerprints.add(report.terrain);leastOpen=Math.min(leastOpen,report.walkableFraction);
-      const cliff=map.terrain.cells.indexOf(TERRAIN.cliff),x=(cliff%map.terrain.cols)*32+16,y=(Math.floor(cliff/map.terrain.cols))*32+16;
-      expect(collides(map,x,y,14)).toBe(true);
+      const cliff=map.terrain.cells.indexOf(TERRAIN.cliff);
+      if(cliff>=0){const x=((map.terrain.originCol??0)+cliff%map.terrain.cols)*32+16,y=((map.terrain.originRow??0)+Math.floor(cliff/map.terrain.cols))*32+16;expect(collides(map,x,y,14)).toBe(true);}
     }
     expect(fingerprints.size).toBe(100);console.log(`100-seed geography: ${fingerprints.size} unique terrains, minimum traversable ${(leastOpen*100).toFixed(1)}%`);
   },30000);

@@ -55,7 +55,7 @@ describe('character roster and independent selections',()=>{
   it('persists favorite National Dex ids without disturbing migrated progress or settings',()=>{
     const local=storage(),old={...freshSave(),version:1,unlockedPokemon:['bulbasaur','squirtle'],research:{viridianWins:5,enemiesDefeated:123},settings:{damageNumbers:false}};
     local.setItem('pokemon-survivors-save',JSON.stringify(old));toggleFavorite(7,local);updateSettings({reducedMotion:true},local);
-    expect(loadSave(local)).toMatchObject({favoritePokemon:[7],unlockedPokemon:['bulbasaur','squirtle'],research:{viridianWins:5,enemiesDefeated:123},settings:{damageNumbers:false,reducedMotion:true}});
+    expect(loadSave(local)).toMatchObject({favoritePokemon:[7],unlockedPokemon:['bulbasaur','squirtle','weedle'],research:{viridianWins:5,enemiesDefeated:123},settings:{damageNumbers:false,reducedMotion:true}});
     expect(filterRoster(regionRoster(ROSTER_REGIONS[0]),loadSave(local),'name','favorites').map(r=>r.dex)).toEqual([7]);toggleFavorite(7,local);expect(loadSave(local).favoritePokemon).toEqual([]);
   });
 });

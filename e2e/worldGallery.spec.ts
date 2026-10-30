@@ -9,6 +9,7 @@ async function start(page:Page,seed?:number){
 async function freezeCamera(page:Page,point:{x:number;y:number},zoom=1){
   await page.evaluate(({x,y,zoom})=>{
     const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.cancelChoices();s.overlay=s.add.container(0,0);s.state.enemies=[];s.state.projectiles=[];s.state.pickups=[];s.syncViews(1);
+    Object.assign(s.state.player,{x,y,vx:0,vy:0});s.previousPlayer={x,y};
     for(const object of [s.player,s.playerShadow,s.playerHpGraphics,s.hud,s.expGraphics,s.expText,s.portrait,s.bossGraphics,s.bossText])object.setVisible(false);
     s.cameras.main.stopFollow();s.cameras.main.setZoom(zoom).centerOn(x,y);s.syncWorldChunks(true);
   },{...point,zoom});await page.waitForTimeout(90);
@@ -49,8 +50,8 @@ test('cliff terrain blocks actual player movement',async({page})=>{
   await page.goto('/?seed=1337');await expect(page.locator('#app canvas')).toBeVisible();await start(page,1337);
   const edge=await page.evaluate(()=>{
     const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),grid=s.state.world.terrain;
-    const i=grid.cells.findIndex((v:number,index:number)=>v===4&&index%grid.cols>1&&grid.cells[index-1]===0&&s.state.world.decorations.every((d:any)=>!d.solid||Math.hypot(d.x-((index%grid.cols)-.5)*32,d.y-(Math.floor(index/grid.cols)+.5)*32)>80));
-    if(i<0)throw new Error('No clear cliff approach');const x=((i%grid.cols)-.5)*32,y=(Math.floor(i/grid.cols)+.5)*32;
+    const i=grid.cells.findIndex((v:number,index:number)=>v===4&&index%grid.cols>1&&grid.cells[index-1]===0&&s.state.world.decorations.every((d:any)=>!d.solid||Math.hypot(d.x-(grid.originCol+(index%grid.cols)-.5)*32,d.y-(grid.originRow+Math.floor(index/grid.cols)+.5)*32)>80));
+    if(i<0)throw new Error('No clear cliff approach');const x=(grid.originCol+(i%grid.cols)-.5)*32,y=(grid.originRow+Math.floor(i/grid.cols)+.5)*32;
     Object.assign(s.state.player,{x,y,vx:0,vy:0});s.previousPlayer={x,y};s.state.enemies=[];s.nextSpawn=Infinity;s.cameras.main.stopFollow();s.cameras.main.centerOn(x,y);s.syncWorldChunks(true);return{x,y};
   });
   await page.keyboard.down('d');await page.waitForTimeout(350);await page.keyboard.up('d');

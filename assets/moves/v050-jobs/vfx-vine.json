@@ -1,0 +1,91 @@
+{
+  "id": "vine",
+  "subject": "A living green vine whip snapping from left to right. Four stages: compact curl, half extended vine, long fully extended hooked vine with pale lime impact spark, recoiling broken motion trail. Coherent one-pixel dark-green contours.",
+  "kind": "vfx",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 4,
+  "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A living green vine whip snapping from left to right. Four stages: compact curl, half extended vine, long fully extended hooked vine with pale lime impact spark, recoiling broken motion trail. Coherent one-pixel dark-green contours.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+  "sourceFile": "exec-5489d7da-4214-429b-8cb1-86439b206b28.png",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed",
+  "sourceSha256": "e3cf986f185064df6bbea7fece4ee08dbf4fc51f367af6e02f13abef9d0c7742",
+  "sourceSize": [
+    1983,
+    793
+  ],
+  "output": "public/assets/vfx/vine.png",
+  "outputSha256": "814e43f9894d963693cedfc01da26046fcd1b0d8269d956afdefd39d99e775b1",
+  "processing": {
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "layout": "horizontal",
+    "colorsPerFrame": 24,
+    "alphaThreshold": 160,
+    "cellCoverage": 0.3,
+    "isolation": {
+      "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+      "sourceFrameBoxes": [
+        [
+          45,
+          203,
+          309,
+          534
+        ],
+        [
+          396,
+          203,
+          867,
+          534
+        ],
+        [
+          899,
+          203,
+          1532,
+          534
+        ],
+        [
+          1600,
+          203,
+          1956,
+          534
+        ]
+      ],
+      "sourceGutters": [
+        [
+          309,
+          396
+        ],
+        [
+          867,
+          899
+        ],
+        [
+          1532,
+          1600
+        ]
+      ],
+      "sourceCuts": [
+        0,
+        352,
+        883,
+        1566,
+        1983
+      ],
+      "sharedCanvasSize": [
+        633,
+        633
+      ],
+      "maxSubjectSourceWidth": 633,
+      "sharedSourceY": [
+        203,
+        534
+      ],
+      "sharedScale": 0.0947867298578199,
+      "preservesRelativeFrameSizes": true,
+      "retainsAllParticlesInsideEachGroup": true
+    },
+    "sampling": "modal palette clusters / fixed frame canvas"
+  }
+}

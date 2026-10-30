@@ -1,6 +1,6 @@
 import {expect,Page,test} from '@playwright/test';
 import {writeFileSync,mkdirSync} from 'node:fs';
-import {freshSave} from '../src/save';
+import {applyBossUnlocks,freshSave} from '../src/save';
 import {readyMenu,singlePlayer} from './helpers/menu';
 
 const tile=(page:Page,dex:number)=>page.locator(`.roster-tile[data-dex="${dex}"]`);
@@ -24,14 +24,14 @@ test('base-form portrait roster and full summary fit all four supported resoluti
     await expect(page.getByRole('listbox',{name:'Pokémon roster'}).getByRole('option')).toHaveCount(9);await expect(page.locator('.partner-card,.roster-number,.roster-regions,.partner-description')).toHaveCount(0);await expect(page.locator('.partner-detail')).not.toContainText('NATIONAL');
     await expect(page.getByLabel('Region',{exact:true}).locator('option[value=johto]')).toHaveJSProperty('disabled',true);await expect(page.getByLabel('Region',{exact:true}).locator('option[value=hoenn]')).toHaveJSProperty('disabled',true);
     for(const dex of [2,3,5,6,8,9,11,12,14,15,17,18])await expect(tile(page,dex)).toHaveCount(0);
-    for(const [dex,name,id,hp,attack,special,speed,move,types] of [[1,'Bulbasaur','bulbasaur',135,49,65,170,'Tackle',['Grass','Poison']],[4,'Charmander','charmander',117,52,60,185,'Scratch',['Fire']],[7,'Squirtle','squirtle',132,48,50,155,'Tackle',['Water']]] as const){
+    for(const [dex,name,id,hp,attack,special,speed,move,types] of [[1,'Bulbasaur','bulbasaur',135,49,65,170,'Vine Whip',['Grass','Poison']],[4,'Charmander','charmander',117,52,60,185,'Scratch',['Fire']],[7,'Squirtle','squirtle',132,48,50,155,'Tackle',['Water']]] as const){
       await tile(page,dex).click();await readyRoster(page);const detail=page.getByRole('region',{name:'Selected Pokémon'});
       await expect(detail.getByRole('heading',{name,exact:true})).toBeVisible();await expect(detail.locator('.roster-portrait--large img')).toHaveAttribute('src',new RegExp(`/portraits/${id}.png$`));await expect(tile(page,dex).locator('img')).toHaveAttribute('src',new RegExp(`/portraits/${id}.png$`));
       await expect.poll(()=>detail.locator('img').evaluate((image:HTMLImageElement)=>image.complete&&image.naturalWidth===40)).toBe(true);
       await expect(detail.locator('.type-chip')).toHaveText([...types]);await expect(detail.locator('.starting-move-name')).toHaveText(move);await expect(detail.locator('.starting-move-heading')).toContainText('Rank 1');
       for(const [key,value] of [['hp',hp],['attack',attack],['specialAttack',special],['speed',speed]] as const)await expect(detail.locator(`[data-stat="${key}"] dd`)).toHaveText(String(value));
       await expect(page.getByRole('button',{name:`Select ${name}`,exact:true})).toBeEnabled();expect(await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.isActive('stage'))).toBe(false);
-      const descriptions={tackle:'A controlled forward impact with knockback.',scratch:'Fast narrow claw arcs.'};await expect(detail.locator('.starting-move-description')).toHaveText(descriptions[id==='charmander'?'scratch':'tackle']);await expectSummaryFits(page,height);
+      const descriptions={tackle:'A controlled forward impact with knockback.',scratch:'Fast narrow claw arcs.',vineWhip:'A long sweeping vine that hits a line of foes.'};await expect(detail.locator('.starting-move-description')).toHaveText(descriptions[id==='bulbasaur'?'vineWhip':id==='charmander'?'scratch':'tackle']);await expectSummaryFits(page,height);
       expect(await detail.locator('img').evaluate((image:HTMLImageElement)=>image.clientWidth===image.clientHeight)).toBe(true);
       if(width===1280)await page.screenshot({animations:'disabled',path:`test-results/screenshots/v0310-${id}.png`});
     }
@@ -47,24 +47,24 @@ test('base-form portrait roster and full summary fit all four supported resoluti
 });
 
 test('only base candidates appear and locked summaries fit without changing discoveries or unlocks',async({page})=>{
-  const save=freshSave();save.unlockedPokemon=['bulbasaur','squirtle','ivysaur','caterpie'];save.pokedex.push('ivysaur','venusaur','caterpie','weedle','pidgey');save.research.viridianWins=7;
+  const save=freshSave();save.unlockedPokemon=['bulbasaur','squirtle','ivysaur','caterpie'];save.pokedex.push('ivysaur','venusaur','caterpie','weedle','pidgey');save.research.viridianWins=7;applyBossUnlocks(save);
   await page.addInitScript(save=>localStorage.setItem('pokemon-survivors-save',JSON.stringify(save)),save);await openRoster(page);
   for(const [width,height] of [[1280,720],[1600,900],[1920,1080],[2560,1440]]){await page.setViewportSize({width,height});await tile(page,4).click();await readyRoster(page);await expect(tile(page,4)).toHaveAttribute('data-state','locked');await expect(page.locator('.partner-confirm')).toBeDisabled();await expect(page.locator('.partner-access')).toContainText('locked in your save');await expectSummaryFits(page,height);if(width===1280)await page.screenshot({animations:'disabled',path:'test-results/screenshots/v0310-locked.png'});}
   for(const dex of [2,3,5,6,8,9,11,12,14,15,17,18])await expect(tile(page,dex)).toHaveCount(0);
   await tile(page,10).click();await expect(page.locator('.selected-pokemon-name')).toHaveText('Caterpie');await expect(tile(page,10)).toHaveAttribute('data-state','unavailable');await expect(page.locator('.partner-confirm')).toBeDisabled();await expect(page.locator('.partner-stat-bars')).toHaveCount(0);
-  for(const dex of [13,16])await expect(tile(page,dex)).toHaveAttribute('data-state','unavailable');await page.getByLabel('Filter',{exact:true}).selectOption('locked');await expect(page.locator('.roster-tile')).toHaveCount(4);await page.getByLabel('Filter',{exact:true}).selectOption('all');
+  await expect(tile(page,13)).toHaveAttribute('data-state','unlocked');await tile(page,13).click();await expect(page.getByRole('button',{name:'Select Weedle',exact:true})).toBeEnabled();await expect(page.locator('.starting-move-name')).toHaveText('Tackle');await expect(tile(page,16)).toHaveAttribute('data-state','unavailable');await page.getByLabel('Filter',{exact:true}).selectOption('locked');await expect(page.locator('.roster-tile')).toHaveCount(3);await page.getByLabel('Filter',{exact:true}).selectOption('all');
   await tile(page,25).click();await expect(tile(page,25)).toHaveAttribute('data-state','undiscovered');await expect(page.locator('.selected-pokemon-name')).toHaveText('Undiscovered');await expect(page.locator('.partner-detail img')).toHaveCount(0);await expect(tile(page,25).locator('img')).toHaveCount(0);await expect(tile(page,25)).not.toHaveAttribute('aria-label',/Pikachu/);await page.keyboard.press('Enter');await expect(page.locator('.frontend--pokemon')).toBeVisible();await expect(page.locator('.partner-confirm')).toBeDisabled();
   const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('pokemon-survivors-save')!));expect(saved).toEqual(save);await page.screenshot({animations:'disabled',path:'test-results/screenshots/v0310-unknown.png'});
 });
 
 test('sorting, real filters and persistent favorites retain selection and saved progress',async({page})=>{
-  const save=freshSave();save.research.viridianWins=6;save.best.viridian={level:35,defeated:140,time:900};await page.goto('/?seed=1337');await readyMenu(page);await page.evaluate(save=>localStorage.setItem('pokemon-survivors-save',JSON.stringify(save)),save);await singlePlayer(page);await readyRoster(page);
+  const save=freshSave();save.research.viridianWins=6;save.best.viridian={level:35,defeated:140,time:900};applyBossUnlocks(save);await page.goto('/?seed=1337');await readyMenu(page);await page.evaluate(save=>localStorage.setItem('pokemon-survivors-save',JSON.stringify(save)),save);await singlePlayer(page);await readyRoster(page);
   await tile(page,7).click();await page.getByLabel('Sort',{exact:true}).selectOption('name');await expect(tile(page,7)).toHaveAttribute('aria-selected','true');await expect(page.locator('.roster-tile').first()).toHaveAttribute('data-dex','1');
-  await page.getByLabel('Filter',{exact:true}).selectOption('unlocked');await expect(page.locator('.roster-tile')).toHaveCount(3);await expect(page.locator('.selected-pokemon-name')).toHaveText('Squirtle');
+  await page.getByLabel('Filter',{exact:true}).selectOption('unlocked');await expect(page.locator('.roster-tile')).toHaveCount(4);await expect(page.locator('.selected-pokemon-name')).toHaveText('Squirtle');
   await page.getByRole('button',{name:'Favorite Squirtle',exact:true}).click();await expect(page.getByRole('button',{name:'Favorite Squirtle',exact:true})).toHaveAttribute('aria-pressed','true');await page.getByLabel('Filter',{exact:true}).selectOption('favorites');await expect(page.locator('.roster-tile')).toHaveCount(1);await expect(tile(page,7)).toHaveAttribute('aria-selected','true');
   await page.reload();await readyMenu(page);await singlePlayer(page);await readyRoster(page);await page.getByLabel('Filter',{exact:true}).selectOption('favorites');await expect(tile(page,7)).toBeVisible();
   const after=await page.evaluate(()=>JSON.parse(localStorage.getItem('pokemon-survivors-save')!));expect(after).toEqual({...save,favoritePokemon:[7]});
-  await page.getByRole('button',{name:'Favorite Squirtle',exact:true}).click();await expect(page.locator('.roster-empty')).toContainText('No favorites');await expect(page.locator('.partner-confirm')).toBeDisabled();await page.getByRole('button',{name:'Back',exact:true}).focus();await page.keyboard.press('ArrowUp');await expect(page.getByLabel('Filter',{exact:true})).toBeFocused();await page.getByLabel('Filter',{exact:true}).selectOption('discovered');await expect(page.locator('.roster-tile')).toHaveCount(3);
+  await page.getByRole('button',{name:'Favorite Squirtle',exact:true}).click();await expect(page.locator('.roster-empty')).toContainText('No favorites');await expect(page.locator('.partner-confirm')).toBeDisabled();await page.getByRole('button',{name:'Back',exact:true}).focus();await page.keyboard.press('ArrowUp');await expect(page.getByLabel('Filter',{exact:true})).toBeFocused();await page.getByLabel('Filter',{exact:true}).selectOption('discovered');await expect(page.locator('.roster-tile')).toHaveCount(4);
 });
 
 test('keyboard browsing deliberately changes base selections and leaves hover separate',async({page})=>{
@@ -82,7 +82,7 @@ test('one confirmation preserves the selected partner through stage back and int
     await openRoster(page);await tile(page,dex).click();await page.getByRole('button',{name:`Select ${name}`,exact:true}).click();await expect(page.getByRole('heading',{name:'Choose your destination'})).toBeVisible();await expect(page.locator('.page-subtitle')).toContainText(name);
     await page.keyboard.press('Escape');await readyRoster(page);await expect(tile(page,dex)).toHaveAttribute('aria-selected','true');await page.getByRole('button',{name:`Select ${name}`,exact:true}).click();await page.getByRole('button',{name:'Enter Forest',exact:true}).click();
     await page.waitForFunction(id=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return s.state?.pokemonId===id&&s.player?.active;},id);
-    const run=await page.evaluate(()=>{const g=(window as any).__POKEMON_SURVIVORS__,s=g.scene.getScene('game');return{pokemon:s.state.pokemonId,hp:s.state.maxHp,move:s.state.moveSlots[0],selectorActive:g.scene.isActive('pokemon'),backgrounds:document.querySelectorAll('.menu-background-canvas').length};});expect(run).toMatchObject({pokemon:id,hp,move:{id:id==='charmander'?'scratch':'tackle',rank:1},selectorActive:false,backgrounds:0});
+    const run=await page.evaluate(()=>{const g=(window as any).__POKEMON_SURVIVORS__,s=g.scene.getScene('game');return{pokemon:s.state.pokemonId,hp:s.state.maxHp,move:s.state.moveSlots[0],selectorActive:g.scene.isActive('pokemon'),backgrounds:document.querySelectorAll('.menu-background-canvas').length};});expect(run).toMatchObject({pokemon:id,hp,move:{id:id==='bulbasaur'?'vineWhip':id==='charmander'?'scratch':'tackle',rank:1},selectorActive:false,backgrounds:0});
   }
 });
 

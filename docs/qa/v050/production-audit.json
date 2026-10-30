@@ -1,0 +1,206 @@
+{
+  "version": "0.5.0",
+  "serverPort": 5200,
+  "repositoryPrefix": "/pkmnsrvrs/",
+  "productionBundle": true,
+  "loadedBundlePaths": [
+    "/pkmnsrvrs/assets/index-CMnRblcE.js"
+  ],
+  "auditedAtUtc": "2026-10-30T13:50:06.185Z",
+  "runtime": {
+    "startingMove": "vineWhip",
+    "devGlobal": "undefined",
+    "devSceneApi": "undefined",
+    "debugEnabled": false,
+    "moveTextures": 52,
+    "vfxTextures": 19,
+    "nativeTextures": 27,
+    "nativeTextureFilters": [
+      {
+        "key": "pokemon-action:bulbasaur:physical",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:bulbasaur:special",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:bulbasaur:hurt",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:ivysaur:physical",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:ivysaur:special",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:ivysaur:hurt",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:venusaur:physical",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:venusaur:special",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:venusaur:hurt",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:charmander:physical",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:charmander:special",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:charmander:hurt",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:charmeleon:physical",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:charmeleon:special",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:charmeleon:hurt",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:charizard:physical",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:charizard:special",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:charizard:hurt",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:squirtle:physical",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:squirtle:special",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:squirtle:hurt",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:wartortle:physical",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:wartortle:special",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:wartortle:hurt",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:blastoise:physical",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:blastoise:special",
+        "filter": 0
+      },
+      {
+        "key": "pokemon-action:blastoise:hurt",
+        "filter": 0
+      }
+    ]
+  },
+  "nativeFirst": {
+    "key": "pokemon-action:bulbasaur:physical",
+    "animation": "pokemon-action:bulbasaur:physical:east",
+    "frame": 22,
+    "nativeAction": "Attack",
+    "starts": 1,
+    "origin": [
+      0.5,
+      0.6666666666666666
+    ],
+    "filter": 0,
+    "groundDelta": [
+      0,
+      0
+    ],
+    "vfx": {
+      "active": 1,
+      "pooled": 0,
+      "created": 1,
+      "capacity": 192,
+      "emitted": 1,
+      "culled": 0
+    }
+  },
+  "nativeSecond": {
+    "key": "pokemon-action:bulbasaur:physical",
+    "frame": 24,
+    "starts": 1,
+    "groundDelta": [
+      0,
+      0
+    ]
+  },
+  "pool": {
+    "dense": {
+      "active": 192,
+      "pooled": 0,
+      "created": 192,
+      "capacity": 192,
+      "emitted": 401,
+      "culled": 0
+    },
+    "expired": {
+      "active": 0,
+      "pooled": 192,
+      "created": 192,
+      "capacity": 192,
+      "emitted": 401,
+      "culled": 0
+    }
+  },
+  "shutdown": {
+    "gameActive": false,
+    "vfx": {
+      "active": 0,
+      "pooled": 0,
+      "created": 0,
+      "capacity": 192,
+      "emitted": 401,
+      "culled": 0
+    },
+    "grassMasks": 0,
+    "grassParticles": 0
+  },
+  "assetRequests": {
+    "total": 308,
+    "unique": 308,
+    "failed": [],
+    "moves": 52,
+    "vfx": 19,
+    "nativeActions": 27
+  },
+  "productionCheatSymbols": [],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "status": "passed",
+  "serverClosed": true
+}

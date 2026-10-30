@@ -7,13 +7,16 @@ export function terrainFingerprint(map:StageMap){let h=2166136261;for(const valu
 
 export function validateForest(map:StageMap){
   const errors=[...validateMap(map).errors],field=buildFlowField(map,map.playerStart.x,map.playerStart.y,64);
+  const inField=(x:number,y:number)=>x>=field.originX+64&&y>=field.originY+64&&x<field.originX+(field.cols-1)*64&&y<field.originY+(field.rows-1)*64;
   const reachable=(x:number,y:number)=>{
     if(collides(map,x,y,14))return false;
-    const cx=Math.floor(x/64),cy=Math.floor(y/64);
+    const cx=Math.floor((x-field.originX)/64),cy=Math.floor((y-field.originY)/64);
     for(let oy=-1;oy<=1;oy++)for(let ox=-1;ox<=1;ox++){const i=(cy+oy)*field.cols+cx+ox;if(field.distances[i]>=0)return true;}return false;
   };
-  for(const landmark of map.landmarks.filter(l=>l.id==='clearing'||l.id==='campsite'))if(!reachable(landmark.x,landmark.y))errors.push(`unreachable-${landmark.id}`);
-  for(const camp of map.features.camps){
+  // Validate resident navigation, not absent distant chunks. Landmark loading
+  // and every shared path port have separate streaming acceptance tests.
+  for(const landmark of map.landmarks.filter(l=>(l.id==='clearing'||l.id==='campsite')&&inField(l.x,l.y)))if(!reachable(landmark.x,landmark.y))errors.push(`unreachable-${landmark.id}`);
+  for(const camp of map.features.camps.filter(c=>inField(c.x,c.y))){
     for(let i=0;i<12;i++){const angle=i*Math.PI/6;if(!reachable(camp.x+Math.cos(angle)*140,camp.y+Math.sin(angle)*140))errors.push(`crowded-campsite:${camp.id}:${i}`);}
   }
   for(const zone of map.spawnZones){let found=false;for(let y=zone.y+32;y<zone.y+zone.height;y+=64)for(let x=zone.x+32;x<zone.x+zone.width;x+=64)if(reachable(x,y))found=true;if(!found)errors.push('blocked-spawn-region');}

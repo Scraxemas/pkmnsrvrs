@@ -1,0 +1,27 @@
+{
+  "id": "sludgeWave",
+  "subject": "An expanding crescent of dark purple toxic water with bright magenta crest spikes and tiny purple droplets, broad low wave silhouette.",
+  "kind": "icon",
+  "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: sludgeWave. An expanding crescent of dark purple toxic water with bright magenta crest spikes and tiny purple droplets, broad low wave silhouette.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+  "sourceFile": "exec-6eafdf2e-9a9c-4900-a2f8-f937c8a2f147.png",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed",
+  "sourceSha256": "7c5cd22b489a95f5e11c2dadf58e91d7863f1e8a72e1a12bd81908f59f387041",
+  "sourceSize": [
+    1254,
+    1254
+  ],
+  "output": "public/assets/moves/sludgeWave.png",
+  "outputSha256": "8e8be1fc1765c60e0592a5756c333a67e14d1ea7687e3cfce032a050fe3d25c5",
+  "processing": {
+    "canvas": [
+      32,
+      32
+    ],
+    "colors": 12,
+    "maxSubjectExtent": 26,
+    "alphaThreshold": 192,
+    "cellCoverage": 0.35,
+    "sampling": "modal palette cluster / no interpolation"
+  }
+}

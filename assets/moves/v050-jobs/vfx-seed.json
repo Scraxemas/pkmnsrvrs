@@ -1,0 +1,92 @@
+{
+  "id": "seed",
+  "subject": "An amber seed artillery projectile bursting into seed fragments. Four stages: small rounded seed, traveling pointed seed with golden motion, seed cracking with green star burst, several fading brown and gold seed fragments.",
+  "kind": "vfx",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 4,
+  "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: An amber seed artillery projectile bursting into seed fragments. Four stages: small rounded seed, traveling pointed seed with golden motion, seed cracking with green star burst, several fading brown and gold seed fragments.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+  "sourceFile": "exec-1686c06e-429f-49dd-b8a4-08f52923159d.png",
+  "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed",
+  "sourceSha256": "b0c3e30384059081bd61cd45c725d4e4e3b39a1e44b68389e50abc0453c30760",
+  "sourceSize": [
+    1983,
+    793
+  ],
+  "output": "public/assets/vfx/seed.png",
+  "outputSha256": "82defd1b52b09df4aaf7ef3c4bb44c324524c69b1053ab3a572b398dcba1d25f",
+  "processing": {
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "layout": "horizontal",
+    "colorsPerFrame": 24,
+    "alphaThreshold": 160,
+    "cellCoverage": 0.3,
+    "isolation": {
+      "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+      "sourceFrameBoxes": [
+        [
+          112,
+          151,
+          260,
+          644
+        ],
+        [
+          428,
+          151,
+          878,
+          644
+        ],
+        [
+          958,
+          151,
+          1440,
+          644
+        ],
+        [
+          1515,
+          151,
+          1952,
+          644
+        ]
+      ],
+      "sourceGutters": [
+        [
+          260,
+          428
+        ],
+        [
+          878,
+          958
+        ],
+        [
+          1440,
+          1515
+        ]
+      ],
+      "sourceCuts": [
+        0,
+        344,
+        918,
+        1477,
+        1983
+      ],
+      "sharedCanvasSize": [
+        493,
+        493
+      ],
+      "maxSubjectSourceWidth": 482,
+      "sharedSourceY": [
+        151,
+        644
+      ],
+      "sharedScale": 0.12170385395537525,
+      "preservesRelativeFrameSizes": true,
+      "retainsAllParticlesInsideEachGroup": true
+    },
+    "sampling": "modal palette clusters / fixed frame canvas"
+  }
+}

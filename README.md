@@ -22,6 +22,10 @@ damaged Pokémon show a small overhead HP bar that hides after full healing.
 See [the v0.3.6 world and UI report](docs/V036_WORLD_AND_UI.md) for the ten-seed
 gallery, asset classification, campsite/cliff features, and browser validation.
 
+The [Viridian Forest improvements report](docs/VIRIDIAN_FOREST_IMPROVEMENTS.md)
+documents translucent foreground grass, stable NPC collision, deterministic
+64×64-tile wilderness chunks, protected encounters, boss rewards and validation.
+
 The [v0.3.7 menu redesign](docs/V037_MENU_REDESIGN.md) uses the supplied Viridian
 Forest background and location artwork. Menu controls support mouse, keyboard,
 and controller. Settings save reduced motion, damage numbers, and screen shake;
@@ -81,6 +85,17 @@ The [v0.4.3 move artwork pass](docs/V043_MOVE_ICONS.md) adds original AI-generat
 five-slot move HUD, and evolution notifications share one asset registry. Browse
 the [style study and comparison gallery](docs/qa/v043/index.html) for native-size
 and enlarged previews, before/after cards, and existing-item comparisons.
+
+The [v0.5.0 move system](docs/V050_MOVE_SYSTEM.md) implements all 43 approved
+Bulbasaur-family moves, permanent TM discoveries, Rank-5 transformations and four
+two-move fusions. Shared ancestry validation prevents obsolete moves from returning.
+All nine starter forms use native attack actions, with pooled animated combat VFX
+and an expanded [art and gameplay review gallery](docs/qa/v050/index.html).
+
+Runs also support a [floating touch/click-and-drag joystick](docs/TOUCH_MOVEMENT.md),
+alongside WASD, arrow keys, and controller left-stick/D-pad movement. Touch or
+left-click empty gameplay space, drag to move at proportional speed, and release
+to stop. Joystick dimensions and appearance are configurable in `src/movementVector.ts`.
 
 ## FRLG asset library
 

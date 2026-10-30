@@ -1,0 +1,23 @@
+{
+  "dense": {
+    "active": 192,
+    "pooled": 0,
+    "created": 192,
+    "capacity": 192,
+    "emitted": 501,
+    "culled": 0
+  },
+  "cleaned": {
+    "active": 0,
+    "pooled": 192,
+    "created": 192,
+    "capacity": 192,
+    "emitted": 501,
+    "culled": 0
+  },
+  "normal": 13,
+  "reduced": 3,
+  "culled": 1,
+  "unchanged": true,
+  "objects": 192
+}

@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-30",
+  "unitSuite": { "command": "pnpm test", "files": 35, "passed": 521, "failed": 0 },
+  "build": { "command": "pnpm build", "status": "passed", "warning": "Large production JavaScript bundle" },
+  "diffCheck": "passed",
+  "browserChecks": {
+    "distinctSelectedPassedAcrossRuns": 63,
+    "entireSuiteRerun": false,
+    "groups": {
+      "gameAndWorldGallery": 14,
+      "itemsSettingsProgressionMovesAndStreaming": 45,
+      "rosterAndCampaignSaveMigration": 4
+    },
+    "finalIsolatedRerun": { "config": ".forest-playwright.config.ts", "passed": 10, "failed": 0, "secondsApprox": 162 },
+    "notes": "Obsolete fixed-world and root-display-list assertions were adapted. Development reload interruptions were rerun with hot reload disabled."
+  },
+  "measurements": {
+    "dense400Enemies10SimulatedSecondsWallMs": 1017.5,
+    "prewarmed12CrossingsSlowestMs": 0.8,
+    "residentChunks": 9,
+    "generatedChunkCacheCap": 18,
+    "defaultTilesPerChunkEdge": 64,
+    "browserTravelCoordinatesTested": [-50000, 50000],
+    "forestSeedsValidated": 100,
+    "bossArenaSeedsValidated": 20
+  },
+  "performanceScope": "Local test-host measurements; not an FPS or pause-free guarantee for all hardware."
+}

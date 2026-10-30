@@ -1,0 +1,27 @@
+{
+  "id": "sludgeBomb",
+  "subject": "A heavy dark-purple toxic sludge sphere exploding into thick rounded purple splashes with magenta highlights.",
+  "kind": "icon",
+  "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: sludgeBomb. A heavy dark-purple toxic sludge sphere exploding into thick rounded purple splashes with magenta highlights.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+  "sourceFile": "exec-a2791305-4ca0-4f9d-a3d5-acb1e8f64313.png",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed",
+  "sourceSha256": "850c894335a5b1f68776d807f5d97007ac8cf4e85729a30127387d668ad5730e",
+  "sourceSize": [
+    1254,
+    1254
+  ],
+  "output": "public/assets/moves/sludgeBomb.png",
+  "outputSha256": "161fbdcc2fcddf190f1a918bad66ba35ed6b6a1592a5f43c2132a82faca7371e",
+  "processing": {
+    "canvas": [
+      32,
+      32
+    ],
+    "colors": 12,
+    "maxSubjectExtent": 26,
+    "alphaThreshold": 192,
+    "cellCoverage": 0.35,
+    "sampling": "modal palette cluster / no interpolation"
+  }
+}

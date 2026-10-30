@@ -1,0 +1,24 @@
+{
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "hp": 103.21666666666668,
+  "enemies": 300,
+  "poisoned": 16,
+  "vfx": {
+    "active": 22,
+    "pooled": 0,
+    "created": 22,
+    "capacity": 192,
+    "emitted": 6,
+    "culled": 0
+  },
+  "effects": [
+    "poisonPowder",
+    "earthPower",
+    "synthesis",
+    "powerWhip",
+    "venoshock"
+  ]
+}

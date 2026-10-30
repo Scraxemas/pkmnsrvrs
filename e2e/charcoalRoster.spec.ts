@@ -24,7 +24,7 @@ test('compact selection and Pokedex fit desktop screens without stretched empty 
     await page.setViewportSize({width,height});await open(page,scene);const state=await geometry(page);diagnostics.push({width,height,mode,...state});
     expect(state.horizontal).toBe(false);expect(state.vertical).toBe(false);expect(state.panel.bottom).toBeLessThan(state.footer.top);expect(state.footer.bottom).toBeLessThanOrEqual(height);expect(state.panel.bottom-state.contentBottom).toBeLessThan(22);
     for(const part of state.parts){expect(part.left).toBeGreaterThan(state.panel.left);expect(part.right).toBeLessThan(state.panel.right);expect(part.bottom).toBeLessThan(state.panel.bottom);}
-    if(scene==='pokemon'){await expect(page.locator('.roster-tile')).toHaveCount(9);expect(await page.locator('.roster-grid').evaluate(grid=>grid.scrollHeight-grid.clientHeight)).toBeLessThanOrEqual(1);await expect(page.locator('.starting-move-description')).toHaveText('A controlled forward impact with knockback.');await expect(page.locator('.partner-stat')).toHaveCount(4);}
+    if(scene==='pokemon'){await expect(page.locator('.roster-tile')).toHaveCount(9);expect(await page.locator('.roster-grid').evaluate(grid=>grid.scrollHeight-grid.clientHeight)).toBeLessThanOrEqual(1);await expect(page.locator('.starting-move-description')).toHaveText('A long sweeping vine that hits a line of foes.');await expect(page.locator('.partner-stat')).toHaveCount(4);}
     else{await expect(page.locator('.roster-tile')).toHaveCount(151);await expect(page.locator('.dex-base-stats>div')).toHaveCount(6);}
     await page.screenshot({path:`${folder}/after-${mode}-${width}.png`});
   }writeFileSync(`${folder}/desktop-diagnostics.json`,JSON.stringify(diagnostics,null,2));

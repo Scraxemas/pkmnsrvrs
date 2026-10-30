@@ -11,7 +11,7 @@ test('supplied artwork and responsive main menu render at standard and ultrawide
     const logoBounds=(await logo.boundingBox())!;expect(logoBounds.width/logoBounds.height).toBeCloseTo(202/100,2);
     const layout=await page.evaluate(()=>{
       const root=document.querySelector('.frontend')!,nav=[...root.querySelectorAll<HTMLElement>('.arcade-button:not([disabled])')];
-      return{scroll:root.scrollWidth>innerWidth,vertical:root.scrollHeight>innerHeight+1,buttons:nav.map(button=>{const r=button.getBoundingClientRect();return{left:r.left,right:r.right,top:r.top,bottom:r.bottom};}),font:document.fonts.check('16px Silkscreen'),background:(root.querySelector('.frontend-background') as HTMLImageElement).src};
+      return{scroll:root.scrollWidth>innerWidth,vertical:root.scrollHeight>innerHeight+1,buttons:nav.map(button=>{const r=button.getBoundingClientRect();return{left:r.left,right:r.right,top:r.top,bottom:r.bottom};}),font:[...document.fonts].some(face=>face.family.replace(/['"]/g,'')==='Pokemon Pixel Font'&&face.status==='loaded')&&getComputedStyle(root).fontFamily.split(',')[0].replace(/['"]/g,'').trim()==='Pokemon Pixel Font',background:(root.querySelector('.frontend-background') as HTMLImageElement).src};
     });
     expect(layout.scroll).toBe(false);expect(layout.vertical).toBe(false);expect(layout.font).toBe(true);expect(layout.background).toContain('viridian-forest-main-menu.jpg');
     for(const button of layout.buttons){expect(button.left).toBeGreaterThanOrEqual(0);expect(button.right).toBeLessThanOrEqual(width);expect(button.top).toBeGreaterThanOrEqual(0);expect(button.bottom).toBeLessThanOrEqual(height);}
@@ -54,14 +54,14 @@ test('settings persist, preserve progression, and control real gameplay presenta
   const state=await page.evaluate(()=>{
     const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),p=s.state.player;s.renderAttack({id:999,moveId:'tackle',kind:'charge',type:'Normal',x:p.x,y:p.y,tx:p.x+20,ty:p.y,radius:70,hits:[],damage:1234});
     s.state.projectiles=[{id:9999,x:p.x,y:p.y,vx:0,vy:0,radius:5,damage:1,ttl:5,type:'Bug',source:'caterpie'}];s.step();
-    return{numbers:s.children.list.some((child:any)=>child.text==='1234'),shake:s.cameras.main.shakeEffect.isRunning,settings:s.preferences,save:JSON.parse(localStorage.getItem('pokemon-survivors-save')!)};
+    return{numbers:s.effectsLayer.list.some((child:any)=>child.text==='1234'),shake:s.cameras.main.shakeEffect.isRunning,settings:s.preferences,save:JSON.parse(localStorage.getItem('pokemon-survivors-save')!)};
   });
   expect(state.numbers).toBe(false);expect(state.shake).toBe(false);expect(state.settings).toEqual({damageNumbers:false,reducedMotion:true,screenShake:true});expect(state.save.research.viridianWins).toBe(4);expect(state.save.best.viridian.level).toBe(33);
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.stop('game');(window as any).__POKEMON_SURVIVORS__.scene.start('settings');});await expect(page.getByRole('heading',{name:'Settings',exact:true})).toBeVisible();
   await page.getByRole('switch',{name:'Reduced motion'}).click();await page.getByRole('switch',{name:'Damage numbers'}).click();await page.keyboard.press('Escape');
   await singlePlayer(page);await choosePartner(page);await page.getByRole('button',{name:'Enter Forest',exact:true}).click();
   await page.waitForFunction(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return s.keys?.D&&s.player?.active;});
-  const enabled=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),p=s.state.player;s.renderAttack({id:999,moveId:'tackle',kind:'charge',type:'Normal',x:p.x,y:p.y,tx:p.x+20,ty:p.y,radius:70,hits:[],damage:1234});s.state.projectiles=[{id:9999,x:p.x,y:p.y,vx:0,vy:0,radius:5,damage:1,ttl:5,type:'Bug',source:'caterpie'}];s.step();return{numbers:s.children.list.some((child:any)=>child.text==='1234'),shake:s.cameras.main.shakeEffect.isRunning};});expect(enabled).toEqual({numbers:true,shake:true});
+  const enabled=await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game'),p=s.state.player;s.renderAttack({id:999,moveId:'tackle',kind:'charge',type:'Normal',x:p.x,y:p.y,tx:p.x+20,ty:p.y,radius:70,hits:[],damage:1234});s.state.projectiles=[{id:9999,x:p.x,y:p.y,vx:0,vy:0,radius:5,damage:1,ttl:5,type:'Bug',source:'caterpie'}];s.step();return{numbers:s.effectsLayer.list.some((child:any)=>child.text==='1234'),shake:s.cameras.main.shakeEffect.isRunning};});expect(enabled).toEqual({numbers:true,shake:true});
 });
 
 test('controller D-pad, confirm, and back navigate without held-button scene bouncing',async({page})=>{

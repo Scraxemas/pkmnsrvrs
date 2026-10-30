@@ -101,14 +101,16 @@ test('wild, elite, and boss shadows stay hidden and a ball survives chunk unload
   await page.goto('/?seed=1337');await expect(page.locator('#app canvas')).toBeVisible();
   await page.evaluate(()=>{(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'bulbasaur'});});
   await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('game').player?.active);
-  const result=await page.evaluate(()=>{
+  const result=await page.evaluate(async()=>{
+    const {spawnSpecies}=await import('/src/simulation.ts');
     const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.state.time=s.duration;s.schedule();s.syncViews(1);
+    spawnSpecies(s.state,'caterpie',1);spawnSpecies(s.state,'pidgeotto',1,true);s.syncViews(1);
     const tiers=[s.state.enemies.some((e:any)=>!e.elite&&!e.boss),s.state.enemies.some((e:any)=>e.elite),s.state.enemies.some((e:any)=>e.boss)];
     const shadows=[s.playerShadow,...s.enemyShadows.values()].every((shadow:any)=>!shadow.visible);
     s.state.enemies=[];s.nextSpawn=Infinity;s.miniIndex=99;s.state.bossSpawned=true;s.state.time=0;
     const home={x:s.state.player.x,y:s.state.player.y},key=`${Math.floor(home.x/512)},${Math.floor(home.y/512)}`;
     s.state.pickups.push({id:9999,x:home.x+60,y:home.y,value:1,kind:'ball',tier:2});
-    const away=s.state.world.features.clearings[1];Object.assign(s.state.player,{x:away.x,y:away.y});s.previousPlayer={x:away.x,y:away.y};s.cameras.main.stopFollow().centerOn(away.x,away.y);s.syncWorldChunks(true);s.syncViews(1);
+    const away=s.state.world.playerStart;Object.assign(s.state.player,{x:away.x,y:away.y});s.previousPlayer={x:away.x,y:away.y};s.cameras.main.stopFollow().centerOn(away.x,away.y);s.syncWorldChunks(true);s.syncViews(1);
     const unloaded=!s.chunkViews.has(key),retained=s.state.pickups.some((p:any)=>p.id===9999);
     Object.assign(s.state.player,home);s.previousPlayer=home;s.cameras.main.centerOn(home.x,home.y);s.syncWorldChunks(true);
     return{tiers,shadows,unloaded,retained};

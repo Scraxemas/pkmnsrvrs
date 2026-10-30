@@ -4,7 +4,7 @@ export interface ProgressionSpecies {id:string;moveProgression?:MoveProgression;
 export const MAX_MOVE_SLOTS=5;
 const threeStage=(ids:string[])=>ids.map((id,index)=>[id,{stage:index+1,stages:3}]);
 export const MOVE_PROGRESSIONS:Record<string,MoveProgression>=Object.fromEntries([
-  ...threeStage(['bulbasaur','ivysaur','venusaur']),...threeStage(['charmander','charmeleon','charizard']),...threeStage(['squirtle','wartortle','blastoise']),
+  ...threeStage(['bulbasaur','ivysaur','venusaur']),...threeStage(['charmander','charmeleon','charizard']),...threeStage(['squirtle','wartortle','blastoise']),...threeStage(['weedle','kakuna','beedrill']),
 ]);
 export function moveProgression(species:ProgressionSpecies):MoveProgression{return species.moveProgression??MOVE_PROGRESSIONS[species.id]??{stage:1,stages:1};}
 export function moveCapacity(species:ProgressionSpecies,level:number){

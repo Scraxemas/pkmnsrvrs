@@ -81,7 +81,7 @@ export function describeItemImprovement(item:ItemDef,rank:number){
 }
 export function itemApplicable(item:ItemDef,pokemon:PokemonDef,slots:readonly {id:string}[],moves:Record<string,MoveDef>,level=1){
   const ids=new Set([...slots.map(slot=>slot.id),...(slots.length<moveCapacity(pokemon,level)?pokemon.learnset:[])]),available=[...ids].map(id=>moves[id]).filter(Boolean);
-  if(item.typeBoost)return available.some(move=>move.type===item.typeBoost);
+  if(item.typeBoost)return available.some(move=>move.type===item.typeBoost&&(move.damageClass!=='Status'||!!move.status));
   const checks:Record<ItemApplicability,(move:MoveDef)=>boolean>={all:()=>true,physical:move=>move.damageClass==='Physical',special:move=>move.damageClass==='Special',drain:move=>move.kind==='drain'||move.status==='seeded',projectile:move=>['projectile','piercing','spread','fixed'].includes(move.kind),duration:move=>!!move.status||move.kind==='cloud',sustained:move=>!!move.status&&['poison','burn','seeded'].includes(move.status)};
   return available.some(checks[item.applicability]);
 }

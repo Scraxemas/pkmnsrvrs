@@ -21,7 +21,7 @@ describe('menu data and saved presentation preferences',()=>{
     const local=storage(),save=freshSave();save.research.viridianWins=7;save.unlockedStages.push('mtMoon');
     local.setItem('pokemon-survivors-save',JSON.stringify({...save,settings:{damageNumbers:false}}));
     expect(loadSave(local).settings).toEqual({damageNumbers:false,reducedMotion:false,screenShake:false});
-    updateSettings({reducedMotion:true},local);expect(loadSave(local)).toMatchObject({unlockedStages:['viridian','mtMoon'],research:{viridianWins:7},settings:{reducedMotion:true,damageNumbers:false}});
+    updateSettings({reducedMotion:true},local);expect(loadSave(local)).toMatchObject({unlockedStages:['viridian','mtMoon','pewterGym'],research:{viridianWins:7},settings:{reducedMotion:true,damageNumbers:false}});
   });
   it('improves best-run ties by defeated count then time, and preserves stronger records',()=>{
     const local=storage(),run={result:'defeat' as const,pokemon:'bulbasaur',stage:'viridian',level:10,defeated:20,time:100};
@@ -31,7 +31,7 @@ describe('menu data and saved presentation preferences',()=>{
   it('keeps legacy unlocks and research when a settings change migrates a v1 save',()=>{
     const local=storage();local.setItem('pokemon-survivors-save',JSON.stringify({version:1,unlockedPokemon:['bulbasaur','squirtle'],unlockedStages:['viridian','mtMoon'],research:{enemiesDefeated:120,viridianWins:2},lastRun:{result:'victory',pokemon:'venusaur',level:35,time:1800,defeated:120}}));
     updateSettings({damageNumbers:false},local);const migrated=loadSave(local);
-    expect(migrated).toMatchObject({version:2,unlockedPokemon:['bulbasaur','squirtle'],unlockedStages:['viridian','mtMoon'],research:{enemiesDefeated:120,viridianWins:2},lastRun:{stage:'viridian'},settings:{damageNumbers:false}});
+    expect(migrated).toMatchObject({version:2,unlockedPokemon:['bulbasaur','squirtle','weedle'],unlockedStages:['viridian','mtMoon','pewterGym'],research:{enemiesDefeated:120,viridianWins:2},lastRun:{stage:'viridian'},settings:{damageNumbers:false}});
   });
   it('navigates visual columns and rows without focusing diagonal cards first',()=>{
     const boxes=[{left:0,top:0,width:200,height:60},{left:0,top:80,width:200,height:60},{left:500,top:0,width:300,height:200}];

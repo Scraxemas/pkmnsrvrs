@@ -1,0 +1,91 @@
+{
+  "id": "dragonEnergy",
+  "subject": "A concentrated blue-violet dragon-energy orb with a luminous icy-blue center and sharp violet flame crown. Four stages: tiny concentrated charge; compact fully formed blue-violet orb flying right with pointed flame crown; fierce jagged violet-blue energy impact burst; fading violet angular flame fragments. No shield, leaves, actual dragon, creature or character.",
+  "kind": "vfx",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 4,
+  "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Four distinct keyframes: charge, active, impact, fade. No text, numbering, labels, outlines of cells or grid. Wide transparent canvas; each logical cell is64×64pixels enlarged crisply. Clear empty gutters and a common baseline preserve consistent scale acrossframes; do not crop or overlap adjacent cells.\nSubject: A concentrated blue-violet dragon-energy orb with a luminous icy-blue center and sharp violet flame crown. Four stages: tiny concentrated charge; compact fully formed blue-violet orb flying right with pointed flame crown; fierce jagged violet-blue energy impact burst; fading violet angular flame fragments. No shield, leaves, actual dragon, creature or character.\nStyle: Original polished GBA-era RPG pixel art, harmonious limited palette, hard square clusters, clean dark stepped contours, bright sharp highlights. No gradients, no antialiasing, no smooth illustration. Transparent background with actual alpha; no painted checkerboard or scenery. Do not depict Pokémon.",
+  "sourceFile": "exec-17033fee-1f89-43e7-8967-d9406c5595d0.png",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed",
+  "sourceSha256": "2961a726a62ef2ff3c9138c1673c551b6e3805daeb9821a8cba9587b0d237d8c",
+  "sourceSize": [
+    1983,
+    793
+  ],
+  "output": "public/assets/vfx/dragonEnergy.png",
+  "outputSha256": "952f4d5eee95a87e900ce08b1f68ce7a1845db8c4e5a2e9f246a1b04a58293e0",
+  "processing": {
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "layout": "horizontal",
+    "colorsPerFrame": 24,
+    "alphaThreshold": 160,
+    "cellCoverage": 0.3,
+    "isolation": {
+      "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+      "sourceFrameBoxes": [
+        [
+          99,
+          153,
+          367,
+          663
+        ],
+        [
+          451,
+          153,
+          946,
+          663
+        ],
+        [
+          1019,
+          153,
+          1508,
+          663
+        ],
+        [
+          1565,
+          153,
+          1943,
+          663
+        ]
+      ],
+      "sourceGutters": [
+        [
+          367,
+          451
+        ],
+        [
+          946,
+          1019
+        ],
+        [
+          1508,
+          1565
+        ]
+      ],
+      "sourceCuts": [
+        0,
+        409,
+        982,
+        1536,
+        1983
+      ],
+      "sharedCanvasSize": [
+        510,
+        510
+      ],
+      "maxSubjectSourceWidth": 495,
+      "sharedSourceY": [
+        153,
+        663
+      ],
+      "sharedScale": 0.11764705882352941,
+      "preservesRelativeFrameSizes": true,
+      "retainsAllParticlesInsideEachGroup": true
+    },
+    "sampling": "modal palette clusters / fixed frame canvas"
+  }
+}

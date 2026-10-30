@@ -1,0 +1,91 @@
+{
+  "id": "grassEnergy",
+  "subject": "A concentrated vibrant emerald-green energy sphere with a pale mint core and two thin curved lime orbital bands. Four stages: tiny mint charge; compact emerald sphere flying right trailing a few green square sparks; explosive green energy starburst; fading mint energy arcs and green motes. No shield canopy, leaf-shaped body, creature or character.",
+  "kind": "vfx",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 4,
+  "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Four distinct keyframes: charge, active, impact, fade. No text, numbering, labels, outlines of cells or grid. Wide transparent canvas; each logical cell is64×64pixels enlarged crisply. Clear empty gutters and a common baseline preserve consistent scale acrossframes; do not crop or overlap adjacent cells.\nSubject: A concentrated vibrant emerald-green energy sphere with a pale mint core and two thin curved lime orbital bands. Four stages: tiny mint charge; compact emerald sphere flying right trailing a few green square sparks; explosive green energy starburst; fading mint energy arcs and green motes. No shield canopy, leaf-shaped body, creature or character.\nStyle: Original polished GBA-era RPG pixel art, harmonious limited palette, hard square clusters, clean dark stepped contours, bright sharp highlights. No gradients, no antialiasing, no smooth illustration. Transparent background with actual alpha; no painted checkerboard or scenery. Do not depict Pokémon.",
+  "sourceFile": "exec-1229c8ba-acf6-4604-ad6f-8c397282ca85.png",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed",
+  "sourceSha256": "64d17841896f08cac30f82a4c519511465feb484734ebca13e86fe43325b8fb6",
+  "sourceSize": [
+    1983,
+    793
+  ],
+  "output": "public/assets/vfx/grassEnergy.png",
+  "outputSha256": "423a989242aad2cb03dcb560bf58ea69219a6f24c713ec67ec6b23940fae3d54",
+  "processing": {
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "layout": "horizontal",
+    "colorsPerFrame": 24,
+    "alphaThreshold": 160,
+    "cellCoverage": 0.3,
+    "isolation": {
+      "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+      "sourceFrameBoxes": [
+        [
+          107,
+          131,
+          328,
+          677
+        ],
+        [
+          452,
+          131,
+          927,
+          677
+        ],
+        [
+          981,
+          131,
+          1513,
+          677
+        ],
+        [
+          1564,
+          131,
+          1924,
+          677
+        ]
+      ],
+      "sourceGutters": [
+        [
+          328,
+          452
+        ],
+        [
+          927,
+          981
+        ],
+        [
+          1513,
+          1564
+        ]
+      ],
+      "sourceCuts": [
+        0,
+        390,
+        954,
+        1538,
+        1983
+      ],
+      "sharedCanvasSize": [
+        546,
+        546
+      ],
+      "maxSubjectSourceWidth": 532,
+      "sharedSourceY": [
+        131,
+        677
+      ],
+      "sharedScale": 0.10989010989010989,
+      "preservesRelativeFrameSizes": true,
+      "retainsAllParticlesInsideEachGroup": true
+    },
+    "sampling": "modal palette clusters / fixed frame canvas"
+  }
+}

@@ -1,0 +1,3039 @@
+{
+  "version": "0.5.0",
+  "created": "2026-10-30",
+  "tool": "Codex built-in image_gen.imagegen",
+  "existingIcons": "v0.4.3 original fourteen retained byte-for-byte",
+  "generations": [
+    {
+      "id": "acidSpray",
+      "subject": "A diagonal fan of three corrosive purple liquid droplets with pale green acidic highlights, splashing at the tip.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: acidSpray. A diagonal fan of three corrosive purple liquid droplets with pale green acidic highlights, splashing at the tip.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-0ebdff86-1feb-48c2-a9ef-5a3c1a5ce82c.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "8f7530b3928390116dbfc7d1813573f9dfa9b72b9a34910adb1b3b2c20a41703",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/acidSpray.png",
+      "outputSha256": "94faab671fbac4f2396b3309c2822ed6657ca8b5d4856ce33b972d2a1fe5dbae",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "bodySlam",
+      "subject": "A broad low cream physical impact radiating outward with chunky brown ground fragments and a strong central downward collision.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: bodySlam. A broad low cream physical impact radiating outward with chunky brown ground fragments and a strong central downward collision.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-a4f790d3-d6cc-47fb-bbda-ae0864302fd5.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "7a78fb3a1e111d4d08d112024e9cc975a6a4fe4a111328feff0bee790e915d60",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/bodySlam.png",
+      "outputSha256": "46847a84907a76db5a2ce859447efa144b524cfc126648c06e7db13cde854c3d",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "bulletSeed",
+      "subject": "Three small golden-brown seeds in a straight rapid-fire diagonal trail with tiny green speed dashes.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: bulletSeed. Three small golden-brown seeds in a straight rapid-fire diagonal trail with tiny green speed dashes.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-201f4b8b-f1a6-48f4-a719-94c9de4ebf2a.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "6e866ea39cb31459d147331e1f49c90dcc2ed53e9018990fdc325f7b5ed95c1f",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/bulletSeed.png",
+      "outputSha256": "b9b47638d7a969decf0566db587eab0f80cdc84580d5890629e8332f6ccb043a",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "earthPower",
+      "subject": "A tall glowing orange-gold fissure erupting between two jagged ochre rock pillars, concentrated upward earth-energy attack.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: earthPower. A tall glowing orange-gold fissure erupting between two jagged ochre rock pillars, concentrated upward earth-energy attack.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-b89a20d3-1ca7-443c-8f00-4503cad19800.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "93bb5523a7ef49276de3dcb9008f4786efec75b1c41ce774d7872abcfc0e3119",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/earthPower.png",
+      "outputSha256": "7b3100231e19a04f655bd5df621f4e1efc573ad1f8196e4f3d9ba8da61c1e006",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "earthquake",
+      "subject": "Three broad jagged brown ground cracks radiating outward with small bouncing ochre rock chunks, horizontal shaking composition.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: earthquake. Three broad jagged brown ground cracks radiating outward with small bouncing ochre rock chunks, horizontal shaking composition.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-e10ac961-5663-4436-b9b5-5cda96032dc3.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "b9bf15ab1b074471b7236fcef002a419956cd13e085b8bc9fd25f9a8f9ced016",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/earthquake.png",
+      "outputSha256": "8f4e0c4d13be7fc6a7fa96314e5edeb3453d69a8d4f74892404bd3b163f657e1",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "energyBall",
+      "subject": "A compact saturated green energy sphere with a bright pale-mint core and two curved orbiting lime energy arcs.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: energyBall. A compact saturated green energy sphere with a bright pale-mint core and two curved orbiting lime energy arcs.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-e059627a-e5a8-4cfe-b242-a37887cdc051.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "b0d500d71d61940718bb571367772f6bc37f23d873c84dbe05efe92b3e81653e",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/energyBall.png",
+      "outputSha256": "6557350e0398e80377744aa58344179d0387ba03cd04298e022000bc969b198d",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "frenzyPlant",
+      "subject": "Huge branching brown roots bursting upward around a bright emerald plant-energy core, angular powerful ultimate silhouette.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: frenzyPlant. Huge branching brown roots bursting upward around a bright emerald plant-energy core, angular powerful ultimate silhouette.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-8a37d4e7-82db-4b17-ae13-10b44947bfb1.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "331dc902c4bab4d77e17f9d5860bf608b54c0ac45622cb777a7e3f0c76ef35b3",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/frenzyPlant.png",
+      "outputSha256": "84d811893c69f8ee5020cb12644d2d85c96749e383470052d15331b1b6930bc7",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "gigaDrain",
+      "subject": "Three strong green life-draining tendrils converging into a bright mint core, a wide three-pronged absorption silhouette.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: gigaDrain. Three strong green life-draining tendrils converging into a bright mint core, a wide three-pronged absorption silhouette.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-9116efa9-7b95-4b1d-89d4-9862fcc2f0e0.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "e6745c7d7b6f3592ba4d4dab20e0c54450c081665c1258afb3a49e4a9c2c916e",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/gigaDrain.png",
+      "outputSha256": "f9253e292f29d18d2508d9e134baa18750f94b488bf89589cbec9547014de1fc",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "grassKnot",
+      "subject": "Two long green blades tied into a recognizable tight entangling knot, dark-green outlines and lime edges.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: grassKnot. Two long green blades tied into a recognizable tight entangling knot, dark-green outlines and lime edges.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-72820d7b-4041-4eef-9ff0-36367f4a80d1.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "c565e578d8ed3ea1039d3c974d6461727d576c7fee9617d00c35d2dde8592fec",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/grassKnot.png",
+      "outputSha256": "9d823a4c9531096e1264848901b7611cf8e068d2ba9ae43d6e338785f9af840a",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "grassPledge",
+      "subject": "Three erupting columns of pale-green plant energy rising from pointed green leaves.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: grassPledge. Three erupting columns of pale-green plant energy rising from pointed green leaves.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-e17382d8-7c1f-4e2b-9764-1acdb9fdc5e8.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "d2b92ddfa85fd3a6c5bf5b6be5f79567281f0cc88d7467cb57ae4edcac0feddf",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/grassPledge.png",
+      "outputSha256": "2b611ba119791ce91de26d8594fad28744dd3409b4a3406a691635b661d96223",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "grassyGlide",
+      "subject": "A sharp green leaf shaped like a gliding forward blade, short mint speed streaks behind it.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: grassyGlide. A sharp green leaf shaped like a gliding forward blade, short mint speed streaks behind it.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-4c7773b9-eee8-43e4-8128-a5aa56ebaffd.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "4a1c2e30a55a604a5987299fb5f84d7f4468e042f388f58e7626042e5e7740d6",
+      "sourceSize": [
+        1278,
+        1230
+      ],
+      "output": "public/assets/moves/grassyGlide.png",
+      "outputSha256": "a38d69cc27defc8e01315aca4bed97c00c0af1844afaba365512b950d9b947ec",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "grassyTerrain",
+      "subject": "A small vivid green tuft of healing grasses growing from a compact earthy patch, with two pale-mint recovery sparkles.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: grassyTerrain. A small vivid green tuft of healing grasses growing from a compact earthy patch, with two pale-mint recovery sparkles.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-fe63acb7-ac02-4060-9359-82b3e6568da9.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "5e0c9841a81b2402016e5fd8716e1418de3dae0c21598439e2cf080066d1c1f1",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/grassyTerrain.png",
+      "outputSha256": "3a12193eafaf586ff34144a1a9535ecc50d5e3910e0408fd55b4bbe88b650f34",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "growl",
+      "subject": "Three pale cream sound-wave arcs expanding outward from a compact amber vibration spark; no face.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: growl. Three pale cream sound-wave arcs expanding outward from a compact amber vibration spark; no face.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-4b388445-28c9-4f58-a92c-d8c5dc02d0e9.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "a15d00e656e000dcaa77e4dbe5738f576f0ac760675021b0ec99fe9269236b2c",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/growl.png",
+      "outputSha256": "4221c8b2f9c662cce2b365791e854b11db8de479ba5ad01ed405edeeb1c263a9",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "growth",
+      "subject": "A sturdy green sprout with two larger ascending leaves and a small golden upward growth sparkle.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: growth. A sturdy green sprout with two larger ascending leaves and a small golden upward growth sparkle.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-7fa49bbf-75c3-45e6-a2dc-31c7e70ce3e2.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "70ca947e728fbbc077418c6e60531b8188ebe139f94ade73054a3d579b5ffc08",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/growth.png",
+      "outputSha256": "3c73921de0e999276f4a156a357e82b367be0b74dc809ccb08427df75f263796",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "helpingHand",
+      "subject": "Two small cream hands reaching toward each other with a bright warm-gold cooperative sparkle between them, no arms or characters.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: helpingHand. Two small cream hands reaching toward each other with a bright warm-gold cooperative sparkle between them, no arms or characters.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-970f7e43-dced-4fa9-b0f5-1e14e546ed8f.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "fb82dfe5c0ca6752b79ffaa5a0c9023a2d77163afc67fa708b9e0cfc63c9bbf7",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/helpingHand.png",
+      "outputSha256": "ef114f382ff6167957c88c3530e7e458f76b9e141b554697c7ca4b9b7246d35f",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "ingrain",
+      "subject": "Two strong brown roots curling under a green sprout with a warm healing glow, rooted defensive silhouette.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: ingrain. Two strong brown roots curling under a green sprout with a warm healing glow, rooted defensive silhouette.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-07b1705a-30a3-40ca-82dc-fd4b34f53712.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "fa756a1712e63200dca3574430a6924482d30bf7ef7ca0eac0c40214b0cdffe7",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/ingrain.png",
+      "outputSha256": "2070a3556d9754007a1d59c954c6f0f306c48fd0fbbed980070b3f47d3b07ce7",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "leafStorm",
+      "subject": "A vertical cyclone of dark and light green razor leaves circling a strong pale-green center, readable spiral silhouette.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: leafStorm. A vertical cyclone of dark and light green razor leaves circling a strong pale-green center, readable spiral silhouette.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-f7994824-0c54-47e1-8f8b-1d1b35c63c17.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "c0526189bb98f1be8089630295fa0c03605ba0a14ed9f7644a346c0031e0907a",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/leafStorm.png",
+      "outputSha256": "32364daeabf70ba1fa1f0805052f0fdc78de7a426439945e54577c1c60aa6f49",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "magicalLeaf",
+      "subject": "Two floating emerald leaves with a luminous pale mint magical sparkle between them; round enchanted composition, distinct from physical cutting leaves.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: magicalLeaf. Two floating emerald leaves with a luminous pale mint magical sparkle between them; round enchanted composition, distinct from physical cutting leaves.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-10c1ab0e-e29d-4188-8304-7c83d379eb45.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "5e42726cad8882e3f1ac2be65af81389c0e4ba90848db6e900a8da94ce033269",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/magicalLeaf.png",
+      "outputSha256": "63f34eb055fe78aedaacc854b510df6353caf5ddc4b10c667444b334bc5dd9c3",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "megaDrain",
+      "subject": "One curling bright-green energy tendril pulling a tiny mint life-light from a target spark toward a green orb.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: megaDrain. One curling bright-green energy tendril pulling a tiny mint life-light from a target spark toward a green orb.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-2388e15c-b8e4-4a91-b015-1d074a37f283.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "5e7f0ef2623e1b5d1a14f1bce11cc3140d6459a8362d507a42fdd02e19f96997",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/megaDrain.png",
+      "outputSha256": "6addadcb7c2d8b4d807c56ffeb40821f5a679e5aee8582d021a46d3c324da189",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "petalBlizzard",
+      "subject": "A broad circular fusion storm of sharp pink petals and emerald cutting leaves, strong full-circle silhouette distinct from Petal Dance.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: petalBlizzard. A broad circular fusion storm of sharp pink petals and emerald cutting leaves, strong full-circle silhouette distinct from Petal Dance.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-75da6290-ebc5-4c8b-b089-f018761e1eb4.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "81be773325fbf1e5ad22ef38e04702c72aa453028bfb765f06a6da31b59546f0",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/petalBlizzard.png",
+      "outputSha256": "bc386249f943463c1123e4ab1219f16db892bae54ee137e3fc69d30b905f6779",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "petalDance",
+      "subject": "A graceful spiral of five pink petals with light rose highlights around an open center, clear dancing motion.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: petalDance. A graceful spiral of five pink petals with light rose highlights around an open center, clear dancing motion.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-effbef38-45d5-4d23-ac50-feb3c838eacc.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "a2424a5610dd1c6c5e64efc9432923ab676a924b0af8368e42a6f264d31c05b1",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/petalDance.png",
+      "outputSha256": "b2065962dc5a585f6132c89e501c4b69f0384c5383e6e598ef3cb679005c2388",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "poisonJab",
+      "subject": "A sharp violet thorn-like striking spike with a magenta toxic droplet on its point and a short physical thrust trail.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: poisonJab. A sharp violet thorn-like striking spike with a magenta toxic droplet on its point and a short physical thrust trail.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-88cb0cdd-17f1-4f55-be04-764a193bf9d2.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "cc29cbc6e255bae85d33f09ca7c4dbb43019547e1205891f99fedc8315b99186",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/poisonJab.png",
+      "outputSha256": "6625dfc45db8b9bf93449367f23296f34964e43c8f3667e69d6f00ea31d0e1b3",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "powerWhip",
+      "subject": "A thick coiled emerald vine striking with a dramatic pale-lime impact star, heavier hooked shape than Vine Whip.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: powerWhip. A thick coiled emerald vine striking with a dramatic pale-lime impact star, heavier hooked shape than Vine Whip.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-6e4f1b2f-6d6b-44be-908c-5cad9802dd0a.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "1c187f02a33f383fd7bd26a9ec323d1e4abbdc88e04a76726183be0eefe81175",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/powerWhip.png",
+      "outputSha256": "ccf7c1aecec7ed7c7321efdea4b12a30daef1a1609a82965ad79b7ecefba5ec1",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "protect",
+      "subject": "A crisp translucent-looking mint-green shield silhouette with an open darker-green center and one small pale-white glint.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: protect. A crisp translucent-looking mint-green shield silhouette with an open darker-green center and one small pale-white glint.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-1dccf61b-3f91-49ad-82a4-2e5bca7b967d.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "5b28975cdbff5a6341543eb8d42c733b6e545a36b01f70b832ea88b01ce116cf",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/protect.png",
+      "outputSha256": "af553b4c7e038d1485a5850d07ff0c2a27acecfbf884432dbee51f4ce0cfdf24",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "seedBomb",
+      "subject": "One large brown seed with a split green shell and a bright yellow-green explosive impact crown.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: seedBomb. One large brown seed with a split green shell and a bright yellow-green explosive impact crown.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-d29b9f11-4cfd-42b7-8c37-ee08235eb54a.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "cacfe09c1863de4d981d6f5f9f3fba8795e6723156e9576e6c050d7f4349a15e",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/seedBomb.png",
+      "outputSha256": "13a0819244d1beeda60969a52ae784efc3d46252163691a887fa70a8542b8a4c",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "sleepPowder",
+      "subject": "A cloud of soft lavender spores with a small pale-blue crescent moon and two tiny white glints, sleepy airy silhouette. No letters.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: sleepPowder. A cloud of soft lavender spores with a small pale-blue crescent moon and two tiny white glints, sleepy airy silhouette. No letters.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-1e86c787-ebd9-4eb9-a993-5313bf3f19b5.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "826fc0f3c2f43a22fa81afd5506530fa06b070d68f6575df9fb0348a578c01a7",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/sleepPowder.png",
+      "outputSha256": "d415d1640593048c851b910e3b1ac216a54797c825549d32e29d71b587978136",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "sludgeBomb",
+      "subject": "A heavy dark-purple toxic sludge sphere exploding into thick rounded purple splashes with magenta highlights.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: sludgeBomb. A heavy dark-purple toxic sludge sphere exploding into thick rounded purple splashes with magenta highlights.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-a2791305-4ca0-4f9d-a3d5-acb1e8f64313.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "850c894335a5b1f68776d807f5d97007ac8cf4e85729a30127387d668ad5730e",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/sludgeBomb.png",
+      "outputSha256": "161fbdcc2fcddf190f1a918bad66ba35ed6b6a1592a5f43c2132a82faca7371e",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "sludgeWave",
+      "subject": "An expanding crescent of dark purple toxic water with bright magenta crest spikes and tiny purple droplets, broad low wave silhouette.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: sludgeWave. An expanding crescent of dark purple toxic water with bright magenta crest spikes and tiny purple droplets, broad low wave silhouette.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-6eafdf2e-9a9c-4900-a2f8-f937c8a2f147.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "7c5cd22b489a95f5e11c2dadf58e91d7863f1e8a72e1a12bd81908f59f387041",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/sludgeWave.png",
+      "outputSha256": "8e8be1fc1765c60e0592a5756c333a67e14d1ea7687e3cfce032a050fe3d25c5",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "solarBeam",
+      "subject": "A long concentrated yellow-green solar beam ending in a bright pale-gold starburst, a small green charging orb at its base.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: solarBeam. A long concentrated yellow-green solar beam ending in a bright pale-gold starburst, a small green charging orb at its base.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-17b2499f-421d-4693-ad65-da97b1b02c62.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "fd0bec8b61d74d7d958d6d607287c7e26870369c60177e52eac25e15df7c751c",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/solarBeam.png",
+      "outputSha256": "c3b0ed7c46f85c9386917f7cb1eb20cf9494cda4049cd18cd04873f32c779a40",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "sunnyDay",
+      "subject": "A cheerful golden sun with a warm amber center and eight short angular yellow rays. No scene or sky.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: sunnyDay. A cheerful golden sun with a warm amber center and eight short angular yellow rays. No scene or sky.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-5e7d07ab-d230-4059-b810-beedf28caccb.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "402773a9fb5051c4caa59314955551474394704ac62a71721472430337cfe12d",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/sunnyDay.png",
+      "outputSha256": "528bfc8e5b90bae0eddca1d5ebf4b86cec84b04624232e6536d0ba782c65fc50",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "sweetScent",
+      "subject": "A small pink blossom with three curling rosy aroma trails and a pale golden center.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: sweetScent. A small pink blossom with three curling rosy aroma trails and a pale golden center.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-5ab31d5e-57a2-4880-8995-b4393fa9de0b.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "488362a907255afce4e70eccb9bcbb4eafe5c1752636d016d13fbd5e4672713a",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/sweetScent.png",
+      "outputSha256": "b4c86d86870e931222b8980e48ba333d8a6417bbe48430920f81745a9f00e246",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "swordsDance",
+      "subject": "Two crossed silver swords with small golden hilts and an arc of red-orange offensive energy, distinct crossing blade silhouettes.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: swordsDance. Two crossed silver swords with small golden hilts and an arc of red-orange offensive energy, distinct crossing blade silhouettes.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-dc2d5a43-32b6-49e8-864d-63edccb22f2d.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "ffc063ab9db68192023ef9aacfb222056c5ff00333b1ffdd9a1abab155ce4bfe",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/swordsDance.png",
+      "outputSha256": "5f8246be76ddb86ffc052f8823fddcd8d6533ca81dc9e3d1b2affa9b20a73f9d",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "synthesis",
+      "subject": "A fresh green two-leaf sprout supporting a bright warm sunlight sparkle, gentle recovery identity.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: synthesis. A fresh green two-leaf sprout supporting a bright warm sunlight sparkle, gentle recovery identity.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-92a09fea-c554-452f-9096-684cdf926164.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "fa23a7404a094378d38428f685cda7787ec234ddcfe6c31951acf4ea451e2490",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/synthesis.png",
+      "outputSha256": "e1eb182ea6a00e24b71307158542af09822d444eed324714f4d05ca1617e05af",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "takeDown",
+      "subject": "A powerful golden-brown shoulder-charge motion wedge with a heavy cream impact burst and short trailing dust.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: takeDown. A powerful golden-brown shoulder-charge motion wedge with a heavy cream impact burst and short trailing dust.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-ee7baedd-174c-4d21-962a-0314cc5eb0bf.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "6c3c93133d6ace88571620678b699637e963693a8d1900b4fc41c7745516c0a0",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/takeDown.png",
+      "outputSha256": "218d4eea485200064d509c42e8ff1077a7d882436792e5ff4bf6e6f5b2e89f48",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "toxic",
+      "subject": "A dark violet skull-shaped toxic vapor puff surrounded by small intense magenta spore dots.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: toxic. A dark violet skull-shaped toxic vapor puff surrounded by small intense magenta spore dots.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-22c425f8-853a-496b-b85b-8955cc8d940f.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "2e0af9f1c504a0fa371fca2c01a70434944171eeaf1c74a9ab9046debb012fcd",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/toxic.png",
+      "outputSha256": "c00a96d1d2b9b59e7d7a997236cbc6fb6300e89b6c4f127e43706dc270fe44b7",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "trailblaze",
+      "subject": "An orange-gold forward flame streak intertwined with a bright green leaf, energetic sprinting diagonal silhouette.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: trailblaze. An orange-gold forward flame streak intertwined with a bright green leaf, energetic sprinting diagonal silhouette.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-b3c40f85-137e-4a63-9302-f4e37af76f6a.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "65ff049af8b215662d2f3758b28c4a8b7067c717f45fc4a49a06bc6044fc6350",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/trailblaze.png",
+      "outputSha256": "9a0c673ca53da513089c103aab7f7db33f97626cdd20fad5327770d765a5ba3a",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "venoshock",
+      "subject": "A violet electric-toxic burst with a jagged purple lightning fork piercing a magenta poison droplet.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: venoshock. A violet electric-toxic burst with a jagged purple lightning fork piercing a magenta poison droplet.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-97f90ca6-7498-4d57-bacf-4b3965061aac.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "4bf731216dfcd8c9ee28fe75dec7dd5f0fdffb02249ed27633483b617946e468",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/venoshock.png",
+      "outputSha256": "01b297271cef46a6ce069c1724cba953d5250e3b1e90c78c088ddd92919e9055",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "worrySeed",
+      "subject": "A single amber seed bearing a tiny green sprout, encircled by two dark violet disruptive energy arcs.",
+      "kind": "icon",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent 32×32 game move icon extending the selected Classic Inventory style.\nPrimary request: Original, professionally crafted 32×32 pixel-art ability icon for a classic fantasy creature RPG. Authentic Game Boy Advance-era pixel art, carefully placed pixels, readable silhouette, clean dark outlines, limited harmonious color palette, crisp clusters of hand-placed pixels, subtle highlights, tasteful shading, vibrant elemental colors, no gradients, no anti-aliasing, no smooth illustration, no photorealism, no typography, no borders, no frames, no decorative background, centered subject, transparent background. The icon must remain instantly recognizable at native 32×32 resolution and visually compatible with classic Pokémon inventory sprites.\nArt direction: Charming GBA-era inventory sprite, restrained 8–12 color palette, bold clean one-pixel dark outline, bright readable clusters, minimal effects. Use a strict logical 32×32 pixel grid enlarged cleanly to the output canvas. Subject occupies about 26×26 logical pixels with 3 transparent pixels margin. Every visible pixel is a hard square block aligned to the same logical grid.\nSubject: worrySeed. A single amber seed bearing a tiny green sprout, encircled by two dark violet disruptive energy arcs.\nConstraints: ONE icon only; original design; no text, no labels, no grid lines, no shadow behind the sprite, no checkerboard painted into background. Actual transparent alpha. The entire output is one enlarged 32×32 pixel sprite.",
+      "sourceFile": "exec-00fc8840-44d8-41e7-ae24-4eba2cecc563.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "d5909b22b2f87bf8e806103510c95c8f9a590f4508167c0f9042148d9bbf116a",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "output": "public/assets/moves/worrySeed.png",
+      "outputSha256": "520c24259db35eb55edfd5bac2eb261d86a2091efb7d57ba885da7d13d3cc241",
+      "processing": {
+        "canvas": [
+          32,
+          32
+        ],
+        "colors": 12,
+        "maxSubjectExtent": 26,
+        "alphaThreshold": 192,
+        "cellCoverage": 0.35,
+        "sampling": "modal palette cluster / no interpolation"
+      }
+    },
+    {
+      "id": "aura",
+      "subject": "A defensive and offensive green-gold support aura. Four stages: a small light at bottom, two rising curved leafy ribbons, full pointed arching green shield canopy with golden glints, thinning leaf sparks. Open transparent center suitable around a character, do not draw a character.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A defensive and offensive green-gold support aura. Four stages: a small light at bottom, two rising curved leafy ribbons, full pointed arching green shield canopy with golden glints, thinning leaf sparks. Open transparent center suitable around a character, do not draw a character.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-dbb7cc1d-8d32-4401-92cf-0613ecef5455.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "07d6f94fe21d5b6221852406e73dd61a96b3a51021e55d300a0e2e5a4f822bb0",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/aura.png",
+      "outputSha256": "072b331e768a7d3c381f45606006d455bf7bdd835f1fc9a4e6d165a8320d335b",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              42,
+              133,
+              349,
+              719
+            ],
+            [
+              430,
+              133,
+              856,
+              719
+            ],
+            [
+              902,
+              133,
+              1479,
+              719
+            ],
+            [
+              1519,
+              133,
+              1955,
+              719
+            ]
+          ],
+          "sourceGutters": [
+            [
+              349,
+              430
+            ],
+            [
+              856,
+              902
+            ],
+            [
+              1479,
+              1519
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            389,
+            879,
+            1499,
+            1983
+          ],
+          "sharedCanvasSize": [
+            586,
+            586
+          ],
+          "maxSubjectSourceWidth": 577,
+          "sharedSourceY": [
+            133,
+            719
+          ],
+          "sharedScale": 0.10238907849829351,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "beam",
+      "subject": "A huge horizontal concentrated green solar-energy beam. Four stages: small luminous green charge on left with faint horizontal guide, focused narrow piercing beam from left to right, wide intensely bright pale-yellow-green beam with sharp jagged green edges and impact crown on right, thin receding beam and separated energy flecks. Each frame is128×64 logical pixels, fourframes horizontal; no circles around art.",
+      "kind": "vfx",
+      "frameWidth": 128,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 128×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A huge horizontal concentrated green solar-energy beam. Four stages: small luminous green charge on left with faint horizontal guide, focused narrow piercing beam from left to right, wide intensely bright pale-yellow-green beam with sharp jagged green edges and impact crown on right, thin receding beam and separated energy flecks. Each frame is128×64 logical pixels, fourframes horizontal; no circles around art.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-fdfab58d-a518-4ed1-b92b-4577d463c8bd.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "7275f4b94c55d1ffdf02e4218305039543ee02089d3c5dd821ec737cc0a521f8",
+      "sourceSize": [
+        2172,
+        724
+      ],
+      "output": "public/assets/vfx/beam.png",
+      "outputSha256": "f5c19a304bebb7dc8fd1429bf4a885f3c28707d49801ed05f0106437075f5c9a",
+      "processing": {
+        "frameWidth": 128,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              66,
+              159,
+              454,
+              574
+            ],
+            [
+              514,
+              159,
+              964,
+              574
+            ],
+            [
+              999,
+              159,
+              1647,
+              574
+            ],
+            [
+              1693,
+              159,
+              2151,
+              574
+            ]
+          ],
+          "sourceGutters": [
+            [
+              454,
+              514
+            ],
+            [
+              964,
+              999
+            ],
+            [
+              1647,
+              1693
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            484,
+            981,
+            1670,
+            2172
+          ],
+          "sharedCanvasSize": [
+            858,
+            415
+          ],
+          "maxSubjectSourceWidth": 648,
+          "sharedSourceY": [
+            159,
+            574
+          ],
+          "sharedScale": 0.14457831325301204,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "bloom",
+      "subject": "A green healing blossom light. Four stages: small lime seed of light, gently opening four green leaflike rays, symmetrical mint recovery bloom with several bright square motes, fading separated green sparkles.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A green healing blossom light. Four stages: small lime seed of light, gently opening four green leaflike rays, symmetrical mint recovery bloom with several bright square motes, fading separated green sparkles.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-68b73560-30c6-4af3-b1be-9bfa5557798a.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "b1e992d7b726c935124607eb88c5eb5b79e4d6ddac5c5d3b966861a8bb4588e6",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/bloom.png",
+      "outputSha256": "3da126717999a5a587f20ced8fa7bffea2b06ff94e83847073c506fac7ec27da",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              139,
+              117,
+              308,
+              697
+            ],
+            [
+              459,
+              117,
+              798,
+              697
+            ],
+            [
+              850,
+              117,
+              1425,
+              697
+            ],
+            [
+              1507,
+              117,
+              1887,
+              697
+            ]
+          ],
+          "sourceGutters": [
+            [
+              308,
+              459
+            ],
+            [
+              798,
+              850
+            ],
+            [
+              1425,
+              1507
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            383,
+            824,
+            1466,
+            1983
+          ],
+          "sharedCanvasSize": [
+            580,
+            580
+          ],
+          "maxSubjectSourceWidth": 575,
+          "sharedSourceY": [
+            117,
+            697
+          ],
+          "sharedScale": 0.10344827586206896,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "bubble",
+      "subject": "Several translucent blue bubble rims with open transparent centers and tiny white square highlights. Four stages: one small bubble, three bubbles rising in different sizes, largest bubble rings widening with one popping sparkle, broken cyan ring arcs and tiny droplets. Use blue stepped contours and actual alpha, no colored opaque interior.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: Several translucent blue bubble rims with open transparent centers and tiny white square highlights. Four stages: one small bubble, three bubbles rising in different sizes, largest bubble rings widening with one popping sparkle, broken cyan ring arcs and tiny droplets. Use blue stepped contours and actual alpha, no colored opaque interior.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-7b33fe4e-1e45-41ec-90a9-52a06e5d93a9.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "15e6e6e7fcbd3ec4d41118c192b04f7f3747268caeaf0c8f92604f6dcad9dd9c",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/bubble.png",
+      "outputSha256": "823909ec7bddc365eb7c0b650bdca730227596c24b75361527e7f3939647eaf4",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              146,
+              133,
+              348,
+              694
+            ],
+            [
+              555,
+              133,
+              839,
+              694
+            ],
+            [
+              976,
+              133,
+              1427,
+              694
+            ],
+            [
+              1523,
+              133,
+              1939,
+              694
+            ]
+          ],
+          "sourceGutters": [
+            [
+              348,
+              555
+            ],
+            [
+              839,
+              976
+            ],
+            [
+              1427,
+              1523
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            451,
+            907,
+            1475,
+            1983
+          ],
+          "sharedCanvasSize": [
+            561,
+            561
+          ],
+          "maxSubjectSourceWidth": 451,
+          "sharedSourceY": [
+            133,
+            694
+          ],
+          "sharedScale": 0.10695187165775401,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "dragonEnergy",
+      "subject": "A concentrated blue-violet dragon-energy orb with a luminous icy-blue center and sharp violet flame crown. Four stages: tiny concentrated charge; compact fully formed blue-violet orb flying right with pointed flame crown; fierce jagged violet-blue energy impact burst; fading violet angular flame fragments. No shield, leaves, actual dragon, creature or character.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Four distinct keyframes: charge, active, impact, fade. No text, numbering, labels, outlines of cells or grid. Wide transparent canvas; each logical cell is64×64pixels enlarged crisply. Clear empty gutters and a common baseline preserve consistent scale acrossframes; do not crop or overlap adjacent cells.\nSubject: A concentrated blue-violet dragon-energy orb with a luminous icy-blue center and sharp violet flame crown. Four stages: tiny concentrated charge; compact fully formed blue-violet orb flying right with pointed flame crown; fierce jagged violet-blue energy impact burst; fading violet angular flame fragments. No shield, leaves, actual dragon, creature or character.\nStyle: Original polished GBA-era RPG pixel art, harmonious limited palette, hard square clusters, clean dark stepped contours, bright sharp highlights. No gradients, no antialiasing, no smooth illustration. Transparent background with actual alpha; no painted checkerboard or scenery. Do not depict Pokémon.",
+      "sourceFile": "exec-17033fee-1f89-43e7-8967-d9406c5595d0.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "2961a726a62ef2ff3c9138c1673c551b6e3805daeb9821a8cba9587b0d237d8c",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/dragonEnergy.png",
+      "outputSha256": "952f4d5eee95a87e900ce08b1f68ce7a1845db8c4e5a2e9f246a1b04a58293e0",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              99,
+              153,
+              367,
+              663
+            ],
+            [
+              451,
+              153,
+              946,
+              663
+            ],
+            [
+              1019,
+              153,
+              1508,
+              663
+            ],
+            [
+              1565,
+              153,
+              1943,
+              663
+            ]
+          ],
+          "sourceGutters": [
+            [
+              367,
+              451
+            ],
+            [
+              946,
+              1019
+            ],
+            [
+              1508,
+              1565
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            409,
+            982,
+            1536,
+            1983
+          ],
+          "sharedCanvasSize": [
+            510,
+            510
+          ],
+          "maxSubjectSourceWidth": 495,
+          "sharedSourceY": [
+            153,
+            663
+          ],
+          "sharedScale": 0.11764705882352941,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "drain",
+      "subject": "Green life-draining tendril energy moving horizontally from right toward left. Four stages: small green spark, winding thin energy tendril, three bright curling tendrils with small mint sparks, fading returning green motes. No objects or creatures.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: Green life-draining tendril energy moving horizontally from right toward left. Four stages: small green spark, winding thin energy tendril, three bright curling tendrils with small mint sparks, fading returning green motes. No objects or creatures.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-33b1ac89-819a-44fe-9d20-bff0aeb88b8e.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "0a8d23523b0d027505533c2ad306b8641545ff308f6e9d11406672b5b4182d54",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/drain.png",
+      "outputSha256": "7382dfff3972b4720f33c4715f6f532e62271fc16b6558a0d604f6abc78735d7",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              110,
+              180,
+              368,
+              614
+            ],
+            [
+              449,
+              180,
+              895,
+              614
+            ],
+            [
+              927,
+              180,
+              1410,
+              614
+            ],
+            [
+              1521,
+              180,
+              1909,
+              614
+            ]
+          ],
+          "sourceGutters": [
+            [
+              368,
+              449
+            ],
+            [
+              895,
+              927
+            ],
+            [
+              1410,
+              1521
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            408,
+            911,
+            1465,
+            1983
+          ],
+          "sharedCanvasSize": [
+            483,
+            483
+          ],
+          "maxSubjectSourceWidth": 483,
+          "sharedSourceY": [
+            180,
+            614
+          ],
+          "sharedScale": 0.12422360248447205,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "fire",
+      "subject": "A small bright orange fireball with yellow core and red-orange tapering tail. Four stages show flying flame shape changing, then compact fiery impact, then diminishing sparks. Sharp pixel clusters, no round decorative background.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A small bright orange fireball with yellow core and red-orange tapering tail. Four stages show flying flame shape changing, then compact fiery impact, then diminishing sparks. Sharp pixel clusters, no round decorative background.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-aef4c180-3256-406d-8f37-6d120b75c86b.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "b9951249d7c21e5c5feb1c4efd259a4d6b08a2f5e5c53c1898a1164de4734e4e",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/fire.png",
+      "outputSha256": "4d7473890a4e77422968a3b5c488e79cee038cc6fbb8085152b8fc46a8dd13c3",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              48,
+              156,
+              396,
+              628
+            ],
+            [
+              493,
+              156,
+              943,
+              628
+            ],
+            [
+              1046,
+              156,
+              1470,
+              628
+            ],
+            [
+              1589,
+              156,
+              1915,
+              628
+            ]
+          ],
+          "sourceGutters": [
+            [
+              396,
+              493
+            ],
+            [
+              943,
+              1046
+            ],
+            [
+              1470,
+              1589
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            444,
+            994,
+            1529,
+            1983
+          ],
+          "sharedCanvasSize": [
+            472,
+            472
+          ],
+          "maxSubjectSourceWidth": 450,
+          "sharedSourceY": [
+            156,
+            628
+          ],
+          "sharedScale": 0.1271186440677966,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "grassEnergy",
+      "subject": "A concentrated vibrant emerald-green energy sphere with a pale mint core and two thin curved lime orbital bands. Four stages: tiny mint charge; compact emerald sphere flying right trailing a few green square sparks; explosive green energy starburst; fading mint energy arcs and green motes. No shield canopy, leaf-shaped body, creature or character.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Four distinct keyframes: charge, active, impact, fade. No text, numbering, labels, outlines of cells or grid. Wide transparent canvas; each logical cell is64×64pixels enlarged crisply. Clear empty gutters and a common baseline preserve consistent scale acrossframes; do not crop or overlap adjacent cells.\nSubject: A concentrated vibrant emerald-green energy sphere with a pale mint core and two thin curved lime orbital bands. Four stages: tiny mint charge; compact emerald sphere flying right trailing a few green square sparks; explosive green energy starburst; fading mint energy arcs and green motes. No shield canopy, leaf-shaped body, creature or character.\nStyle: Original polished GBA-era RPG pixel art, harmonious limited palette, hard square clusters, clean dark stepped contours, bright sharp highlights. No gradients, no antialiasing, no smooth illustration. Transparent background with actual alpha; no painted checkerboard or scenery. Do not depict Pokémon.",
+      "sourceFile": "exec-1229c8ba-acf6-4604-ad6f-8c397282ca85.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "64d17841896f08cac30f82a4c519511465feb484734ebca13e86fe43325b8fb6",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/grassEnergy.png",
+      "outputSha256": "423a989242aad2cb03dcb560bf58ea69219a6f24c713ec67ec6b23940fae3d54",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              107,
+              131,
+              328,
+              677
+            ],
+            [
+              452,
+              131,
+              927,
+              677
+            ],
+            [
+              981,
+              131,
+              1513,
+              677
+            ],
+            [
+              1564,
+              131,
+              1924,
+              677
+            ]
+          ],
+          "sourceGutters": [
+            [
+              328,
+              452
+            ],
+            [
+              927,
+              981
+            ],
+            [
+              1513,
+              1564
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            390,
+            954,
+            1538,
+            1983
+          ],
+          "sharedCanvasSize": [
+            546,
+            546
+          ],
+          "maxSubjectSourceWidth": 532,
+          "sharedSourceY": [
+            131,
+            677
+          ],
+          "sharedScale": 0.10989010989010989,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "ground",
+      "subject": "Earth energy erupting in jagged rocky pillars. Four stages: small ground crack and dust, three ochre rock spikes rising with orange internal light, tall powerful rocky column burst with dark stones and gold highlights, receding rubble shards and dust. Dark earth outlines.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: Earth energy erupting in jagged rocky pillars. Four stages: small ground crack and dust, three ochre rock spikes rising with orange internal light, tall powerful rocky column burst with dark stones and gold highlights, receding rubble shards and dust. Dark earth outlines.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-c3319c05-1ec9-4611-aeb6-aa9ea710a52e.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "8c670c702e21d9f3ba42c9315e1e2f07d1506e990997809f96d05ffa27f269c4",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/ground.png",
+      "outputSha256": "8cff7d778d81125cc8da10b4540ac9baade6651c8f17d5c0cef07ab5d569d44b",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              39,
+              107,
+              446,
+              745
+            ],
+            [
+              513,
+              107,
+              966,
+              745
+            ],
+            [
+              1007,
+              107,
+              1500,
+              745
+            ],
+            [
+              1547,
+              107,
+              1939,
+              745
+            ]
+          ],
+          "sourceGutters": [
+            [
+              446,
+              513
+            ],
+            [
+              966,
+              1007
+            ],
+            [
+              1500,
+              1547
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            479,
+            986,
+            1523,
+            1983
+          ],
+          "sharedCanvasSize": [
+            638,
+            638
+          ],
+          "maxSubjectSourceWidth": 493,
+          "sharedSourceY": [
+            107,
+            745
+          ],
+          "sharedScale": 0.09404388714733543,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "impact",
+      "subject": "A forceful cream-white physical collision burst. Four stages: small compressed bright wedge, strong forward-pointing burst, expanded jagged impact star with short motion lines, isolated dissipating cream shards.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A forceful cream-white physical collision burst. Four stages: small compressed bright wedge, strong forward-pointing burst, expanded jagged impact star with short motion lines, isolated dissipating cream shards.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-bea797c2-496d-421e-8d8c-856a6d2683c6.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "27e54565255ade0600b5419738f58f8359026c669d9c223932a91d8f520cb6be",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/impact.png",
+      "outputSha256": "17fb3ba3b2319c734dddfefcc7ab54d4113f595255f8f477af21e5dd5483b759",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              56,
+              138,
+              307,
+              643
+            ],
+            [
+              397,
+              138,
+              916,
+              643
+            ],
+            [
+              935,
+              138,
+              1511,
+              643
+            ],
+            [
+              1588,
+              138,
+              1931,
+              643
+            ]
+          ],
+          "sourceGutters": [
+            [
+              307,
+              397
+            ],
+            [
+              916,
+              935
+            ],
+            [
+              1511,
+              1588
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            352,
+            925,
+            1549,
+            1983
+          ],
+          "sharedCanvasSize": [
+            576,
+            576
+          ],
+          "maxSubjectSourceWidth": 576,
+          "sharedSourceY": [
+            138,
+            643
+          ],
+          "sharedScale": 0.10416666666666667,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "leaf",
+      "subject": "A spinning razor-edged emerald leaf projectile. Four stages show one leaf rotating through distinct angles, pale serrated edges and dark-green vein; same recognizable object, very short lime movement dashes.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A spinning razor-edged emerald leaf projectile. Four stages show one leaf rotating through distinct angles, pale serrated edges and dark-green vein; same recognizable object, very short lime movement dashes.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-5ef9fb5e-7048-4122-bd44-615d1701b079.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "436f3d0bdeae62549444465d97d881f713a7f570d4ef4b44e820a5f14f4cfe4f",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/leaf.png",
+      "outputSha256": "43b97a0bfe59214959f6db391266204b40b37b26108add0fbfe1367d27049d67",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              113,
+              190,
+              349,
+              638
+            ],
+            [
+              492,
+              190,
+              895,
+              638
+            ],
+            [
+              953,
+              190,
+              1517,
+              638
+            ],
+            [
+              1585,
+              190,
+              1940,
+              638
+            ]
+          ],
+          "sourceGutters": [
+            [
+              349,
+              492
+            ],
+            [
+              895,
+              953
+            ],
+            [
+              1517,
+              1585
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            420,
+            924,
+            1551,
+            1983
+          ],
+          "sharedCanvasSize": [
+            564,
+            564
+          ],
+          "maxSubjectSourceWidth": 564,
+          "sharedSourceY": [
+            190,
+            638
+          ],
+          "sharedScale": 0.10638297872340426,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "petal",
+      "subject": "A fusion-exclusive full-circle petal storm. Four stages: a few separated pink petals and green cutting leaves, curved swirling ring of pink petals, powerful broad circular storm with sharp magenta petals and pale-green leaves, scattered fading petals. Open transparent center; every petal angular and crisp.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A fusion-exclusive full-circle petal storm. Four stages: a few separated pink petals and green cutting leaves, curved swirling ring of pink petals, powerful broad circular storm with sharp magenta petals and pale-green leaves, scattered fading petals. Open transparent center; every petal angular and crisp.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-76d3a30e-9ac9-4bd9-b28f-51f9bfba8193.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "4c244eb7cf90fa03d4b3ff20c1a91fd9e3ca7639dfa962194ce8afb0a0b7826a",
+      "sourceSize": [
+        2172,
+        724
+      ],
+      "output": "public/assets/vfx/petal.png",
+      "outputSha256": "04984eb066b5971a0a0810885358570889306e28fc7b05bf596d53dfd52af96e",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              41,
+              71,
+              414,
+              657
+            ],
+            [
+              490,
+              71,
+              925,
+              657
+            ],
+            [
+              977,
+              71,
+              1656,
+              657
+            ],
+            [
+              1712,
+              71,
+              2147,
+              657
+            ]
+          ],
+          "sourceGutters": [
+            [
+              414,
+              490
+            ],
+            [
+              925,
+              977
+            ],
+            [
+              1656,
+              1712
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            452,
+            951,
+            1684,
+            2172
+          ],
+          "sharedCanvasSize": [
+            679,
+            679
+          ],
+          "maxSubjectSourceWidth": 679,
+          "sharedSourceY": [
+            71,
+            657
+          ],
+          "sharedScale": 0.08836524300441827,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "poison",
+      "subject": "Purple toxic spore cloud. Four stages: three tiny purple spores, separated rising rounded violet puffs, larger spreading purple cloud with magenta spores, thinning cloud with several separated dots. Crisp stepped cloud contours.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: Purple toxic spore cloud. Four stages: three tiny purple spores, separated rising rounded violet puffs, larger spreading purple cloud with magenta spores, thinning cloud with several separated dots. Crisp stepped cloud contours.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-1e21d72e-7b07-4239-964e-0888a280e629.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "85c509022e30e451102a75b2d7c94b9fdd2654f025429193d5417c96344cdb4c",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/poison.png",
+      "outputSha256": "6879d40910d8ac5efa0f6432cae63871f38b750dd2c57b15ba05dfb5a887280e",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              85,
+              202,
+              322,
+              672
+            ],
+            [
+              441,
+              202,
+              805,
+              672
+            ],
+            [
+              866,
+              202,
+              1486,
+              672
+            ],
+            [
+              1556,
+              202,
+              1925,
+              672
+            ]
+          ],
+          "sourceGutters": [
+            [
+              322,
+              441
+            ],
+            [
+              805,
+              866
+            ],
+            [
+              1486,
+              1556
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            381,
+            835,
+            1521,
+            1983
+          ],
+          "sharedCanvasSize": [
+            620,
+            620
+          ],
+          "maxSubjectSourceWidth": 620,
+          "sharedSourceY": [
+            202,
+            672
+          ],
+          "sharedScale": 0.0967741935483871,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "root",
+      "subject": "Massive earthy roots erupting from below. Four stages: cracked earth with small green root tip, two thick brown roots arch upward with lime leaf tips, several large branching roots with bright green plant power and dirt chunks, roots recede with a few falling earthy chunks. Dark brown contour and stepped shading.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: Massive earthy roots erupting from below. Four stages: cracked earth with small green root tip, two thick brown roots arch upward with lime leaf tips, several large branching roots with bright green plant power and dirt chunks, roots recede with a few falling earthy chunks. Dark brown contour and stepped shading.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-878eb871-b8cd-44fe-b2df-c2a31ab9f68b.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "ae514300bcc812f51866a1edabc8154dbe84805f135ce617d24d8e950559e4fe",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/root.png",
+      "outputSha256": "7128082544096cf60f3cdc9d93c412d9dcbd2841e712f0d8c2f53792b38e3bc6",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              44,
+              99,
+              418,
+              698
+            ],
+            [
+              467,
+              99,
+              917,
+              698
+            ],
+            [
+              958,
+              99,
+              1497,
+              698
+            ],
+            [
+              1529,
+              99,
+              1939,
+              698
+            ]
+          ],
+          "sourceGutters": [
+            [
+              418,
+              467
+            ],
+            [
+              917,
+              958
+            ],
+            [
+              1497,
+              1529
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            442,
+            937,
+            1513,
+            1983
+          ],
+          "sharedCanvasSize": [
+            599,
+            599
+          ],
+          "maxSubjectSourceWidth": 539,
+          "sharedSourceY": [
+            99,
+            698
+          ],
+          "sharedScale": 0.1001669449081803,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "seed",
+      "subject": "An amber seed artillery projectile bursting into seed fragments. Four stages: small rounded seed, traveling pointed seed with golden motion, seed cracking with green star burst, several fading brown and gold seed fragments.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: An amber seed artillery projectile bursting into seed fragments. Four stages: small rounded seed, traveling pointed seed with golden motion, seed cracking with green star burst, several fading brown and gold seed fragments.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-1686c06e-429f-49dd-b8a4-08f52923159d.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "b0c3e30384059081bd61cd45c725d4e4e3b39a1e44b68389e50abc0453c30760",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/seed.png",
+      "outputSha256": "82defd1b52b09df4aaf7ef3c4bb44c324524c69b1053ab3a572b398dcba1d25f",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              112,
+              151,
+              260,
+              644
+            ],
+            [
+              428,
+              151,
+              878,
+              644
+            ],
+            [
+              958,
+              151,
+              1440,
+              644
+            ],
+            [
+              1515,
+              151,
+              1952,
+              644
+            ]
+          ],
+          "sourceGutters": [
+            [
+              260,
+              428
+            ],
+            [
+              878,
+              958
+            ],
+            [
+              1440,
+              1515
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            344,
+            918,
+            1477,
+            1983
+          ],
+          "sharedCanvasSize": [
+            493,
+            493
+          ],
+          "maxSubjectSourceWidth": 482,
+          "sharedSourceY": [
+            151,
+            644
+          ],
+          "sharedScale": 0.12170385395537525,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "slash",
+      "subject": "Three crisp ivory-white claw slash arcs. Four stages: first tiny cut, full sequential three-curved cuts, crossing bright impact shards, fading broken arc tips. Sharp dark contour, no actual claw or paw.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: Three crisp ivory-white claw slash arcs. Four stages: first tiny cut, full sequential three-curved cuts, crossing bright impact shards, fading broken arc tips. Sharp dark contour, no actual claw or paw.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-95955ce7-1f1d-4262-bb90-5a6635305d5d.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "ed3629aab84f5cf26a67a8efaf79cba40e123203cb8219a20b10e416593137f8",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/slash.png",
+      "outputSha256": "7da0ccd4fbc074a130d6d9e09ecd1d9a461e9b9bd7895a9e2d3c56f6dc019b96",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              123,
+              180,
+              374,
+              646
+            ],
+            [
+              529,
+              180,
+              939,
+              646
+            ],
+            [
+              1011,
+              180,
+              1499,
+              646
+            ],
+            [
+              1596,
+              180,
+              1930,
+              646
+            ]
+          ],
+          "sourceGutters": [
+            [
+              374,
+              529
+            ],
+            [
+              939,
+              1011
+            ],
+            [
+              1499,
+              1596
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            451,
+            975,
+            1547,
+            1983
+          ],
+          "sharedCanvasSize": [
+            488,
+            488
+          ],
+          "maxSubjectSourceWidth": 488,
+          "sharedSourceY": [
+            180,
+            646
+          ],
+          "sharedScale": 0.12295081967213115,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "toxicWave",
+      "subject": "A fusion-exclusive expanding poisonous shockwave. Four stages: compact dark-violet ripple, wider jagged ring of violet poison, broad irregular purple toxic wave rim with bright magenta crest spikes and scattered spores, broken outer purple wave fragments. Transparent center; no opaque disk.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A fusion-exclusive expanding poisonous shockwave. Four stages: compact dark-violet ripple, wider jagged ring of violet poison, broad irregular purple toxic wave rim with bright magenta crest spikes and scattered spores, broken outer purple wave fragments. Transparent center; no opaque disk.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-bd6f4e06-7025-4010-bcc9-0996bbf9c310.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "fc9ec961e0e7cb500c6545cfe77725f4c7479bb5c6c502c407a947c5df1b2ec2",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/toxicWave.png",
+      "outputSha256": "494e9ff54b5528f0ad7ae163201c7110a967b9745d81fcdbf048c52304f8ee16",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              41,
+              193,
+              315,
+              667
+            ],
+            [
+              378,
+              193,
+              815,
+              667
+            ],
+            [
+              856,
+              193,
+              1440,
+              667
+            ],
+            [
+              1478,
+              193,
+              1966,
+              667
+            ]
+          ],
+          "sourceGutters": [
+            [
+              315,
+              378
+            ],
+            [
+              815,
+              856
+            ],
+            [
+              1440,
+              1478
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            346,
+            835,
+            1459,
+            1983
+          ],
+          "sharedCanvasSize": [
+            584,
+            584
+          ],
+          "maxSubjectSourceWidth": 584,
+          "sharedSourceY": [
+            193,
+            667
+          ],
+          "sharedScale": 0.10273972602739725,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "vine",
+      "subject": "A living green vine whip snapping from left to right. Four stages: compact curl, half extended vine, long fully extended hooked vine with pale lime impact spark, recoiling broken motion trail. Coherent one-pixel dark-green contours.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A living green vine whip snapping from left to right. Four stages: compact curl, half extended vine, long fully extended hooked vine with pale lime impact spark, recoiling broken motion trail. Coherent one-pixel dark-green contours.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-5489d7da-4214-429b-8cb1-86439b206b28.png",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "e3cf986f185064df6bbea7fece4ee08dbf4fc51f367af6e02f13abef9d0c7742",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/vine.png",
+      "outputSha256": "814e43f9894d963693cedfc01da26046fcd1b0d8269d956afdefd39d99e775b1",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              45,
+              203,
+              309,
+              534
+            ],
+            [
+              396,
+              203,
+              867,
+              534
+            ],
+            [
+              899,
+              203,
+              1532,
+              534
+            ],
+            [
+              1600,
+              203,
+              1956,
+              534
+            ]
+          ],
+          "sourceGutters": [
+            [
+              309,
+              396
+            ],
+            [
+              867,
+              899
+            ],
+            [
+              1532,
+              1600
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            352,
+            883,
+            1566,
+            1983
+          ],
+          "sharedCanvasSize": [
+            633,
+            633
+          ],
+          "maxSubjectSourceWidth": 633,
+          "sharedSourceY": [
+            203,
+            534
+          ],
+          "sharedScale": 0.0947867298578199,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    },
+    {
+      "id": "water",
+      "subject": "A high-pressure cyan-blue horizontal water jet with white highlights. Four stages: small water glob at left, narrow jet projecting right, thick jet meeting a large broad splash crown at right, broken droplets dissipating. Dark blue contour, no bubble rings.",
+      "kind": "vfx",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "frames": 4,
+      "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A high-pressure cyan-blue horizontal water jet with white highlights. Four stages: small water glob at left, narrow jet projecting right, thick jet meeting a large broad splash crown at right, broken droplets dissipating. Dark blue contour, no bubble rings.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+      "sourceFile": "exec-23f396ca-708f-46fa-879d-20133f054fe4.png",
+      "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+      "tool": "Codex built-in image_gen.imagegen",
+      "model": "not exposed",
+      "sourceSha256": "14cbf23d8b99856be6a81c3cf62e8bfdf693314a874acec19f38607969f007cf",
+      "sourceSize": [
+        1983,
+        793
+      ],
+      "output": "public/assets/vfx/water.png",
+      "outputSha256": "4ac266df6c2295f6275605f7546539cad0a83e33c354b1c101bbe5b8b82f21bd",
+      "processing": {
+        "frameWidth": 64,
+        "frameHeight": 64,
+        "frames": 4,
+        "layout": "horizontal",
+        "colorsPerFrame": 24,
+        "alphaThreshold": 160,
+        "cellCoverage": 0.3,
+        "isolation": {
+          "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+          "sourceFrameBoxes": [
+            [
+              39,
+              161,
+              255,
+              677
+            ],
+            [
+              410,
+              161,
+              932,
+              677
+            ],
+            [
+              980,
+              161,
+              1524,
+              677
+            ],
+            [
+              1565,
+              161,
+              1945,
+              677
+            ]
+          ],
+          "sourceGutters": [
+            [
+              255,
+              410
+            ],
+            [
+              932,
+              980
+            ],
+            [
+              1524,
+              1565
+            ]
+          ],
+          "sourceCuts": [
+            0,
+            332,
+            956,
+            1544,
+            1983
+          ],
+          "sharedCanvasSize": [
+            544,
+            544
+          ],
+          "maxSubjectSourceWidth": 544,
+          "sharedSourceY": [
+            161,
+            677
+          ],
+          "sharedScale": 0.11029411764705882,
+          "preservesRelativeFrameSizes": true,
+          "retainsAllParticlesInsideEachGroup": true
+        },
+        "sampling": "modal palette clusters / fixed frame canvas"
+      }
+    }
+  ],
+  "moves": [
+    {
+      "id": "powerWhip",
+      "name": "Power Whip",
+      "type": "Grass"
+    },
+    {
+      "id": "magicalLeaf",
+      "name": "Magical Leaf",
+      "type": "Grass"
+    },
+    {
+      "id": "leafStorm",
+      "name": "Leaf Storm",
+      "type": "Grass"
+    },
+    {
+      "id": "bulletSeed",
+      "name": "Bullet Seed",
+      "type": "Grass"
+    },
+    {
+      "id": "seedBomb",
+      "name": "Seed Bomb",
+      "type": "Grass"
+    },
+    {
+      "id": "acidSpray",
+      "name": "Acid Spray",
+      "type": "Poison"
+    },
+    {
+      "id": "venoshock",
+      "name": "Venoshock",
+      "type": "Poison"
+    },
+    {
+      "id": "sludgeBomb",
+      "name": "Sludge Bomb",
+      "type": "Poison"
+    },
+    {
+      "id": "toxic",
+      "name": "Toxic",
+      "type": "Poison"
+    },
+    {
+      "id": "megaDrain",
+      "name": "Mega Drain",
+      "type": "Grass"
+    },
+    {
+      "id": "gigaDrain",
+      "name": "Giga Drain",
+      "type": "Grass"
+    },
+    {
+      "id": "takeDown",
+      "name": "Take Down",
+      "type": "Normal"
+    },
+    {
+      "id": "bodySlam",
+      "name": "Body Slam",
+      "type": "Normal"
+    },
+    {
+      "id": "petalDance",
+      "name": "Petal Dance",
+      "type": "Grass"
+    },
+    {
+      "id": "petalBlizzard",
+      "name": "Petal Blizzard",
+      "type": "Grass"
+    },
+    {
+      "id": "energyBall",
+      "name": "Energy Ball",
+      "type": "Grass"
+    },
+    {
+      "id": "sunnyDay",
+      "name": "Sunny Day",
+      "type": "Fire"
+    },
+    {
+      "id": "solarBeam",
+      "name": "Solar Beam",
+      "type": "Grass"
+    },
+    {
+      "id": "sludgeWave",
+      "name": "Sludge Wave",
+      "type": "Poison"
+    },
+    {
+      "id": "synthesis",
+      "name": "Synthesis",
+      "type": "Grass"
+    },
+    {
+      "id": "grassyTerrain",
+      "name": "Grassy Terrain",
+      "type": "Grass"
+    },
+    {
+      "id": "ingrain",
+      "name": "Ingrain",
+      "type": "Grass"
+    },
+    {
+      "id": "grassKnot",
+      "name": "Grass Knot",
+      "type": "Grass"
+    },
+    {
+      "id": "grassyGlide",
+      "name": "Grassy Glide",
+      "type": "Grass"
+    },
+    {
+      "id": "trailblaze",
+      "name": "Trailblaze",
+      "type": "Grass"
+    },
+    {
+      "id": "grassPledge",
+      "name": "Grass Pledge",
+      "type": "Grass"
+    },
+    {
+      "id": "frenzyPlant",
+      "name": "Frenzy Plant",
+      "type": "Grass"
+    },
+    {
+      "id": "poisonJab",
+      "name": "Poison Jab",
+      "type": "Poison"
+    },
+    {
+      "id": "earthPower",
+      "name": "Earth Power",
+      "type": "Ground"
+    },
+    {
+      "id": "earthquake",
+      "name": "Earthquake",
+      "type": "Ground"
+    },
+    {
+      "id": "growl",
+      "name": "Growl",
+      "type": "Normal"
+    },
+    {
+      "id": "growth",
+      "name": "Growth",
+      "type": "Normal"
+    },
+    {
+      "id": "sleepPowder",
+      "name": "Sleep Powder",
+      "type": "Grass"
+    },
+    {
+      "id": "sweetScent",
+      "name": "Sweet Scent",
+      "type": "Normal"
+    },
+    {
+      "id": "worrySeed",
+      "name": "Worry Seed",
+      "type": "Grass"
+    },
+    {
+      "id": "protect",
+      "name": "Protect",
+      "type": "Normal"
+    },
+    {
+      "id": "swordsDance",
+      "name": "Swords Dance",
+      "type": "Normal"
+    },
+    {
+      "id": "helpingHand",
+      "name": "Helping Hand",
+      "type": "Normal"
+    },
+    {
+      "id": "tackle",
+      "name": "Tackle",
+      "type": "Normal"
+    },
+    {
+      "id": "scratch",
+      "name": "Scratch",
+      "type": "Normal"
+    },
+    {
+      "id": "vineWhip",
+      "name": "Vine Whip",
+      "type": "Grass"
+    },
+    {
+      "id": "poisonPowder",
+      "name": "Poison Powder",
+      "type": "Poison"
+    },
+    {
+      "id": "leechSeed",
+      "name": "Leech Seed",
+      "type": "Grass"
+    },
+    {
+      "id": "ember",
+      "name": "Ember",
+      "type": "Fire"
+    },
+    {
+      "id": "dragonRage",
+      "name": "Dragon Rage",
+      "type": "Dragon"
+    },
+    {
+      "id": "metalClaw",
+      "name": "Metal Claw",
+      "type": "Steel"
+    },
+    {
+      "id": "dragonClaw",
+      "name": "Dragon Claw",
+      "type": "Dragon"
+    },
+    {
+      "id": "razorLeaf",
+      "name": "Razor Leaf",
+      "type": "Grass"
+    },
+    {
+      "id": "hydroPump",
+      "name": "Hydro Pump",
+      "type": "Water"
+    },
+    {
+      "id": "waterGun",
+      "name": "Water Gun",
+      "type": "Water"
+    },
+    {
+      "id": "bubble",
+      "name": "Bubble",
+      "type": "Water"
+    },
+    {
+      "id": "rapidSpin",
+      "name": "Rapid Spin",
+      "type": "Normal"
+    }
+  ]
+}

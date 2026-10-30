@@ -1,0 +1,243 @@
+{
+  "revision": "50739567cb7196ff1e4eefa40bfc05562274f6d2",
+  "method": "Unmodified v0.4.3 main.ts served as a temporary sibling module with its legacy Graphics renderer and reduced walk sprites. Current deterministic simulation supplies matching attack activations for comparison.",
+  "familyAudits": [
+    {
+      "species": "charmander",
+      "move": "scratch",
+      "nativeAttackFrames": false,
+      "frames": [
+        {
+          "time": 3.3333333333333313,
+          "texture": "charmander-sprite",
+          "frame": 8,
+          "state": "attack"
+        },
+        {
+          "time": 3.5333333333333306,
+          "texture": "charmander-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 3.73333333333333,
+          "texture": "charmander-sprite",
+          "frame": 8,
+          "state": "attack"
+        },
+        {
+          "time": 3.933333333333329,
+          "texture": "charmander-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 4.133333333333328,
+          "texture": "charmander-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 4.333333333333328,
+          "texture": "charmander-sprite",
+          "frame": 8,
+          "state": "attack"
+        },
+        {
+          "time": 4.533333333333327,
+          "texture": "charmander-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 4.733333333333326,
+          "texture": "charmander-sprite",
+          "frame": 8,
+          "state": "attack"
+        },
+        {
+          "time": 4.933333333333326,
+          "texture": "charmander-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 5.133333333333325,
+          "texture": "charmander-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 5.299999999999991,
+          "texture": "charmander-sprite",
+          "frame": 8,
+          "state": "attack"
+        },
+        {
+          "time": 5.49999999999999,
+          "texture": "charmander-sprite",
+          "frame": 8,
+          "state": "idle"
+        }
+      ]
+    },
+    {
+      "species": "bulbasaur",
+      "move": "vineWhip",
+      "nativeAttackFrames": false,
+      "frames": [
+        {
+          "time": 6.1666666666666545,
+          "texture": "bulbasaur-sprite",
+          "frame": 12,
+          "state": "idle"
+        },
+        {
+          "time": 6.399999999999987,
+          "texture": "bulbasaur-sprite",
+          "frame": 12,
+          "state": "attack"
+        },
+        {
+          "time": 6.599999999999986,
+          "texture": "bulbasaur-sprite",
+          "frame": 12,
+          "state": "idle"
+        },
+        {
+          "time": 6.799999999999986,
+          "texture": "bulbasaur-sprite",
+          "frame": 12,
+          "state": "idle"
+        },
+        {
+          "time": 7.033333333333318,
+          "texture": "bulbasaur-sprite",
+          "frame": 12,
+          "state": "idle"
+        },
+        {
+          "time": 7.266666666666651,
+          "texture": "bulbasaur-sprite",
+          "frame": 12,
+          "state": "idle"
+        },
+        {
+          "time": 7.46666666666665,
+          "texture": "bulbasaur-sprite",
+          "frame": 12,
+          "state": "attack"
+        },
+        {
+          "time": 7.666666666666649,
+          "texture": "bulbasaur-sprite",
+          "frame": 12,
+          "state": "idle"
+        },
+        {
+          "time": 7.8666666666666485,
+          "texture": "bulbasaur-sprite",
+          "frame": 12,
+          "state": "idle"
+        },
+        {
+          "time": 8.066666666666649,
+          "texture": "bulbasaur-sprite",
+          "frame": 12,
+          "state": "idle"
+        },
+        {
+          "time": 8.299999999999981,
+          "texture": "bulbasaur-sprite",
+          "frame": 12,
+          "state": "idle"
+        },
+        {
+          "time": 8.49999999999998,
+          "texture": "bulbasaur-sprite",
+          "frame": 12,
+          "state": "attack"
+        }
+      ]
+    },
+    {
+      "species": "squirtle",
+      "move": "tackle",
+      "nativeAttackFrames": false,
+      "frames": [
+        {
+          "time": 6.266666666666654,
+          "texture": "squirtle-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 6.43333333333332,
+          "texture": "squirtle-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 6.666666666666653,
+          "texture": "squirtle-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 6.866666666666652,
+          "texture": "squirtle-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 7.066666666666651,
+          "texture": "squirtle-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 7.266666666666651,
+          "texture": "squirtle-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 7.499999999999983,
+          "texture": "squirtle-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 7.666666666666649,
+          "texture": "squirtle-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 7.899999999999982,
+          "texture": "squirtle-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 8.066666666666649,
+          "texture": "squirtle-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 8.266666666666648,
+          "texture": "squirtle-sprite",
+          "frame": 8,
+          "state": "idle"
+        },
+        {
+          "time": 8.466666666666647,
+          "texture": "squirtle-sprite",
+          "frame": 8,
+          "state": "idle"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "id": "impact",
+  "subject": "A forceful cream-white physical collision burst. Four stages: small compressed bright wedge, strong forward-pointing burst, expanded jagged impact star with short motion lines, isolated dissipating cream shards.",
+  "kind": "vfx",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 4,
+  "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A forceful cream-white physical collision burst. Four stages: small compressed bright wedge, strong forward-pointing burst, expanded jagged impact star with short motion lines, isolated dissipating cream shards.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+  "sourceFile": "exec-bea797c2-496d-421e-8d8c-856a6d2683c6.png",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed",
+  "sourceSha256": "27e54565255ade0600b5419738f58f8359026c669d9c223932a91d8f520cb6be",
+  "sourceSize": [
+    1983,
+    793
+  ],
+  "output": "public/assets/vfx/impact.png",
+  "outputSha256": "17fb3ba3b2319c734dddfefcc7ab54d4113f595255f8f477af21e5dd5483b759",
+  "processing": {
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "layout": "horizontal",
+    "colorsPerFrame": 24,
+    "alphaThreshold": 160,
+    "cellCoverage": 0.3,
+    "isolation": {
+      "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+      "sourceFrameBoxes": [
+        [
+          56,
+          138,
+          307,
+          643
+        ],
+        [
+          397,
+          138,
+          916,
+          643
+        ],
+        [
+          935,
+          138,
+          1511,
+          643
+        ],
+        [
+          1588,
+          138,
+          1931,
+          643
+        ]
+      ],
+      "sourceGutters": [
+        [
+          307,
+          397
+        ],
+        [
+          916,
+          935
+        ],
+        [
+          1511,
+          1588
+        ]
+      ],
+      "sourceCuts": [
+        0,
+        352,
+        925,
+        1549,
+        1983
+      ],
+      "sharedCanvasSize": [
+        576,
+        576
+      ],
+      "maxSubjectSourceWidth": 576,
+      "sharedSourceY": [
+        138,
+        643
+      ],
+      "sharedScale": 0.10416666666666667,
+      "preservesRelativeFrameSizes": true,
+      "retainsAllParticlesInsideEachGroup": true
+    },
+    "sampling": "modal palette clusters / fixed frame canvas"
+  }
+}

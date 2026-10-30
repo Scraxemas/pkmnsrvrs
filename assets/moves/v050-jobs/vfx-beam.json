@@ -1,0 +1,92 @@
+{
+  "id": "beam",
+  "subject": "A huge horizontal concentrated green solar-energy beam. Four stages: small luminous green charge on left with faint horizontal guide, focused narrow piercing beam from left to right, wide intensely bright pale-yellow-green beam with sharp jagged green edges and impact crown on right, thin receding beam and separated energy flecks. Each frame is128×64 logical pixels, fourframes horizontal; no circles around art.",
+  "kind": "vfx",
+  "frameWidth": 128,
+  "frameHeight": 64,
+  "frames": 4,
+  "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 128×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A huge horizontal concentrated green solar-energy beam. Four stages: small luminous green charge on left with faint horizontal guide, focused narrow piercing beam from left to right, wide intensely bright pale-yellow-green beam with sharp jagged green edges and impact crown on right, thin receding beam and separated energy flecks. Each frame is128×64 logical pixels, fourframes horizontal; no circles around art.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+  "sourceFile": "exec-fdfab58d-a518-4ed1-b92b-4577d463c8bd.png",
+  "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed",
+  "sourceSha256": "7275f4b94c55d1ffdf02e4218305039543ee02089d3c5dd821ec737cc0a521f8",
+  "sourceSize": [
+    2172,
+    724
+  ],
+  "output": "public/assets/vfx/beam.png",
+  "outputSha256": "f5c19a304bebb7dc8fd1429bf4a885f3c28707d49801ed05f0106437075f5c9a",
+  "processing": {
+    "frameWidth": 128,
+    "frameHeight": 64,
+    "frames": 4,
+    "layout": "horizontal",
+    "colorsPerFrame": 24,
+    "alphaThreshold": 160,
+    "cellCoverage": 0.3,
+    "isolation": {
+      "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+      "sourceFrameBoxes": [
+        [
+          66,
+          159,
+          454,
+          574
+        ],
+        [
+          514,
+          159,
+          964,
+          574
+        ],
+        [
+          999,
+          159,
+          1647,
+          574
+        ],
+        [
+          1693,
+          159,
+          2151,
+          574
+        ]
+      ],
+      "sourceGutters": [
+        [
+          454,
+          514
+        ],
+        [
+          964,
+          999
+        ],
+        [
+          1647,
+          1693
+        ]
+      ],
+      "sourceCuts": [
+        0,
+        484,
+        981,
+        1670,
+        2172
+      ],
+      "sharedCanvasSize": [
+        858,
+        415
+      ],
+      "maxSubjectSourceWidth": 648,
+      "sharedSourceY": [
+        159,
+        574
+      ],
+      "sharedScale": 0.14457831325301204,
+      "preservesRelativeFrameSizes": true,
+      "retainsAllParticlesInsideEachGroup": true
+    },
+    "sampling": "modal palette clusters / fixed frame canvas"
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "version": "0.5.0",
+  "validatedAtUtc": "2026-10-30T14:01:43.042974+00:00",
+  "status": "passed",
+  "typecheck": {
+    "command": "pnpm run typecheck",
+    "status": "passed"
+  },
+  "unitTests": {
+    "command": "pnpm test",
+    "files": 30,
+    "passed": 448,
+    "failed": 0,
+    "durationSeconds": 9.15
+  },
+  "browserTests": {
+    "command": "pnpm exec playwright test (full e2e suite, isolated server/output)",
+    "stats": {
+      "startTime": "2026-10-30T13:51:22.612Z",
+      "duration": 552847.7050000001,
+      "expected": 99,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "workers": 2,
+    "retries": 0,
+    "evidence": "playwright-results.json"
+  },
+  "build": {
+    "command": "pnpm run build",
+    "status": "passed",
+    "loadedBundlePaths": [
+      "/pkmnsrvrs/assets/index-CMnRblcE.js"
+    ]
+  },
+  "productionSubpath": {
+    "prefix": "/pkmnsrvrs/",
+    "requests": 308,
+    "failedRequests": [],
+    "status": "passed",
+    "evidence": "production-audit.json"
+  },
+  "content": {
+    "bulbasaurFamilyMoves": 43,
+    "globalMoves": 52,
+    "technicalMachines": 24,
+    "ordinaryOptionalChains": 6,
+    "fusions": 4
+  },
+  "artwork": {
+    "moveIcons": 52,
+    "retainedV043Icons": 14,
+    "newIcons": 38,
+    "generatedVfxAtlases": 19,
+    "originalGenerations": 57,
+    "nativeActionSheets": 27,
+    "nativeFrameCells": 1592,
+    "runtimePngBytes": 448359
+  },
+  "performance": {
+    "existing400Enemy10SecondSimulationBudgetMs": 5000,
+    "existingBudgetPassed": true,
+    "fiveMove400EnemyDualReplayMs": 2247.6,
+    "renderCpuWithEffects": {
+      "samples": 80,
+      "p50Ms": 0.8199999988079071,
+      "p95Ms": 1.2200000017881394,
+      "meanMs": 0.8337499998882413,
+      "minMs": 0.5,
+      "maxMs": 1.9599999994039536
+    },
+    "renderCpuWithoutEffects": {
+      "samples": 80,
+      "p50Ms": 0.7199999988079071,
+      "p95Ms": 1.3,
+      "meanMs": 0.7327500001341107,
+      "minMs": 0.42000000178813934,
+      "maxMs": 1.6599999994039536
+    },
+    "pairedVfxIncrement": {
+      "samples": 80,
+      "p50Ms": 0.11999999880790713,
+      "p95Ms": 0.5599999994039535,
+      "meanMs": 0.10099999975413083,
+      "minMs": -0.8199999988079072,
+      "maxMs": 0.9400000005960465
+    },
+    "rendererStateHashUnchanged": true,
+    "gpuOrFpsGuarantee": false,
+    "evidence": "render-performance.json"
+  },
+  "visualReview": {
+    "resolutions": [
+      [
+        1280,
+        720
+      ],
+      [
+        1920,
+        1080
+      ]
+    ],
+    "nativeDirectionalCases": 48,
+    "recordedStarterForms": 9,
+    "fusionCardAndEffectCases": 8,
+    "denseEnemyCount": 300,
+    "showcase": "combat-showcase.json",
+    "gallery": "index.html",
+    "galleryAudit": {
+      "status": "passed",
+      "images": 162,
+      "brokenImages": 0,
+      "missingLinks": 0,
+      "horizontalOverflow": false,
+      "evidence": "gallery-audit.json"
+    }
+  },
+  "limitations": [
+    "Only two early Forest research TM reward examples are placed; advanced rewards have generic hooks and development grants.",
+    "Helping Hand currently supplies a solo buff; multiplayer allies are future scope.",
+    "Normal player projectile hits resolve at activation; travel is presentation. Charged attacks resolve on release.",
+    "CPU rendering measurements exclude GPU, compositor, setup and simulation costs."
+  ],
+  "concurrentWorkspaceWork": "Separate font changes were preserved and included in the final browser/build verification."
+}

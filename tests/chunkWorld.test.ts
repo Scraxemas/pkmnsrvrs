@@ -14,12 +14,13 @@ describe('streamed Viridian chunk world',()=>{
     }
   });
   it('keeps obstacle density bounded and central spawn chunks clear',()=>{
-    const map=generateMap(1337);for(const decorations of Object.values(map.decorationBuckets))expect(decorations.filter(d=>d.solid).length).toBeLessThanOrEqual(48);
+    const map=generateMap(1337);for(const decorations of Object.values(map.decorationBuckets))expect(decorations.filter(d=>d.solid).length).toBeLessThanOrEqual(450);
     expect(map.decorations.every(d=>Math.hypot(d.x-map.playerStart.x,d.y-map.playerStart.y)>=260)).toBe(true);
   });
   it('has continuous path pixels across multiple chunk seams',()=>{
     const map=generateMap(1337);let stitched=0;
-    for(let boundary=1;boundary<map.terrain.cols/FOREST_CHUNK_CELLS;boundary++)for(let y=0;y<map.terrain.rows;y++)if(terrainAt(map.terrain,boundary*FOREST_CHUNK_CELLS-1,y)===TERRAIN.path&&terrainAt(map.terrain,boundary*FOREST_CHUNK_CELLS,y)===TERRAIN.path)stitched++;
+    const ox=map.terrain.originCol??0,oy=map.terrain.originRow??0;
+    for(let boundary=1;boundary<3;boundary++)for(let y=oy;y<oy+map.terrain.rows;y++)if(terrainAt(map.terrain,ox+boundary*FOREST_CHUNK_CELLS-1,y)===TERRAIN.path&&terrainAt(map.terrain,ox+boundary*FOREST_CHUNK_CELLS,y)===TERRAIN.path)stitched++;
     expect(stitched).toBeGreaterThan(30);
   });
 });

@@ -5,6 +5,918 @@
   },
   "cards": [
     {
+      "id": "powerWhip",
+      "texture": "move:powerWhip",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "magicalLeaf",
+      "texture": "move:magicalLeaf",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "leafStorm",
+      "texture": "move:leafStorm",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "bulletSeed",
+      "texture": "move:bulletSeed",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "seedBomb",
+      "texture": "move:seedBomb",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "acidSpray",
+      "texture": "move:acidSpray",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "venoshock",
+      "texture": "move:venoshock",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "sludgeBomb",
+      "texture": "move:sludgeBomb",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "toxic",
+      "texture": "move:toxic",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "megaDrain",
+      "texture": "move:megaDrain",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "gigaDrain",
+      "texture": "move:gigaDrain",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "takeDown",
+      "texture": "move:takeDown",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "bodySlam",
+      "texture": "move:bodySlam",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "petalDance",
+      "texture": "move:petalDance",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "petalBlizzard",
+      "texture": "move:petalBlizzard",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "energyBall",
+      "texture": "move:energyBall",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "sunnyDay",
+      "texture": "move:sunnyDay",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "solarBeam",
+      "texture": "move:solarBeam",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "sludgeWave",
+      "texture": "move:sludgeWave",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "synthesis",
+      "texture": "move:synthesis",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "grassyTerrain",
+      "texture": "move:grassyTerrain",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "ingrain",
+      "texture": "move:ingrain",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "grassKnot",
+      "texture": "move:grassKnot",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "grassyGlide",
+      "texture": "move:grassyGlide",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "trailblaze",
+      "texture": "move:trailblaze",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "grassPledge",
+      "texture": "move:grassPledge",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "frenzyPlant",
+      "texture": "move:frenzyPlant",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "poisonJab",
+      "texture": "move:poisonJab",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "earthPower",
+      "texture": "move:earthPower",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "earthquake",
+      "texture": "move:earthquake",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "growl",
+      "texture": "move:growl",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "growth",
+      "texture": "move:growth",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "sleepPowder",
+      "texture": "move:sleepPowder",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "sweetScent",
+      "texture": "move:sweetScent",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "worrySeed",
+      "texture": "move:worrySeed",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "protect",
+      "texture": "move:protect",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "swordsDance",
+      "texture": "move:swordsDance",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
+      "id": "helpingHand",
+      "texture": "move:helpingHand",
+      "source": [
+        32,
+        32
+      ],
+      "size": [
+        64,
+        64
+      ],
+      "scale": [
+        2,
+        2
+      ],
+      "filter": 0,
+      "position": [
+        0,
+        -110
+      ],
+      "bottom": 324,
+      "nameTop": 337,
+      "fallback": false
+    },
+    {
       "id": "tackle",
       "texture": "move:tackle",
       "source": [
@@ -341,7 +1253,7 @@
       "fallback": false
     }
   ],
-  "count": 14,
+  "count": 52,
   "pixelArt": true,
   "antialias": false,
   "mixed": [

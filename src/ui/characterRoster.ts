@@ -15,14 +15,14 @@ export type RosterState='unlocked'|'locked'|'undiscovered'|'unavailable';
 export type RosterSort='dex'|'name';
 export type RosterFilter='all'|'unlocked'|'locked'|'discovered'|'favorites';
 export type RosterMode='character'|'pokedex';
-const enemyDex:Record<string,number>={caterpie:10,metapod:11,butterfree:12,weedle:13,kakuna:14,beedrill:15,pidgey:16,pidgeotto:17};
+const enemyDex:Record<string,number>={caterpie:10,metapod:11,butterfree:12,weedle:13,kakuna:14,beedrill:15,pidgey:16,pidgeotto:17,pikachu:25};
 
 /** Catalogue records, not playable character definitions. Art never grants access. */
 export const CHARACTER_RECORDS:RosterRecord[]=[
-  ...Object.values(POKEMON).map(p=>{const startingPartner=(STARTERS as readonly string[]).includes(p.id),from=Object.values(POKEMON).find(parent=>parent.evolvesTo===p.id);return{dex:p.dex,id:p.id,name:p.name,types:p.types,portrait:assetFor(p.id,'portrait'),combat:p,startingPartner,restriction:startingPartner?undefined:from?`Evolution form. Evolve ${from.name} at level ${from.evolutionLevel} during a run. This form is not a starting partner.`:'A playable partner unlock is not available yet.'};}),
-  ...Object.values(ENEMIES).map(p=>({dex:enemyDex[p.id],id:p.id,name:p.name,types:p.types,portrait:assetFor(p.id,'portrait'),startingPartner:false,restriction:'Encountered in the wild. A playable partner unlock is not available yet.'})),
-  ...([{dex:25,id:'pikachu',name:'Pikachu',types:['Electric']},{dex:43,id:'oddish',name:'Oddish',types:['Grass','Poison']},{dex:69,id:'bellsprout',name:'Bellsprout',types:['Grass','Poison']}] as const).map(p=>({...p,types:[...p.types] as PokemonType[],portrait:assetFor(p.id,'portrait'),startingPartner:false,restriction:'A playable partner unlock is not available yet.'})),
-];
+  ...Object.values(POKEMON).map(p=>{const startingPartner=(STARTERS as readonly string[]).includes(p.id)||p.id==='weedle',from=Object.values(POKEMON).find(parent=>parent.evolvesTo===p.id);return{dex:p.dex,id:p.id,name:p.name,types:p.types,portrait:assetFor(p.id,'portrait'),combat:p,startingPartner,restriction:p.id==='weedle'?'Defeat Beedrill in Viridian Forest to unlock Weedle.':startingPartner?undefined:from?`Evolution form. Evolve ${from.name} at level ${from.evolutionLevel} during a run. This form is not a starting partner.`:'A playable partner unlock is not available yet.'};}),
+  ...Object.values(ENEMIES).filter(p=>!POKEMON[p.id]).map(p=>({dex:enemyDex[p.id],id:p.id,name:p.name,types:p.types,portrait:assetFor(p.id,'portrait'),startingPartner:false,restriction:'Encountered in the wild. A playable partner unlock is not available yet.'})),
+  ...([{dex:25,id:'pikachu',name:'Pikachu',types:['Electric']},{dex:43,id:'oddish',name:'Oddish',types:['Grass','Poison']},{dex:69,id:'bellsprout',name:'Bellsprout',types:['Grass','Poison']}] as const).filter(p=>!ENEMIES[p.id]&&!POKEMON[p.id]).map(p=>({...p,types:[...p.types] as PokemonType[],portrait:assetFor(p.id,'portrait'),startingPartner:false,restriction:'A playable partner unlock is not available yet.'})),
+].sort((a,b)=>a.dex-b.dex);
 
 /** Empty National Dex slots have no species identity, stats, moves or artwork. */
 export function regionRoster(region:RosterRegion,records:readonly RosterRecord[]=CHARACTER_RECORDS):RosterRecord[]{
@@ -61,7 +61,7 @@ export function rosterRequirement(record:RosterRecord,save:SaveData){
   if(state==='unlocked')return 'Ready for your next run.';
   if(!record.id)return 'Reserved National Dex slot. A playable Pokémon is not available here yet.';
   if(state==='undiscovered')return 'Explore and meet Pokémon to reveal their identities. Discovery does not unlock a playable partner.';
-  if(state==='locked')return 'This starter is locked in your save. No additional unlock challenge is currently available.';
+  if(state==='locked')return record.restriction??'This starter is locked in your save. No additional unlock challenge is currently available.';
   return record.restriction??'A playable partner unlock is not available yet.';
 }
 export function filterRoster(records:readonly RosterRecord[],save:SaveData,sort:RosterSort,filter:RosterFilter,mode:RosterMode='character'){

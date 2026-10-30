@@ -1,96 +1,135 @@
-import {createTerrainGrid,setTerrain,TERRAIN,terrainAtWorld,TerrainCode} from './terrain';
-import {distanceToTrails,featureContains,forestHash,ForestRng,planForest} from './forestPlan';
-import {FOREST_CHUNK_CELLS,FOREST_CHUNK_SIZE,FOREST_TILE_SIZE,chunkKey} from './worldConstants';
+import {createTerrainGrid,TERRAIN,terrainAtWorld,TerrainCode} from './terrain';
+import {distanceToTrails,featureContains,forestHash,ForestRng,planForest,type EllipseFeature,type ForestFeatures,type Point,type Trail} from './forestPlan';
+import {FOREST_CHUNK_CELLS,FOREST_TILE_SIZE,chunkKey} from './worldConstants';
 import type {Decoration,ForestMotif,Landmark,Rect,WorldChunk} from './worldgen';
 
+export interface ForestChunkData extends WorldChunk {
+  terrain:ReturnType<typeof createTerrainGrid>;
+  decorations:Decoration[];
+  trails:Trail[];
+  template:string;
+  rotation:number;
+}
+
+/** Authored arrangements, rotated and varied as a unit, rather than tile noise. */
+export const FOREST_TEMPLATES=[
+  {id:'woodland-groves',motif:'forest-wall',groves:[[.17,.18],[.28,.24],[.18,.76],[.76,.18],[.78,.76],[.69,.83]],grass:[[.25,.58]],rocks:[[.68,.31]],ponds:[],cliffs:[],logs:[[.25,.33]]},
+  {id:'sunlit-meadow',motif:'flower-meadow',groves:[[.16,.18],[.81,.22],[.18,.79],[.79,.81]],grass:[[.74,.66]],rocks:[[.22,.62]],ponds:[],cliffs:[],logs:[[.77,.32]]},
+  {id:'reedy-pond',motif:'pond',groves:[[.17,.19],[.75,.75],[.19,.77],[.79,.23]],grass:[[.7,.27],[.74,.75]],rocks:[[.19,.64]],ponds:[[.27,.28]],cliffs:[],logs:[[.22,.79]]},
+  {id:'bug-nesting-thicket',motif:'tall-grass',groves:[[.17,.19],[.79,.23],[.21,.78],[.78,.79],[.3,.25]],grass:[[.24,.31],[.72,.67],[.24,.72]],rocks:[[.77,.33]],ponds:[],cliffs:[],logs:[[.22,.81],[.81,.65]]},
+  {id:'mossy-outcrop',motif:'rocky',groves:[[.18,.2],[.78,.19],[.22,.76],[.77,.77]],grass:[[.75,.69]],rocks:[[.24,.28],[.77,.28],[.22,.7]],ponds:[],cliffs:[[.26,.27]],logs:[[.72,.8]]},
+  {id:'narrow-woodland',motif:'corridor',groves:[[.32,.28],[.68,.27],[.29,.71],[.71,.7],[.2,.5],[.8,.5]],grass:[[.18,.22],[.8,.77]],rocks:[[.22,.73]],ponds:[],cliffs:[],logs:[[.75,.24]]},
+  {id:'open-combat-glade',motif:'clearing',groves:[[.15,.18],[.82,.17],[.16,.82],[.83,.81]],grass:[[.18,.68]],rocks:[[.79,.3]],ponds:[],cliffs:[],logs:[[.25,.83]]},
+  {id:'hidden-forest-camp',motif:'campsite',groves:[[.18,.19],[.79,.23],[.2,.79],[.79,.78]],grass:[[.76,.29]],rocks:[[.23,.74]],ponds:[],cliffs:[],logs:[[.23,.31]]},
+] as const;
+
 export function regionalMotif(seed:number,cx:number,cy:number):ForestMotif {
-  const region=forestHash(seed,Math.floor(cx/3),Math.floor(cy/3))%5,local=forestHash(seed,cx,cy,0x1753)%10;
-  const types:ForestMotif[][]=[['forest-wall','forest-wall','forest-wall','clearing','corridor'],['tall-grass','pond','tall-grass','flower-meadow','clearing'],['rocky','cliff','rocky','forest-wall','clearing'],['flower-meadow','clearing','flower-meadow','corridor','tall-grass'],['landmark','forest-wall','corridor','tall-grass','clearing']];
-  return types[region][local%5];
+  const region=forestHash(seed,Math.floor(cx/3),Math.floor(cy/3),0x5187);
+  const index=(forestHash(seed,cx,cy,0x1753)+(region%3))%FOREST_TEMPLATES.length;
+  return FOREST_TEMPLATES[index].motif;
 }
 
 export function buildForest(seed:number){
-  const width=8192,height=8192,features=planForest(seed,width,height),start={x:features.clearings[0].x,y:features.clearings[0].y};
-  const grid=createTerrainGrid(width,height,FOREST_TILE_SIZE),decorations:Decoration[]=[],landmarks:Landmark[]=[],chunks:Record<string,WorldChunk>={},treeCells=new Map<string,{x:number;y:number}[]>();
-  const raster=(x:number,y:number,rx:number,ry:number,inside:(wx:number,wy:number)=>boolean,value:TerrainCode)=>{
-    const x0=Math.max(0,Math.floor((x-rx)/32)),x1=Math.min(grid.cols-1,Math.ceil((x+rx)/32)),y0=Math.max(0,Math.floor((y-ry)/32)),y1=Math.min(grid.rows-1,Math.ceil((y+ry)/32));
-    for(let gy=y0;gy<=y1;gy++)for(let gx=x0;gx<=x1;gx++)if(inside(gx*32+16,gy*32+16))setTerrain(grid,gx,gy,value);
+  // The original authored-scale forest plan remains the campaign's recognisable
+  // core. It is now rasterised only for resident chunks, with wilderness beyond.
+  const width=8192,height=8192,features=planForest(seed,width,height);
+  const start={x:features.clearings[0].x,y:features.clearings[0].y};
+  const arena=features.clearings[1],bossArena={x:arena.x-300,y:arena.y-300,width:600,height:600};
+  const pikachu=features.clearings[2],exit=features.clearings[features.clearings.length-1];
+  const landmarks:Landmark[]=[
+    {id:'entrance',...start,radius:350},
+    {id:'pikachu-hollow',x:pikachu.x,y:pikachu.y,radius:pikachu.radius},
+    {id:'beedrill-nest',x:arena.x,y:arena.y,radius:440},
+    {id:'pewter-exit',x:exit.x,y:exit.y,radius:exit.radius},
+    ...features.clearings.map(c=>({id:'clearing',x:c.x,y:c.y,radius:c.radius})),
+    ...features.ponds.map(c=>({id:'pond',x:c.x,y:c.y,radius:Math.max(c.rx,c.ry)})),
+    ...features.cliffs.map(c=>({id:'cliff',x:c.x,y:c.y,radius:Math.max(c.rx,c.ry)})),
+    ...features.camps.map(c=>({id:'campsite',x:c.x,y:c.y+110,radius:c.radius})),
+  ];
+  const ancient=features.clearings.slice(3).find(c=>features.camps.every(camp=>Math.hypot(camp.x-c.x,camp.y-c.y)>c.radius+250))??features.clearings[3];
+  landmarks.push({id:'ancient-tree',x:ancient.x+ancient.radius*.5,y:ancient.y-ancient.radius*.4,radius:95});
+  const spawnZones:Rect[]=[];for(let i=0;i<8;i++){const a=i*Math.PI/4;spawnZones.push({x:start.x+Math.cos(a)*680-160,y:start.y+Math.sin(a)*680-140,width:320,height:280});}
+  return{width,height,start,bossArena,landmarks,spawnZones,features};
+}
+
+/** Shared edge hashes give both neighbours exactly the same walkable port. */
+export function forestChunkPorts(seed:number,cx:number,cy:number,cells=FOREST_CHUNK_CELLS){
+  const size=cells*FOREST_TILE_SIZE,offset=(value:number)=>(Math.floor(cells*.25)+value%Math.max(1,Math.floor(cells*.5)))*FOREST_TILE_SIZE+FOREST_TILE_SIZE/2;
+  return{
+    north:{x:cx*size+offset(forestHash(seed,cx,cy,0x4e)),y:cy*size},
+    south:{x:cx*size+offset(forestHash(seed,cx,cy+1,0x4e)),y:(cy+1)*size},
+    west:{x:cx*size,y:cy*size+offset(forestHash(seed,cx,cy,0x45))},
+    east:{x:(cx+1)*size,y:cy*size+offset(forestHash(seed,cx+1,cy,0x45))},
   };
-  for(const feature of features.ponds)raster(feature.x,feature.y,feature.rx*1.12,feature.ry*1.12,(x,y)=>featureContains(feature,x,y),TERRAIN.water);
-  for(const feature of features.cliffs)raster(feature.x,feature.y,feature.rx*1.12,feature.ry*1.12,(x,y)=>featureContains(feature,x,y),TERRAIN.cliff);
-  // Paint each connected trail as overlapping native-grid capsules.
-  for(const trail of features.trails)for(let i=1;i<trail.points.length;i++){
-    const a=trail.points[i-1],b=trail.points[i],length=Math.hypot(b.x-a.x,b.y-a.y),steps=Math.ceil(length/24);
-    for(let step=0;step<=steps;step++){
-      const t=step/Math.max(1,steps),x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t,r=trail.width/2;
-      raster(x,y,r,r,(wx,wy)=>Math.hypot(wx-x,wy-y)<=r,TERRAIN.path);
+}
+
+export function generateForestChunk(seed:number,cx:number,cy:number,features:ForestFeatures,cells=FOREST_CHUNK_CELLS):ForestChunkData {
+  const size=cells*FOREST_TILE_SIZE,x0=cx*size,y0=cy*size,rng=new ForestRng(forestHash(seed,cx,cy,0x517cc1b7));
+  const motif=regionalMotif(seed,cx,cy),template=FOREST_TEMPLATES.find(t=>t.motif===motif)!,rotation=rng.int(4),mirror=rng.next()<.5?-1:1;
+  const point=(u:number,v:number):Point=>{let x=(u-.5)*mirror,y=v-.5;for(let i=0;i<rotation;i++)[x,y]=[-y,x];return{x:x0+(x+.5)*size,y:y0+(y+.5)*size};};
+  const centre={x:x0+size*(.46+rng.next()*.08),y:y0+size*(.46+rng.next()*.08)},ports=forestChunkPorts(seed,cx,cy,cells);
+  const trails:Trail[]=Object.entries(ports).map(([side,port])=>{
+    const dx=centre.x-port.x,dy=centre.y-port.y,length=Math.hypot(dx,dy)||1;
+    const inset={x:port.x+(side==='west'?128:side==='east'?-128:0),y:port.y+(side==='north'?128:side==='south'?-128:0)},bend=(rng.next()-.5)*size*.12;
+    return{id:`${cx},${cy}-${side}`,width:128,points:[port,inset,{x:(inset.x+centre.x)/2-dy/length*bend,y:(inset.y+centre.y)/2+dx/length*bend},centre]};
+  });
+  const inChunk=(p:Point,padding=0)=>p.x>=x0-padding&&p.y>=y0-padding&&p.x<x0+size+padding&&p.y<y0+size+padding;
+  // Join handcrafted clearings and the original trail network to the chunk's
+  // port network. No landmark depends on a random opening.
+  for(const clearing of features.clearings.filter(p=>inChunk(p)))trails.push({id:`access-${clearing.id}`,width:144,points:[centre,clearing]});
+  const authoredTrails=features.trails.filter(t=>t.points.some(p=>inChunk(p,size)));
+  for(const trail of authoredTrails){
+    trails.push(trail);
+    // Clip each intersecting segment. Long segments can cross a chunk without
+    // an authored control point in it, and still need a local connector.
+    for(let i=1;i<trail.points.length;i++){
+      const a=trail.points[i-1],b=trail.points[i],dx=b.x-a.x,dy=b.y-a.y;let lo=0,hi=1,valid=true;
+      const shoulder=trail.width/2;
+      for(const [p,q] of [[-dx,a.x-x0+shoulder],[dx,x0+size+shoulder-a.x],[-dy,a.y-y0+shoulder],[dy,y0+size+shoulder-a.y]]){
+        if(p===0){if(q<0)valid=false;continue;}const t=q/p;if(p<0)lo=Math.max(lo,t);else hi=Math.min(hi,t);
+      }
+      if(valid&&lo<=hi){const t=(lo+hi)/2,local={x:a.x+dx*t,y:a.y+dy*t};trails.push({id:`join-${trail.id}-${i}`,width:128,points:[centre,local]});}
     }
   }
-  const protectedPoint=(x:number,y:number)=>features.clearings.some(c=>Math.hypot(c.x-x,c.y-y)<c.radius+30)||features.camps.some(c=>Math.hypot(c.x-x,c.y-y)<c.radius+35);
-  const place=(id:string,x:number,y:number,radius:number,solid=true,allowWater=false)=>{
-    if(x<60||x>width-60||y<132||y>height-24||Math.hypot(x-start.x,y-start.y)<300)return false;
-    const terrain=terrainAtWorld(grid,x,y);
-    if(allowWater?terrain!==TERRAIN.water:terrain!==TERRAIN.grass)return false;
-    if(solid&&id!=='tent'&&id!=='campLog'&&id!=='supplies'&&protectedPoint(x,y))return false;
+  const localFeature=(positions:readonly (readonly number[])[],prefix:string,rx:number,ry:number):EllipseFeature[]=>positions.map(([u,v],i)=>({...point(u,v),id:`${prefix}-${cx},${cy}-${i}`,rx:rx*size/2048,ry:ry*size/2048,phase:rng.next()*Math.PI*2}));
+  const ponds=[...features.ponds.filter(p=>inChunk(p,400)),...localFeature(template.ponds,'pond',235,170)];
+  const cliffs=[...features.cliffs.filter(p=>inChunk(p,400)),...localFeature(template.cliffs,'cliff',165,130)];
+  const patches=localFeature(template.grass,'grass',235+rng.int(100),170+rng.int(90));
+  const clearings=features.clearings.filter(p=>inChunk(p,500)),camps=features.camps.filter(p=>inChunk(p,300));
+  const pathDistance=(x:number,y:number)=>distanceToTrails({trails} as ForestFeatures,x,y);
+  const protectedPoint=(x:number,y:number)=>clearings.some(c=>Math.hypot(c.x-x,c.y-y)<c.radius+35)||camps.some(c=>Math.hypot(c.x-x,c.y-y)<c.radius+35)||(motif==='clearing'||motif==='flower-meadow')&&Math.hypot(x-centre.x,y-centre.y)<380;
+  const terrain=createTerrainGrid(size,size,FOREST_TILE_SIZE);terrain.originCol=cx*cells;terrain.originRow=cy*cells;
+  for(let y=0;y<cells;y++)for(let x=0;x<cells;x++){
+    const wx=x0+x*32+16,wy=y0+y*32+16;let value:TerrainCode=TERRAIN.grass;
+    if(pathDistance(wx,wy)<=0)value=TERRAIN.path;
+    else if(!protectedPoint(wx,wy)){
+      if(ponds.some(p=>featureContains(p,wx,wy)))value=TERRAIN.water;
+      else if(cliffs.some(p=>featureContains(p,wx,wy)))value=TERRAIN.cliff;
+      else if(patches.some(p=>featureContains(p,wx,wy)))value=TERRAIN.tallGrass;
+    }
+    terrain.cells[y*cells+x]=value;
+  }
+  const decorations:Decoration[]=[],treeCells=new Map<string,Point[]>();
+  const place=(id:string,x:number,y:number,radius:number,solid=true,allowWater=false,camp=false)=>{
+    if(!inChunk({x,y})||Math.hypot(x-features.clearings[0].x,y-features.clearings[0].y)<300)return false;
+    const ground=terrainAtWorld(terrain,x,y);if(allowWater?ground!==TERRAIN.water:ground!==TERRAIN.grass&&ground!==TERRAIN.tallGrass)return false;
+    if(solid&&(!camp&&protectedPoint(x,y)||pathDistance(x,y)<radius+48))return false;
     if(id==='tree'){
-      const cx=Math.floor(x/64),cy=Math.floor(y/64);
-      for(let oy=-1;oy<=1;oy++)for(let ox=-1;ox<=1;ox++)if((treeCells.get(chunkKey(cx+ox,cy+oy))??[]).some(t=>Math.hypot(t.x-x,t.y-y)<46))return false;
-      const key=chunkKey(cx,cy);if(!treeCells.has(key))treeCells.set(key,[]);treeCells.get(key)!.push({x,y});
+      const tx=Math.floor(x/64),ty=Math.floor(y/64);for(let oy=-1;oy<=1;oy++)for(let ox=-1;ox<=1;ox++)if(treeCells.get(chunkKey(tx+ox,ty+oy))?.some(t=>Math.hypot(t.x-x,t.y-y)<52))return false;
+      const key=chunkKey(tx,ty);if(!treeCells.has(key))treeCells.set(key,[]);treeCells.get(key)!.push({x,y});
     }
     const collisionRadius=solid?(id==='tree'?14:id==='tent'?31:id==='landRock'?Math.max(13,radius*.6):Math.max(10,radius*.5)):0;
-    decorations.push({id,x,y,depth:Math.round(y),solid,radius,collisionRadius});return true;
+    decorations.push({id,x,y,depth:Math.round(y),solid,radius,collisionRadius,persistentId:`${cx},${cy}:${decorations.length}`});return true;
   };
-  const flowers=(x:number,y:number,radius:number,rng:ForestRng)=>{
-    for(let i=0;i<7+rng.int(5);i++){const a=rng.next()*Math.PI*2,r=Math.sqrt(rng.next())*radius;place(['flowerWhite','flowerPink','flowerYellow'][rng.int(3)],x+Math.cos(a)*r,y+Math.sin(a)*r*.65,0,false);}
-  };
-  for(let cy=0;cy<16;cy++)for(let cx=0;cx<16;cx++){
-    const key=chunkKey(cx,cy),rng=new ForestRng(forestHash(seed,cx,cy,0x517cc1b7)),x=cx*512+256,y=cy*512+256;
-    let motif=regionalMotif(seed,cx,cy);
-    if(features.clearings.some(c=>Math.hypot(c.x-x,c.y-y)<c.radius))motif='clearing';
-    if(features.ponds.some(f=>Math.hypot(f.x-x,f.y-y)<260))motif='pond';
-    if(features.cliffs.some(f=>Math.hypot(f.x-x,f.y-y)<260))motif='cliff';
-    if(features.camps.some(c=>Math.hypot(c.x-x,c.y-y)<280))motif='campsite';
-    chunks[key]={key,cx,cy,motif,encounterWeight:motif==='tall-grass'?1.35:motif==='clearing'?.8:1,safeSpawn:motif==='clearing'||motif==='corridor',featureIds:[...features.ponds,...features.cliffs,...features.camps].filter(f=>Math.abs(f.x-x)<512&&Math.abs(f.y-y)<512).map(f=>f.id)};
-    if(motif==='tall-grass'||(motif==='pond'&&rng.next()<.6)){
-      const gx=cx*512+130+rng.next()*240,gy=cy*512+130+rng.next()*240,rx=95+rng.int(100),ry=75+rng.int(85),phase=rng.next()*Math.PI*2;
-      raster(gx,gy,rx*1.2,ry*1.2,(wx,wy)=>!protectedPoint(wx,wy)&&terrainAtWorld(grid,wx,wy)===TERRAIN.grass&&featureContains({id:'grass',x:gx,y:gy,rx,ry,phase},wx,wy),TERRAIN.tallGrass);
-    }
-    const groves=motif==='forest-wall'?3:motif==='clearing'||motif==='campsite'?1:2;
-    for(let grove=0;grove<groves;grove++){
-      const ax=cx*512+80+rng.next()*350,ay=cy*512+100+rng.next()*330,count=3+rng.int(6),spread=75+rng.int(80);
-      let planted=0;for(let i=0;i<count*4;i++){
-        const angle=rng.next()*Math.PI*2,r=Math.sqrt(rng.next())*spread,tx=ax+Math.cos(angle)*r,ty=ay+Math.sin(angle)*r*.8;
-        if(place('tree',tx,ty,30)&&++planted>=count)break;
-      }
-      if(rng.next()<.5)place('bush',ax+70,ay+40,15);
-      if(rng.next()<.3)place('sapling',ax-70,ay-20,20);
-    }
-    if(motif==='rocky'){
-      const rx=cx*512+170+rng.next()*170,ry=cy*512+150+rng.next()*190;
-      for(let i=0;i<5+rng.int(3);i++)place('landRock',rx+(rng.next()-.5)*180,ry+(rng.next()-.5)*150,24+rng.int(12));
-    }
-    if(motif==='flower-meadow'||motif==='landmark'){
-      const fx=cx*512+140+rng.next()*230,fy=cy*512+140+rng.next()*230;
-      flowers(fx,fy,75+rng.int(55),rng);landmarks.push({id:'flower-clearing',x:fx,y:fy,radius:90});
-    }
+  for(const [u,v] of template.groves){
+    const anchor=point(u+(rng.next()-.5)*.055,v+(rng.next()-.5)*.055),count=motif==='forest-wall'||motif==='corridor'?28:18;
+    for(let i=0;i<count*3;i++){const a=rng.next()*Math.PI*2,r=Math.sqrt(rng.next())*(150+rng.next()*70);place('tree',anchor.x+Math.cos(a)*r,anchor.y+Math.sin(a)*r*.85,30);}
+    place('bush',anchor.x+180,anchor.y+35,15);if(rng.next()<.6)place('sapling',anchor.x-170,anchor.y-45,20);
   }
-  for(const pond of features.ponds){
-    landmarks.push({id:'pond',x:pond.x,y:pond.y,radius:Math.max(pond.rx,pond.ry)});
-    const rng=new ForestRng(forestHash(seed,Math.floor(pond.x),Math.floor(pond.y)));
-    for(let i=0;i<2;i++)place('waterRock',pond.x+(rng.next()-.5)*pond.rx,pond.y+(rng.next()-.5)*pond.ry,20,false,true);
-    for(let i=0;i<6;i++){const a=rng.next()*Math.PI*2;place('reeds',pond.x+Math.cos(a)*(pond.rx+22),pond.y+Math.sin(a)*(pond.ry+22),0,false);}
-  }
-  for(const camp of features.camps){
-    place('tent',camp.x,camp.y,42);place('campLog',camp.x-80,camp.y+65,24);place('campLog',camp.x+72,camp.y+65,24);place('supplies',camp.x+65,camp.y+5,16);
-    flowers(camp.x-96,camp.y-60,45,new ForestRng(forestHash(seed,Math.floor(camp.x),Math.floor(camp.y))));
-    landmarks.push({id:'campsite',x:camp.x,y:camp.y+110,radius:camp.radius});
-  }
-  for(const c of features.clearings)landmarks.push({id:'clearing',x:c.x,y:c.y,radius:c.radius});
-  for(const c of features.cliffs)landmarks.push({id:'cliff',x:c.x,y:c.y,radius:Math.max(c.rx,c.ry)});
-  const ancientClearing=features.clearings.slice(2).find(c=>features.camps.every(camp=>Math.hypot(camp.x-c.x,camp.y-c.y)>c.radius+250))??features.clearings[1];
-  landmarks.push({id:'ancient-tree',x:ancientClearing.x+ancientClearing.radius*.5,y:ancientClearing.y-ancientClearing.radius*.4,radius:95});
-  const arena=features.clearings[1],bossArena={x:arena.x-300,y:arena.y-300,width:600,height:600};
-  const spawnZones:Rect[]=[];for(let i=0;i<8;i++){const a=i*Math.PI/4;spawnZones.push({x:start.x+Math.cos(a)*680-160,y:start.y+Math.sin(a)*680-140,width:320,height:280});}
-  const decorationBuckets:Record<string,Decoration[]>={};for(const decoration of decorations){const key=chunkKey(Math.floor(decoration.x/512),Math.floor(decoration.y/512));(decorationBuckets[key]??=[]).push(decoration);}
-  return{width,height,start,bossArena,grid,decorations,landmarks,chunks,spawnZones,decorationBuckets,features};
+  for(const [u,v] of template.rocks){const p=point(u,v);for(let i=0;i<6;i++)place('landRock',p.x+(rng.next()-.5)*180,p.y+(rng.next()-.5)*150,24+rng.int(12));}
+  for(const [u,v] of template.logs){const p=point(u,v);place('campLog',p.x,p.y,28);place('bush',p.x+52,p.y+10,15,false);}
+  if(motif==='flower-meadow'||motif==='clearing'||motif==='campsite')for(let i=0;i<30;i++){const a=rng.next()*Math.PI*2,r=190+rng.next()*170;place(['flowerWhite','flowerPink','flowerYellow'][rng.int(3)],centre.x+Math.cos(a)*r,centre.y+Math.sin(a)*r*.7,0,false);}
+  for(const pond of ponds){for(let i=0;i<2;i++)place('waterRock',pond.x+(rng.next()-.5)*pond.rx,pond.y+(rng.next()-.5)*pond.ry,20,false,true);for(let i=0;i<8;i++){const a=i*Math.PI/4;place('reeds',pond.x+Math.cos(a)*(pond.rx+22),pond.y+Math.sin(a)*(pond.ry+22),0,false);}}
+  for(const camp of camps){place('tent',camp.x,camp.y,42,true,false,true);place('campLog',camp.x-80,camp.y+65,24,true,false,true);place('campLog',camp.x+72,camp.y+65,24,true,false,true);place('supplies',camp.x+65,camp.y+5,16,true,false,true);}
+  return{key:chunkKey(cx,cy),cx,cy,motif,encounterWeight:motif==='tall-grass'?1.35:motif==='clearing'?.8:1,safeSpawn:motif==='clearing'||motif==='corridor',featureIds:[...ponds,...cliffs,...camps].map(f=>f.id),terrain,decorations,trails,template:template.id,rotation};
 }

@@ -1,0 +1,92 @@
+{
+  "id": "water",
+  "subject": "A high-pressure cyan-blue horizontal water jet with white highlights. Four stages: small water glob at left, narrow jet projecting right, thick jet meeting a large broad splash crown at right, broken droplets dissipating. Dark blue contour, no bubble rings.",
+  "kind": "vfx",
+  "frameWidth": 64,
+  "frameHeight": 64,
+  "frames": 4,
+  "prompt": "Use case: stylized-concept\nAsset type: original animated pixel-art combat VFX sprite sheet, separate from inventory icons.\nPrimary request: ONE sprite sheet with exactly FOUR chronological animation frames in a single horizontal row of four equal isolated cells. Each frame is a distinct keyframe of the same effect: anticipation / activation / strong impact / dissipating. No text, numbering, labels, cell outlines or grid. Use a wide transparent canvas. Each logical cell is 64×64 pixels, enlarged with crisp square pixels. Clear empty gutters prevent adjacent-cell overlap. Keep common baseline and center across frames and preserve the size progression rather than filling every cell equally.\nSubject: A high-pressure cyan-blue horizontal water jet with white highlights. Four stages: small water glob at left, narrow jet projecting right, thick jet meeting a large broad splash crown at right, broken droplets dissipating. Dark blue contour, no bubble rings.\nStyle: Original professionally crafted GBA-era RPG pixel art, limited harmonious elemental palette, hard square pixel clusters, clean dark stepped contours, bright small highlights, no smooth illustration, no gradients, no antialiasing. Transparent background with actual alpha; no painted checkerboard or scenery. Effects should be readable around small creature sprites and hundreds of enemies. Do not depict any Pokémon or characters.",
+  "sourceFile": "exec-23f396ca-708f-46fa-879d-20133f054fe4.png",
+  "recoveryNote": "Original built-in generation completed during interrupted orchestration; source subject verified in contact sheet.",
+  "tool": "Codex built-in image_gen.imagegen",
+  "model": "not exposed",
+  "sourceSha256": "14cbf23d8b99856be6a81c3cf62e8bfdf693314a874acec19f38607969f007cf",
+  "sourceSize": [
+    1983,
+    793
+  ],
+  "output": "public/assets/vfx/water.png",
+  "outputSha256": "4ac266df6c2295f6275605f7546539cad0a83e33c354b1c101bbe5b8b82f21bd",
+  "processing": {
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "frames": 4,
+    "layout": "horizontal",
+    "colorsPerFrame": 24,
+    "alphaThreshold": 160,
+    "cellCoverage": 0.3,
+    "isolation": {
+      "method": "three widest fully transparent alpha-projection gutters; horizontally centered subjects and shared vertical baseline/scale",
+      "sourceFrameBoxes": [
+        [
+          39,
+          161,
+          255,
+          677
+        ],
+        [
+          410,
+          161,
+          932,
+          677
+        ],
+        [
+          980,
+          161,
+          1524,
+          677
+        ],
+        [
+          1565,
+          161,
+          1945,
+          677
+        ]
+      ],
+      "sourceGutters": [
+        [
+          255,
+          410
+        ],
+        [
+          932,
+          980
+        ],
+        [
+          1524,
+          1565
+        ]
+      ],
+      "sourceCuts": [
+        0,
+        332,
+        956,
+        1544,
+        1983
+      ],
+      "sharedCanvasSize": [
+        544,
+        544
+      ],
+      "maxSubjectSourceWidth": 544,
+      "sharedSourceY": [
+        161,
+        677
+      ],
+      "sharedScale": 0.11029411764705882,
+      "preservesRelativeFrameSizes": true,
+      "retainsAllParticlesInsideEachGroup": true
+    },
+    "sampling": "modal palette clusters / fixed frame canvas"
+  }
+}
