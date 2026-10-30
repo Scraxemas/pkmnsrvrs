@@ -1,0 +1,13 @@
+{
+  "count": 9,
+  "scroll": 0,
+  "animatedTiles": 0,
+  "backgrounds": 1,
+  "rect": {
+    "x": -5,
+    "y": 0,
+    "width": 1290,
+    "height": 720,
+    "scale": 0.9375
+  }
+}

@@ -1,5 +1,16 @@
 # Asset manifest
 
+## v0.3.10 evolution metadata
+
+- Existing portrait PNGs, forest art, logo, sprites, and map art remain unchanged.
+- Ancestry metadata comes from the pinned [PokeAPI species CSV](https://github.com/PokeAPI/pokeapi/blob/f38eb24b70f8462976154f534e79bf2bdd7af847/data/v2/csv/pokemon_species.csv).
+  It supplies parent relationships only and creates no playable definitions or
+  artwork. Single-stage, Legendary, and Mythical species receive no special
+  exclusion rule; unavailable later-generation babies remain region-gated.
+- Original CSV, revision/hash provenance, and upstream license are retained in
+  `assets/data/pokeapi`. The generated runtime parent map is
+  `src/data/evolutionParents.ts`; import script: `tools/import_evolution_families.py`.
+
 ## v0.3.9 character roster
 
 - Roster tiles and large previews reuse the existing PMDCollab portrait PNGs.

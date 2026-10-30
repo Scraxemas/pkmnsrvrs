@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
-import {assetFor,ENEMIES,MOVES,POKEMON} from './content';
+import {POKEMON} from './content';
 import {loadSave,updateSettings} from './save';
 import {motionReduced,PlayerSettings} from './preferences';
 import {actionButton,element,icon} from './ui/dom';
 import {locationCard} from './ui/locationCard';
-import {FRONTEND_VERSION,LocationCardData,locationCards,menuAsset,MENU_ART,researchStatistics,PLAY_MODES,STARTERS} from './ui/menuData';
+import {FRONTEND_VERSION,LocationCardData,locationCards,menuAsset,MENU_ART,researchStatistics,PLAY_MODES} from './ui/menuData';
 import {MenuInput} from './ui/menuInput';
 import {arcadeButton} from './ui/arcadeButton';
 import {MenuBackgroundController} from './ui/menuBackgroundController';
@@ -76,10 +76,10 @@ export class PokemonScene extends FrontendScene {
   constructor(){super('pokemon');}
   init(data?:{pokemon?:string}){if(data?.pokemon&&POKEMON[data.pokemon])this.selection.preview(POKEMON[data.pokemon].dex);}
   create(){
-    this.mount('pokemon','Select Pokémon','Choose a partner for your next run.');this.selection.preview(this.selection.dex);
+    this.mount('pokemon','Select Pokémon');this.selection.preview(this.selection.dex);
     const back=()=>this.scene.start('menu',{mode:true});
     this.roster=new CharacterRosterView(this.root,this.content,this.footer,loadSave(),this.selection,this.sort,this.filter,back,id=>this.scene.start('stage',{pokemon:id}),(sort,filter)=>{this.sort=sort;this.filter=filter;});
-    this.navigation=new MenuInput(this.root,back,{initialFocus:()=>{const tile=this.roster?.selectedTile();tile?.scrollIntoView({block:'nearest',inline:'nearest'});return tile;},move:direction=>this.roster?.move(direction)??false});
+    this.navigation=new MenuInput(this.root,back,{focusOnHover:false,initialFocus:()=>{const tile=this.roster?.selectedTile();tile?.scrollIntoView({block:'nearest',inline:'nearest'});return tile;},move:direction=>this.roster?.move(direction)??false});
     this.animateBackground();this.events.once('shutdown',()=>this.roster?.destroy());
   }
 }
@@ -104,16 +104,12 @@ export class StageScene extends FrontendScene {
 }
 
 export class DexScene extends FrontendScene {
+  selection=new CharacterSelection('pokedex');roster?:CharacterRosterView;sort:RosterSort='dex';filter:RosterFilter='all';
   constructor(){super('dex');}
   create(){
-    const save=loadSave(),ids=[...new Set([...Object.keys(POKEMON),...Object.keys(ENEMIES)])],known=new Set([...save.pokedex,...STARTERS]);
-    this.mount('dex','Pokédex',`${ids.filter(id=>known.has(id)).length} / ${ids.length} discovered · Meet Pokémon and evolve your partners to fill these pages.`);
-    const grid=element('div','dex-grid');
-    for(const id of ids){const pokemon=POKEMON[id]??ENEMIES[id],card=element('article',`dex-entry${known.has(id)?'':' dex-entry--unknown'}`);
-      if(known.has(id)){const image=element('img');image.src=assetFor(id,'portrait');image.alt='';const info=element('div');info.append(element('h2','',pokemon.name),element('p','',pokemon.types.join(' / ')));card.append(image,info);}
-      else card.append(element('span','unknown-portrait','?'),element('div','','Undiscovered Pokémon'));grid.append(card);
-    }
-    this.content.append(grid);this.controls(()=>this.scene.start('menu'));
+    this.mount('dex','Pokédex');const back=()=>this.scene.start('menu');
+    this.roster=new CharacterRosterView(this.root,this.content,this.footer,loadSave(),this.selection,this.sort,this.filter,back,()=>{},(sort,filter)=>{this.sort=sort;this.filter=filter;},'pokedex');
+    this.navigation=new MenuInput(this.root,back,{focusOnHover:false,initialFocus:()=>this.roster?.selectedTile(),move:direction=>this.roster?.move(direction)??false});this.animateBackground();this.events.once('shutdown',()=>this.roster?.destroy());
   }
 }
 

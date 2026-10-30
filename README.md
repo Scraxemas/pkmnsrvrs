@@ -34,12 +34,19 @@ The camera stays fixed. Play opens Single Player / Multiplayer
 mode selection; multiplayer is explicitly unavailable. Personal bests and saved
 totals are in Research → Statistics. The report includes actual animation footage.
 
-The latest [v0.3.9 character roster](docs/V039_CHARACTER_ROSTER.md) replaces the
+The [v0.3.9 character roster](docs/V039_CHARACTER_ROSTER.md) replaces the
 large partner cards with a scrollable portrait grid and selected-partner panel.
 Original PMD portraits, actual level-one stats and starting moves, discovery and
 unlock states, sorting, filters, and saved favorites are supported. One Select
 button continues to Stage Selection. Only the three existing starters are
 playable; other catalogue slots do not grant new characters.
+
+The latest [v0.3.10 corrections](docs/V0310_CHARACTER_CORRECTIONS.md) restrict
+Character Selection to registered base forms, remove roster numbers, and keep
+the complete portrait/move/stat summary visible without right-panel scrolling.
+Hover no longer changes selection. The separate Pokédex retains the numbered
+151-species grid, evolved discoveries, and family information. Saves and artwork
+are preserved; the same three starters remain playable.
 
 ## FRLG asset library
 

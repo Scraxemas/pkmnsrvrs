@@ -2,13 +2,28 @@ import {describe,expect,it} from 'vitest';
 import {POKEMON} from '../src/content';
 import {startingStats} from '../src/playerStats';
 import {freshSave,loadSave,toggleFavorite,updateSettings} from '../src/save';
-import {CHARACTER_RECORDS,CharacterSelection,filterRoster,regionRoster,ROSTER_REGIONS,rosterName,rosterRequirement,rosterState,STAT_CAPS} from '../src/ui/characterRoster';
+import {baseCharacterRoster,buildRoster,CHARACTER_RECORDS,CharacterSelection,evolutionFamily,filterRoster,isBaseStartingForm,regionRoster,ROSTER_REGIONS,rosterName,rosterRequirement,rosterState,STAT_CAPS,RosterRecord} from '../src/ui/characterRoster';
 import {makeState} from '../src/simulation';
 import {generateMap} from '../src/worldgen';
 
 const find=(id:string)=>CHARACTER_RECORDS.find(record=>record.id===id)!;
 function storage():Storage{const data=new Map<string,string>();return{get length(){return data.size;},getItem:key=>data.get(key)??null,setItem:(key,value)=>{data.set(key,value);},clear:()=>data.clear(),removeItem:key=>{data.delete(key);},key:index=>[...data.keys()][index]??null};}
 describe('character roster and independent selections',()=>{
+  it('uses evolutionary ancestry to retain only actual base-form candidates',()=>{
+    expect(baseCharacterRoster().map(record=>record.id)).toEqual(['bulbasaur','charmander','squirtle','caterpie','weedle','pidgey','pikachu','oddish','bellsprout']);
+    for(const dex of [2,3,5,6,8,9,11,12,14,15,17,18,26,44,45,70,71])expect(isBaseStartingForm(dex)).toBe(false);
+    expect(buildRoster('character')).toHaveLength(9);expect(buildRoster('pokedex')).toHaveLength(151);expect(buildRoster('character','johto')).toEqual([]);
+  });
+  it('does not exclude single-stage species, legendary species or mythical species',()=>{
+    const records:RosterRecord[]=[127,132,143,144,145,146,150,151].map(dex=>({dex,id:`fixture-${dex}`,types:[],startingPartner:false}));
+    expect(baseCharacterRoster(ROSTER_REGIONS,records).map(record=>record.dex)).toEqual([127,132,143,144,145,146,150,151]);
+    expect(evolutionFamily(151)).toEqual([151]);expect(evolutionFamily(133)).toEqual([133,134,135,136]);
+  });
+  it('keeps future babies gated by region and preserves the separate species family',()=>{
+    expect(isBaseStartingForm(25)).toBe(true);expect(isBaseStartingForm(172)).toBe(false);expect(evolutionFamily(1)).toEqual([1,2,3]);expect(evolutionFamily(25)).toEqual([25,26]);
+    const regions=ROSTER_REGIONS.map(region=>({...region,available:region.id!=='hoenn'}));expect(isBaseStartingForm(25,regions)).toBe(false);expect(isBaseStartingForm(172,regions)).toBe(true);expect(evolutionFamily(25,regions)).toEqual([172,25,26]);
+    expect(isBaseStartingForm(122)).toBe(true);expect(isBaseStartingForm(143)).toBe(true);
+  });
   it('has 151 stable catalogue slots without manufacturing combat definitions',()=>{
     const roster=regionRoster(ROSTER_REGIONS[0]);expect(roster).toHaveLength(151);expect(new Set(roster.map(r=>r.dex)).size).toBe(151);expect(roster[150]).toEqual({dex:151,types:[],startingPartner:false});expect(roster.filter(r=>r.combat)).toHaveLength(Object.keys(POKEMON).length);
     expect(ROSTER_REGIONS.map(r=>[r.first,r.last,r.available])).toEqual([[1,151,true],[152,251,false],[252,386,false]]);

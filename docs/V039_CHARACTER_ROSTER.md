@@ -1,5 +1,9 @@
 # v0.3.9 — Pokémon character roster
 
+Follow-up: [v0.3.10](V0310_CHARACTER_CORRECTIONS.md) separates the base-form
+character roster from the numbered species Pokédex and compacts the summary.
+The screenshots and behavior below document the original v0.3.9 milestone.
+
 The partner screen now uses a compact, scrollable portrait roster and a dedicated
 selected-Pokémon panel. Existing Bulbasaur, Charmander, and Squirtle portraits
 remain the primary artwork in both places. Their files are unchanged; no new

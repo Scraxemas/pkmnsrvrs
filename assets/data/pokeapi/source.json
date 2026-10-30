@@ -1,0 +1,9 @@
+{
+  "repository": "https://github.com/PokeAPI/pokeapi",
+  "revision": "f38eb24b70f8462976154f534e79bf2bdd7af847",
+  "source": "data/v2/csv/pokemon_species.csv",
+  "sha256": "e66e2eeb25fd3836b0ebab6bf87bbf01960aa3c0555e2bac495fa8393c5e0c45",
+  "use": "Evolution ancestry only; no gameplay definitions or artwork",
+  "species": 1025,
+  "parentLinks": 484
+}
