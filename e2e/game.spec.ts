@@ -5,11 +5,11 @@ test('menu to deterministic Viridian Forest run with visual checkpoints',async({
   await page.goto('/?fast=1&debug=1&seed=1337');
   const canvas=page.locator('canvas');await expect(canvas).toBeVisible();await page.waitForTimeout(500);
   await page.screenshot({path:'test-results/screenshots/01-main-menu.png'});
-  await canvas.click({position:{x:640,y:310}});await page.waitForTimeout(300);
+  await page.getByRole('button',{name:'New Run',exact:true}).click();await page.waitForTimeout(300);
   await page.screenshot({path:'test-results/screenshots/02-pokemon-selection.png'});
-  await canvas.click({position:{x:250,y:550}});await page.waitForTimeout(300);
+  await page.getByRole('button',{name:'Choose Bulbasaur'}).click();await page.waitForTimeout(300);
   await page.screenshot({path:'test-results/screenshots/03-stage-selection.png'});
-  await canvas.click({position:{x:250,y:445}});await page.waitForTimeout(1000);
+  await page.getByRole('button',{name:'Enter Forest',exact:true}).click();await page.waitForTimeout(1000);
   await expect(canvas).toBeVisible();await page.screenshot({path:'test-results/screenshots/04-viridian-early.png'});
   await page.keyboard.down('d');await page.waitForTimeout(500);await page.keyboard.up('d');
   const state=await page.evaluate(()=>{const g=(window as any).__POKEMON_SURVIVORS__;const s=g.scene.getScene('game');return{level:s.state.level,enemies:s.state.enemies.length,hash:s.state.seed,player:s.state.player};});

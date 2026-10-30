@@ -22,6 +22,12 @@ damaged Pokémon show a small overhead HP bar that hides after full healing.
 See [the v0.3.6 world and UI report](docs/V036_WORLD_AND_UI.md) for the ten-seed
 gallery, asset classification, campsite/cliff features, and browser validation.
 
+The [v0.3.7 menu redesign](docs/V037_MENU_REDESIGN.md) uses the supplied Viridian
+Forest background and location artwork. Menu controls support mouse, keyboard,
+and controller. Settings save reduced motion, damage numbers, and screen shake;
+fullscreen reports the browser's actual state. Audio and later Kanto stages are
+clearly labeled as future content.
+
 ## FRLG asset library
 
 The complete supplied tileset is extracted into [assets/extracted/frlg](assets/extracted/frlg/README.md). Open its `index.html` locally to browse all 4,792 native cells, complete props, and reusable terrain. Names include dimensions and source coordinates; unverified semantic identities are explicitly labeled for review. Complete assembled props are separated from raw prop parts.

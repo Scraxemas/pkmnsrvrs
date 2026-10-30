@@ -1,5 +1,16 @@
 # Asset manifest
 
+## v0.3.7 menu presentation
+
+- User-supplied `viridian_forest_main_menu.jpg` and `FL_Viridian_Forest_card.png`
+  are imported byte-for-byte under `public/assets/menu`. They serve as menu
+  background and location-card artwork only.
+- `assets/menu-imports.json` records original names, dimensions, roles, and hashes.
+- Attribution/licensing beyond the user's supplied files was not provided. The
+  import does not assert new redistribution rights.
+- Local pixel typography: Google Fonts Silkscreen Regular/Bold, with original
+  SIL Open Font License retained at `src/ui/fonts/OFL-Silkscreen.txt`.
+
 ## Pokémon sprites and portraits
 
 - Source: [PMD Sprite Repository](https://sprites.pmdcollab.org/), mirrored from [PMDCollab/SpriteCollab](https://github.com/PMDCollab/SpriteCollab)

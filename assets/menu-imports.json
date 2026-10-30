@@ -1,0 +1,18 @@
+[
+  {
+    "source": "viridian_forest_main_menu.jpg",
+    "path": "assets/menu/viridian-forest-main-menu.jpg",
+    "role": "Viridian Forest first-milestone main-menu background",
+    "width": 1376,
+    "height": 768,
+    "sha256": "97ae7a4a4a83f228b9d16a600d981b60a03a9f8e1adcd335a774d15782407e11"
+  },
+  {
+    "source": "FL_Viridian_Forest_card.png",
+    "path": "assets/menu/viridian-forest-card.png",
+    "role": "Viridian Forest reusable location-card hero artwork",
+    "width": 240,
+    "height": 128,
+    "sha256": "f85c2c448e1f99930ebfffd4dbba94f77f6f399fda2e3a3d74b14bfcf9649950"
+  }
+]

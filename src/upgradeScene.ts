@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import {SimState,Upgrade} from './simulation';
 import {describeUpgrade,UpgradeDetails} from './upgrades';
+import {loadSave} from './save';
+import {motionReduced} from './preferences';
 
 interface ChoiceConfig {title:string;options:Upgrade[];state:SimState;onSelect:(upgrade:Upgrade)=>void;}
 
@@ -57,6 +59,7 @@ export class UpgradeScene extends Phaser.Scene {
     this.drawCards(true);
   }
   drawCards(entrance:boolean){
+    entrance=entrance&&!motionReduced(loadSave().settings);
     for(const card of this.cards)card.destroy(true);this.cards=[];this.pager?.destroy();this.pager=undefined;
     const options=this.config.options.slice(this.page*3,this.page*3+3),width=330,height=480,gap=26;
     options.forEach((option,i)=>{

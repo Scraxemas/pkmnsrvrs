@@ -1,6 +1,11 @@
-# v0.3.6 implementation status
+# v0.3.7 implementation status
 
-Latest pass: functional animated upgrade cards with queued levels and mastery,
+Latest frontend: supplied Viridian Forest background and reusable location art,
+responsive title screen and subpages, spatial keyboard/controller menu navigation,
+real save summaries, and persistent presentation settings. See [the menu report](V037_MENU_REDESIGN.md)
+for artwork hashes, source files, screenshots, and browser verification.
+
+Previous gameplay pass: functional animated upgrade cards with queued levels and mastery,
 incremental EXP HUD, auto-hiding overhead HP, disabled entity shadows, fresh normal
 run seeds and explicit replay seeds, globally planned trails/clearings, regional
 groves and grass, flowers, pond reeds, separate land/water rocks, tiled collidable
