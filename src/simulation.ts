@@ -79,17 +79,24 @@ export function beginBossEncounter(state:SimState){
  spawnSpecies(state,'beedrill',1,false,true,arrival);
  state.bossSpawned=state.enemies.some(e=>e.boss);return state.bossSpawned;
 }
-export function discoverNearbyForest(state:SimState){
- const stream=state.world.stream;if(!stream)return;
+export function discoverNearbyForest(state:SimState):string[]{
+ const stream=state.world.stream;if(!stream)return [];
+ const discovered:string[]=[];
  for(const landmark of state.world.landmarks){
   if(Math.hypot(landmark.x-state.player.x,landmark.y-state.player.y)>landmark.radius+80)continue;
-  if(!['entrance','pikachu-hollow','beedrill-nest','pewter-exit','campsite'].includes(landmark.id)&&!landmark.id.startsWith('campsite:')&&!landmark.id.startsWith('ancient-tree:'))continue;
+  if(!['entrance','pikachu-hollow','beedrill-nest','pewter-exit'].includes(landmark.id)&&
+   !['campsite:','ancient-tree:','tm-cache:'].some(prefix=>landmark.id.startsWith(prefix)))continue;
   if(landmark.id==='pikachu-hollow'&&!stream.persistent.discoveries.includes('pikachu-encounter')){
    const before=state.enemies.length;spawnSpecies(state,'pikachu',1,true,false,{x:landmark.x,y:landmark.y});
    if(state.enemies.length>before)markWorldDiscovery(state.world,'pikachu-encounter');
   }
-  markWorldDiscovery(state.world,landmark.id);
+  if(markWorldDiscovery(state.world,landmark.id)){
+   discovered.push(landmark.id);
+   if(landmark.id.startsWith('campsite:')||landmark.id.startsWith('ancient-tree:'))
+    state.pickups.push({id:++state.eventId,x:state.player.x+20,y:state.player.y+20,kind:'ball',tier:1,value:1});
+  }
  }
+ return discovered;
 }
 export function spawn(state:SimState,count:number,elite=false,boss=false){spawnSpecies(state,boss?'beedrill':elite?'pidgeotto':'caterpie',count,elite,boss);}
 export function reachablePickupPosition(state:Pick<SimState,'navigation'|'world'|'player'>,x:number,y:number){
@@ -222,7 +229,7 @@ export function tick(state:SimState,dt:number,input:{x:number;y:number},legacyMo
  }
  const field=state.navigation,targetChanged=Math.floor(state.player.x/field.cellSize)!==field.targetGridX||Math.floor(state.player.y/field.cellSize)!==field.targetGridY;
  if(field.worldRevision!==(state.world.stream?.revision??0)||(targetChanged&&state.time>=(state.nextNavigationAt??0))){state.navigation=buildFlowField(state.world,state.player.x,state.player.y,field.cellSize);state.navigationRebuilds++;state.nextNavigationAt=state.time+.25;}
- discoverNearbyForest(state);
+ for(const id of discoverNearbyForest(state))events.push('forest-discovery:'+id);
  stepMoveRuntime(state,dt,mods);for(const e of state.enemies)enemyAI(state,e,dt,events,mods);separateEnemies(state,dt);updateProjectiles(state,dt,mods);processGroundEffects(state,dt,mods);stepPickups(state,dt,mods,events);
  const slots:MoveSlot[]=legacyMoves?legacyMoves.map(move=>({id:move.id,rank:1})):state.moveSlots;for(const slot of slots){const move=MOVES[slot.id];if(!move)continue;const cooldown=moveCooldown(state,slot,mods),previousTime=state.time-dt;if(slot.nextAttackAt===undefined)slot.nextAttackAt=(Math.floor(previousTime/cooldown)+1)*cooldown;else if(slot.cooldownDuration&&Math.abs(slot.cooldownDuration-cooldown)>1e-9)slot.nextAttackAt=previousTime+Math.max(0,slot.nextAttackAt-previousTime)/slot.cooldownDuration*cooldown;slot.cooldownDuration=cooldown;if(state.time+1e-9<slot.nextAttackAt)continue;slot.nextAttackAt+=Math.max(1,Math.floor((state.time-slot.nextAttackAt)/cooldown)+1)*cooldown;const attack=activate(state,slot,move,mods);if(attack)state.attacks.push(attack);}
  const dead=state.enemies.filter(enemy=>enemy.hp<=0);for(const enemy of dead){state.defeated++;const position=reachablePickupPosition(state,enemy.x,enemy.y);dropExperience(state,position.x,position.y,enemy.xp);if(enemy.boss||enemy.elite)state.pickups.push({id:++state.eventId,...position,value:1,kind:'ball',tier:enemy.boss?3:2});if(!enemy.boss)dropConsumable(state,position.x,position.y,enemy.elite);events.push(`defeated:${enemy.species}`);events.push(enemy.boss?'boss-defeated':enemy.elite?'elite-defeated':'enemy-defeated');}state.enemies=state.enemies.filter(enemy=>enemy.hp>0);
