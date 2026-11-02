@@ -6,7 +6,7 @@ import { ENVIRONMENT_ASSETS, ENVIRONMENT_ATLASES, environmentKey, environmentUrl
 import {cliffFrame,decorationVisual,visibleChunkRange} from './worldPresentation';
 import {GrassBrushField} from './grassBrush';
 import {GRASS_FOREGROUND_ALPHA,grassFootCoverage,measureVisibleRows,opaqueGrassBladeColumn,VisibleRows} from './grassOcclusion';
-import {gameplayHudLayout, GameplayHudLayout, hpBarColor,experienceProgress} from './hudLayout';
+import {gameplayHudLayout, GameplayHudLayout, hpBarColor,experienceProgress,formatSurvivalTimer} from './hudLayout';
 import {seedForRun} from './runSeed';
 import {RENDER_SETTINGS} from './renderSettings';
 import {renderProfile} from './renderProfiles';
@@ -31,6 +31,7 @@ import {hasMoveArt,moveTexture,preloadMoveArt} from './moveAssets';
 import {pixelArt} from './ui/pixelArt';
 import {PickupRenderer} from './pickupRenderer';
 import {ItemHud} from './ui/itemHud';
+import {MobileCombatHud} from './ui/mobileCombatHud';
 import {MoveHud} from './ui/moveHud';
 import {progressionNoticeText} from './upgrades';
 import {MoveVfxRenderer,preloadMoveVfx} from './moveVfx';
@@ -47,16 +48,16 @@ class GameScene extends Phaser.Scene {
  groundLayer!:Phaser.GameObjects.Layer;worldLayer!:Phaser.GameObjects.Layer;effectsLayer!:Phaser.GameObjects.Layer;
  preferences!:PlayerSettings;
  state!:SimState;keys!:Record<string,Phaser.Input.Keyboard.Key>;player!:Phaser.GameObjects.Sprite;playerShadow!:Phaser.GameObjects.Ellipse;cameraTarget!:Phaser.GameObjects.Zone;
- portrait!:Phaser.GameObjects.Image;hud!:Phaser.GameObjects.Text;expGraphics!:Phaser.GameObjects.Graphics;expText!:Phaser.GameObjects.Text;playerHpGraphics!:Phaser.GameObjects.Graphics;bossGraphics!:Phaser.GameObjects.Graphics;bossText!:Phaser.GameObjects.Text;hpLayout!:GameplayHudLayout;
+ portrait!:Phaser.GameObjects.Image;hud!:Phaser.GameObjects.Text;timerText!:Phaser.GameObjects.Text;researchHud!:Phaser.GameObjects.Text;expGraphics!:Phaser.GameObjects.Graphics;expText!:Phaser.GameObjects.Text;playerHpGraphics!:Phaser.GameObjects.Graphics;bossGraphics!:Phaser.GameObjects.Graphics;bossText!:Phaser.GameObjects.Text;hpLayout!:GameplayHudLayout;
  expDisplay=0;expLevel=1;expFlash=0;playerHpBounds={x:0,y:0,width:0,height:0,fillWidth:0};
  debugText?:Phaser.GameObjects.Text;debugGraphics?:Phaser.GameObjects.Graphics;enemyViews=new Map<number,Phaser.GameObjects.Sprite>();enemyShadows=new Map<number,Phaser.GameObjects.Ellipse>();pickupViews=new Map<number,Phaser.GameObjects.Image>();projectileViews=new Map<number,Phaser.GameObjects.Shape>();
- pickupRenderer!:PickupRenderer;itemHud!:ItemHud;moveHud!:MoveHud;previousPickups=new Map<number,Position>();
+ pickupRenderer!:PickupRenderer;itemHud!:ItemHud;moveHud!:MoveHud;mobileHud!:MobileCombatHud;previousPickups=new Map<number,Position>();
  playerAnimation!:PokemonAnimationController;enemyAnimations=new Map<number,PokemonAnimationController>();previousPlayer!:Position;previousEnemies=new Map<number,Position>();previousProjectiles=new Map<number,Position>();renderPlayer:Position={x:0,y:0};
  chunkViews=new Map<string,Phaser.GameObjects.GameObject[]>();chunkRangeKey='';activeChunk={cx:Number.NaN,cy:Number.NaN};sessionDefeats:Record<string,number>={};sessionBalls=0;sessionUnlockedTms:string[]=[];runStartPokemon:string[]=[];acc=0;overlay?:Phaser.GameObjects.Container;fast=false;debug=false;duration=1800;nextSpawn=0;miniIndex=0;bossWarningShown=false;ended=false;
  grassViews=new Map<string,GrassView>();grassBrush=new GrassBrushField();grassParticles=new Set<Phaser.GameObjects.Rectangle>();grassBrushCount=0;
  pokemonVisibleRows=new Map<string,VisibleRows[]>();
  moveVfx!:MoveVfxRenderer;statusHud!:Phaser.GameObjects.Text;researchBase:Record<string,number>={};lastHitReaction=Number.NEGATIVE_INFINITY;
- objectiveHud!:Phaser.GameObjects.Text;
+ objectiveHud!:Phaser.GameObjects.Text;inspectMove=0;inspectItem=0;
  pendingChoices:ChoiceRequest[]=[];activeChoice?:{request:ChoiceRequest;options:Upgrade[]};choiceSerial=0;
  chunkContentRevision=0;
  forestDiscoveryCount=0;
@@ -67,7 +68,7 @@ class GameScene extends Phaser.Scene {
 
  constructor(){super('game')}
  init(d:{pokemon:string;fast?:boolean;seed?:number}){
-  const saved=loadSave();this.runStartPokemon=[...saved.unlockedPokemon];this.preferences=saved.settings;this.researchBase={...saved.research};this.fast=!!d.fast;this.debug=import.meta.env.DEV&&new URLSearchParams(location.search).has('debug');this.state=makeState(POKEMON[d.pokemon]??POKEMON.bulbasaur,seedForRun(location.search,d.seed),undefined,{discoveredTms:saved.discoveredTms});this.duration=this.fast?90:1800;this.ended=false;this.overlay=undefined;this.acc=0;this.nextSpawn=0;this.miniIndex=0;this.sessionDefeats={};this.sessionBalls=0;this.sessionUnlockedTms=[];this.expDisplay=0;this.expLevel=1;this.expFlash=0;
+  const saved=loadSave();this.runStartPokemon=[...saved.unlockedPokemon];this.preferences=saved.settings;this.researchBase={...saved.research};this.fast=!!d.fast;this.debug=import.meta.env.DEV&&new URLSearchParams(location.search).has('debug');this.state=makeState(POKEMON[d.pokemon]??POKEMON.bulbasaur,seedForRun(location.search,d.seed),undefined,{discoveredTms:saved.discoveredTms});this.duration=this.fast?90:1800;this.ended=false;this.overlay=undefined;this.acc=0;this.nextSpawn=0;this.miniIndex=0;this.sessionDefeats={};this.sessionBalls=0;this.sessionUnlockedTms=[];this.expDisplay=0;this.expLevel=1;this.expFlash=0;this.inspectMove=0;this.inspectItem=0;
   this.enemyViews.clear();this.enemyShadows.clear();this.enemyAnimations.clear();this.pickupViews.clear();this.projectileViews.clear();this.previousEnemies.clear();this.previousProjectiles.clear();this.chunkViews.clear();this.chunkRangeKey='';this.activeChunk={cx:Number.NaN,cy:Number.NaN};this.previousPlayer={x:this.state.player.x,y:this.state.player.y};
   this.grassViews.clear();this.grassBrush.clear();this.grassParticles.clear();this.grassBrushCount=0;
   this.previousPickups.clear();
@@ -84,7 +85,7 @@ class GameScene extends Phaser.Scene {
   this.groundLayer=this.add.layer().setName('terrain-layer').setDepth(0);
   this.worldLayer=this.add.layer().setName('world-layer').setDepth(1);
   this.effectsLayer=this.add.layer().setName('world-effects-layer').setDepth(2);
-  this.events.once('shutdown',()=>{this.scene.stop('upgrade');this.scene.stop('results');this.pickupRenderer.destroy();this.itemHud.destroy();this.moveHud.destroy();this.moveVfx.destroy();});
+  this.events.once('shutdown',()=>{this.scene.stop('upgrade');this.scene.stop('results');this.pickupRenderer.destroy();this.itemHud.destroy();this.moveHud.destroy();this.mobileHud.destroy();this.moveVfx.destroy();});
   this.cameras.main.centerOn(this.state.player.x,this.state.player.y);this.drawForest();
   // Prepare one likely next chunk between crossings, never the whole world.
   this.time.addEvent({delay:175,loop:true,callback:()=>prewarmWorldChunk(this.state.world,this.state.player.x,this.state.player.y)});
@@ -96,12 +97,43 @@ class GameScene extends Phaser.Scene {
   this.player=this.add.sprite(this.state.player.x,this.state.player.y,`${this.state.pokemonId}-sprite`,0).setOrigin(.5,1).setScale(profile.scale).setDepth(this.state.player.y+20);
   this.worldLayer.add([this.playerShadow,this.player]);
   this.cameraTarget=this.add.zone(this.state.player.x,this.state.player.y,1,1);if(!this.state.world.stream)this.cameras.main.setBounds(0,0,this.state.world.width,this.state.world.height);else this.cameras.main.removeBounds();this.cameras.main.roundPixels=true;this.cameras.main.startFollow(this.cameraTarget,true,1,1);
-  this.hpLayout=gameplayHudLayout(W,H);this.expGraphics=this.add.graphics().setDepth(22000).setScrollFactor(0);this.expText=this.add.text(W/2,this.hpLayout.experience.y+this.hpLayout.experience.height/2,'',{fontFamily:FONT,fontSize:'17px',fontStyle:'bold',color:'#fff',stroke:'#10202a',strokeThickness:3}).setOrigin(.5).setDepth(22001).setScrollFactor(0);this.playerHpGraphics=this.add.graphics().setDepth(18000);this.bossGraphics=this.add.graphics().setDepth(21990).setScrollFactor(0);this.bossText=this.add.text(W/2,this.hpLayout.boss.y+this.hpLayout.boss.height/2,'',{fontFamily:FONT,fontSize:'13px',fontStyle:'bold',color:'#fff',stroke:'#2a1010',strokeThickness:2}).setOrigin(.5).setDepth(21991).setScrollFactor(0);this.portrait=this.add.image(1215,this.hpLayout.portraitY,`${this.state.pokemonId}-portrait`).setScale(1.35).setDepth(20000).setScrollFactor(0);this.hud=this.add.text(18,this.hpLayout.infoY,'',{fontFamily:FONT,fontSize:'14px',color:'#fff',backgroundColor:'#102019dd',padding:{x:10,y:8},lineSpacing:3}).setDepth(20000).setScrollFactor(0);
+  this.hpLayout=gameplayHudLayout(W,H);
+   const layout=this.hpLayout;
+   this.expGraphics=this.add.graphics().setDepth(22000).setScrollFactor(0);
+   this.expText=this.add.text(layout.experience.x,20,'',{fontFamily:FONT,fontSize:'11px',color:'#e8f8ff',backgroundColor:'#102019ea',padding:{x:6,y:3}}).setDepth(22001).setScrollFactor(0).setVisible(false);
+   this.expGraphics.setInteractive(new Phaser.Geom.Rectangle(layout.experience.x,layout.experience.y,layout.experience.width,layout.experience.height),Phaser.Geom.Rectangle.Contains);
+   this.expGraphics.on('pointerover',()=>this.expText.setVisible(true));this.expGraphics.on('pointerout',()=>this.expText.setVisible(false));
+   this.timerText=this.add.text(layout.timer.x,layout.timer.y,'',{fontFamily:FONT,fontSize:'28px',fontStyle:'bold',color:'#ffffff',stroke:'#0c1c1c',strokeThickness:5}).setName('survival-timer').setOrigin(.5).setDepth(22001).setScrollFactor(0);
+   this.playerHpGraphics=this.add.graphics().setDepth(18000);
+   this.bossGraphics=this.add.graphics().setDepth(21990).setScrollFactor(0);
+   this.bossText=this.add.text(W/2,layout.boss.y-17,'',{fontFamily:FONT,fontSize:'13px',fontStyle:'bold',color:'#fff',stroke:'#2a1010',strokeThickness:3}).setOrigin(.5).setDepth(21991).setScrollFactor(0);
+   this.portrait=this.add.image(layout.portrait.x,layout.portrait.y,`${this.state.pokemonId}-portrait`).setDisplaySize(48,48).setDepth(20000).setScrollFactor(0);
+   this.hud=this.add.text(layout.character.x,layout.infoY,'',{fontFamily:FONT,fontSize:'14px',fontStyle:'bold',color:'#fff',backgroundColor:'#102019b0',padding:{x:8,y:5}}).setOrigin(1,0).setName('character-summary').setDepth(20000).setScrollFactor(0);
   this.effectsLayer.add(this.playerHpGraphics);
-  this.objectiveHud=this.add.text(18,174,'',{fontFamily:FONT,fontSize:'12px',color:'#dce8c8',backgroundColor:'#102019c9',padding:{x:8,y:5}}).setName('forest-objective').setDepth(20000).setScrollFactor(0);
+  this.objectiveHud=this.add.text(layout.objective.x,layout.objective.y,'',{fontFamily:FONT,fontSize:'12px',color:'#dce8c8',backgroundColor:'#102019ad',padding:{x:6,y:4}}).setOrigin(1,0).setName('forest-objective').setDepth(20000).setScrollFactor(0);
+   this.researchHud=this.add.text(layout.research.x,layout.research.y,'',{fontFamily:FONT,fontSize:'11px',color:'#b9eacc',backgroundColor:'#1020199c',padding:{x:6,y:4}}).setOrigin(1,0).setName('field-research-compact').setDepth(20000).setScrollFactor(0);
   if(this.debug){this.debugGraphics=this.add.graphics().setDepth(19990);this.effectsLayer.add(this.debugGraphics);this.debugText=this.add.text(W-440,H-215,'',{fontFamily:FONT,fontSize:'13px',color:'#9fffb3',backgroundColor:'#07120ddd',padding:{x:8,y:6}}).setDepth(22010).setScrollFactor(0);}
-  this.pickupRenderer=new PickupRenderer(this,this.worldLayer,this.effectsLayer);this.pickupViews=this.pickupRenderer.views;this.itemHud=new ItemHud(this);this.moveHud=new MoveHud(this);this.itemHud.update(this.state,motionReduced(this.preferences));this.renderMoveHud();
-  this.statusHud=this.add.text(790,125,'',{fontFamily:FONT,fontSize:'11px',color:'#cce8d5',backgroundColor:'#102019b8',padding:{x:7,y:5},wordWrap:{width:350}}).setName('combat-status-hud').setDepth(20000).setScrollFactor(0);
+  this.pickupRenderer=new PickupRenderer(this,this.worldLayer,this.effectsLayer);this.pickupViews=this.pickupRenderer.views;this.itemHud=new ItemHud(this);this.moveHud=new MoveHud(this);this.mobileHud=new MobileCombatHud();this.mobileHud.update(this.state);this.itemHud.update(this.state,motionReduced(this.preferences));this.renderMoveHud();
+   // Keyboard digits inspect move slots 1–5 and held-item slots 6–9.
+   const inspectKeyboard=(event:KeyboardEvent)=>{
+    if(this.overlay||this.ended)return;
+    const key=Number(event.key);
+    if(Number.isInteger(key)&&key>=1&&key<=5){this.itemHud.hideDetail();this.moveHud.showDetail(key-1);}
+    else if(Number.isInteger(key)&&key>=6&&key<=9){this.moveHud.hideDetail();this.itemHud.showDetail(key-6);}
+    else if(event.key==='Escape'){this.moveHud.hideDetail();this.itemHud.hideDetail();}
+   };
+   this.input.keyboard?.on('keydown',inspectKeyboard);
+   this.events.once('shutdown',()=>this.input.keyboard?.off('keydown',inspectKeyboard));
+   // Controller shoulders cycle inspected moves/items without interfering with the movement stick.
+   const inspectGamepad=(_pad:Phaser.Input.Gamepad.Gamepad,button:Phaser.Input.Gamepad.Button)=>{
+    if(this.overlay||this.ended)return;
+    if(button.index===4){this.itemHud.hideDetail();this.moveHud.showDetail(this.inspectMove++%5);}
+    else if(button.index===5){this.moveHud.hideDetail();this.itemHud.showDetail(this.inspectItem++%4);}
+    else if(button.index===1){this.moveHud.hideDetail();this.itemHud.hideDetail();}
+   };
+   this.input.gamepad?.on('down',inspectGamepad);
+   this.events.once('shutdown',()=>this.input.gamepad?.off('down',inspectGamepad));
+  this.statusHud=this.add.text(layout.status.x+330,layout.status.y,'',{fontFamily:FONT,fontSize:'11px',color:'#cce8d5',backgroundColor:'#102019b8',padding:{x:7,y:5},wordWrap:{width:330}}).setOrigin(1,0).setName('combat-status-hud').setDepth(20000).setScrollFactor(0);
   if(import.meta.env.DEV)void import('./devMoveTools').then(({installMoveDevelopmentTools})=>installMoveDevelopmentTools(this));
   spawnSpecies(this.state,'caterpie',6);spawnSpecies(this.state,'weedle',4);this.renderHealthBars();
   // This unregistered pointer is used only for hit testing at native event coordinates.
@@ -145,8 +177,8 @@ class GameScene extends Phaser.Scene {
   const layout=this.hpLayout,summary=experienceProgress(this.state.level,this.state.xp,this.state.nextXp),bar=layout.experience,g=this.expGraphics;
   if(this.expLevel!==this.state.level){this.expLevel=this.state.level;this.expDisplay=0;this.expFlash=1;}
   this.expDisplay+=(summary.ratio-this.expDisplay)*(1-Math.exp(-delta/80));this.expFlash=Math.max(0,this.expFlash-delta/450);
-  g.clear().fillStyle(0x08121c,.96).fillRect(bar.x-4,bar.y-4,bar.width+8,bar.height+8).fillStyle(0x1d2d51,1).fillRect(bar.x,bar.y,bar.width,bar.height).fillStyle(this.expFlash>.3?0xbfeeff:0x62c8ff,1).fillRect(bar.x,bar.y,Math.round(bar.width*this.expDisplay),bar.height).lineStyle(3,0xe7dfb0,1).strokeRect(bar.x-1,bar.y-1,bar.width+2,bar.height+2);
-  this.expText.setText(summary.label);
+  g.clear().fillStyle(0x08121c,.92).fillRect(bar.x-1,bar.y-1,bar.width+2,bar.height+2).fillStyle(0x1d2d51,1).fillRect(bar.x,bar.y,bar.width,bar.height).fillStyle(this.expFlash>.3?0xbfeeff:0x62c8ff,1).fillRect(bar.x,bar.y,Math.round(bar.width*this.expDisplay),bar.height).lineStyle(1,0xc5e4d5,.85).strokeRect(bar.x,bar.y,bar.width,bar.height);
+  if(this.expText.text!==summary.label)this.expText.setText(summary.label);
   const hpRatio=Math.max(0,Math.min(1,this.state.hp/Math.max(1,this.state.maxHp))),zoom=this.cameras.main.zoom,rows=this.visibleRows(this.player,this.state.pokemonId),head=this.player.y-this.player.displayOriginY*this.player.scaleY+rows.top*this.player.scaleY;
   const width=Math.max(35,Math.min(55,renderProfile(this.state.pokemonId).shadowWidth+5))/zoom,height=5/zoom,x=this.renderPlayer.x-width/2,y=head-10/zoom;
   this.playerHpBounds={x,y,width,height,fillWidth:width*hpRatio};this.playerHpGraphics.clear().setVisible(hpRatio<1);
@@ -290,7 +322,7 @@ class GameScene extends Phaser.Scene {
   if(request.kind==='credit'&&!options.length){this.showNextChoice(false);return;}
   if(!options.length)options=upgradeOptions(this.state);
   this.activeChoice={request,options};this.acc=0;this.overlay??=this.add.container(0,0).setScrollFactor(0);
-  this.renderMoveHud();this.renderHealthBars();this.setGameplayNoticesVisible(false);
+  this.renderMoveHud();this.renderHealthBars();this.setGameplayNoticesVisible(false);this.mobileHud.setVisible(false);this.moveHud.hideDetail();this.itemHud.hideDetail();
   // Immediate manager pause freezes Clock, TweenManager, sprite animation and scene updates together.
   if(!this.scene.isPaused('game'))this.scene.manager.pause(this);
   this.scene.launch('upgrade',{title:request.title,options,state:this.state,onSelect:(u:Upgrade)=>this.completeChoice(request.id,u)});
@@ -304,18 +336,29 @@ class GameScene extends Phaser.Scene {
  }
  resumeAfterChoices(){
   if(this.activeChoice||this.pendingChoices.length||this.ended)return;
-  this.overlay?.destroy(true);this.overlay=undefined;this.acc=0;this.setGameplayNoticesVisible(true);
+  this.overlay?.destroy(true);this.overlay=undefined;this.acc=0;this.setGameplayNoticesVisible(true);this.mobileHud.setVisible(true);
   if(this.scene.isPaused('game')){this.input.keyboard?.resetKeys();this.scene.manager.resume(this);}
  }
- cancelChoices(resume=true){this.scene.manager.stop('upgrade');this.pendingChoices=[];this.activeChoice=undefined;this.overlay?.destroy(true);this.overlay=undefined;this.acc=0;if(resume&&!this.ended){this.setGameplayNoticesVisible(true);if(this.scene.isPaused('game')){this.input.keyboard?.resetKeys();this.scene.manager.resume(this);}}}
+ cancelChoices(resume=true){this.scene.manager.stop('upgrade');this.pendingChoices=[];this.activeChoice=undefined;this.overlay?.destroy(true);this.overlay=undefined;this.acc=0;this.mobileHud.setVisible(resume&&!this.ended);if(resume&&!this.ended){this.setGameplayNoticesVisible(true);if(this.scene.isPaused('game')){this.input.keyboard?.resetKeys();this.scene.manager.resume(this);}}}
  setGameplayNoticesVisible(visible:boolean){for(const object of this.children.list)if(object.getData('gameplayNotice'))(object as Phaser.GameObjects.Text).setVisible(visible);}
  renderMoveHud(){
   this.moveHud.update(this.state);
-  this.hud.setText(`XP ${this.state.level>=100?'MAX':`${Number(this.state.xp.toFixed(1))}/${this.state.nextXp}`}   TIME ${Math.floor(this.state.time/60)}:${String(Math.floor(this.state.time%60)).padStart(2,'0')}   KO ${this.state.defeated}${this.fast?'   [FAST TEST MODE]':''}${this.state.moveUpgradeCredits?`   MOVE CREDITS ${this.state.moveUpgradeCredits}`:''}`);
-  this.objectiveHud.setText(forestObjectiveText(this.state.world,this.state.player,this.state.bossSpawned)+'\nFIELD RESEARCH · '+forestResearchHud(this.researchBase,this.sessionDefeats,this.state.discoveredTms));
+  const summary='LV '+this.state.level+'  ·  KO '+this.state.defeated;
+  if(this.hud.text!==summary)this.hud.setText(summary);
+  const timer=formatSurvivalTimer(Math.min(this.state.time,this.duration));
+  if(this.timerText.text!==timer)this.timerText.setText(timer);
+  const warning=this.state.time>=this.duration-60&&!this.state.bossSpawned;
+  const timerColor=warning?'#ffb884':'#ffffff';
+  if(this.timerText.style.color!==timerColor)this.timerText.setColor(timerColor);
+  const objective=forestObjectiveText(this.state.world,this.state.player,this.state.bossSpawned);
+  if(this.objectiveHud.text!==objective)this.objectiveHud.setText(objective);
+  this.objectiveHud.setVisible(!!objective);
+  const research=this.state.bossSpawned?'':forestResearchHud(this.researchBase,this.sessionDefeats,this.state.discoveredTms,1);
+  if(this.researchHud.text!==research)this.researchHud.setText(research);
+  this.researchHud.setVisible(!!research);
  }
  showProgressionNotices(){
-  if(!this.state.progressionNotices.length)return;this.renderMoveHud();
+  if(!this.state.progressionNotices.length)return;this.children.getByName('move-progression-notice')?.destroy(true);this.renderMoveHud();
   const text=this.add.text(0,0,this.state.progressionNotices.map(progressionNoticeText).join('\n'),{fontFamily:FONT,fontSize:'16px',fontStyle:'bold',color:'#ffe9a0',backgroundColor:'#102019ed',padding:{x:12,y:8},align:'center',wordWrap:{width:950}}).setOrigin(.5,0);
   const notice=this.add.container(W/2,176,[text]).setName('move-progression-notice').setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);
   let row=0;for(const change of this.state.progressionNotices){
@@ -403,10 +446,9 @@ class GameScene extends Phaser.Scene {
  drawDebug(){const g=this.debugGraphics;if(!g)return;g.clear();g.lineStyle(2,0xff5d73,.65);for(const d of this.state.world.decorations)if(Math.abs(d.x-this.state.player.x)<900&&Math.abs(d.y-this.state.player.y)<650)g.strokeCircle(d.x,d.y,d.collisionRadius+14);g.lineStyle(2,0x62e8ff,.8);for(const e of this.state.enemies.slice(0,100)){g.lineBetween(e.x,e.y,e.x+e.vx*.28,e.y+e.vy*.28);if(e.blockedFor>.4){g.lineStyle(2,0xffd45c,.9);g.strokeCircle(e.x,e.y,18);g.lineStyle(2,0x62e8ff,.8);}}g.lineStyle(3,0x8fff89,.9);g.lineBetween(this.state.player.x,this.state.player.y,this.state.player.x+this.state.player.vx*.3,this.state.player.y+this.state.player.vy*.3);}
  update(_t:number,delta:number){
   this.renderHealthBars(delta);this.moveVfx.update(this.state.time+this.acc);this.renderCombatStatus();
-  this.itemHud.update(this.state,motionReduced(this.preferences));this.renderMoveHud();
+  this.itemHud.update(this.state,motionReduced(this.preferences));this.mobileHud.update(this.state);this.renderMoveHud();
   if(this.overlay||this.ended)return;this.acc+=Math.min(delta/1000,.1);while(this.acc>=this.fixedStep&&!this.overlay&&!this.ended){this.acc-=this.fixedStep;this.step();}if(this.overlay||this.ended)return;const alpha=interpolationAlpha(this.acc,this.fixedStep),profile=renderProfile(this.state.pokemonId);this.renderPlayer=interpolatePosition(this.previousPlayer,this.state.player,alpha);const playerOffset=this.applyPokemonAnimation(this.player,this.playerAnimation,this.state.pokemonId,this.state.player.facing,Math.hypot(this.state.player.vx,this.state.player.vy),this.renderPlayer);this.playerShadow.setPosition(this.renderPlayer.x,this.renderPlayer.y+profile.shadowOffsetY).setDepth(this.renderPlayer.y-2);this.cameraTarget.setPosition(this.renderPlayer.x,this.renderPlayer.y);this.syncViews(alpha);this.syncWorldChunks();this.drawDebug();this.renderHealthBars(0);
   this.updateGrass();
-  this.renderMoveHud();
   if(this.debugText){const ranged=this.state.enemies.filter(e=>e.behavior==='ranged').length;this.debugText.setText(`DEBUG\nFPS ${Math.round(this.game.loop.actualFps)}  SIM 30 Hz  α ${alpha.toFixed(2)}\nAnim ${this.playerAnimation.state}  Key ${this.player.anims.currentAnim?.key??'idle'}  Frame ${String(this.player.frame.name)}\nFacing ${this.state.player.facing}  Ground offset ${playerOffset.toFixed(1)}\nSim ${this.state.player.x.toFixed(1)},${this.state.player.y.toFixed(1)}  Prev ${this.previousPlayer.x.toFixed(1)},${this.previousPlayer.y.toFixed(1)}\nRender ${this.renderPlayer.x.toFixed(1)},${this.renderPlayer.y.toFixed(1)}  Shadow ${this.playerShadow.x.toFixed(1)},${this.playerShadow.y.toFixed(1)}\nCamera ${this.cameraTarget.x.toFixed(1)},${this.cameraTarget.y.toFixed(1)}  Chunk ${this.activeChunk.cx},${this.activeChunk.cy}\nPhase ${this.state.encounterPhase}  Ranged ${ranged}/${this.state.maxRangedEnemies}  Shots ${this.state.projectiles.length}/${this.state.maxEnemyProjectiles}\nEnemies ${this.state.enemies.length}  Checks ${this.state.collisionChecks}  Nav ${this.state.navigationRebuilds}\nWorld ${this.state.world.seed}  RNG ${this.state.seed}  Hash ${stateHash(this.state)}`);}
  }
 }
