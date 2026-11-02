@@ -40,6 +40,11 @@ export function generateMap(seed:number,biome:Biome='forest',options:{chunkCells
      const prior=options.changes?.seed===seed?options.changes:undefined;
      const changes:ForestWorldChanges=prior?.version===2?JSON.parse(JSON.stringify(prior)) as ForestWorldChanges:
        {version:2,seed,discoveries:[...(prior?.discoveries??[])],removedDecorations:{},terrainEdits:{}};
+    // Old or externally produced delta values can reintroduce cliffs/water
+    // despite the open-field generator. Keep valid edits and discoveries.
+    for(const edits of Object.values(changes.terrainEdits))
+     for(const [index,value] of Object.entries(edits))
+      if(value===TERRAIN.cliff||value===TERRAIN.water)delete edits[index];
     const map:StageMap={seed,biome,width:forest.width,height:forest.height,playerStart:forest.start,bossArena:forest.bossArena,paths,terrain:createTerrainGrid(size*3,size*3,FOREST_TILE_SIZE),decorations:[],landmarks:[...forest.landmarks],baseLandmarks:forest.landmarks,spawnZones:forest.spawnZones,chunkSize:size,chunks:{},decorationBuckets:{},features:forest.features,stream:{centerX:Number.NaN,centerY:Number.NaN,revision:0,contentRevision:0,activeKeys:[],cells,maxCachedChunks:Math.max(9,Math.floor(options.maxCachedChunks??18)),cache:new Map(),persistent:changes}};
     syncWorldChunks(map,map.playerStart.x,map.playerStart.y);return map;
   }
@@ -65,7 +70,8 @@ function rebuildResidentWorld(map:StageMap){
     const chunk=cachedForestChunk(map,stream.centerX+ox,stream.centerY+oy),key=chunk.key,removed=new Set(stream.persistent.removedDecorations[key]??[]),edits=stream.persistent.terrainEdits[key]??{};
     stream.activeKeys.push(key);map.chunks[key]={key,cx:chunk.cx,cy:chunk.cy,motif:chunk.motif,encounterWeight:chunk.encounterWeight,safeSpawn:chunk.safeSpawn,featureIds:chunk.featureIds};
     for(let y=0;y<cells;y++)for(let x=0;x<cells;x++){
-      const i=y*cells+x,value=edits[i]??chunk.terrain.cells[i];grid.cells[((oy+1)*cells+y)*cols+(ox+1)*cells+x]=value;
+      const i=y*cells+x,value=edits[i]??chunk.terrain.cells[i];
+      grid.cells[((oy+1)*cells+y)*cols+(ox+1)*cells+x]=(value===TERRAIN.water||value===TERRAIN.cliff)?chunk.terrain.cells[i]:value;
     }
     const decorations=chunk.decorations.filter(d=>!removed.has(d.persistentId!));map.decorationBuckets[key]=decorations;map.decorations.push(...decorations);map.landmarks.push(...chunk.landmarks);
     for(const d of decorations)if(d.solid){const cell=chunkKey(Math.floor(d.x/128),Math.floor(d.y/128));(map.collisionBuckets[cell]??=[]).push(d);}
@@ -102,7 +108,7 @@ export function removeWorldDecoration(map:StageMap,id:string){
   if(list.includes(id))return false;(map.stream.persistent.removedDecorations[key]??=[]).push(id);map.stream.contentRevision++;rebuildResidentWorld(map);return true;
 }
 export function setWorldTerrain(map:StageMap,tileX:number,tileY:number,value:number){
-  if(!map.stream||!Number.isInteger(value)||value<0||value>4)return false;
+  if(!map.stream||!Number.isInteger(value)||![TERRAIN.grass,TERRAIN.path,TERRAIN.tallGrass].includes(value as 0|1|3))return false;
   const cells=map.stream.cells,cx=Math.floor(tileX/cells),cy=Math.floor(tileY/cells),key=chunkKey(cx,cy),index=(tileY-cy*cells)*cells+tileX-cx*cells;
   (map.stream.persistent.terrainEdits[key]??={})[index]=value;map.stream.contentRevision++;rebuildResidentWorld(map);return true;
 }

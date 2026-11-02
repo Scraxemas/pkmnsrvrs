@@ -258,8 +258,11 @@ class GameScene extends Phaser.Scene {
    const light=forestNoise(map.seed,wx,wy,630,0x27ba);
    const tint=light<.30?0xeaf3e7:light>.71?0xf5ffee:0xffffff;
    objects.push(this.groundObject(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.grassFill)).setDisplaySize(tile,tile).setTint(tint).setDepth(0)));
-   if(value===TERRAIN.path||value===TERRAIN.water)objects.push(this.groundObject(this.add.image(wx,wy,environmentKey(this.terrainTexture(x,y)),adjacencyMask(map.terrain,x,y,value)).setDisplaySize(tile,tile).setDepth(1)));
-   else if(value===TERRAIN.cliff){const mask=adjacencyMask(map.terrain,x,y,value),image=this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.cliffAtlas),cliffFrame(!!(mask&1),!!(mask&4),!!(mask&16),!!(mask&64))).setDisplaySize(tile,tile).setDepth(wy+tile/2);this.worldLayer.add(image);objects.push(image);}
+   // The legacy 48x48 cliff PNG is actually one boulder, NOT a 3x3
+   // cliff tileset. Never slice it into mountain-wall fragments in the
+   // endless forest, even if an old save somehow contains cliff tiles.
+   if(value===TERRAIN.path||(value===TERRAIN.water&&map.biome!=='forest'))objects.push(this.groundObject(this.add.image(wx,wy,environmentKey(this.terrainTexture(x,y)),adjacencyMask(map.terrain,x,y,value)).setDisplaySize(tile,tile).setDepth(1)));
+   else if(value===TERRAIN.cliff&&map.biome!=='forest'){const mask=adjacencyMask(map.terrain,x,y,value),image=this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.cliffAtlas),cliffFrame(!!(mask&1),!!(mask&4),!!(mask&16),!!(mask&64))).setDisplaySize(tile,tile).setDepth(wy+tile/2);this.worldLayer.add(image);objects.push(image);}
    // Transparent whole tufts can bend without rotating opaque ground squares.
    else if(value===TERRAIN.tallGrass)objects.push(...this.addGrass(wx+((y%2)*2-1)*2,wy+12,x,y));
    else if(hash%11===0)objects.push(this.groundObject(this.add.image(wx,wy,safeEnvironmentTexture(this,details[hash%details.length])).setScale(2).setDepth(.5)));
