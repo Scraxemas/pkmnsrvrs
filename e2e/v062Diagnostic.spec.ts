@@ -12,6 +12,17 @@ test('game assets load with no missing-texture placeholders and HUD fits viewpor
    const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
    return s?.state?.time>0.5&&s?.moveHud&&s?.itemHud;
  });
+ await page.evaluate(()=>{
+  const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
+  const player=s.state.player;
+  const keys=['candy:xs','candy:s','candy:m','candy:l','candy:xl','ball:1','ball:2','ball:3'];
+  s.state.pickups=keys.map((key:string,i:number)=>({id:70000+i,x:player.x+220+i*60,y:player.y+70+(i%2)*60,value:i===0?5:i===1?15:i===2?40:i===3?80:200,kind:key.startsWith('ball')?'ball':'xp',tier:key.startsWith('ball')?Number(key.split(':')[1]):undefined}));
+  s.state.moveSlots=[{id:'scratch',rank:1},{id:'ember',rank:1}];
+  s.state.items=[{id:'magnet',rank:1}];
+  s.moveHud.update(s.state);s.itemHud.update(s.state,true);
+  s.pickupRenderer.draw(s.state,new Map(),1,true);
+ });
+ await page.waitForTimeout(150);
  const result=await page.evaluate(()=>{
   const g=(window as any).__POKEMON_SURVIVORS__,s=g.scene.getScene('game'),canvas=g.canvas;
   const rect=canvas.getBoundingClientRect(),objects:any[]=[];
@@ -28,7 +39,9 @@ test('game assets load with no missing-texture placeholders and HUD fits viewpor
    return{key,visible:obj.visible,x:b.x,y:b.y,right:b.right,bottom:b.bottom};
   });
   const move=s.moveHud.slots.map((slot:any,i:number)=>({i,texture:slot.image.texture.key,visible:slot.image.visible,status:slot.container.getData('status')}));
-  return {rect:{x:rect.x,y:rect.y,width:rect.width,height:rect.height},view:{width:innerWidth,height:innerHeight},game:{width:g.config.width,height:g.config.height,zoom:s.cameras.main.zoom,scrollX:s.cameras.main.scrollX,scrollY:s.cameras.main.scrollY},elements,move,missing:objects};
+  const pickup=[...s.pickupRenderer.views.values()].map((x:any)=>({texture:x.texture.key,assetId:x.getData('assetId'),visible:x.visible}));
+  const items=s.itemHud.slots.map((slot:any)=>({texture:slot.image.texture.key,visible:slot.image.visible}));
+  return {rect:{x:rect.x,y:rect.y,width:rect.width,height:rect.height},view:{width:innerWidth,height:innerHeight},game:{width:g.config.width,height:g.config.height,zoom:s.cameras.main.zoom,scrollX:s.cameras.main.scrollX,scrollY:s.cameras.main.scrollY},elements,move,pickup,items,missing:objects};
  });
  console.log('ASSET_AND_HUD_DIAGNOSTIC '+JSON.stringify({failed,result}));
  await page.screenshot({path:'test-results/v062-diagnostic.png'});
