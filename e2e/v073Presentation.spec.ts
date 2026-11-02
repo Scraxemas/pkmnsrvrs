@@ -49,7 +49,7 @@ test('combat HUD has consistent panels without hiding attacks or navigation',asy
  });
  expect(snap.hasChrome).toBe(true);expect(snap.depth).toBeLessThan(20000);
  expect(snap.moveSlots).toEqual([true,true,true,true,true]);
- expect(snap.clock).toMatch(/^\\d\\d:\\d\\d$/);
+ expect(snap.clock).toMatch(/^\d\d:\d\d$/);
  expect(snap.caption).toContain('30 MIN');
  expect(snap.player).toBe(true);expect(snap.simulationTime).toBe(1800);
  await page.screenshot({path:'test-results/v073-expedition-ui/combat-1280.png'});
