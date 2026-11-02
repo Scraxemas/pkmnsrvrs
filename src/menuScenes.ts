@@ -136,11 +136,23 @@ export class SettingsScene extends FrontendScene {
   constructor(){super('settings');}
   create(){
     this.mount('settings','Settings','Presentation preferences are saved automatically.');const settings=loadSave().settings,list=element('div','settings-list');
-    const options:[Exclude<keyof PlayerSettings,'sfxVolume'>,string,string][]=[['reducedMotion','Reduced motion','Reduce menu and card animation. Disable camera shake. Also respects your system preference.'],['damageNumbers','Damage numbers','Show the damage dealt by automatic attacks.'],['screenShake','Screen shake','A subtle camera response when your Pokémon takes damage. Disabled by reduced motion.'],['soundEffects','Sound effects','Original effects for experience, evolution, TMs, powerful moves and boss encounters.']];
+    const options:[Exclude<keyof PlayerSettings,'sfxVolume'|'canopyIntensity'>,string,string][]=[['reducedMotion','Reduced motion','Reduce menu and card animation. Disable camera shake. Also respects your system preference.'],['damageNumbers','Damage numbers','Show the damage dealt by automatic attacks.'],['screenShake','Screen shake','A subtle camera response when your Pokémon takes damage. Disabled by reduced motion.'],['soundEffects','Sound effects','Original effects for experience, evolution, TMs, powerful moves and boss encounters.']];
     for(const [key,title,description] of options){
       const row=actionButton('',()=>{settings[key]=!settings[key];updateSettings({[key]:settings[key]});row.setAttribute('aria-checked',String(settings[key]));row.querySelector('.switch-state')!.textContent=settings[key]?'ON':'OFF';this.root.dataset.reducedMotion=String(motionReduced(settings));},'setting-row');row.replaceChildren();row.setAttribute('role','switch');row.setAttribute('aria-label',title);row.setAttribute('aria-checked',String(settings[key]));
       const text=element('span','setting-copy');text.append(element('strong','',title),element('span','',description));const toggle=element('span','setting-switch');toggle.append(element('span','switch-state',settings[key]?'ON':'OFF'),element('span','switch-track'));row.append(text,toggle);list.append(row);
     }
+    const canopyLevels=['off','subtle','standard'] as const;
+    const canopy=actionButton('',()=>{
+      const index=canopyLevels.indexOf(settings.canopyIntensity);
+      settings.canopyIntensity=canopyLevels[(index+1)%canopyLevels.length];
+      updateSettings({canopyIntensity:settings.canopyIntensity});
+      canopyState.textContent=settings.canopyIntensity.toUpperCase();
+    },'setting-row');
+    canopy.setAttribute('aria-label','Forest canopy intensity');
+    const canopyCopy=element('span','setting-copy');
+    canopyCopy.append(element('strong','','Forest canopy'),element('span','','Ambient leaf shade. Choose Off, Subtle, or Standard. Changes apply next run.'));
+    const canopyState=element('span','fullscreen-state',settings.canopyIntensity.toUpperCase());
+    canopy.append(canopyCopy,canopyState);list.append(canopy);
     const fullscreen=actionButton('',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{status.textContent='Fullscreen is unavailable in this browser. The game still scales to your window.';}},'setting-row');fullscreen.replaceChildren();fullscreen.setAttribute('aria-label','Toggle fullscreen');
     const fsCopy=element('span','setting-copy');fsCopy.append(element('strong','','Fullscreen'),element('span','','Use the whole display where your browser supports it.'));const fsState=element('span','fullscreen-state',document.fullscreenElement?'EXIT FULLSCREEN':'ENTER FULLSCREEN');fullscreen.append(fsCopy,fsState,icon('expand'));fullscreen.disabled=!document.fullscreenEnabled;if(fullscreen.disabled)fsState.textContent='BROWSER UNAVAILABLE';list.append(fullscreen);
     const changed=()=>{fsState.textContent=document.fullscreenElement?'EXIT FULLSCREEN':'ENTER FULLSCREEN';};document.addEventListener('fullscreenchange',changed);this.events.once('shutdown',()=>document.removeEventListener('fullscreenchange',changed));
