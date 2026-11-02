@@ -2,7 +2,7 @@ name: Quality checks
 on:
   pull_request:
   push:
-    branches: [main, feat/v061-compact-combat-hud]
+    branches: [main]
 permissions:
   contents: read
 jobs:
