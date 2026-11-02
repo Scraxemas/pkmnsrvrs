@@ -46,7 +46,7 @@ export class MoveHud {
    const container=scene.add.container(x,y,[frame,image,label,rank]).setName('move-slot-'+(index+1)).setDepth(20000).setScrollFactor(0);
    const hit=scene.add.zone(0,0,SLOT,SLOT).setOrigin(0).setInteractive();
    container.add(hit);
-   hit.on('pointerover',()=>this.showDetail(index));
+   hit.on('pointerover',(pointer:Phaser.Input.Pointer)=>{if(!pointer.wasTouch)this.showDetail(index);});
    hit.on('pointerout',()=>this.cancelPress());
    hit.on('pointerdown',()=>{
     this.cancelPress(false);
