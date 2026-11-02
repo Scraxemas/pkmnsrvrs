@@ -46,7 +46,7 @@ for(const viewport of [{width:1280,height:720},{width:1920,height:1080}]){
     });
     expect(audit.cards).toHaveLength(audit.count);expect(audit.pixelArt).toBe(true);expect(audit.antialias).toBe(false);
     for(const card of audit.cards){
-      expect(card,card.id).toMatchObject({texture:`move:${card.id}`,source:[32,32],size:[64,64],scale:[2,2],filter:0,position:[0,-110],fallback:false});
+      expect(card,card.id).toMatchObject({texture:`move:${card.id}`,source:[32,32],size:[64,64],scale:[2,2],filter:1,position:[0,-110],fallback:false});
       expect(card.bottom).toBeLessThan(card.nameTop);
     }
     await page.evaluate(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');s.scene.stop('upgrade');s.scene.resume();});
@@ -62,7 +62,7 @@ for(const viewport of [{width:1280,height:720},{width:1920,height:1080}]){
     }));
     expect(mixed.map((art:any)=>art.id)).toEqual(['ember','charcoal','magnet']);
     expect(mixed[1].key).toContain('pokesprite:charcoal');expect(mixed[2].key).toContain('pokesprite:magnet');
-    for(const image of mixed){expect(Math.max(...image.display)).toBe(64);expect(image.scale[0]).toBe(image.scale[1]);expect(image.filter).toBe(0);}
+    for(const image of mixed){expect(Math.max(...image.display)).toBe(64);expect(image.scale[0]).toBe(image.scale[1]);expect(image.filter).toBe(1);}
     await page.screenshot({path:`${folder}/mixed-upgrade-cards-${viewport.width}.png`});
     writeFileSync(`${folder}/card-audit-${viewport.width}.json`,JSON.stringify({viewport,...audit,mixed},null,2));
     expect(failures).toEqual([]);
@@ -82,7 +82,7 @@ for(const viewport of [{width:1280,height:720},{width:1920,height:1080}]){
       });
     });
     expect(hud.map((slot:any)=>slot.id)).toEqual(['dragonClaw','ember','dragonRage','metalClaw','tackle']);
-    for(const slot of hud){expect(slot).toMatchObject({status:'filled',fallback:false,visible:true,key:`move:${slot.id}`,scale:[1,1],size:[32,32],filter:0,textFits:true});expect(slot.imageRight).toBeLessThanOrEqual(slot.slotRight);}
+    for(const slot of hud){expect(slot).toMatchObject({status:'filled',fallback:false,visible:true,key:`move:${slot.id}`,scale:[1,1],size:[32,32],filter:1,textFits:true});expect(slot.imageRight).toBeLessThanOrEqual(slot.slotRight);}
     await page.screenshot({path:`${folder}/move-hud-${viewport.width}.png`});
     if(viewport.width===1280)await page.screenshot({path:`${folder}/move-hud.png`});
   });

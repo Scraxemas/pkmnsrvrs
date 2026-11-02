@@ -1,4 +1,5 @@
 import type Phaser from 'phaser';
+import {NEAREST_PIXEL_FILTER} from './pixelFiltering';
 import {VFX_ASSETS} from './data/vfxAssets';
 import type {AttackEvent} from './simulation';
 
@@ -54,7 +55,7 @@ export class MoveVfxRenderer {
  private add(event:AttackEvent,profile:MoveVfxProfile,asset:string,time:number,index:number,count:number,reduced:boolean,delay=0){
   if(this.active.length>=this.capacity||!this.scene.textures.exists(vfxTexture(asset)))return;
   let sprite=this.free.pop();if(!sprite&&this.created<this.capacity){this.created++;sprite=this.scene.add.sprite(0,0,vfxTexture(asset));this.worldLayer?.add(sprite);}if(!sprite)return;
-  sprite.setTexture(vfxTexture(asset),0).setVisible(true).setActive(true).setAlpha(1).setTint(profile.tint??0xffffff).setOrigin(.5).setName('move-vfx').setData('moveId',event.moveId);sprite.texture.setFilter(0);
+  sprite.setTexture(vfxTexture(asset),0).setVisible(true).setActive(true).setAlpha(1).setTint(profile.tint??0xffffff).setOrigin(.5).setName('move-vfx').setData('moveId',event.moveId);sprite.texture.setFilter(NEAREST_PIXEL_FILTER);
   const target=event.impacts?.[index%(event.impacts?.length||1)];
   this.active.push({sprite,start:time,duration:reduced?Math.min(.35,profile.duration):profile.duration,x:event.x,y:event.y-16,tx:target?.x??event.tx,ty:(target?.y??event.ty)-14,size:profile.size,index,count,angle:Math.atan2(event.ty-event.y,event.tx-event.x),profile,asset,delay,reduced});
  }
