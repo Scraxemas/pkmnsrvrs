@@ -10,10 +10,12 @@ import {FRONTEND_VERSION,menuAsset,MENU_ART,researchStatistics,PLAY_MODES} from 
 import {MenuInput} from './ui/menuInput';
 import {arcadeButton} from './ui/arcadeButton';
 import {MenuBackgroundController} from './ui/menuBackgroundController';
+import {expeditionBriefing} from './ui/expeditionBriefing';
 import {CharacterSelection,RosterFilter,RosterSort} from './ui/characterRoster';
 import {CharacterRosterView} from './ui/characterRosterView';
 import './menu.css';
 import './ui/titleMenu.css';
+import './ui/expeditionPolish.css';
 import './ui/characterRoster.css';
 
 export function stopFrontendScenes(scene:Phaser.Scene){for(const key of ['menu','pokemon','stage','dex','research','settings'])if(key!==scene.scene.key&&scene.scene.isActive(key))scene.scene.stop(key);}
@@ -55,6 +57,23 @@ export class MenuScene extends FrontendScene {
     this.mount('menu');const initialMode=this.modeOpen;
     const stage=element('div','title-stage'),stack=element('section','title-stack'),title=element('h1','game-title'),logo=element('img','menu-logo');
     logo.src=menuAsset(MENU_ART.logo);logo.alt='Pokémon Survivors';logo.width=202;logo.height=100;logo.draggable=false;title.append(logo);
+    const hero=element('div','expedition-hero');
+    hero.append(element('div','expedition-overline','KANTO REGION  /  FIELD OPERATIONS'),title,element('p','expedition-tagline','ONE POKÉMON. AN ENDLESS FOREST. THIRTY MINUTES TO SURVIVE.'));
+    const save=loadSave(),briefing=expeditionBriefing(save);
+    const briefingPanel=element('aside','expedition-briefing');
+    briefingPanel.setAttribute('aria-label','Viridian Forest expedition briefing');
+    const briefingTop=element('div','expedition-briefing__top');
+    briefingTop.append(element('span','expedition-briefing__index','01 / KANTO'),element('span','expedition-briefing__status',briefing.status));
+    const briefingTitle=element('h2','expedition-briefing__title','VIRIDIAN FOREST');
+    const briefingCaption=element('p','expedition-briefing__description','Survive the wilds. Grow stronger. Outlast the swarm. Beedrill appears at the 30-minute mark—wherever you explore.');
+    const briefingMeta=element('div','expedition-briefing__meta');
+    for(const [label,value] of [['SURVIVAL', '30:00'],['BEST RUN',briefing.best],['CLEARS',briefing.clears],['SITES FOUND',briefing.discoveries]]){
+     const stat=element('div','expedition-briefing__stat');
+     stat.append(element('span','expedition-briefing__stat-label',label),element('strong','expedition-briefing__stat-value',value));briefingMeta.append(stat);
+    }
+    const briefingFooter=element('div','expedition-briefing__footer');
+    briefingFooter.append(element('span','expedition-briefing__last',briefing.lastResult),element('span','expedition-briefing__tag','ENDLESS OPEN WORLD'));
+    briefingPanel.append(briefingTop,briefingTitle,briefingCaption,briefingMeta,briefingFooter);
     const nav=element('nav','title-navigation');nav.setAttribute('aria-label','Main menu');
     this.play=arcadeButton('Play',()=>this.setMode(!this.modeOpen),'play');this.play.setAttribute('aria-controls','play-modes');nav.append(this.play);
     const area=element('div','title-mode-area');this.links=element('div','title-links');
@@ -63,7 +82,7 @@ export class MenuScene extends FrontendScene {
     this.modes=element('section','mode-panel');this.modes.id='play-modes';this.modes.setAttribute('aria-label','Choose play mode');
     this.single=arcadeButton('Single Player',()=>this.scene.start('pokemon'),'single');
     const multi=arcadeButton('Multiplayer',()=>{},'multi');multi.disabled=!PLAY_MODES.multiplayer.available;multi.dataset.targetPlayers=String(PLAY_MODES.multiplayer.targetMaxPlayers);multi.setAttribute('aria-label','Multiplayer — Coming soon');multi.querySelector('.arcade-button__label')!.append(element('span','coming-soon','COMING SOON'));
-    this.modes.append(this.single,multi,arcadeButton('Back',()=>this.setMode(false),'back'));area.append(this.links,this.modes);nav.append(area);stack.append(title,nav);stage.append(stack);this.content.append(stage);this.footer.append(element('span','title-build',FRONTEND_VERSION));
+    this.modes.append(this.single,multi,arcadeButton('Back',()=>this.setMode(false),'back'));area.append(this.links,this.modes);nav.append(area);stack.append(hero,nav);stage.append(stack,briefingPanel);this.content.append(stage);this.footer.append(element('span','title-build',FRONTEND_VERSION));
     this.animateBackground();
     this.navigation=new MenuInput(this.root,()=>{if(this.modeOpen)this.setMode(false);});this.setMode(initialMode);
   }
