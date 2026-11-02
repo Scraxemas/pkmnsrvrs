@@ -61,6 +61,37 @@ describe('v0.6 forest milestone',()=>{
   boss.hp=boss.maxHp*.25;
   expect(tick(state,1/30,{x:0,y:0})).toContain('boss-phase:3');
  });
+ it.each([
+  {phase:1,health:.5,next:2},
+  {phase:2,health:.25,next:3},
+ ])('cancels a phase-$phase windup before phase $next rather than firing an untelegraphed volley',({phase,health,next})=>{
+  const state=makeState(POKEMON.charmander,77);
+  spawnSpecies(state,'beedrill',1,false,true);
+  const boss=state.enemies[0];
+  boss.phase=phase;boss.hp=boss.maxHp*health;boss.attackWindup=1/60;boss.aiCooldown=0;
+  const changed=tick(state,1/30,{x:0,y:0});
+  expect(changed).toContain('boss-phase:'+next);
+  expect(changed).not.toContain('boss-attack');
+  expect(changed).not.toContain('boss-windup');
+  expect(state.projectiles).toHaveLength(0);
+  expect(state.hazards).toHaveLength(0);
+  expect(boss.attackWindup).toBe(0);
+  const warning:string[]=[];
+  for(let i=0;i<15;i++)warning.push(...tick(state,1/30,{x:0,y:0}));
+  expect(warning).toContain('boss-windup');
+  expect(warning).not.toContain('boss-attack');
+  const fired:string[]=[];
+  for(let i=0;i<40;i++)fired.push(...tick(state,1/30,{x:0,y:0}));
+  expect(fired).toContain('boss-attack');
+ });
+ it('commits a mixed session of research exactly once, including Beedrill',()=>{
+  const storage=memoryStorage(),defeats={caterpie:24,pidgey:30,beedrill:1};
+  // This is the single transaction now performed before the victory ends.
+  const saved=recordSessionEvents(defeats,2,storage);
+  expect(saved.research).toMatchObject({caterpie:24,pidgey:30,beedrill:1,pokeBalls:2});
+  expect(saved.discoveredTms).toEqual(expect.arrayContaining(['sv:033','sv:111']));
+  expect(saved.tmDiscoveries.filter(t=>t.id==='sv:111')).toHaveLength(1);
+ });
  it('keeps synthesized sound optional and gives migrated saves safe defaults',()=>{
   expect(playGameCue('tm',{...DEFAULT_SETTINGS,soundEffects:false})).toBe(false);
   expect(playGameCue('xp',{...DEFAULT_SETTINGS,sfxVolume:0})).toBe(false);
