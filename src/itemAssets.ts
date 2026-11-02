@@ -16,7 +16,6 @@ export function safeItemTexture(scene:Phaser.Scene,id:string,outlined=false){
  const fallback='generated:pokesprite-'+category;
  if(!scene.textures.exists(fallback)){
   const g=scene.add.graphics().setVisible(false);
-  g.fillStyle(0x102a25,1).fillRect(0,0,32,32);
   if(category==='candy'){
    g.fillStyle(0xb3f6f7,1).fillTriangle(16,2,28,16,4,16).fillTriangle(4,16,28,16,16,30);
    g.fillStyle(0x54bbd5,1).fillTriangle(16,7,23,16,16,25);
