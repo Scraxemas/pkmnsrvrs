@@ -52,3 +52,31 @@ test('game assets load with no missing-texture placeholders and HUD fits viewpor
  expect(result.rect.x+result.rect.width).toBeLessThanOrEqual(result.view.width+1);
  expect(result.rect.y+result.rect.height).toBeLessThanOrEqual(result.view.height+1);
 });
+
+test('when optional pickup art is missing, it uses visible pixel art rather than the Phaser missing-texture square',async({page})=>{
+ await page.goto('/?seed=1337');
+ await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__);
+ await page.evaluate(()=> (window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'charmander',seed:1337}));
+ await page.waitForFunction(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return s?.state?.time>.2&&s?.pickupRenderer&&s?.itemHud;});
+ const textures=await page.evaluate(async()=>{
+  const scene=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
+  const {itemTexture}=await import('/src/itemAssets.ts');
+  const candyKey=itemTexture('candy:xs',true),itemKey=itemTexture('magnet',true);
+  scene.textures.remove(candyKey);
+  scene.textures.remove(itemKey);
+  scene.state.pickups=[{id:99021,x:scene.state.player.x+220,y:scene.state.player.y+110,kind:'xp',value:5}];
+  scene.state.items=[{id:'magnet',rank:1}];
+  scene.itemHud.update(scene.state,true);
+  scene.pickupRenderer.draw(scene.state,new Map(),1,true);
+  return{
+    candy:scene.pickupRenderer.views.get(99021)?.texture.key,
+    item:scene.itemHud.slots[0].image.texture.key,
+    candyExists:scene.textures.exists('generated:pokesprite-candy'),
+    itemExists:scene.textures.exists('generated:pokesprite-item')
+  };
+ });
+ expect(textures).toMatchObject({
+  candy:'generated:pokesprite-candy',item:'generated:pokesprite-item',
+  candyExists:true,itemExists:true
+ });
+});
