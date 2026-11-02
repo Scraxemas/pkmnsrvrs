@@ -379,7 +379,8 @@ class GameScene extends Phaser.Scene {
  }
  showEventBanner(message:string,color='#ffe7a2',duration=2400){
   const notice=this.add.text(W/2,208,message,{fontFamily:FONT,fontSize:'22px',fontStyle:'bold',color,backgroundColor:'#102019ee',padding:{x:16,y:10},align:'center',stroke:'#102019',strokeThickness:2}).setName('forest-event-notice').setOrigin(.5,0).setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);
-  this.time.delayedCall(duration,()=>notice.destroy());
+  if(!motionReduced(this.preferences))this.tweens.add({targets:notice,alpha:0,duration:220,delay:Math.max(0,duration-220)});
+  this.time.delayedCall(duration,()=>{if(notice.active)notice.destroy();});
  }
  showEvolution(id:string){const p=POKEMON[id],profile=renderProfile(id);recordEvolution(id);playGameCue('evolution',this.preferences);if(!motionReduced(this.preferences)){const burst=this.add.circle(this.state.player.x,this.state.player.y-18,24,0xffe9a1,.5).setDepth(this.state.player.y+30);this.effectsLayer.add(burst);this.tweens.add({targets:burst,scale:3,alpha:0,duration:650,onComplete:()=>burst.destroy()});}this.player.anims.stop();this.player.setTexture(`${id}-sprite`,0);this.playerAnimation.setSpecies(id);this.playerAnimation.trigger('evolution',this.state.time,1.8);this.playerShadow.setSize(profile.shadowWidth,profile.shadowHeight);this.portrait.setTexture(`${id}-portrait`);const text=this.add.text(W/2,H/2,`Congratulations!\nYour Pokémon evolved into ${p.name}!`,{fontFamily:FONT,fontSize:'30px',color:'#ffe26b',backgroundColor:'#102019ee',padding:{x:30,y:24},align:'center'}).setOrigin(.5).setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);this.time.delayedCall(1800,()=>text.destroy());}
  showReward(tier:1|2|3){playGameCue('reward',this.preferences);const options=rewardRoll(this.state,tier);this.showChoices(`${tier===3?'ULTRA':tier===2?'GREAT':'POKÉ'} BALL OPENED!`,options);}
