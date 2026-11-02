@@ -113,6 +113,25 @@ class GameScene extends Phaser.Scene {
    this.researchHud=this.add.text(layout.research.x,layout.research.y,'',{fontFamily:FONT,fontSize:'11px',color:'#b9eacc',backgroundColor:'#1020199c',padding:{x:6,y:4}}).setOrigin(1,0).setName('field-research-compact').setDepth(20000).setScrollFactor(0);
   if(this.debug){this.debugGraphics=this.add.graphics().setDepth(19990);this.effectsLayer.add(this.debugGraphics);this.debugText=this.add.text(W-440,H-215,'',{fontFamily:FONT,fontSize:'13px',color:'#9fffb3',backgroundColor:'#07120ddd',padding:{x:8,y:6}}).setDepth(22010).setScrollFactor(0);}
   this.pickupRenderer=new PickupRenderer(this,this.worldLayer,this.effectsLayer);this.pickupViews=this.pickupRenderer.views;this.itemHud=new ItemHud(this);this.moveHud=new MoveHud(this);this.itemHud.update(this.state,motionReduced(this.preferences));this.renderMoveHud();
+   // Keyboard digits inspect move slots 1–5 and held-item slots 6–9.
+   const inspectKeyboard=(event:KeyboardEvent)=>{
+    if(this.overlay||this.ended)return;
+    const key=Number(event.key);
+    if(Number.isInteger(key)&&key>=1&&key<=5){this.itemHud.hideDetail();this.moveHud.showDetail(key-1);}
+    else if(Number.isInteger(key)&&key>=6&&key<=9){this.moveHud.hideDetail();this.itemHud.showDetail(key-6);}
+    else if(event.key==='Escape'){this.moveHud.hideDetail();this.itemHud.hideDetail();}
+   };
+   this.input.keyboard?.on('keydown',inspectKeyboard);
+   this.events.once('shutdown',()=>this.input.keyboard?.off('keydown',inspectKeyboard));
+   // Controller shoulders cycle inspected moves/items without interfering with the movement stick.
+   const inspectGamepad=(_pad:Phaser.Input.Gamepad.Gamepad,button:Phaser.Input.Gamepad.Button)=>{
+    if(this.overlay||this.ended)return;
+    if(button.index===4){this.itemHud.hideDetail();this.moveHud.showDetail(this.inspectMove++%5);}
+    else if(button.index===5){this.moveHud.hideDetail();this.itemHud.showDetail(this.inspectItem++%4);}
+    else if(button.index===1){this.moveHud.hideDetail();this.itemHud.hideDetail();}
+   };
+   this.input.gamepad?.on('down',inspectGamepad);
+   this.events.once('shutdown',()=>this.input.gamepad?.off('down',inspectGamepad));
   this.statusHud=this.add.text(layout.status.x+330,layout.status.y,'',{fontFamily:FONT,fontSize:'11px',color:'#cce8d5',backgroundColor:'#102019b8',padding:{x:7,y:5},wordWrap:{width:330}}).setOrigin(1,0).setName('combat-status-hud').setDepth(20000).setScrollFactor(0);
   if(import.meta.env.DEV)void import('./devMoveTools').then(({installMoveDevelopmentTools})=>installMoveDevelopmentTools(this));
   spawnSpecies(this.state,'caterpie',6);spawnSpecies(this.state,'weedle',4);this.renderHealthBars();
