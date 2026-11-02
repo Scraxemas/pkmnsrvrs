@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 import {mkdirSync} from 'node:fs';
 
-for(const seed of [1337,24680,8675309]){
+for(const seed of [1337,24680,8675309,7,20261102]){
  test('canopy pages stream cleanly on endless forest seed '+seed,async({page})=>{
   await page.setViewportSize({width:1280,height:720});
   await page.goto('/?seed='+seed);
@@ -71,4 +71,28 @@ test('canopy setting Off removes all shadow objects but keeps the same terrain a
  });
  expect(on.shadows).toBeGreaterThan(0);expect(on.vignette).toBe(true);
  expect(on.landmarks).toEqual(off.landmarks);
+});
+
+test('canopy still keeps HUD and combat visible at a mobile viewport',async({page})=>{
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('/?seed=1337');
+ await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__);
+ await page.evaluate(()=>{
+  const game=(window as any).__POKEMON_SURVIVORS__,save=JSON.parse(localStorage.getItem('pokemon-survivors-save')||'{"version":2}');
+  save.settings={...save.settings,canopyIntensity:'standard'};
+  localStorage.setItem('pokemon-survivors-save',JSON.stringify(save));
+  game.scene.start('game',{pokemon:'charmander',seed:1337});
+ });
+ await page.waitForFunction(()=>((window as any).__POKEMON_SURVIVORS__.scene.getScene('game')?.state?.time??0)>.2);
+ const result=await page.evaluate(()=>{
+  const game=(window as any).__POKEMON_SURVIVORS__,s=game.scene.getScene('game');
+  const rect=game.canvas.getBoundingClientRect();
+  return{vignette:s.canopyRenderer.vignette?.visible,shadowCount:s.canopyRenderer.layer.list.length,
+   timer:s.timerText.visible,player:s.player.visible,rect:{x:rect.x,y:rect.y,right:rect.right,bottom:rect.bottom}};
+ });
+ expect(result.vignette).toBe(true);expect(result.timer).toBe(true);expect(result.player).toBe(true);
+ expect(result.shadowCount).toBeGreaterThan(0);
+ expect(result.rect.x).toBeGreaterThanOrEqual(-1);expect(result.rect.right).toBeLessThanOrEqual(391);
+ expect(result.rect.bottom).toBeLessThanOrEqual(845);
+ await page.screenshot({path:'test-results/v072-canopy-gallery/mobile-standard.png'});
 });
