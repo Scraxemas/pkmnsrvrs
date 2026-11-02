@@ -92,8 +92,8 @@ export function discoverNearbyForest(state:SimState):string[]{
   }
   if(markWorldDiscovery(state.world,landmark.id)){
    discovered.push(landmark.id);
-   if(landmark.id.startsWith('campsite:')||landmark.id.startsWith('ancient-tree:'))
-    state.pickups.push({id:++state.eventId,x:state.player.x+20,y:state.player.y+20,kind:'ball',tier:1,value:1});
+   if(['campsite:','ancient-tree:','tm-cache:'].some(prefix=>landmark.id.startsWith(prefix)))
+    state.pickups.push({id:++state.eventId,x:state.player.x+20,y:state.player.y+20,kind:'ball',tier:landmark.id.startsWith('tm-cache:')?2:1,value:1});
   }
  }
  return discovered;
