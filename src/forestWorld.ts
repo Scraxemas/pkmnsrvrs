@@ -2,6 +2,7 @@ import {createTerrainGrid,TERRAIN,type TerrainCode} from './terrain';
 import {forestHash,forestNoise,ForestRng,planForest,type ForestFeatures,type Trail} from './forestPlan';
 import {FOREST_CHUNK_CELLS,FOREST_TILE_SIZE,chunkKey} from './worldConstants';
 import type {Decoration,ForestMotif,Landmark,Rect,WorldChunk} from './worldgen';
+import {minSolidVisualDistance} from './decorationSpacing';
 
 export interface ForestChunkData extends WorldChunk {
  terrain:ReturnType<typeof createTerrainGrid>;
@@ -80,7 +81,7 @@ export function generateForestChunk(seed:number,cx:number,cy:number,features:For
   const detail=forestNoise(seed,wx,wy,96,0x70a1),ground=forestNoise(seed,wx,wy,225,0x14f5);
   let value:TerrainCode=TERRAIN.grass;
   if(siteFree(wx,wy,40)){
-   if(ground>.86&&detail>.60)value=TERRAIN.path;
+   if(ground>.91&&detail>.70)value=TERRAIN.path;
    else if((bugs||flowers)&&ground<.24&&detail>.43)value=TERRAIN.tallGrass;
    else if(!bugs&&ground<.16&&detail>.65)value=TERRAIN.tallGrass;
   }
@@ -94,21 +95,40 @@ export function generateForestChunk(seed:number,cx:number,cy:number,features:For
   if(!inChunk(x,y)||Math.hypot(x,y)<390||(!siteDecoration&&!siteFree(x,y,solid?150:42)))return;
   const col=Math.floor(x/FOREST_TILE_SIZE)-cx*cells,row=Math.floor(y/FOREST_TILE_SIZE)-cy*cells;
   if(terrain.cells[row*cells+col]===TERRAIN.path)return;
-  decorations.push({id,x,y,radius,solid,collisionRadius:solid?(id==='tree'?14:id==='landRock'?18:16):0,
+  decorations.push({id,x,y,radius,solid,collisionRadius:solid?(id==='tree'?14:id==='landRock'?(radius>28?22:14):16):0,
    depth:Math.round(y),persistentId:`${cx},${cy}:${decorations.length}`});
  };
  const density=motif==='open-meadow'?.58:motif==='old-woodland'?1.2:motif==='bug-habitat'?1.1:1;
+ // A solid prop's position and priority are determined by its GLOBAL grid cell.
+ // Reject competing props with higher priority, including candidates owned by
+ // neighboring chunks. Checking only resident decorations caused visual walls
+ // to appear at seams; a local per-chunk rejection would be order-dependent.
+ const candidate=(gx:number,gy:number)=>{
+  const h=forestHash(seed,gx,gy,0x2d1e),choice=forestHash(seed,gx,gy,0x177e)%10;
+  const x=gx*NEIGHBOUR_SPACING+65+((h>>>8)%95),y=gy*NEIGHBOUR_SPACING+65+((h>>>16)%95);
+  const id=choice<=3?'tree':choice<=5?'landRock':choice===6?'campLog':choice===7?'sapling':'bush';
+  const radius=id==='tree'?30:id==='landRock'?(forestHash(seed,gx,gy,0x40a2)%6===0?34:24):id==='campLog'?25:18;
+  return{gx,gy,h,x,y,id,radius,solid:choice<=5,roll:h/4294967295};
+ };
+ const visualSpaceClear=(d:ReturnType<typeof candidate>)=>{
+  for(let oy=-1;oy<=1;oy++)for(let ox=-1;ox<=1;ox++){
+   if(!ox&&!oy)continue;
+   const other=candidate(d.gx+ox,d.gy+oy);
+   // .156 is the maximum possible density-adjusted rate in any motif.
+   if(!other.solid||other.roll>.156)continue;
+   if(Math.hypot(other.x-d.x,other.y-d.y)>=minSolidVisualDistance(d,other))continue;
+   // Stable hash priority resolves conflicts identically on both sides of
+   // a chunk boundary, even when generation order is reversed.
+   if(other.h<d.h||(other.h===d.h&&(other.gy<d.gy||(other.gy===d.gy&&other.gx<d.gx))))return false;
+  }
+  return true;
+ };
  for(let gy=Math.floor(y0/NEIGHBOUR_SPACING);gy<=Math.floor((y0+size)/NEIGHBOUR_SPACING);gy++)
  for(let gx=Math.floor(x0/NEIGHBOUR_SPACING);gx<=Math.floor((x0+size)/NEIGHBOUR_SPACING);gx++){
-  const h=forestHash(seed,gx,gy,0x2d1e),r=h/4294967295;
-  if(r>.13*density)continue;
-  const x=gx*NEIGHBOUR_SPACING+65+((h>>>8)%95),y=gy*NEIGHBOUR_SPACING+65+((h>>>16)%95);
-  const choice=forestHash(seed,gx,gy,0x177e)%10;
-  if(choice<=3)add('tree',x,y,30,true);
-  else if(choice<=5)add('landRock',x,y,24,true);
-  else if(choice===6)add('campLog',x,y,25,false);
-  else if(choice===7)add('sapling',x,y,18,false);
-  else add('bush',x,y,18,false);
+  const d=candidate(gx,gy);
+  if(d.roll>.13*density)continue;
+  if(d.solid&&!visualSpaceClear(d))continue;
+  add(d.id,d.x,d.y,d.radius,d.solid);
  }
  // Low-cost small non-colliding details; no noise-based obstacles or thick walls.
  const detailCell=112;
