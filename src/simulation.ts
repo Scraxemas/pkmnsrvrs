@@ -133,8 +133,14 @@ function enemyAI(state:SimState,e:Entity,dt:number,events:string[],mods:ItemModi
  const dx=state.player.x-e.x,dy=state.player.y-e.y,d=Math.hypot(dx,dy)||1;e.aiCooldown-=dt;const previousWindup=e.attackWindup;e.attackWindup=Math.max(0,e.attackWindup-dt);
  if(e.boss){
   const phase=e.hp/e.maxHp>.66?1:e.hp/e.maxHp>.33?2:3;
-  if(phase!==e.phase){e.phase=phase;e.attackWindup=0;e.aiCooldown=Math.max(.35,e.aiCooldown);events.push(`boss-phase:${phase}`);}
-  if(previousWindup>0&&e.attackWindup===0){
+  const phaseChanged=phase!==e.phase;
+  if(phaseChanged){
+   // Discard a pending volley on phase transition. It must never be released
+   // at the new phase's damage/shot count without a fresh, visible telegraph.
+   e.phase=phase;e.attackWindup=0;e.aiCooldown=Math.max(.35,e.aiCooldown);
+   events.push(`boss-phase:${phase}`);
+  }
+  if(!phaseChanged&&previousWindup>0&&e.attackWindup===0){
    const shots=phase===1?3:phase===2?6:8,base=Math.atan2(dy,dx);
    for(let i=0;i<shots;i++)fireEnemyProjectile(state,e,base+(i-(shots-1)/2)*.18,130+phase*18);
    if(phase>=2)for(let i=0;i<(phase===3?3:2);i++){
@@ -143,7 +149,7 @@ function enemyAI(state:SimState,e:Entity,dt:number,events:string[],mods:ItemModi
    }
    if(phase===3&&state.enemies.length<90)spawnSpecies(state,'weedle',2);
    e.aiCooldown=2.2-phase*.35;events.push('boss-attack');
-  }else if(e.aiCooldown<=0&&e.attackWindup===0){
+  }else if(!phaseChanged&&e.aiCooldown<=0&&e.attackWindup===0){
    e.attackWindup=phase===3?.5:.75;events.push('boss-windup');
   }
  }
