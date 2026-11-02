@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import {PRIMARY_FONT_FAMILY} from './fonts';
 import type {SimState} from '../simulation';
 import {ITEMS} from '../items';
-import {itemTexture} from '../itemAssets';
+import {safeItemTexture} from '../itemAssets';
 import {gameplayHudLayout} from '../hudLayout';
 
 const SLOT=40,GAP=8;
@@ -29,7 +29,7 @@ export class ItemHud {
   }).setName('item-tooltip').setDepth(23000).setScrollFactor(0).setVisible(false);
   for(let index=0;index<4;index++){
    const frame=scene.add.graphics();
-   const image=scene.add.image(SLOT/2,SLOT/2,itemTexture('magnet',true)).setVisible(false);
+   const image=scene.add.image(SLOT/2,SLOT/2,safeItemTexture(scene,'magnet',true)).setVisible(false);
    const rank=scene.add.text(SLOT-3,SLOT-3,'',{
     fontFamily:PRIMARY_FONT_FAMILY,fontSize:'10px',fontStyle:'bold',
     color:'#d3e5de',stroke:'#102019',strokeThickness:3
@@ -66,7 +66,7 @@ export class ItemHud {
     slot.key=key;slot.spent=spent;slot.flashUntil=state.time+.65;
     slot.container.setData('itemId',held?.id);
     slot.image.setVisible(!!held);
-    if(held)slot.image.setTexture(itemTexture(held.id,true)).setDisplaySize(30,30).setAlpha(spent?.4:1);
+    if(held)slot.image.setTexture(safeItemTexture(this.scene,held.id,true)).setDisplaySize(30,30).setAlpha(spent?.4:1);
     slot.rank.setText(held?(spent?'×':'R'+held.rank):'');
    }
    const flashing=!!held&&!reduced&&state.time<slot.flashUntil;
