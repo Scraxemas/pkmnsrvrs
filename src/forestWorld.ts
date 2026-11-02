@@ -29,6 +29,7 @@ export function buildForest(seed:number){
  const pikachu=site(2050+rng.int(1800),.65+rng.next()*.8);
  const nest=site(2350+rng.int(2200),2.3+rng.next()*.6);
  const exit=site(3700+rng.int(2200),4.3+rng.next()*.6);
+ features.clearings.push({id:'pikachu-hollow',...pikachu,radius:200},{id:'beedrill-nest',...nest,radius:200},{id:'pewter-exit',...exit,radius:200});
  const landmarks:Landmark[]=[
   {id:'entrance',x:0,y:0,radius:160},
   {id:'pikachu-hollow',...pikachu,radius:120},
@@ -53,7 +54,7 @@ export function generateForestChunk(seed:number,cx:number,cy:number,features:For
  const size=cells*FOREST_TILE_SIZE,x0=cx*size,y0=cy*size,rng=new ForestRng(forestHash(seed,cx,cy,0x517cc1b7));
  const motif=regionalMotif(seed,cx,cy),landmarks:Landmark[]=[];
  const inChunk=(x:number,y:number)=>x>=x0&&x<x0+size&&y>=y0&&y<y0+size;
- const staticSites=[...features.camps.map(c=>({id:'campsite',x:c.x,y:c.y,radius:c.radius})),{id:'entrance',x:0,y:0,radius:390}];
+ const staticSites=[...features.camps.map(c=>({id:'campsite',x:c.x,y:c.y,radius:c.radius})),...features.clearings];
  const protectedSite=(x:number,y:number)=>staticSites.some(s=>Math.hypot(s.x-x,s.y-y)<s.radius+70);
  // A rare landmark can be discovered in any direction, including negative chunks.
  // Exact stable IDs allow discoveries to persist after unloading.
@@ -61,7 +62,7 @@ export function generateForestChunk(seed:number,cx:number,cy:number,features:For
  if(rare===0||rare===1){
   const lx=x0+size*(.3+rng.next()*.4),ly=y0+size*(.3+rng.next()*.4);
   if(Math.hypot(lx,ly)>900&&!protectedSite(lx,ly))
-   landmarks.push({id:rare===0?'campsite':'ancient-tree',x:lx,y:ly,radius:115});
+   landmarks.push({id:(rare===0?'campsite:':'ancient-tree:')+chunkKey(cx,cy),x:lx,y:ly,radius:115});
  }
  const blockedSites=[...staticSites,...landmarks];
  const siteFree=(x:number,y:number,padding=0)=>blockedSites.every(p=>Math.hypot(p.x-x,p.y-y)>p.radius+padding);
@@ -84,8 +85,8 @@ export function generateForestChunk(seed:number,cx:number,cy:number,features:For
  // Globally aligned candidate cells avoid discontinuities and solid clusters at
  // resident chunk boundaries; placement does not depend on exploration order.
  const decorations:Decoration[]=[];
- const add=(id:string,x:number,y:number,radius:number,solid=false)=>{
-  if(!inChunk(x,y)||Math.hypot(x,y)<390||!siteFree(x,y,solid?150:42))return;
+ const add=(id:string,x:number,y:number,radius:number,solid=false,siteDecoration=false)=>{
+  if(!inChunk(x,y)||Math.hypot(x,y)<390||(!siteDecoration&&!siteFree(x,y,solid?150:42)))return;
   const col=Math.floor(x/FOREST_TILE_SIZE)-cx*cells,row=Math.floor(y/FOREST_TILE_SIZE)-cy*cells;
   if(terrain.cells[row*cells+col]===TERRAIN.path)return;
   decorations.push({id,x,y,radius,solid,collisionRadius:solid?(id==='tree'?14:id==='landRock'?18:16):0,
@@ -115,8 +116,8 @@ export function generateForestChunk(seed:number,cx:number,cy:number,features:For
   add(choice<5?['flowerWhite','flowerPink','flowerYellow'][choice%3]:choice===5?'reeds':'bush',x,y,0,false);
  }
  // Optional rare visual sites. They never gate the stage or block a passage.
- for(const l of landmarks)if(l.id==='campsite'){
-  add('tent',l.x,l.y+10,42,false);add('campLog',l.x-75,l.y+60,24,false);add('supplies',l.x+60,l.y+38,16,false);
+ for(const l of landmarks)if(l.id.startsWith('campsite:')){
+  add('tent',l.x,l.y+10,42,false,true);add('campLog',l.x-75,l.y+60,24,false,true);add('supplies',l.x+60,l.y+38,16,false,true);
  }
  return{key:chunkKey(cx,cy),cx,cy,motif,encounterWeight:motif==='bug-habitat'?1.15:1,
   safeSpawn:true,featureIds:landmarks.map(l=>l.id),terrain,decorations,landmarks,trails:[],
