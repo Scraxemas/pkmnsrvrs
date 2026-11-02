@@ -26,7 +26,6 @@ export function safeEnvironmentTexture(scene:Phaser.Scene,name:string){
  const fallback='generated:viridian-prop';
  if(!scene.textures.exists(fallback)){
   const g=scene.add.graphics().setVisible(false);
-  g.fillStyle(0x15372c,1).fillRect(0,0,32,32);
   g.fillStyle(0x669c72,1).fillCircle(16,17,12);
   g.fillStyle(0x91c18e,1).fillCircle(12,12,8);
   g.lineStyle(2,0x2b6848,1).strokeCircle(16,17,12);
