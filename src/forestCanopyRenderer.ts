@@ -1,59 +1,70 @@
 import type Phaser from 'phaser';
-import {canopySpotsForPage,vignetteAlpha,type CanopyIntensity} from './forestCanopy';
+import {canopyLighting,vignetteAlpha,type CanopyIntensity,type CanopyLandmark} from './forestCanopy';
 
-/** Static world-page shadows: one Graphics object/page, no actor occlusion.
- * The owning scene's chunkViews destroys the graphics when a page streams out.
+export const CANOPY_TEXTURE_RESOLUTION=96;
+const CANOPY_SHADE=[18,54,42] as const;
+const CANOPY_SUNLIGHT=[244,225,159] as const;
+
+/** One soft pixel field per streamed page. Texture coordinates sample the
+ * same absolute world positions irrespective of chunk order or sign.
+ * Canopy shades ground only: actors, attacks, pickups and HUD remain bright.
  */
 export class ForestCanopyRenderer{
  readonly layer:Phaser.GameObjects.Layer;
  readonly vignette?:Phaser.GameObjects.Image;
+
  constructor(private scene:Phaser.Scene,private seed:number,readonly intensity:CanopyIntensity){
   this.layer=scene.add.layer().setName('canopy-shadows-layer').setDepth(.5);
   if(intensity==='off')return;
   const key='forest-vignette-'+intensity;
   if(!scene.textures.exists(key)){
    const texture=scene.textures.createCanvas(key,512,288);
-   if(!texture)return; // Fallback to ground-only canopy if CanvasTexture is unavailable.
-   const ctx=texture.getContext();
-   const gradient=ctx.createRadialGradient(256,144,40,256,144,300);
+   if(!texture)return;
+   const ctx=texture.getContext(),gradient=ctx.createRadialGradient(256,144,70,256,144,300);
    const alpha=vignetteAlpha(1,intensity);
    gradient.addColorStop(0,'rgba(10,35,25,0)');
-   gradient.addColorStop(.42,'rgba(10,35,25,0)');
+   gradient.addColorStop(.58,'rgba(10,35,25,0)');
    gradient.addColorStop(1,'rgba(10,35,25,'+alpha.toFixed(4)+')');
    ctx.fillStyle=gradient;ctx.fillRect(0,0,512,288);texture.refresh();
+   texture.setFilter(0); // Linear is intentional for soft lighting, not Pokémon sprites.
   }
   this.vignette=scene.add.image(640,360,key).setDisplaySize(1280,720)
    .setScrollFactor(0).setDepth(3).setName('forest-canopy-vignette');
  }
- renderPage(cx:number,cy:number,size:number):Phaser.GameObjects.GameObject[]{
+
+ renderPage(cx:number,cy:number,size:number,landmarks:readonly CanopyLandmark[]=[]):Phaser.GameObjects.GameObject[]{
   if(this.intensity==='off')return [];
-  const spots=canopySpotsForPage(this.seed,cx*size,cy*size,size,this.intensity);
-  if(!spots.length)return [];
-  const g=this.scene.add.graphics().setDepth(0).setName('canopy-page-'+cx+','+cy)
-   .setData('canopyPage',cx+','+cy);
-  this.layer.add(g);
-  for(const spot of spots){
-   const {x,y,radiusX:rx,radiusY:ry,opacity:o,phase}=spot;
-   // Overlapping soft leaf lobes instead of dark square page overlays.
-   // These shapes are bound to GLOBAL positions, not page-local random seeds.
-   // A near-invisible soft halo connects disjoint leaf silhouettes.
-   g.fillStyle(0x143a2b,o*.08).fillEllipse(x,y,rx*2.3,ry*2.1);
-   const leaves=9;
-   for(let i=0;i<leaves;i++){
-    const theta=phase+i*Math.PI*2/leaves;
-    const px=x+Math.cos(theta)*rx*.55,py=y+Math.sin(theta)*ry*.48;
-    const stretch=.45+(i%3)*.11,shape: {x:number;y:number}[]=[];
-    for(let vertex=0;vertex<9;vertex++){
-     const angle=vertex*Math.PI*2/9;
-     const irregular=1+.20*Math.sin(vertex*2.4+i*1.7+phase);
-     shape.push({x:px+Math.cos(angle)*rx*stretch*irregular,y:py+Math.sin(angle)*ry*(.25+(i%2)*.07)*irregular});
-    }
-    g.fillStyle(i%3===0?0x214b36:0x153d2e,o*(i%3===0?.48:.68)).fillPoints(shape,true);
+  const startX=cx*size,startY=cy*size,res=CANOPY_TEXTURE_RESOLUTION;
+  const key=`forest-canopy-field:${this.seed}:${this.intensity}:${cx}:${cy}:${size}`;
+  if(!this.scene.textures.exists(key)){
+   const texture=this.scene.textures.createCanvas(key,res,res);
+   if(!texture)return [];
+   const ctx=texture.getContext(),data=ctx.createImageData(res,res);
+   const relevant=landmarks.filter(l=>
+    l.x+l.radius+200>startX&&l.x-l.radius-200<startX+size&&
+    l.y+l.radius+200>startY&&l.y-l.radius-200<startY+size);
+   for(let row=0;row<res;row++)for(let col=0;col<res;col++){
+    const x=startX+(col+.5)*size/res,y=startY+(row+.5)*size/res;
+    const {shade,sunlight}=canopyLighting(this.seed,x,y,this.intensity,relevant);
+    // Compose cool translucent shade and warm sunlight in ONE smooth texture.
+    const alpha=shade+sunlight*(1-shade),i=(row*res+col)*4;
+    const darkWeight=shade/Math.max(alpha,1/255),lightWeight=1-darkWeight;
+    data.data[i]=Math.round(CANOPY_SHADE[0]*darkWeight+CANOPY_SUNLIGHT[0]*lightWeight);
+    data.data[i+1]=Math.round(CANOPY_SHADE[1]*darkWeight+CANOPY_SUNLIGHT[1]*lightWeight);
+    data.data[i+2]=Math.round(CANOPY_SHADE[2]*darkWeight+CANOPY_SUNLIGHT[2]*lightWeight);
+    data.data[i+3]=Math.round(alpha*255);
    }
-   if(spot.sunlight){
-    g.fillStyle(0xf5e5ac,.025).fillEllipse(x+rx*.35,y-ry*.35,rx*1.1,ry*.9);
-   }
+   ctx.putImageData(data,0,0);texture.refresh();
+   texture.setFilter(0); // Smooth interpolated canopy edges; pixel-art assets remain NEAREST.
   }
-  return [g];
+  const image=this.scene.add.image(startX+size/2,startY+size/2,key)
+   .setDisplaySize(size,size).setDepth(0).setName('canopy-page-'+cx+','+cy)
+   .setData('canopyPage',cx+','+cy);
+  this.layer.add(image);
+  // Same lifecycle as world page objects; no unbounded persistent GPU texture cache.
+  image.once('destroy',()=>{
+   if(this.scene.textures.exists(key))this.scene.textures.remove(key);
+  });
+  return [image];
  }
 }
