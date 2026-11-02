@@ -1,0 +1,119 @@
+/* Expedition visual system — sharp Pokémon art, readable type, calm forest palette.
+ * All controls retain native button semantics and keyboard / controller focus.
+ */
+.frontend{
+ --exp-ink:#091b19;--exp-forest:#122e27;--exp-surface:#16382f;
+ --exp-line:rgba(222,239,193,.27);--exp-gold:#f5d68a;
+ --exp-mint:#b8e9cd;--exp-cream:#fff3d5;
+}
+.frontend--menu .frontend-shade{
+ background:linear-gradient(90deg,rgba(4,15,13,.89) 0%,rgba(6,23,18,.72) 42%,rgba(7,26,19,.47) 100%),
+  linear-gradient(0deg,rgba(3,15,12,.85),transparent 46%);
+}
+.frontend--menu .title-stage{
+ display:grid;grid-template-columns:minmax(0,1.2fr) minmax(290px,.8fr);
+ align-items:center;justify-content:center;gap:clamp(28px,5vw,100px);
+ width:min(1380px,100%);margin:0 auto;
+ min-height:100dvh;padding:clamp(40px,7vh,84px) clamp(22px,4vw,66px);
+}
+.frontend--menu .title-stack{min-height:0;display:flex;align-items:flex-start;justify-content:center;gap:clamp(30px,5vh,66px);max-width:620px}
+.expedition-hero{display:grid;justify-items:start;gap:15px;max-width:600px}
+.expedition-overline{font:11px/1.6 var(--font-primary);letter-spacing:1px;color:var(--exp-mint);text-shadow:0 2px 2px #071b15}
+.expedition-hero .game-title{width:min(550px,100%);filter:drop-shadow(0 8px 0 #02181194) drop-shadow(0 0 12px #0818118f)}
+.expedition-tagline{max-width:535px;font:clamp(13px,1.2vw,17px)/1.7 var(--font-primary);color:#f0e8d0;letter-spacing:.1px;text-shadow:0 2px 4px #04140e}
+.frontend--menu .title-navigation{width:min(465px,100%);align-items:stretch;gap:18px}
+.frontend--menu .title-links{gap:13px;align-items:stretch}
+.frontend--menu .arcade-button--play{width:100%}
+.frontend--menu .arcade-button--settings{width:100%}
+.frontend--menu .arcade-button{
+ --face:#1b4c3b;--highlight:#4a8663;--shade:#103326;
+ background:#071b15;box-shadow:0 5px 0 #03140fa8;
+ transition:transform .14s,filter .14s,box-shadow .14s;
+}
+.frontend--menu .arcade-button__rim{padding:2px;background:#859c7b;box-shadow:inset 0 2px #d0d8a3,inset 0 -2px #304834}
+.frontend--menu .arcade-button__face{border-color:#103428;text-shadow:1px 2px #061e17;font-size:17px;min-height:57px}
+.frontend--menu .arcade-button--play{--face:#c9984b;--highlight:#ffe3a2;--shade:#986631;color:#152c24!important}
+.frontend--menu .arcade-button--play .arcade-button__face{min-height:78px;font-size:25px;text-shadow:1px 1px #fbe5b2}
+.frontend--menu .arcade-button--pokedex{--face:#244f61;--highlight:#6694aa;--shade:#173a49}
+.frontend--menu .arcade-button--research{--face:#356849;--highlight:#76a875;--shade:#224432}
+.frontend--menu .arcade-button--settings{--face:#29413f;--highlight:#5a7971;--shade:#19322f}
+.frontend--menu .arcade-button:hover:not(:disabled),.frontend--menu .arcade-button.is-focused:not(:disabled){
+ filter:brightness(1.18) drop-shadow(0 0 7px #ffedb04d);transform:translateY(-3px);
+ box-shadow:0 7px 0 #04170f;
+}
+.frontend--menu .arcade-button:focus-visible{outline:3px solid #ffe7a0!important;outline-offset:5px!important}
+.frontend--menu .mode-panel{width:100%;margin:0}
+.frontend--menu .arcade-button--single{--face:#2c7050;--highlight:#74ad7a;--shade:#1e4938}
+.frontend--menu .arcade-button--back{width:100%}
+.expedition-briefing{
+ position:relative;isolation:isolate;align-self:center;display:flex;flex-direction:column;gap:25px;
+ min-width:0;width:100%;max-width:430px;justify-self:end;
+ padding:clamp(24px,3vw,39px);
+ color:var(--exp-cream);background:linear-gradient(147deg,#183e32ed 0%,#0b251edb 53%,#081e19ed 100%);
+ border:1px solid #a6c18a8c;box-shadow:0 16px 0 #05171092,0 30px 80px #030d0b8a,inset 0 0 0 4px #e3e9a40a;
+ backdrop-filter:blur(7px);
+}
+.expedition-briefing:before{content:'';position:absolute;pointer-events:none;inset:7px;border:1px solid #dae5aa22}
+.expedition-briefing:after{content:'';position:absolute;pointer-events:none;right:0;top:0;border-top:22px solid var(--exp-gold);border-left:22px solid transparent}
+.expedition-briefing__top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:9px;font:10px/1.5 var(--font-primary)}
+.expedition-briefing__index{color:#b9d4c2;letter-spacing:1px}
+.expedition-briefing__status{padding:7px 10px;border:1px solid #b6d88b87;background:#284d33;color:#eaf4bb;font-size:8px;letter-spacing:.4px}
+.expedition-briefing__title{font:clamp(23px,2.1vw,33px)/1.35 var(--font-primary)!important;color:var(--exp-gold);letter-spacing:.4px;text-shadow:2px 3px #061b14}
+.expedition-briefing__description{font:14px/1.8 var(--font-primary);color:#d5e6cd;max-width:34ch}
+.expedition-briefing__meta{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--exp-line);border-left:1px solid var(--exp-line)}
+.expedition-briefing__stat{min-width:0;min-height:88px;display:flex;flex-direction:column;justify-content:center;gap:9px;padding:15px 12px;border-right:1px solid var(--exp-line);border-bottom:1px solid var(--exp-line);background:#102e25a3}
+.expedition-briefing__stat-label{color:#a9cabb;font:9px/1.5 var(--font-primary);letter-spacing:.4px}
+.expedition-briefing__stat-value{font:clamp(15px,1.5vw,21px)/1.4 var(--font-primary);color:#fff0bf;overflow-wrap:anywhere}
+.expedition-briefing__footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:9px;padding-top:4px;color:#d7e9d7}
+.expedition-briefing__last{font:10px/1.6 var(--font-primary);color:#d6e5cd}
+.expedition-briefing__tag{font:8px/1.5 var(--font-primary);padding:7px;background:#2c503e;border:1px solid #6f9c7b;color:#f1deb2}
+.frontend--menu .frontend-footer{z-index:2}
+.frontend:not(.frontend--menu) .frontend-shade{
+ background:linear-gradient(110deg,#061912ef 0%,#0a211bdc 65%,#061811bb),
+ linear-gradient(0deg,#04140dc9,transparent 40%);
+}
+.frontend:not(.frontend--menu) .page-header{padding-bottom:19px;border-bottom:1px solid #b5d7a551}
+.frontend:not(.frontend--menu) .page-header .eyebrow{font-size:10px;letter-spacing:1.3px;color:#acd9b8}
+.frontend:not(.frontend--menu) .page-header h1{color:#fff2c8;text-shadow:2px 3px #061810}
+.frontend:not(.frontend--menu) .build-label{padding:8px 12px;border:1px solid #a7bd915d;background:#0f2c24b8;color:#e6dbaf}
+.frontend .ui-button:focus-visible,.frontend button:focus-visible,.frontend select:focus-visible,.frontend input:focus-visible{outline:3px solid #ffdd83!important;outline-offset:3px}
+.frontend .research-entry,.frontend .statistic,.frontend .saved-run,.frontend .settings-list{backdrop-filter:blur(5px);border-color:#a4c28e78;box-shadow:0 8px 22px #06130e55}
+.frontend .research-entry{background:linear-gradient(150deg,#193c30eb,#0a261ee8);border-left:3px solid #91b782}
+.frontend .research-entry.is-complete{border-left-color:#f2d27f;background:linear-gradient(160deg,#274d35ec,#11271ee8)}
+.frontend .research-entry h2{color:#fff1d1}
+.frontend .research-entry progress{height:10px}
+.frontend .research-entry progress::-webkit-progress-value{background:linear-gradient(90deg,#6dbe94,#d5df88)}
+.frontend .setting-row:hover:not(:disabled),.frontend .setting-row.is-focused{background:#32573fd9}
+.frontend .research-tabs [aria-selected=true]{background:#eacb80;color:#102a20!important}
+@media(max-width:1000px){
+ .frontend--menu .title-stage{grid-template-columns:minmax(0,1fr) minmax(265px,.86fr);gap:30px;padding:45px 25px}
+ .expedition-briefing{padding:23px;gap:17px}
+ .expedition-briefing__description{font-size:12px}
+ .expedition-briefing__stat{min-height:70px}
+ .expedition-briefing__stat-value{font-size:15px}
+}
+@media(max-width:760px){
+ .frontend--menu .title-stage{display:flex;flex-direction:column;align-items:center;gap:36px;padding:24px 17px 46px}
+ .frontend--menu .title-stack{align-items:center;width:100%;max-width:520px;gap:22px}
+ .expedition-hero{justify-items:center;text-align:center;gap:13px}
+ .expedition-overline{font-size:9px}
+ .expedition-tagline{font-size:12px}
+ .frontend--menu .title-navigation{max-width:440px;width:100%}
+ .expedition-briefing{justify-self:center;max-width:500px}
+ .frontend--menu .game-title{max-width:460px}
+ .frontend--menu .frontend-footer{position:static;text-align:right;padding:0 20px 14px}
+}
+@media(max-height:700px) and (min-width:761px){
+ .frontend--menu .title-stage{padding-top:22px;padding-bottom:24px}
+ .frontend--menu .title-stack{gap:17px}
+ .expedition-hero{gap:9px}
+ .frontend--menu .game-title{max-width:400px}
+ .expedition-briefing{padding:18px;gap:12px}
+ .expedition-briefing__stat{min-height:62px;padding:9px 10px}
+ .expedition-briefing__description{font-size:11px;line-height:1.5}
+ .frontend--menu .title-navigation{gap:9px}
+ .frontend--menu .title-links{gap:8px}
+ .frontend--menu .arcade-button__face{min-height:48px}
+ .frontend--menu .arcade-button--play .arcade-button__face{min-height:57px}
+}
+@media(prefers-reduced-motion:reduce){.expedition-briefing,.frontend--menu .arcade-button{transition:none!important}}
