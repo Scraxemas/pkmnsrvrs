@@ -21,6 +21,7 @@ import {frameGroundOffset} from './groundOffsets';
 import {interpolatePosition,interpolationAlpha,Position} from './interpolation';
 import {chunkKey,prewarmWorldChunk,syncWorldChunks as syncWorldData} from './worldgen';
 import {forestObjectiveText} from './forestObjectives';
+import {forestHash} from './forestPlan';
 import {forestResearchHud} from './forestResearch';
 import {playGameCue,installGameAudioUnlock} from './gameAudio';
 import {fusionForResult} from './data/moveFusions';
@@ -252,13 +253,13 @@ class GameScene extends Phaser.Scene {
   const cells=16,map=this.state.world,key=chunkKey(cx,cy),tile=map.terrain.tileSize,pageSize=cells*tile,objects:Phaser.GameObjects.GameObject[]=[],baseX=cx*cells,baseY=cy*cells,details=[ENVIRONMENT_ASSETS.grass,ENVIRONMENT_ASSETS.grassRocks,ENVIRONMENT_ASSETS.forestFloor];
   const ownerKey=chunkKey(Math.floor(cx*pageSize/map.chunkSize),Math.floor(cy*pageSize/map.chunkSize));if(!map.chunks[ownerKey])return;
   for(let ly=0;ly<cells;ly++)for(let lx=0;lx<cells;lx++){
-   const x=baseX+lx,y=baseY+ly;if(!map.stream&&(x<0||y<0||x>=map.terrain.cols||y>=map.terrain.rows))continue;const wx=x*tile+tile/2,wy=y*tile+tile/2,value=terrainAt(map.terrain,x,y),hash=Math.abs((x*17+y*31+map.seed*7)|0);
+   const x=baseX+lx,y=baseY+ly;if(!map.stream&&(x<0||y<0||x>=map.terrain.cols||y>=map.terrain.rows))continue;const wx=x*tile+tile/2,wy=y*tile+tile/2,value=terrainAt(map.terrain,x,y),hash=forestHash(map.seed,x,y,0x17e3);
    objects.push(this.groundObject(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.grassFill)).setDisplaySize(tile,tile).setDepth(0)));
    if(value===TERRAIN.path||value===TERRAIN.water)objects.push(this.groundObject(this.add.image(wx,wy,environmentKey(this.terrainTexture(x,y)),adjacencyMask(map.terrain,x,y,value)).setDisplaySize(tile,tile).setDepth(1)));
    else if(value===TERRAIN.cliff){const mask=adjacencyMask(map.terrain,x,y,value),image=this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.cliffAtlas),cliffFrame(!!(mask&1),!!(mask&4),!!(mask&16),!!(mask&64))).setDisplaySize(tile,tile).setDepth(wy+tile/2);this.worldLayer.add(image);objects.push(image);}
    // Transparent whole tufts can bend without rotating opaque ground squares.
    else if(value===TERRAIN.tallGrass)objects.push(...this.addGrass(wx+((y%2)*2-1)*2,wy+12,x,y));
-   else if(hash%7===0)objects.push(this.groundObject(this.add.image(wx,wy,safeEnvironmentTexture(this,details[hash%details.length])).setScale(2).setDepth(.5)));
+   else if(hash%11===0)objects.push(this.groundObject(this.add.image(wx,wy,safeEnvironmentTexture(this,details[hash%details.length])).setScale(2).setDepth(.5)));
   }
   for(const d of (map.decorationBuckets[ownerKey]??[]).filter(d=>Math.floor(d.x/pageSize)===cx&&Math.floor(d.y/pageSize)===cy)){
    const visual=decorationVisual(d.id,d.x,d.y,map.seed,d.radius),image=this.add.image(Math.round(d.x),Math.round(d.y),safeEnvironmentTexture(this,visual.name));
@@ -266,7 +267,7 @@ class GameScene extends Phaser.Scene {
    image.setOrigin(.5,(image.height-visual.trunkPadding)/image.height).setDepth(d.y).setScale(visual.scale).setData('mapProp',d.id);if(d.id==='tree')image.setData('forestTree',true);objects.push(image);
   }
   for(const landmark of map.landmarks.filter(l=>Math.floor(l.x/pageSize)===cx&&Math.floor(l.y/pageSize)===cy)){
-   if(landmark.id==='ancient-tree')objects.push(this.addForestTree(landmark.x,landmark.y,ENVIRONMENT_ASSETS.ancientTree,4));
+   if(landmark.id.startsWith('ancient-tree:'))objects.push(this.addForestTree(landmark.x,landmark.y,ENVIRONMENT_ASSETS.ancientTree,3));
    const label=({'entrance':'VIRIDIAN FOREST','pikachu-hollow':'PIKACHU HOLLOW','beedrill-nest':'BEEDRILL NEST','pewter-exit':'TO PEWTER CITY'} as Record<string,string>)[landmark.id];
    if(label)objects.push(this.groundObject(this.add.text(landmark.x,landmark.y-90,label,{fontFamily:FONT,fontSize:'13px',color:'#f2f1c9',backgroundColor:'#193d2bdd',padding:{x:8,y:5}}).setOrigin(.5).setDepth(2)));
   }
