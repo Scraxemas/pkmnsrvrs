@@ -60,23 +60,25 @@ test('when optional pickup art is missing, it uses visible pixel art rather than
  await page.waitForFunction(()=>{const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return s?.state?.time>.2&&s?.pickupRenderer&&s?.itemHud;});
  const textures=await page.evaluate(async()=>{
   const scene=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');
-  const {itemTexture}=await import('/src/itemAssets.ts');
-  const candyKey=itemTexture('candy:xs',true),itemKey=itemTexture('magnet',true);
+  const candyKey='pokesprite:candy:xs:outline',itemKey='pokesprite:magnet:outline';
   scene.textures.remove(candyKey);
   scene.textures.remove(itemKey);
+  scene.textures.remove('viridian-frlg/land_boulder');
+  const forest=scene.addForestTree(scene.state.player.x+270,scene.state.player.y+60,'frlg/land_boulder');
+  const forestTexture=forest.texture.key;forest.destroy();
   scene.state.pickups=[{id:99021,x:scene.state.player.x+220,y:scene.state.player.y+110,kind:'xp',value:5}];
   scene.state.items=[{id:'magnet',rank:1}];
   scene.itemHud.update(scene.state,true);
   scene.pickupRenderer.draw(scene.state,new Map(),1,true);
   return{
     candy:scene.pickupRenderer.views.get(99021)?.texture.key,
-    item:scene.itemHud.slots[0].image.texture.key,
+    item:scene.itemHud.slots[0].image.texture.key,forest:forestTexture,
     candyExists:scene.textures.exists('generated:pokesprite-candy'),
     itemExists:scene.textures.exists('generated:pokesprite-item')
   };
  });
  expect(textures).toMatchObject({
-  candy:'generated:pokesprite-candy',item:'generated:pokesprite-item',
+  candy:'generated:pokesprite-candy',item:'generated:pokesprite-item',forest:'generated:viridian-prop',
   candyExists:true,itemExists:true
  });
 });
