@@ -44,6 +44,7 @@ for(const seed of [1337,24680,8675309]){
 }
 
 test('canopy setting Off removes all shadow objects but keeps the same terrain and landmarks',async({page})=>{
+ mkdirSync('test-results/v072-canopy-gallery',{recursive:true});
  await page.goto('/?seed=1337');
  await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__);
  const read=async(level:'off'|'standard')=>{
