@@ -12,7 +12,9 @@ export class ForestCanopyRenderer{
   if(intensity==='off')return;
   const key='forest-vignette-'+intensity;
   if(!scene.textures.exists(key)){
-   const texture=scene.textures.createCanvas(key,512,288),ctx=texture.getContext();
+   const texture=scene.textures.createCanvas(key,512,288);
+   if(!texture)return; // Fallback to ground-only canopy if CanvasTexture is unavailable.
+   const ctx=texture.getContext();
    const gradient=ctx.createRadialGradient(256,144,40,256,144,300);
    const alpha=vignetteAlpha(1,intensity);
    gradient.addColorStop(0,'rgba(10,35,25,0)');
