@@ -131,7 +131,22 @@ function enemyAI(state:SimState,e:Entity,dt:number,events:string[],mods:ItemModi
  if(state.world.stream&&!chunkAtWorld(state.world,e.x,e.y)){e.vx=e.vy=0;return;}
  processStatuses(state,e,dt,mods);if(e.hp<=0)return;if(state.time<(e.staggerUntil??0)||e.statuses.some(status=>status.kind==='sleep')){e.vx=e.vy=0;return;}
  const dx=state.player.x-e.x,dy=state.player.y-e.y,d=Math.hypot(dx,dy)||1;e.aiCooldown-=dt;const previousWindup=e.attackWindup;e.attackWindup=Math.max(0,e.attackWindup-dt);
- if(e.boss){const phase=e.hp/e.maxHp>.66?1:e.hp/e.maxHp>.33?2:3;if(phase!==e.phase){e.phase=phase;events.push(`boss-phase:${phase}`);}if(e.aiCooldown<=0){const shots=phase===1?3:phase===2?6:8,base=Math.atan2(dy,dx);for(let i=0;i<shots;i++)fireEnemyProjectile(state,e,base+(i-(shots-1)/2)*.18,130+phase*18);if(phase>=2){for(let i=0;i<(phase===3?3:2);i++){const angle=state.time*.7+i*Math.PI;createGroundHazard(state,'spikes',state.player.x+Math.cos(angle)*75,state.player.y+Math.sin(angle)*75);}}if(phase===3&&state.enemies.length<90)spawnSpecies(state,'weedle',2);e.aiCooldown=2.2-phase*.35;events.push('boss-attack');}}
+ if(e.boss){
+  const phase=e.hp/e.maxHp>.66?1:e.hp/e.maxHp>.33?2:3;
+  if(phase!==e.phase){e.phase=phase;e.attackWindup=0;e.aiCooldown=Math.max(.35,e.aiCooldown);events.push(`boss-phase:${phase}`);}
+  if(previousWindup>0&&e.attackWindup===0){
+   const shots=phase===1?3:phase===2?6:8,base=Math.atan2(dy,dx);
+   for(let i=0;i<shots;i++)fireEnemyProjectile(state,e,base+(i-(shots-1)/2)*.18,130+phase*18);
+   if(phase>=2)for(let i=0;i<(phase===3?3:2);i++){
+    const angle=state.time*.7+i*Math.PI;
+    createGroundHazard(state,'spikes',state.player.x+Math.cos(angle)*75,state.player.y+Math.sin(angle)*75);
+   }
+   if(phase===3&&state.enemies.length<90)spawnSpecies(state,'weedle',2);
+   e.aiCooldown=2.2-phase*.35;events.push('boss-attack');
+  }else if(e.aiCooldown<=0&&e.attackWindup===0){
+   e.attackWindup=phase===3?.5:.75;events.push('boss-windup');
+  }
+ }
  else if(e.behavior==='ranged'){
   if(previousWindup>0&&e.attackWindup===0){if(fireEnemyProjectile(state,e,Math.atan2(dy,dx),e.species==='pidgey'?125:105)){events.push(`enemy-shot:${e.id}`);if(e.species==='butterfree')createGroundHazard(state,'powder',state.player.x+45,state.player.y);}e.aiCooldown=e.species==='pidgey'?2.6:3.1;}
   else if(e.aiCooldown<=0&&e.attackWindup===0&&hasLineOfSight(state.world,e.x,e.y,state.player.x,state.player.y)){e.attackWindup=e.species==='pidgey'?.42:.58;events.push(`enemy-windup:${e.id}`);}
@@ -146,7 +161,7 @@ function enemyAI(state:SimState,e:Entity,dt:number,events:string[],mods:ItemModi
    e.steeringX=dirX;e.steeringY=dirY;e.steeringUntil=state.time+.2+(e.id%7)*.015;
   }else {dirX=e.steeringX??dirX;dirY=e.steeringY??dirY;}
  }
- if(e.behavior==='defend'&&d>125&&!e.statuses.some(status=>status.kind==='worried'))movement*=.3;if(e.behavior==='charge'&&e.aiCooldown>.8)movement*=1.8;
+ if(e.boss&&e.attackWindup>0)movement*=.2;if(e.behavior==='defend'&&d>125&&!e.statuses.some(status=>status.kind==='worried'))movement*=.3;if(e.behavior==='charge'&&e.aiCooldown>.8)movement*=1.8;
  if(movement<0){dirX=-dirX;dirY=-dirY;movement=-movement;}
  moveEnemy(state,e,dirX,dirY,movement*dt,dt);
  if(d<24)hurtPlayer(state,Math.max(1,8-state.vitamins.iron*.15)*dt,'contact',mods,e);
