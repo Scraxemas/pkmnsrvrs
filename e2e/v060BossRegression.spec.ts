@@ -31,7 +31,6 @@ test('the first Beedrill victory records each pending defeat once and shows its 
    research:save.research,
    discoveredTms:save.discoveredTms,
    tmDiscoveries:save.tmDiscoveries,
-   results:game.scene.getScene('results').config?.unlocks,
    sessionDefeats:scene.sessionDefeats,
   };
  });
@@ -41,7 +40,12 @@ test('the first Beedrill victory records each pending defeat once and shows its 
  expect(result.discoveredTms).toEqual(expect.arrayContaining(['sv:033','sv:111']));
  expect(result.tmDiscoveries.filter((tm:any)=>tm.id==='sv:111')).toHaveLength(1);
  expect(result.sessionDefeats).toEqual({});
- expect(result.results).toEqual(expect.arrayContaining([
+ await page.waitForFunction(()=>{
+  const results=(window as any).__POKEMON_SURVIVORS__.scene.getScene('results');
+  return results?.scene?.isActive()&&Array.isArray(results?.config?.unlocks);
+ });
+ const unlocks=await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.getScene('results').config.unlocks);
+ expect(unlocks).toEqual(expect.arrayContaining([
   'Pokémon unlocked: Weedle',
   'TM discovered: SV TM033',
   'TM discovered: SV TM111',
