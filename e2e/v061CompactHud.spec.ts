@@ -39,6 +39,15 @@ for(const viewport of [{width:1280,height:720},{width:1920,height:1080},{width:3
   expect(snapshot.items.every((m:any)=>m.x>=0&&m.x+40<=snapshot.width)).toBe(true);
   mkdirSync('test-results/compact-hud',{recursive:true});
   await page.screenshot({path:'test-results/compact-hud/desktop-'+viewport.width+'.png'});
+  if(viewport.width<=700){
+   const mobile=page.locator('.mobile-combat-hud');
+   await expect(mobile.locator('summary')).toBeVisible();
+   await expect(mobile.locator('summary')).toHaveCSS('min-height','44px');
+   await mobile.locator('summary').click();
+   await expect(mobile.locator('.mobile-combat-hud__panel')).toContainText('MOVE 1');
+   await expect(mobile.locator('.mobile-combat-hud__panel')).toContainText('ITEM 4');
+   await page.screenshot({path:'test-results/compact-hud/mobile-build-details.png'});
+  }
  });
 }
 test('numeric keyboard inspection opens details and Escape dismisses them',async({page})=>{
