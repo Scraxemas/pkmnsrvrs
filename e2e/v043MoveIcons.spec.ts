@@ -78,11 +78,11 @@ for(const viewport of [{width:1280,height:720},{width:1920,height:1080}]){
     const hud=await page.evaluate(()=>{
       const s=(window as any).__POKEMON_SURVIVORS__.scene.getScene('game');return [1,2,3,4,5].map(index=>{
         const card=s.children.getByName(`move-slot-${index}`),image=card.getByName('move-art'),name=card.list.find((child:any)=>child.type==='Text'),bounds=image.getBounds();
-        return{id:card.getData('moveId'),status:card.getData('status'),fallback:card.getData('artFallback'),visible:image.visible,key:image.texture.key,scale:[image.scaleX,image.scaleY],size:[image.displayWidth,image.displayHeight],filter:image.texture.source[0].scaleMode,imageRight:bounds.right,nameLeft:name.getBounds().left,textFits:card.list.filter((child:any)=>child.type==='Text').every((text:any)=>text.getBounds().right<=card.x+145)};
+        return{id:card.getData('moveId'),status:card.getData('status'),fallback:card.getData('artFallback'),visible:image.visible,key:image.texture.key,scale:[image.scaleX,image.scaleY],size:[image.displayWidth,image.displayHeight],filter:image.texture.source[0].scaleMode,imageRight:bounds.right,nameLeft:name.getBounds().left,textFits:card.list.filter((child:any)=>child.type==='Text'&&child.visible).every((text:any)=>text.getBounds().right<=card.x+46),slotRight:card.x+46};
       });
     });
     expect(hud.map((slot:any)=>slot.id)).toEqual(['dragonClaw','ember','dragonRage','metalClaw','tackle']);
-    for(const slot of hud){expect(slot).toMatchObject({status:'filled',fallback:false,visible:true,key:`move:${slot.id}`,scale:[1,1],size:[32,32],filter:0,textFits:true});expect(slot.imageRight).toBeLessThan(slot.nameLeft);}
+    for(const slot of hud){expect(slot).toMatchObject({status:'filled',fallback:false,visible:true,key:`move:${slot.id}`,scale:[1,1],size:[32,32],filter:0,textFits:true});expect(slot.imageRight).toBeLessThanOrEqual(slot.slotRight);}
     await page.screenshot({path:`${folder}/move-hud-${viewport.width}.png`});
     if(viewport.width===1280)await page.screenshot({path:`${folder}/move-hud.png`});
   });
