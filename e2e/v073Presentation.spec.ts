@@ -23,6 +23,10 @@ for(const viewport of [{width:1280,height:720},{width:1663,height:924},{width:39
   expect(metrics.play.height).toBeGreaterThan(55);
   mkdirSync('test-results/v073-expedition-ui',{recursive:true});
   await page.screenshot({path:`test-results/v073-expedition-ui/menu-${viewport.width}.png`,fullPage:true});
+  if(viewport.width<500){
+   await card.scrollIntoViewIfNeeded();
+   await page.screenshot({path:'test-results/v073-expedition-ui/menu-mobile-briefing.png'});
+  }
   await page.locator('.arcade-button--play').click();
   await expect(page.locator('#play-modes')).toBeVisible();
   await expect(page.locator('.arcade-button--single')).toBeVisible();
@@ -59,6 +63,8 @@ test('end-of-run report keeps a prominent accessible return action',async({page}
  await page.setViewportSize({width:1280,height:720});
  await page.goto('/?seed=1337');
  await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__);
+ await page.evaluate(()=>(window as any).__POKEMON_SURVIVORS__.scene.start('game',{pokemon:'charmander',seed:1337}));
+ await page.waitForFunction(()=>((window as any).__POKEMON_SURVIVORS__.scene.getScene('game')?.state?.time??0)>.2);
  await page.evaluate(()=>{
   const game=(window as any).__POKEMON_SURVIVORS__;
   game.scene.start('results',{result:'victory',level:32,defeated:437,time:1800,seed:1337,
