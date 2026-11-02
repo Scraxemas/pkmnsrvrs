@@ -1,37 +1,80 @@
-import {forestHash,forestNoise} from './forestPlan';
+import {forestNoise} from './forestPlan';
 
 export type CanopyIntensity='off'|'subtle'|'standard';
-export interface CanopySpot {x:number;y:number;radiusX:number;radiusY:number;opacity:number;phase:number;sunlight:boolean;}
-/** Pure world-space canopy model. Never consumes combat RNG or mutates terrain. */
-export function canopyCoverage(seed:number,x:number,y:number){
- const broad=forestNoise(seed,x,y,840,0x641a);
- const middle=forestNoise(seed,x,y,265,0x79c2);
- const fine=forestNoise(seed,x,y,82,0xa731);
- return Math.max(0,Math.min(1,broad*.55+middle*.33+fine*.12));
+export interface CanopyLandmark {id:string;x:number;y:number;radius:number;}
+export interface CanopyLight {shade:number;sunlight:number;density:number;}
+
+const clamp=(n:number)=>Math.max(0,Math.min(1,n));
+const smooth=(a:number,b:number,x:number)=>{const t=clamp((x-a)/(b-a));return t*t*(3-2*t);};
+
+/** Broad canopy density across roughly 1.2 km of world space; identical at page seams. */
+export function regionalCanopyDensity(seed:number,x:number,y:number):number{
+ return forestNoise(seed,x,y,1280,0x641a);
 }
-export function canopySpotsForPage(seed:number,pageX:number,pageY:number,size:number,intensity:CanopyIntensity):CanopySpot[]{
- if(intensity==='off')return [];
- const cell=182,spots:CanopySpot[]=[];
- // Every anchor has exactly one rendering-page owner. Its shadow can spill
- // across page edges without clipping; pages have an existing viewport margin.
- for(let cy=Math.floor(pageY/cell);cy<=Math.floor((pageY+size)/cell);cy++)
- for(let cx=Math.floor(pageX/cell);cx<=Math.floor((pageX+size)/cell);cx++){
-  const h=forestHash(seed,cx,cy,0x9a31);
-  const x=cx*cell+20+((h>>>7)%140),y=cy*cell+20+((h>>>16)%140);
-  if(x<pageX||x>=pageX+size||y<pageY||y>=pageY+size)continue;
-  const density=canopyCoverage(seed,x,y),coin=forestHash(seed,cx,cy,0xbc82)/4294967295;
-  if(coin>.29+density*.47)continue;
-  const sunlight=(h%9===0),sizeCode=forestHash(seed,cx,cy,0xf271);
-  spots.push({x,y,radiusX:39+sizeCode%44,radiusY:30+(sizeCode>>>8)%38,
-   opacity:(intensity==='standard'?.13:.085)*(.55+density*.85),
-   phase:(sizeCode%628)/100,
-   sunlight});
+
+/** A continuous shadow mass, not a set of stamped leaf/circle positions.
+ * Domain distortion and three noise scales form connected crowns with broken
+ * edges. The function has no page origin and never consumes simulation RNG.
+ */
+export function canopyShadowField(seed:number,x:number,y:number):number{
+ const warp=(forestNoise(seed,x,y,480,0x357a)-.5)*170;
+ const broad=forestNoise(seed,x+warp,y-warp*.64,920,0x9cf2);
+ const crown=forestNoise(seed,x-warp*.5,y+warp,330,0x79c2);
+ const fragments=forestNoise(seed,x,y,78,0xa731);
+ const mass=smooth(.33,.68,broad*.51+crown*.49);
+ // Fine holes only break up established masses; open regions stay open.
+ const holes=smooth(.22,.68,fragments);
+ return clamp(mass*(.66+.34*holes));
+}
+
+/** Small warm shafts of light where the canopy opens. */
+export function canopySunlightField(seed:number,x:number,y:number):number{
+ const opening=forestNoise(seed,x,y,360,0xd02a);
+ const fleck=forestNoise(seed,x+17,y-27,84,0xac73);
+ return smooth(.55,.83,opening)*smooth(.54,.81,fleck);
+}
+
+function landmarkLighting(landmarks:readonly CanopyLandmark[],x:number,y:number){
+ let opening=0,nest=0,ancient=0;
+ for(const site of landmarks){
+  const dx=x-site.x,dy=y-site.y,r=Math.max(170,site.radius+95);
+  if(Math.abs(dx)>r||Math.abs(dy)>r)continue;
+  const influence=1-smooth(.25,1,Math.hypot(dx,dy)/r);
+  if(site.id==='beedrill-nest')nest=Math.max(nest,influence);
+  else if(site.id==='pikachu-hollow'||site.id==='pewter-exit'||site.id.startsWith('campsite:'))
+   opening=Math.max(opening,influence);
+  else if(site.id.startsWith('ancient-tree:'))ancient=Math.max(ancient,influence);
  }
- return spots;
+ return{opening,nest,ancient};
 }
-/** A bounded radial falloff centered on the camera. Never a flashlight cone. */
+
+/** Returns transparent dark shade and light separately, for one color-composited
+ * per-page texture. Scene entities, items, attacks and HUD are never darkened.
+ */
+export function canopyLighting(
+ seed:number,x:number,y:number,intensity:CanopyIntensity,
+ landmarks:readonly CanopyLandmark[]=[]
+):CanopyLight{
+ if(intensity==='off')return{shade:0,sunlight:0,density:0};
+ const density=regionalCanopyDensity(seed,x,y);
+ const shadow=canopyShadowField(seed,x,y);
+ const flecks=canopySunlightField(seed,x,y);
+ const nearby=landmarkLighting(landmarks,x,y);
+ const strength=intensity==='standard'?1:.68;
+ const base=clamp((shadow*.80+density*.20)*(.90+.10*density));
+ const clearFactor=1-.60*nearby.opening-.32*nearby.ancient;
+ const shade=Math.min(.22,strength*(.025+.175*base)*clearFactor*(1+.11*nearby.nest));
+ const sunlight=Math.min(.046,strength*(.036*flecks*(1-base*.50)+.019*nearby.opening+.012*nearby.ancient));
+ return{shade,sunlight,density};
+}
+
+/** Compatibility helper for existing visual diagnostics. */
+export function canopyCoverage(seed:number,x:number,y:number){
+ return clamp(canopyShadowField(seed,x,y)*.8+regionalCanopyDensity(seed,x,y)*.2);
+}
+
+/** An almost imperceptible edge grade; no flashlight effect. */
 export function vignetteAlpha(distanceFraction:number,intensity:CanopyIntensity){
  if(intensity==='off')return 0;
- const f=Math.max(0,Math.min(1,(distanceFraction-.38)/.62));
- return (intensity==='standard'?.105:.065)*f*f*(3-2*f);
+ return (intensity==='standard'?.034:.016)*smooth(.52,1,distanceFraction);
 }
