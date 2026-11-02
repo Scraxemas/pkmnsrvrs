@@ -23,6 +23,7 @@ import {chunkKey,prewarmWorldChunk,syncWorldChunks as syncWorldData} from './wor
 import {forestObjectiveText} from './forestObjectives';
 import {renderLandmarkArt,landmarkDiscoveryLabel} from './landmarkPresentation';
 import {forestHash,forestNoise} from './forestPlan';
+import {createExpeditionHudChrome} from './ui/expeditionHudChrome';
 import {ForestCanopyRenderer} from './forestCanopyRenderer';
 import {forestResearchHud} from './forestResearch';
 import {playGameCue,installGameAudioUnlock} from './gameAudio';
@@ -102,6 +103,7 @@ class GameScene extends Phaser.Scene {
   this.worldLayer.add([this.playerShadow,this.player]);
   this.cameraTarget=this.add.zone(this.state.player.x,this.state.player.y,1,1);if(!this.state.world.stream)this.cameras.main.setBounds(0,0,this.state.world.width,this.state.world.height);else this.cameras.main.removeBounds();this.cameras.main.roundPixels=true;this.cameras.main.startFollow(this.cameraTarget,true,1,1);
   this.hpLayout=gameplayHudLayout(W,H);
+   createExpeditionHudChrome(this);
    const layout=this.hpLayout;
    this.expGraphics=this.add.graphics().setDepth(22000).setScrollFactor(0);
    this.expText=this.add.text(layout.experience.x,20,'',{fontFamily:FONT,fontSize:'11px',color:'#e8f8ff',backgroundColor:'#102019ea',padding:{x:6,y:3}}).setDepth(22001).setScrollFactor(0).setVisible(false);
@@ -181,7 +183,7 @@ class GameScene extends Phaser.Scene {
   const layout=this.hpLayout,summary=experienceProgress(this.state.level,this.state.xp,this.state.nextXp),bar=layout.experience,g=this.expGraphics;
   if(this.expLevel!==this.state.level){this.expLevel=this.state.level;this.expDisplay=0;this.expFlash=1;}
   this.expDisplay+=(summary.ratio-this.expDisplay)*(1-Math.exp(-delta/80));this.expFlash=Math.max(0,this.expFlash-delta/450);
-  g.clear().fillStyle(0x08121c,.92).fillRect(bar.x-1,bar.y-1,bar.width+2,bar.height+2).fillStyle(0x1d2d51,1).fillRect(bar.x,bar.y,bar.width,bar.height).fillStyle(this.expFlash>.3?0xbfeeff:0x62c8ff,1).fillRect(bar.x,bar.y,Math.round(bar.width*this.expDisplay),bar.height).lineStyle(1,0xc5e4d5,.85).strokeRect(bar.x,bar.y,bar.width,bar.height);
+  g.clear().fillStyle(0x08121c,.92).fillRect(bar.x-1,bar.y-1,bar.width+2,bar.height+2).fillStyle(0x1b4539,1).fillRect(bar.x,bar.y,bar.width,bar.height).fillStyle(this.expFlash>.3?0xffe3a1:0x8de1b0,1).fillRect(bar.x,bar.y,Math.round(bar.width*this.expDisplay),bar.height).lineStyle(1,0xe7e0b6,.88).strokeRect(bar.x,bar.y,bar.width,bar.height);
   if(this.expText.text!==summary.label)this.expText.setText(summary.label);
   const hpRatio=Math.max(0,Math.min(1,this.state.hp/Math.max(1,this.state.maxHp))),zoom=this.cameras.main.zoom,rows=this.visibleRows(this.player,this.state.pokemonId),head=this.player.y-this.player.displayOriginY*this.player.scaleY+rows.top*this.player.scaleY;
   const width=Math.max(35,Math.min(55,renderProfile(this.state.pokemonId).shadowWidth+5))/zoom,height=5/zoom,x=this.renderPlayer.x-width/2,y=head-10/zoom;
