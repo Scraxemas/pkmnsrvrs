@@ -15,7 +15,7 @@ export function createExpeditionHudChrome(scene:Phaser.Scene){
  };
  // Five move slots and four item slots, with space preserved around tooltips.
  panel(layout.moves.x-8,layout.moves.y-5,279,111);
- panel(layout.character.x-128,layout.character.y-9,222,61);
+ panel(layout.character.x-148,layout.character.y-9,220,61);
  panel(layout.timer.x-91,layout.timer.y-21,182,49);
  const details=scene.add.text(layout.timer.x,layout.timer.y+29,'VIRIDIAN · 30 MIN SURVIVAL',{
   fontFamily:'"Pokemon Pixel Font", monospace',fontSize:'9px',color:'#e5dcaf',
