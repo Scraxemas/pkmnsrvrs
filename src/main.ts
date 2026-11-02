@@ -322,7 +322,7 @@ class GameScene extends Phaser.Scene {
   if(request.kind==='credit'&&!options.length){this.showNextChoice(false);return;}
   if(!options.length)options=upgradeOptions(this.state);
   this.activeChoice={request,options};this.acc=0;this.overlay??=this.add.container(0,0).setScrollFactor(0);
-  this.renderMoveHud();this.renderHealthBars();this.setGameplayNoticesVisible(false);
+  this.renderMoveHud();this.renderHealthBars();this.setGameplayNoticesVisible(false);this.mobileHud.setVisible(false);this.moveHud.hideDetail();this.itemHud.hideDetail();
   // Immediate manager pause freezes Clock, TweenManager, sprite animation and scene updates together.
   if(!this.scene.isPaused('game'))this.scene.manager.pause(this);
   this.scene.launch('upgrade',{title:request.title,options,state:this.state,onSelect:(u:Upgrade)=>this.completeChoice(request.id,u)});
@@ -336,10 +336,10 @@ class GameScene extends Phaser.Scene {
  }
  resumeAfterChoices(){
   if(this.activeChoice||this.pendingChoices.length||this.ended)return;
-  this.overlay?.destroy(true);this.overlay=undefined;this.acc=0;this.setGameplayNoticesVisible(true);
+  this.overlay?.destroy(true);this.overlay=undefined;this.acc=0;this.setGameplayNoticesVisible(true);this.mobileHud.setVisible(true);
   if(this.scene.isPaused('game')){this.input.keyboard?.resetKeys();this.scene.manager.resume(this);}
  }
- cancelChoices(resume=true){this.scene.manager.stop('upgrade');this.pendingChoices=[];this.activeChoice=undefined;this.overlay?.destroy(true);this.overlay=undefined;this.acc=0;if(resume&&!this.ended){this.setGameplayNoticesVisible(true);if(this.scene.isPaused('game')){this.input.keyboard?.resetKeys();this.scene.manager.resume(this);}}}
+ cancelChoices(resume=true){this.scene.manager.stop('upgrade');this.pendingChoices=[];this.activeChoice=undefined;this.overlay?.destroy(true);this.overlay=undefined;this.acc=0;this.mobileHud.setVisible(resume&&!this.ended);if(resume&&!this.ended){this.setGameplayNoticesVisible(true);if(this.scene.isPaused('game')){this.input.keyboard?.resetKeys();this.scene.manager.resume(this);}}}
  setGameplayNoticesVisible(visible:boolean){for(const object of this.children.list)if(object.getData('gameplayNotice'))(object as Phaser.GameObjects.Text).setVisible(visible);}
  renderMoveHud(){
   this.moveHud.update(this.state);
