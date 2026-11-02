@@ -377,8 +377,8 @@ class GameScene extends Phaser.Scene {
   }
   this.time.delayedCall(2800,()=>notice.destroy(true));
  }
- showEventBanner(message:string,color='#ffe7a2',duration=2400){
-  const notice=this.add.text(W/2,208,message,{fontFamily:FONT,fontSize:'22px',fontStyle:'bold',color,backgroundColor:'#102019ee',padding:{x:16,y:10},align:'center',stroke:'#102019',strokeThickness:2}).setName('forest-event-notice').setOrigin(.5,0).setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);
+ showEventBanner(message:string,color='#ffe7a2',duration=2400,y=208){
+  const notice=this.add.text(W/2,y,message,{fontFamily:FONT,fontSize:'22px',fontStyle:'bold',color,backgroundColor:'#102019ee',padding:{x:16,y:10},align:'center',stroke:'#102019',strokeThickness:2}).setName('forest-event-notice').setOrigin(.5,0).setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);
   if(!motionReduced(this.preferences))this.tweens.add({targets:notice,alpha:0,duration:220,delay:Math.max(0,duration-220)});
   this.time.delayedCall(duration,()=>{if(notice.active)notice.destroy();});
  }
@@ -458,7 +458,7 @@ class GameScene extends Phaser.Scene {
    const label=landmarkDiscoveryLabel(id);
    if(label&&!this.knownDiscoveries.has(key)){
     this.knownDiscoveries.add(key);
-    this.showEventBanner('DISCOVERED · '+label,'#f1e9b1',2500);
+    this.showEventBanner('DISCOVERED · '+label,'#f1e9b1',2500,146);
    }
   }else if(e==='xp-collected')playGameCue('xp',this.preferences);else if(e==='boss-windup')playGameCue('boss-windup',this.preferences);else if(e==='boss-attack')playGameCue('boss-attack',this.preferences);else if(e.startsWith('boss-phase:')){const phase=Number(e.split(':')[1]);this.showEventBanner(phase===2?'BEEDRILL · POISON LANES':'BEEDRILL · HIVE SWARM','#ffafb7');playGameCue('boss-phase',this.preferences);}}
   // Commit research once before ending the run. The old flow finalized
