@@ -36,12 +36,19 @@ export class ForestCanopyRenderer{
    const {x,y,radiusX:rx,radiusY:ry,opacity:o,phase}=spot;
    // Overlapping soft leaf lobes instead of dark square page overlays.
    // These shapes are bound to GLOBAL positions, not page-local random seeds.
-   g.fillStyle(0x143a2b,o*.24).fillEllipse(x,y,rx*2.8,ry*2.6);
-   const petals=5;
-   for(let i=0;i<petals;i++){
-    const theta=phase+i*Math.PI*2/petals;
-    const px=x+Math.cos(theta)*rx*.45,py=y+Math.sin(theta)*ry*.4;
-    g.fillStyle(0x173f2f,o*.68).fillEllipse(px,py,rx*1.55,ry*1.3);
+   // A near-invisible soft halo connects disjoint leaf silhouettes.
+   g.fillStyle(0x143a2b,o*.08).fillEllipse(x,y,rx*2.3,ry*2.1);
+   const leaves=9;
+   for(let i=0;i<leaves;i++){
+    const theta=phase+i*Math.PI*2/leaves;
+    const px=x+Math.cos(theta)*rx*.55,py=y+Math.sin(theta)*ry*.48;
+    const stretch=.45+(i%3)*.11,shape: {x:number;y:number}[]=[];
+    for(let vertex=0;vertex<9;vertex++){
+     const angle=vertex*Math.PI*2/9;
+     const irregular=1+.20*Math.sin(vertex*2.4+i*1.7+phase);
+     shape.push({x:px+Math.cos(angle)*rx*stretch*irregular,y:py+Math.sin(angle)*ry*(.25+(i%2)*.07)*irregular});
+    }
+    g.fillStyle(i%3===0?0x214b36:0x153d2e,o*(i%3===0?.48:.68)).fillPoints(shape,true);
    }
    if(spot.sunlight){
     g.fillStyle(0xf5e5ac,.025).fillEllipse(x+rx*.35,y-ry*.35,rx*1.1,ry*.9);
