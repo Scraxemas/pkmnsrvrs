@@ -96,7 +96,7 @@ export function generateForestChunk(seed:number,cx:number,cy:number,features:For
  for(let gy=Math.floor(y0/NEIGHBOUR_SPACING);gy<=Math.floor((y0+size)/NEIGHBOUR_SPACING);gy++)
  for(let gx=Math.floor(x0/NEIGHBOUR_SPACING);gx<=Math.floor((x0+size)/NEIGHBOUR_SPACING);gx++){
   const h=forestHash(seed,gx,gy,0x2d1e),r=h/4294967295;
-  if(r>.21*density)continue;
+  if(r>.13*density)continue;
   const x=gx*NEIGHBOUR_SPACING+65+((h>>>8)%95),y=gy*NEIGHBOUR_SPACING+65+((h>>>16)%95);
   const choice=forestHash(seed,gx,gy,0x177e)%10;
   if(choice<=3)add('tree',x,y,30,true);
