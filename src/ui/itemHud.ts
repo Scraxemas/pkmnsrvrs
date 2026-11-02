@@ -37,7 +37,7 @@ export class ItemHud {
     .setDepth(20010).setScrollFactor(0).setName('held-item-slot-'+(index+1)).setSize(SLOT,SLOT);
    const hit=scene.add.zone(0,0,SLOT,SLOT).setOrigin(0).setInteractive();
    container.add(hit);
-   hit.on('pointerover',()=>this.showDetail(index));
+   hit.on('pointerover',(pointer:Phaser.Input.Pointer)=>{if(!pointer.wasTouch)this.showDetail(index);});
    hit.on('pointerout',()=>this.hideDetail());
    hit.on('pointerdown',()=>{
     this.cancelPress();
