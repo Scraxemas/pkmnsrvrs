@@ -278,7 +278,7 @@ class GameScene extends Phaser.Scene {
   for(const landmark of map.landmarks.filter(l=>Math.floor(l.x/pageSize)===cx&&Math.floor(l.y/pageSize)===cy)){
    objects.push(...renderLandmarkArt(this,landmark,this.worldLayer));
   }
-  objects.push(...this.canopyRenderer.renderPage(cx,cy,pageSize));
+  objects.push(...this.canopyRenderer.renderPage(cx,cy,pageSize,map.landmarks));
   this.chunkViews.set(key,objects);
  }
  syncWorldChunks(force=false){
