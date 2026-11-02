@@ -49,5 +49,6 @@ export class MobileCombatHud {
    addRow('ITEM '+(i+1)+' · '+(item?.name??'EMPTY'),held?'Rank '+held.rank:'',item?.description??'Find a held item during the run.');
   }
  }
+ setVisible(visible:boolean){this.root.style.display=visible?'':'none';if(!visible)this.root.open=false;}
  destroy(){this.root.remove();}
 }
