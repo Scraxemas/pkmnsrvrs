@@ -52,7 +52,7 @@ class GameScene extends Phaser.Scene {
  debugText?:Phaser.GameObjects.Text;debugGraphics?:Phaser.GameObjects.Graphics;enemyViews=new Map<number,Phaser.GameObjects.Sprite>();enemyShadows=new Map<number,Phaser.GameObjects.Ellipse>();pickupViews=new Map<number,Phaser.GameObjects.Image>();projectileViews=new Map<number,Phaser.GameObjects.Shape>();
  pickupRenderer!:PickupRenderer;itemHud!:ItemHud;moveHud!:MoveHud;previousPickups=new Map<number,Position>();
  playerAnimation!:PokemonAnimationController;enemyAnimations=new Map<number,PokemonAnimationController>();previousPlayer!:Position;previousEnemies=new Map<number,Position>();previousProjectiles=new Map<number,Position>();renderPlayer:Position={x:0,y:0};
- chunkViews=new Map<string,Phaser.GameObjects.GameObject[]>();chunkRangeKey='';activeChunk={cx:Number.NaN,cy:Number.NaN};sessionDefeats:Record<string,number>={};sessionBalls=0;sessionUnlockedTms:string[]=[];acc=0;overlay?:Phaser.GameObjects.Container;fast=false;debug=false;duration=1800;nextSpawn=0;miniIndex=0;bossWarningShown=false;ended=false;
+ chunkViews=new Map<string,Phaser.GameObjects.GameObject[]>();chunkRangeKey='';activeChunk={cx:Number.NaN,cy:Number.NaN};sessionDefeats:Record<string,number>={};sessionBalls=0;sessionUnlockedTms:string[]=[];runStartPokemon:string[]=[];acc=0;overlay?:Phaser.GameObjects.Container;fast=false;debug=false;duration=1800;nextSpawn=0;miniIndex=0;bossWarningShown=false;ended=false;
  grassViews=new Map<string,GrassView>();grassBrush=new GrassBrushField();grassParticles=new Set<Phaser.GameObjects.Rectangle>();grassBrushCount=0;
  pokemonVisibleRows=new Map<string,VisibleRows[]>();
  moveVfx!:MoveVfxRenderer;statusHud!:Phaser.GameObjects.Text;researchBase:Record<string,number>={};lastHitReaction=Number.NEGATIVE_INFINITY;
@@ -67,7 +67,7 @@ class GameScene extends Phaser.Scene {
 
  constructor(){super('game')}
  init(d:{pokemon:string;fast?:boolean;seed?:number}){
-  const saved=loadSave();this.preferences=saved.settings;this.researchBase={...saved.research};this.fast=!!d.fast;this.debug=import.meta.env.DEV&&new URLSearchParams(location.search).has('debug');this.state=makeState(POKEMON[d.pokemon]??POKEMON.bulbasaur,seedForRun(location.search,d.seed),undefined,{discoveredTms:saved.discoveredTms});this.duration=this.fast?90:1800;this.ended=false;this.overlay=undefined;this.acc=0;this.nextSpawn=0;this.miniIndex=0;this.sessionDefeats={};this.sessionBalls=0;this.sessionUnlockedTms=[];this.expDisplay=0;this.expLevel=1;this.expFlash=0;
+  const saved=loadSave();this.runStartPokemon=[...saved.unlockedPokemon];this.preferences=saved.settings;this.researchBase={...saved.research};this.fast=!!d.fast;this.debug=import.meta.env.DEV&&new URLSearchParams(location.search).has('debug');this.state=makeState(POKEMON[d.pokemon]??POKEMON.bulbasaur,seedForRun(location.search,d.seed),undefined,{discoveredTms:saved.discoveredTms});this.duration=this.fast?90:1800;this.ended=false;this.overlay=undefined;this.acc=0;this.nextSpawn=0;this.miniIndex=0;this.sessionDefeats={};this.sessionBalls=0;this.sessionUnlockedTms=[];this.expDisplay=0;this.expLevel=1;this.expFlash=0;
   this.enemyViews.clear();this.enemyShadows.clear();this.enemyAnimations.clear();this.pickupViews.clear();this.projectileViews.clear();this.previousEnemies.clear();this.previousProjectiles.clear();this.chunkViews.clear();this.chunkRangeKey='';this.activeChunk={cx:Number.NaN,cy:Number.NaN};this.previousPlayer={x:this.state.player.x,y:this.state.player.y};
   this.grassViews.clear();this.grassBrush.clear();this.grassParticles.clear();this.grassBrushCount=0;
   this.previousPickups.clear();
@@ -383,7 +383,7 @@ class GameScene extends Phaser.Scene {
   const saved=recordRun({result,pokemon:this.state.pokemonId,stage:'viridian',level:this.state.level,time:this.state.time,defeated:this.state.defeated});
   // Research TMs can be saved during the run. Keep these in the final reward list.
   const earnedTms=new Set([...this.sessionUnlockedTms,...saved.discoveredTms.filter(id=>!prior.discoveredTms.includes(id))]);
-  const unlocks=[...saved.unlockedPokemon.filter(id=>!prior.unlockedPokemon.includes(id)).map(id=>`Pokémon unlocked: ${POKEMON[id]?.name??id}`),...[...earnedTms].map(id=>`TM discovered: ${tmLabel(id)}`)];
+  const unlocks=[...saved.unlockedPokemon.filter(id=>!this.runStartPokemon.includes(id)).map(id=>`Pokémon unlocked: ${POKEMON[id]?.name??id}`),...[...earnedTms].map(id=>`TM discovered: ${tmLabel(id)}`)];
   this.overlay=this.add.container(0,0).setScrollFactor(0);
   this.scene.launch('results',{result,level:this.state.level,defeated:this.state.defeated,time:this.state.time,seed:this.state.world.seed,unlocks,onReturn:()=>this.scene.start('menu')});
  }
