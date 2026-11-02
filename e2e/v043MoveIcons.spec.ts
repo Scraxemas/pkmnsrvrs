@@ -62,7 +62,7 @@ for(const viewport of [{width:1280,height:720},{width:1920,height:1080}]){
     }));
     expect(mixed.map((art:any)=>art.id)).toEqual(['ember','charcoal','magnet']);
     expect(mixed[1].key).toContain('pokesprite:charcoal');expect(mixed[2].key).toContain('pokesprite:magnet');
-    for(const image of mixed){expect(Math.max(...image.display)).toBe(64);expect(image.scale[0]).toBe(image.scale[1]);expect(image.filter).toBe(0);}
+    for(const image of mixed){expect(Math.max(...image.display)).toBe(64);expect(image.scale[0]).toBe(image.scale[1]);expect(image.filter).toBe(1);}
     await page.screenshot({path:`${folder}/mixed-upgrade-cards-${viewport.width}.png`});
     writeFileSync(`${folder}/card-audit-${viewport.width}.json`,JSON.stringify({viewport,...audit,mixed},null,2));
     expect(failures).toEqual([]);
