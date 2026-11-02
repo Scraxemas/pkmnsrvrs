@@ -31,6 +31,7 @@ import {hasMoveArt,moveTexture,preloadMoveArt} from './moveAssets';
 import {pixelArt} from './ui/pixelArt';
 import {PickupRenderer} from './pickupRenderer';
 import {ItemHud} from './ui/itemHud';
+import {MobileCombatHud} from './ui/mobileCombatHud';
 import {MoveHud} from './ui/moveHud';
 import {progressionNoticeText} from './upgrades';
 import {MoveVfxRenderer,preloadMoveVfx} from './moveVfx';
@@ -50,7 +51,7 @@ class GameScene extends Phaser.Scene {
  portrait!:Phaser.GameObjects.Image;hud!:Phaser.GameObjects.Text;timerText!:Phaser.GameObjects.Text;researchHud!:Phaser.GameObjects.Text;expGraphics!:Phaser.GameObjects.Graphics;expText!:Phaser.GameObjects.Text;playerHpGraphics!:Phaser.GameObjects.Graphics;bossGraphics!:Phaser.GameObjects.Graphics;bossText!:Phaser.GameObjects.Text;hpLayout!:GameplayHudLayout;
  expDisplay=0;expLevel=1;expFlash=0;playerHpBounds={x:0,y:0,width:0,height:0,fillWidth:0};
  debugText?:Phaser.GameObjects.Text;debugGraphics?:Phaser.GameObjects.Graphics;enemyViews=new Map<number,Phaser.GameObjects.Sprite>();enemyShadows=new Map<number,Phaser.GameObjects.Ellipse>();pickupViews=new Map<number,Phaser.GameObjects.Image>();projectileViews=new Map<number,Phaser.GameObjects.Shape>();
- pickupRenderer!:PickupRenderer;itemHud!:ItemHud;moveHud!:MoveHud;previousPickups=new Map<number,Position>();
+ pickupRenderer!:PickupRenderer;itemHud!:ItemHud;moveHud!:MoveHud;mobileHud!:MobileCombatHud;previousPickups=new Map<number,Position>();
  playerAnimation!:PokemonAnimationController;enemyAnimations=new Map<number,PokemonAnimationController>();previousPlayer!:Position;previousEnemies=new Map<number,Position>();previousProjectiles=new Map<number,Position>();renderPlayer:Position={x:0,y:0};
  chunkViews=new Map<string,Phaser.GameObjects.GameObject[]>();chunkRangeKey='';activeChunk={cx:Number.NaN,cy:Number.NaN};sessionDefeats:Record<string,number>={};sessionBalls=0;acc=0;overlay?:Phaser.GameObjects.Container;fast=false;debug=false;duration=1800;nextSpawn=0;miniIndex=0;bossWarningShown=false;ended=false;
  grassViews=new Map<string,GrassView>();grassBrush=new GrassBrushField();grassParticles=new Set<Phaser.GameObjects.Rectangle>();grassBrushCount=0;
@@ -84,7 +85,7 @@ class GameScene extends Phaser.Scene {
   this.groundLayer=this.add.layer().setName('terrain-layer').setDepth(0);
   this.worldLayer=this.add.layer().setName('world-layer').setDepth(1);
   this.effectsLayer=this.add.layer().setName('world-effects-layer').setDepth(2);
-  this.events.once('shutdown',()=>{this.scene.stop('upgrade');this.scene.stop('results');this.pickupRenderer.destroy();this.itemHud.destroy();this.moveHud.destroy();this.moveVfx.destroy();});
+  this.events.once('shutdown',()=>{this.scene.stop('upgrade');this.scene.stop('results');this.pickupRenderer.destroy();this.itemHud.destroy();this.moveHud.destroy();this.mobileHud.destroy();this.moveVfx.destroy();});
   this.cameras.main.centerOn(this.state.player.x,this.state.player.y);this.drawForest();
   // Prepare one likely next chunk between crossings, never the whole world.
   this.time.addEvent({delay:175,loop:true,callback:()=>prewarmWorldChunk(this.state.world,this.state.player.x,this.state.player.y)});
@@ -112,7 +113,7 @@ class GameScene extends Phaser.Scene {
   this.objectiveHud=this.add.text(layout.objective.x,layout.objective.y,'',{fontFamily:FONT,fontSize:'12px',color:'#dce8c8',backgroundColor:'#102019ad',padding:{x:6,y:4}}).setOrigin(1,0).setName('forest-objective').setDepth(20000).setScrollFactor(0);
    this.researchHud=this.add.text(layout.research.x,layout.research.y,'',{fontFamily:FONT,fontSize:'11px',color:'#b9eacc',backgroundColor:'#1020199c',padding:{x:6,y:4}}).setOrigin(1,0).setName('field-research-compact').setDepth(20000).setScrollFactor(0);
   if(this.debug){this.debugGraphics=this.add.graphics().setDepth(19990);this.effectsLayer.add(this.debugGraphics);this.debugText=this.add.text(W-440,H-215,'',{fontFamily:FONT,fontSize:'13px',color:'#9fffb3',backgroundColor:'#07120ddd',padding:{x:8,y:6}}).setDepth(22010).setScrollFactor(0);}
-  this.pickupRenderer=new PickupRenderer(this,this.worldLayer,this.effectsLayer);this.pickupViews=this.pickupRenderer.views;this.itemHud=new ItemHud(this);this.moveHud=new MoveHud(this);this.itemHud.update(this.state,motionReduced(this.preferences));this.renderMoveHud();
+  this.pickupRenderer=new PickupRenderer(this,this.worldLayer,this.effectsLayer);this.pickupViews=this.pickupRenderer.views;this.itemHud=new ItemHud(this);this.moveHud=new MoveHud(this);this.mobileHud=new MobileCombatHud();this.mobileHud.update(this.state);this.itemHud.update(this.state,motionReduced(this.preferences));this.renderMoveHud();
    // Keyboard digits inspect move slots 1–5 and held-item slots 6–9.
    const inspectKeyboard=(event:KeyboardEvent)=>{
     if(this.overlay||this.ended)return;
@@ -425,7 +426,7 @@ class GameScene extends Phaser.Scene {
  drawDebug(){const g=this.debugGraphics;if(!g)return;g.clear();g.lineStyle(2,0xff5d73,.65);for(const d of this.state.world.decorations)if(Math.abs(d.x-this.state.player.x)<900&&Math.abs(d.y-this.state.player.y)<650)g.strokeCircle(d.x,d.y,d.collisionRadius+14);g.lineStyle(2,0x62e8ff,.8);for(const e of this.state.enemies.slice(0,100)){g.lineBetween(e.x,e.y,e.x+e.vx*.28,e.y+e.vy*.28);if(e.blockedFor>.4){g.lineStyle(2,0xffd45c,.9);g.strokeCircle(e.x,e.y,18);g.lineStyle(2,0x62e8ff,.8);}}g.lineStyle(3,0x8fff89,.9);g.lineBetween(this.state.player.x,this.state.player.y,this.state.player.x+this.state.player.vx*.3,this.state.player.y+this.state.player.vy*.3);}
  update(_t:number,delta:number){
   this.renderHealthBars(delta);this.moveVfx.update(this.state.time+this.acc);this.renderCombatStatus();
-  this.itemHud.update(this.state,motionReduced(this.preferences));this.renderMoveHud();
+  this.itemHud.update(this.state,motionReduced(this.preferences));this.mobileHud.update(this.state);this.renderMoveHud();
   if(this.overlay||this.ended)return;this.acc+=Math.min(delta/1000,.1);while(this.acc>=this.fixedStep&&!this.overlay&&!this.ended){this.acc-=this.fixedStep;this.step();}if(this.overlay||this.ended)return;const alpha=interpolationAlpha(this.acc,this.fixedStep),profile=renderProfile(this.state.pokemonId);this.renderPlayer=interpolatePosition(this.previousPlayer,this.state.player,alpha);const playerOffset=this.applyPokemonAnimation(this.player,this.playerAnimation,this.state.pokemonId,this.state.player.facing,Math.hypot(this.state.player.vx,this.state.player.vy),this.renderPlayer);this.playerShadow.setPosition(this.renderPlayer.x,this.renderPlayer.y+profile.shadowOffsetY).setDepth(this.renderPlayer.y-2);this.cameraTarget.setPosition(this.renderPlayer.x,this.renderPlayer.y);this.syncViews(alpha);this.syncWorldChunks();this.drawDebug();this.renderHealthBars(0);
   this.updateGrass();
   if(this.debugText){const ranged=this.state.enemies.filter(e=>e.behavior==='ranged').length;this.debugText.setText(`DEBUG\nFPS ${Math.round(this.game.loop.actualFps)}  SIM 30 Hz  α ${alpha.toFixed(2)}\nAnim ${this.playerAnimation.state}  Key ${this.player.anims.currentAnim?.key??'idle'}  Frame ${String(this.player.frame.name)}\nFacing ${this.state.player.facing}  Ground offset ${playerOffset.toFixed(1)}\nSim ${this.state.player.x.toFixed(1)},${this.state.player.y.toFixed(1)}  Prev ${this.previousPlayer.x.toFixed(1)},${this.previousPlayer.y.toFixed(1)}\nRender ${this.renderPlayer.x.toFixed(1)},${this.renderPlayer.y.toFixed(1)}  Shadow ${this.playerShadow.x.toFixed(1)},${this.playerShadow.y.toFixed(1)}\nCamera ${this.cameraTarget.x.toFixed(1)},${this.cameraTarget.y.toFixed(1)}  Chunk ${this.activeChunk.cx},${this.activeChunk.cy}\nPhase ${this.state.encounterPhase}  Ranged ${ranged}/${this.state.maxRangedEnemies}  Shots ${this.state.projectiles.length}/${this.state.maxEnemyProjectiles}\nEnemies ${this.state.enemies.length}  Checks ${this.state.collisionChecks}  Nav ${this.state.navigationRebuilds}\nWorld ${this.state.world.seed}  RNG ${this.state.seed}  Hash ${stateHash(this.state)}`);}
