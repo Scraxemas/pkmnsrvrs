@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import {PRIMARY_FONT_FAMILY} from './ui/fonts';
 import { assetFor, ENEMIES, ITEMS, MOVES, POKEMON, SPRITE_FRAMES } from './content';
 import { FACINGS, Facing, facingRow, facingFromVector } from './direction';
-import { ENVIRONMENT_ASSETS, ENVIRONMENT_ATLASES, environmentKey, environmentUrl } from './environmentAssets';
+import { ENVIRONMENT_ASSETS, ENVIRONMENT_ATLASES, environmentKey, environmentUrl, safeEnvironmentTexture } from './environmentAssets';
 import {cliffFrame,decorationVisual,visibleChunkRange} from './worldPresentation';
 import {GrassBrushField} from './grassBrush';
 import {GRASS_FOREGROUND_ALPHA,grassFootCoverage,measureVisibleRows,opaqueGrassBladeColumn,VisibleRows} from './grassOcclusion';
@@ -191,7 +191,7 @@ class GameScene extends Phaser.Scene {
  drawForest(){this.cameras.main.setBackgroundColor('#70c8a0');this.syncWorldChunks(true);}
  groundObject<T extends Phaser.GameObjects.GameObject>(object:T):T{this.groundLayer.add(object);return object;}
  addForestTree(x:number,y:number,name:string,scale=2){
-  const image=this.add.image(x,y,environmentKey(name));
+  const image=this.add.image(x,y,safeEnvironmentTexture(this,name));
   this.worldLayer.add(image);
   // Both metatrees include two pixels of padding and four pixels of ground
   // below the trunk. Sort at the trunk so overlapping canopies stay intact.
@@ -258,10 +258,10 @@ class GameScene extends Phaser.Scene {
    else if(value===TERRAIN.cliff){const mask=adjacencyMask(map.terrain,x,y,value),image=this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.cliffAtlas),cliffFrame(!!(mask&1),!!(mask&4),!!(mask&16),!!(mask&64))).setDisplaySize(tile,tile).setDepth(wy+tile/2);this.worldLayer.add(image);objects.push(image);}
    // Transparent whole tufts can bend without rotating opaque ground squares.
    else if(value===TERRAIN.tallGrass)objects.push(...this.addGrass(wx+((y%2)*2-1)*2,wy+12,x,y));
-   else if(hash%7===0)objects.push(this.groundObject(this.add.image(wx,wy,environmentKey(details[hash%details.length])).setScale(2).setDepth(.5)));
+   else if(hash%7===0)objects.push(this.groundObject(this.add.image(wx,wy,safeEnvironmentTexture(this,details[hash%details.length])).setScale(2).setDepth(.5)));
   }
   for(const d of (map.decorationBuckets[ownerKey]??[]).filter(d=>Math.floor(d.x/pageSize)===cx&&Math.floor(d.y/pageSize)===cy)){
-   const visual=decorationVisual(d.id,d.x,d.y,map.seed,d.radius),image=this.add.image(Math.round(d.x),Math.round(d.y),environmentKey(visual.name));
+   const visual=decorationVisual(d.id,d.x,d.y,map.seed,d.radius),image=this.add.image(Math.round(d.x),Math.round(d.y),safeEnvironmentTexture(this,visual.name));
    this.worldLayer.add(image);
    image.setOrigin(.5,(image.height-visual.trunkPadding)/image.height).setDepth(d.y).setScale(visual.scale).setData('mapProp',d.id);if(d.id==='tree')image.setData('forestTree',true);objects.push(image);
   }
