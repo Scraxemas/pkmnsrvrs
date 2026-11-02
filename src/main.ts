@@ -22,7 +22,7 @@ import {interpolatePosition,interpolationAlpha,Position} from './interpolation';
 import {chunkKey,prewarmWorldChunk,syncWorldChunks as syncWorldData} from './worldgen';
 import {forestObjectiveText} from './forestObjectives';
 import {forestResearchHud} from './forestResearch';
-import {playGameCue} from './gameAudio';
+import {playGameCue,installGameAudioUnlock} from './gameAudio';
 import {fusionForResult} from './data/moveFusions';
 import {MenuScene,PokemonScene,StageScene,DexScene,ResearchScene,SettingsScene,stopFrontendScenes} from './menuScenes';
 import {motionReduced,PlayerSettings} from './preferences';
@@ -410,6 +410,8 @@ class GameScene extends Phaser.Scene {
   if(this.debugText){const ranged=this.state.enemies.filter(e=>e.behavior==='ranged').length;this.debugText.setText(`DEBUG\nFPS ${Math.round(this.game.loop.actualFps)}  SIM 30 Hz  α ${alpha.toFixed(2)}\nAnim ${this.playerAnimation.state}  Key ${this.player.anims.currentAnim?.key??'idle'}  Frame ${String(this.player.frame.name)}\nFacing ${this.state.player.facing}  Ground offset ${playerOffset.toFixed(1)}\nSim ${this.state.player.x.toFixed(1)},${this.state.player.y.toFixed(1)}  Prev ${this.previousPlayer.x.toFixed(1)},${this.previousPlayer.y.toFixed(1)}\nRender ${this.renderPlayer.x.toFixed(1)},${this.renderPlayer.y.toFixed(1)}  Shadow ${this.playerShadow.x.toFixed(1)},${this.playerShadow.y.toFixed(1)}\nCamera ${this.cameraTarget.x.toFixed(1)},${this.cameraTarget.y.toFixed(1)}  Chunk ${this.activeChunk.cx},${this.activeChunk.cy}\nPhase ${this.state.encounterPhase}  Ranged ${ranged}/${this.state.maxRangedEnemies}  Shots ${this.state.projectiles.length}/${this.state.maxEnemyProjectiles}\nEnemies ${this.state.enemies.length}  Checks ${this.state.collisionChecks}  Nav ${this.state.navigationRebuilds}\nWorld ${this.state.world.seed}  RNG ${this.state.seed}  Hash ${stateHash(this.state)}`);}
  }
 }
+// Register before the first menu click: Web Audio requires real user activation.
+installGameAudioUnlock(()=>loadSave().settings);
 // Canvas text keeps its initial font, so load the primary face before creating scenes.
 document.fonts.load(`16px ${PRIMARY_FONT_FAMILY}`)
  .catch(error=>console.warn('Could not load the primary font; using monospace.',error))
