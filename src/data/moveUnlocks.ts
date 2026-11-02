@@ -23,4 +23,8 @@ export const tmLabel=(id:string)=>TECHNICAL_MACHINES.find(tm=>tm.id===id)?.label
 export const TM_RESEARCH_REWARDS=[
   {research:'caterpie',count:25,tm:'sv:056',label:'Seed Study'},
   {research:'weedle',count:25,tm:'sv:013',label:'Poison Study'},
+  {research:'pidgey',count:30,tm:'sv:033',label:'Canopy Survey'},
+  {research:'metapod',count:20,tm:'sv:007',label:'Defensive Ecology'},
+  {research:'butterfree',count:12,tm:'sv:119',label:'Pollination Study'},
+  {research:'beedrill',count:1,tm:'sv:111',label:'Hive Guardian'},
 ] as const;
