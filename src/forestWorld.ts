@@ -35,7 +35,7 @@ export function buildForest(seed:number){
   {id:'pikachu-hollow',...pikachu,radius:120},
   {id:'beedrill-nest',...nest,radius:110},
   {id:'pewter-exit',...exit,radius:115},
-  ...features.camps.map(c=>({id:'campsite',x:c.x,y:c.y,radius:c.radius}))
+  ...features.camps.map(c=>({id:'campsite:'+c.id,x:c.x,y:c.y,radius:c.radius}))
  ];
  const spawnZones:Rect[]=[];for(let i=0;i<8;i++){const a=i*Math.PI/4;spawnZones.push({x:Math.cos(a)*650-160,y:Math.sin(a)*650-140,width:320,height:280});}
  return{width:Number.POSITIVE_INFINITY,height:Number.POSITIVE_INFINITY,start:{x:0,y:0},
@@ -63,6 +63,11 @@ export function generateForestChunk(seed:number,cx:number,cy:number,features:For
   const lx=x0+size*(.3+rng.next()*.4),ly=y0+size*(.3+rng.next()*.4);
   if(Math.hypot(lx,ly)>900&&!protectedSite(lx,ly))
    landmarks.push({id:(rare===0?'campsite:':'ancient-tree:')+chunkKey(cx,cy),x:lx,y:ly,radius:115});
+ }
+ if(forestHash(seed,cx,cy,0x544d)%92===0){
+  const x=x0+size*.40,y=y0+size*.58;
+  if(Math.hypot(x,y)>1000&&!protectedSite(x,y)&&landmarks.every(l=>Math.hypot(l.x-x,l.y-y)>320))
+   landmarks.push({id:'tm-cache:'+chunkKey(cx,cy),x,y,radius:60});
  }
  const blockedSites=[...staticSites,...landmarks];
  const siteFree=(x:number,y:number,padding=0)=>blockedSites.every(p=>Math.hypot(p.x-x,p.y-y)>p.radius+padding);
@@ -116,9 +121,10 @@ export function generateForestChunk(seed:number,cx:number,cy:number,features:For
   add(choice<5?['flowerWhite','flowerPink','flowerYellow'][choice%3]:choice===5?'reeds':'bush',x,y,0,false);
  }
  // Optional rare visual sites. They never gate the stage or block a passage.
- for(const l of landmarks)if(l.id.startsWith('campsite:')){
+ for(const l of [...landmarks,...features.camps])if(l.id.startsWith('campsite:')||l.id.startsWith('camp-')){
   add('tent',l.x,l.y+10,42,false,true);add('campLog',l.x-75,l.y+60,24,false,true);add('supplies',l.x+60,l.y+38,16,false,true);
  }
+ for(const l of landmarks)if(l.id.startsWith('tm-cache:'))add('supplies',l.x,l.y,14,false,true);
  return{key:chunkKey(cx,cy),cx,cy,motif,encounterWeight:motif==='bug-habitat'?1.15:1,
   safeSpawn:true,featureIds:landmarks.map(l=>l.id),terrain,decorations,landmarks,trails:[],
   template:FOREST_TEMPLATES.find(t=>t.motif===motif)!.id,rotation:0};
