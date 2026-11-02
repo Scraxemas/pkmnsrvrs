@@ -14,6 +14,7 @@ interface ItemView {
  key:string;
  flashUntil:number;
  spent:boolean;
+ flashing:boolean;
 }
 /** Four small held-item slots live directly under the five combat moves. */
 export class ItemHud {
@@ -44,7 +45,7 @@ export class ItemHud {
     this.press=scene.time.delayedCall(420,()=>this.showDetail(index));
    });
    hit.on('pointerup',()=>this.cancelPress());
-   this.slots.push({container,frame,image,rank,key:'',flashUntil:0,spent:false});
+   this.slots.push({container,frame,image,rank,key:'',flashUntil:0,spent:false,flashing:false});
   }
  }
  private cancelPress(){this.press?.remove(false);this.press=undefined;}
@@ -68,9 +69,11 @@ export class ItemHud {
     if(held)slot.image.setTexture(itemTexture(held.id,true)).setDisplaySize(30,30).setAlpha(spent?.4:1);
     slot.rank.setText(held?(spent?'×':'R'+held.rank):'');
    }
-   if(changed||(!reduced&&held&&state.time<slot.flashUntil)){
+   const flashing=!!held&&!reduced&&state.time<slot.flashUntil;
+   if(changed||flashing!==slot.flashing){
+    slot.flashing=flashing;
     slot.frame.clear().fillStyle(0x102019,.86).fillRoundedRect(0,0,SLOT,SLOT,5)
-     .lineStyle(1,!reduced&&held&&state.time<slot.flashUntil?0xffdf8b:0x688f7b,held?.9:.5).strokeRoundedRect(0,0,SLOT,SLOT,5);
+     .lineStyle(1,flashing?0xffdf8b:0x688f7b,held?.9:.5).strokeRoundedRect(0,0,SLOT,SLOT,5);
    }
   });
  }
