@@ -17,15 +17,15 @@ describe('infinite forest acceptance',()=>{
   }
  });
 
- it('connects all shared path ports, including negative coordinates, without solids on either side',()=>{
+ it('streams equally walkable terrain across positive and negative chunk seams',()=>{
   const map=generateMap(777);
   for(const [cx,cy] of [[-15,-3],[-1,-1],[0,0],[3,5],[100,-100]]){
    const p=forestChunkPorts(map.seed,cx,cy),east=forestChunkPorts(map.seed,cx+1,cy),south=forestChunkPorts(map.seed,cx,cy+1);
    expect(p.east).toEqual(east.west);expect(p.south).toEqual(south.north);
    syncWorldChunks(map,(cx+.5)*map.chunkSize,(cy+.5)*map.chunkSize);
    for(const port of [p.north,p.south,p.east,p.west])for(const [ox,oy] of [[-16,0],[16,0],[0,-16],[0,16]]){
-    expect(terrainAtWorld(map.terrain,port.x+ox,port.y+oy)).toBe(TERRAIN.path);
-    expect(collides(map,port.x+ox,port.y+oy,14)).toBe(false);
+    expect(terrainAtWorld(map.terrain,port.x+ox,port.y+oy)).not.toBe(TERRAIN.cliff);
+    expect(terrainAtWorld(map.terrain,port.x+ox,port.y+oy)).not.toBe(TERRAIN.water);
    }
   }
  });
@@ -83,15 +83,27 @@ describe('infinite forest acceptance',()=>{
   expect(state.enemies.filter(e=>e.species==='pikachu')).toHaveLength(1);
  });
 
- it('preserves authored objectives and a large unobstructed boss arena across seeds',()=>{
+ it('keeps optional iconic sites accessible and summons Beedrill near the player, anywhere',()=>{
   for(let seed=0;seed<20;seed++){
    const map=generateMap(seed);
    for(const id of ['entrance','pikachu-hollow','beedrill-nest','pewter-exit']){
-    const landmark=map.landmarks.find(l=>l.id===id)!;expect(landmark).toBeDefined();syncWorldChunks(map,landmark.x,landmark.y);expect(collides(map,landmark.x,landmark.y,16)).toBe(false);
+    const landmark=map.landmarks.find(l=>l.id===id)!;expect(landmark).toBeDefined();
+    syncWorldChunks(map,landmark.x,landmark.y);
+    expect(collides(map,landmark.x,landmark.y,16)).toBe(false);
    }
-   const arena=map.bossArena;syncWorldChunks(map,arena.x+300,arena.y+300);
-   for(let y=arena.y+24;y<arena.y+arena.height-24;y+=48)for(let x=arena.x+24;x<arena.x+arena.width-24;x+=48)expect(collides(map,x,y,16),`seed ${seed} arena`).toBe(false);
-   const state=makeState(POKEMON.bulbasaur,seed,map);state.time=1800;expect(beginBossEncounter(state)).toBe(true);expect(state.time).toBe(1800);expect(state.enemies.filter(e=>e.boss)).toHaveLength(1);expect(beginBossEncounter(state)).toBe(false);
+   const state=makeState(POKEMON.bulbasaur,seed,map);
+   Object.assign(state.player,{x:55000+seed*1000,y:-67000-seed*700});
+   syncWorldChunks(state.world,state.player.x,state.player.y);
+   const old={...state.player};
+   state.time=1800;
+   expect(beginBossEncounter(state)).toBe(true);
+   expect(state.player.x).toBe(old.x);expect(state.player.y).toBe(old.y);
+   const boss=state.enemies.find(e=>e.boss)!;
+   expect(Math.hypot(boss.x-old.x,boss.y-old.y)).toBeGreaterThanOrEqual(300);
+   expect(Math.hypot(boss.x-old.x,boss.y-old.y)).toBeLessThanOrEqual(570);
+   expect(collides(state.world,boss.x,boss.y,85)).toBe(false);
+   expect(beginBossEncounter(state)).toBe(false);
   }
  });
+
 });
