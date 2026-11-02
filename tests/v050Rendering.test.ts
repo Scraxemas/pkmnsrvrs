@@ -1,3 +1,4 @@
+import {NEAREST_PIXEL_FILTER} from '../src/pixelFiltering';
 import {describe,expect,it} from 'vitest';
 import {MOVES,POKEMON} from '../src/content';
 import {FACINGS} from '../src/direction';
@@ -22,7 +23,7 @@ describe('v0.5.0 native character action playback',()=>{
  it('registers every source frame and eight directions with original per-frame timing',()=>{
   const configs:any[]=[],textureFilters:{key:string;filter:number}[]=[];registerNativeAnimations({textures:{exists:()=>true,get:(key:string)=>({setFilter:(filter:number)=>textureFilters.push({key,filter})})},anims:{exists:()=>false,create:(config:any)=>configs.push(config)}} as any);
   expect(configs).toHaveLength(9*3*8);
-  expect(textureFilters).toHaveLength(27);expect(new Set(textureFilters.map(entry=>entry.key)).size).toBe(27);expect(textureFilters.every(entry=>entry.filter===0)).toBe(true);
+  expect(textureFilters).toHaveLength(27);expect(new Set(textureFilters.map(entry=>entry.key)).size).toBe(27);expect(NEAREST_PIXEL_FILTER).toBe(1);expect(textureFilters.every(entry=>entry.filter===NEAREST_PIXEL_FILTER)).toBe(true);
   for(const [species,actions] of Object.entries(NATIVE_ACTIONS))for(const [kind,action] of Object.entries(actions))for(const facing of FACINGS){
    const config=configs.find(config=>config.key===nativeAnimationKey(species,kind as any,facing));expect(config.repeat).toBe(0);expect(config.frameRate).toBe(60);
    expect(config.frames.map((frame:any)=>frame.duration+1000/60)).toEqual(action!.durations.map(ticks=>ticks*1000/60));
