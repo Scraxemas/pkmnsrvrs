@@ -1,4 +1,5 @@
-import Phaser from 'phaser';
+import type Phaser from 'phaser';
+import {NEAREST_PIXEL_FILTER} from './pixelFiltering';
 
 // Reviewed FRLG crops plus the original campsite/flower pixel artwork. Legacy
 // atlas crops remain archived and never enter the playable stage.
@@ -30,7 +31,7 @@ export function safeEnvironmentTexture(scene:Phaser.Scene,name:string){
   g.fillStyle(0x91c18e,1).fillCircle(12,12,8);
   g.lineStyle(2,0x2b6848,1).strokeCircle(16,17,12);
   g.generateTexture(fallback,32,32);g.destroy();
-  scene.textures.get(fallback).setFilter(Phaser.Textures.FilterMode.NEAREST);
+  scene.textures.get(fallback).setFilter(NEAREST_PIXEL_FILTER);
  }
  if(!warnedMissingEnvironment.has(key)){warnedMissingEnvironment.add(key);console.warn('[forest-art] Failed to load '+key+'; showing original fallback.');}
  return fallback;
