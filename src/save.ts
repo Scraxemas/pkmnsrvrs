@@ -30,7 +30,7 @@ export function writeSave(save:SaveData,storage:Storage=localStorage){storage.se
 export function recordForestDiscoveries(ids:readonly string[],storage:Storage=localStorage){
  const save=loadSave(storage),known=new Set(['entrance','pikachu-hollow','pikachu-encounter','beedrill-nest','pewter-exit']);let changed=false;
  save.discoveredLocations??=[];
- for(const id of ids){const key=`viridian:${id}`;if(known.has(id)&&!save.discoveredLocations.includes(key)){save.discoveredLocations.push(key);changed=true;}}
+ for(const id of ids){const key=`viridian:${id}`;if((known.has(id)||id==='campsite'||id.startsWith('campsite:')||id.startsWith('ancient-tree:'))&&!save.discoveredLocations.includes(key)){save.discoveredLocations.push(key);changed=true;}}
  if(changed)writeSave(save,storage);return changed;
 }
 export function toggleFavorite(dex:number,storage:Storage=localStorage){const save=loadSave(storage),favorites=save.favoritePokemon??[];save.favoritePokemon=favorites.includes(dex)?favorites.filter(value=>value!==dex):[...favorites,dex];writeSave(save,storage);return save;}
