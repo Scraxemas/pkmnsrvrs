@@ -5,19 +5,19 @@ import {FOREST_TILE_SIZE,FOREST_CHUNK_CELLS,FOREST_CHUNK_SIZE,chunkKey} from './
 export {FOREST_TILE_SIZE,FOREST_CHUNK_CELLS,FOREST_CHUNK_SIZE,chunkKey} from './worldConstants';
 
 export type Biome='forest'|'cave'|'ship';
-export type ForestMotif='clearing'|'forest-wall'|'corridor'|'tall-grass'|'pond'|'rocky'|'landmark'|'cliff'|'campsite'|'flower-meadow';
+export type ForestMotif='woodland'|'flower-meadow'|'mossy'|'bug-habitat'|'old-woodland'|'open-meadow';
 export interface Rect { x:number;y:number;width:number;height:number; }
 export interface Decoration { id:string;x:number;y:number;depth:number;solid:boolean;radius:number;collisionRadius:number;persistentId?:string; }
 export interface Landmark { id:string;x:number;y:number;radius:number; }
 export interface WorldChunk { key:string;cx:number;cy:number;motif:ForestMotif;encounterWeight:number;safeSpawn:boolean;featureIds?:string[]; }
-export interface ForestWorldChanges {version:1;seed:number;discoveries:string[];removedDecorations:Record<string,string[]>;terrainEdits:Record<string,Record<string,number>>;}
+export interface ForestWorldChanges {version:1|2;seed:number;discoveries:string[];removedDecorations:Record<string,string[]>;terrainEdits:Record<string,Record<string,number>>;}
 export interface ForestStream {
   centerX:number;centerY:number;revision:number;activeKeys:string[];cells:number;maxCachedChunks:number;
   cache:Map<string,ForestChunkData>;persistent:ForestWorldChanges;contentRevision:number;
 }
 export interface StageMap {
   seed:number;biome:Biome;width:number;height:number;playerStart:{x:number;y:number};bossArena:Rect;paths:Rect[];
-  terrain:TerrainGrid;decorations:Decoration[];landmarks:Landmark[];spawnZones:Rect[];
+  terrain:TerrainGrid;decorations:Decoration[];landmarks:Landmark[];baseLandmarks?:Landmark[];spawnZones:Rect[];
   chunkSize:number;chunks:Record<string,WorldChunk>;decorationBuckets:Record<string,Decoration[]>;features:ForestFeatures;
   stream?:ForestStream;collisionBuckets?:Record<string,Decoration[]>;
 }
@@ -35,8 +35,12 @@ function buildLegacyTerrain(rng:MapRng,width:number,height:number,paths:Rect[]){
 export function generateMap(seed:number,biome:Biome='forest',options:{chunkCells?:number;maxCachedChunks?:number;changes?:ForestWorldChanges}={}):StageMap {
   if(biome==='forest'){
     const forest=buildForest(seed),paths:Rect[]=[],requestedCells=options.chunkCells??FOREST_CHUNK_CELLS,cells=Number.isFinite(requestedCells)?Math.max(16,Math.min(128,Math.floor(requestedCells/16)*16)):FOREST_CHUNK_CELLS,size=cells*FOREST_TILE_SIZE;
-    const changes=options.changes?.version===1&&options.changes.seed===seed?JSON.parse(JSON.stringify(options.changes)) as ForestWorldChanges:{version:1 as const,seed,discoveries:[],removedDecorations:{},terrainEdits:{}};
-    const map:StageMap={seed,biome,width:forest.width,height:forest.height,playerStart:forest.start,bossArena:forest.bossArena,paths,terrain:createTerrainGrid(size*3,size*3,FOREST_TILE_SIZE),decorations:[],landmarks:forest.landmarks,spawnZones:forest.spawnZones,chunkSize:size,chunks:{},decorationBuckets:{},features:forest.features,stream:{centerX:Number.NaN,centerY:Number.NaN,revision:0,contentRevision:0,activeKeys:[],cells,maxCachedChunks:Math.max(9,Math.floor(options.maxCachedChunks??18)),cache:new Map(),persistent:changes}};
+    // v1 terrain and decoration deltas belonged to the old maze layout.
+     // Preserve its discoveries, but safely discard geometry-specific edits.
+     const prior=options.changes?.seed===seed?options.changes:undefined;
+     const changes:ForestWorldChanges=prior?.version===2?JSON.parse(JSON.stringify(prior)) as ForestWorldChanges:
+       {version:2,seed,discoveries:[...(prior?.discoveries??[])],removedDecorations:{},terrainEdits:{}};
+    const map:StageMap={seed,biome,width:forest.width,height:forest.height,playerStart:forest.start,bossArena:forest.bossArena,paths,terrain:createTerrainGrid(size*3,size*3,FOREST_TILE_SIZE),decorations:[],landmarks:[...forest.landmarks],baseLandmarks:forest.landmarks,spawnZones:forest.spawnZones,chunkSize:size,chunks:{},decorationBuckets:{},features:forest.features,stream:{centerX:Number.NaN,centerY:Number.NaN,revision:0,contentRevision:0,activeKeys:[],cells,maxCachedChunks:Math.max(9,Math.floor(options.maxCachedChunks??18)),cache:new Map(),persistent:changes}};
     syncWorldChunks(map,map.playerStart.x,map.playerStart.y);return map;
   }
   const rng=new MapRng(seed),width=2560,height=1440,start={x:width/2,y:height/2},bossArena={x:width-610,y:height/2-250,width:500,height:500};
@@ -56,14 +60,14 @@ function cachedForestChunk(map:StageMap,cx:number,cy:number){
 function rebuildResidentWorld(map:StageMap){
   const stream=map.stream!,cells=stream.cells,cols=cells*3,originCol=(stream.centerX-1)*cells,originRow=(stream.centerY-1)*cells;
   const grid=createTerrainGrid(cols*FOREST_TILE_SIZE,cols*FOREST_TILE_SIZE,FOREST_TILE_SIZE);grid.originCol=originCol;grid.originRow=originRow;
-  map.chunks={};map.decorations=[];map.decorationBuckets={};map.collisionBuckets={};stream.activeKeys=[];
+  map.chunks={};map.decorations=[];map.landmarks=[...(map.baseLandmarks??map.landmarks)];map.decorationBuckets={};map.collisionBuckets={};stream.activeKeys=[];
   for(let oy=-1;oy<=1;oy++)for(let ox=-1;ox<=1;ox++){
     const chunk=cachedForestChunk(map,stream.centerX+ox,stream.centerY+oy),key=chunk.key,removed=new Set(stream.persistent.removedDecorations[key]??[]),edits=stream.persistent.terrainEdits[key]??{};
     stream.activeKeys.push(key);map.chunks[key]={key,cx:chunk.cx,cy:chunk.cy,motif:chunk.motif,encounterWeight:chunk.encounterWeight,safeSpawn:chunk.safeSpawn,featureIds:chunk.featureIds};
     for(let y=0;y<cells;y++)for(let x=0;x<cells;x++){
       const i=y*cells+x,value=edits[i]??chunk.terrain.cells[i];grid.cells[((oy+1)*cells+y)*cols+(ox+1)*cells+x]=value;
     }
-    const decorations=chunk.decorations.filter(d=>!removed.has(d.persistentId!));map.decorationBuckets[key]=decorations;map.decorations.push(...decorations);
+    const decorations=chunk.decorations.filter(d=>!removed.has(d.persistentId!));map.decorationBuckets[key]=decorations;map.decorations.push(...decorations);map.landmarks.push(...chunk.landmarks);
     for(const d of decorations)if(d.solid){const cell=chunkKey(Math.floor(d.x/128),Math.floor(d.y/128));(map.collisionBuckets[cell]??=[]).push(d);}
   }
   map.terrain=grid;stream.revision++;
