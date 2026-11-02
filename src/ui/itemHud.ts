@@ -45,7 +45,7 @@ export class ItemHud {
     this.press=scene.time.delayedCall(420,()=>this.showDetail(index));
    });
    hit.on('pointerup',()=>this.cancelPress());
-   this.slots.push({container,frame,image,rank,key:'',flashUntil:0,spent:false,flashing:false});
+   this.slots.push({container,frame,image,rank,key:'__unpainted__',flashUntil:0,spent:false,flashing:false});
   }
  }
  private cancelPress(){this.press?.remove(false);this.press=undefined;}
