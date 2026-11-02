@@ -74,6 +74,7 @@ test('canopy setting Off removes all shadow objects but keeps the same terrain a
 });
 
 test('canopy still keeps HUD and combat visible at a mobile viewport',async({page})=>{
+ mkdirSync('test-results/v072-canopy-gallery',{recursive:true});
  await page.setViewportSize({width:390,height:844});
  await page.goto('/?seed=1337');
  await page.waitForFunction(()=>(window as any).__POKEMON_SURVIVORS__);
