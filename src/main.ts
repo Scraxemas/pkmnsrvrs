@@ -23,6 +23,7 @@ import {chunkKey,prewarmWorldChunk,syncWorldChunks as syncWorldData} from './wor
 import {forestObjectiveText} from './forestObjectives';
 import {renderLandmarkArt,landmarkDiscoveryLabel} from './landmarkPresentation';
 import {forestHash,forestNoise} from './forestPlan';
+import {ForestCanopyRenderer} from './forestCanopyRenderer';
 import {forestResearchHud} from './forestResearch';
 import {playGameCue,installGameAudioUnlock} from './gameAudio';
 import {fusionForResult} from './data/moveFusions';
@@ -47,7 +48,7 @@ const W=1280,H=720,FONT=PRIMARY_FONT_FAMILY;
 interface GrassView {back:Phaser.GameObjects.Image;front:Phaser.GameObjects.Image;blades:Phaser.GameObjects.Image;x:number;y:number;}
 interface ChoiceRequest {id:number;title:string;kind:'level'|'mastery'|'fixed'|'credit';options?:Upgrade[];onDone?:()=>void;}
 class GameScene extends Phaser.Scene {
- groundLayer!:Phaser.GameObjects.Layer;worldLayer!:Phaser.GameObjects.Layer;effectsLayer!:Phaser.GameObjects.Layer;
+ groundLayer!:Phaser.GameObjects.Layer;canopyRenderer!:ForestCanopyRenderer;worldLayer!:Phaser.GameObjects.Layer;effectsLayer!:Phaser.GameObjects.Layer;
  preferences!:PlayerSettings;
  state!:SimState;keys!:Record<string,Phaser.Input.Keyboard.Key>;player!:Phaser.GameObjects.Sprite;playerShadow!:Phaser.GameObjects.Ellipse;cameraTarget!:Phaser.GameObjects.Zone;
  portrait!:Phaser.GameObjects.Image;hud!:Phaser.GameObjects.Text;timerText!:Phaser.GameObjects.Text;researchHud!:Phaser.GameObjects.Text;expGraphics!:Phaser.GameObjects.Graphics;expText!:Phaser.GameObjects.Text;playerHpGraphics!:Phaser.GameObjects.Graphics;bossGraphics!:Phaser.GameObjects.Graphics;bossText!:Phaser.GameObjects.Text;hpLayout!:GameplayHudLayout;
@@ -85,6 +86,7 @@ class GameScene extends Phaser.Scene {
   // World-coordinate depths sort only inside these layers. Their bounded
   // scene depths keep terrain below actors and the HUD above any world y.
   this.groundLayer=this.add.layer().setName('terrain-layer').setDepth(0);
+   this.canopyRenderer=new ForestCanopyRenderer(this,this.state.world.seed,this.preferences.canopyIntensity);
   this.worldLayer=this.add.layer().setName('world-layer').setDepth(1);
   this.effectsLayer=this.add.layer().setName('world-effects-layer').setDepth(2);
   this.events.once('shutdown',()=>{this.scene.stop('upgrade');this.scene.stop('results');this.pickupRenderer.destroy();this.itemHud.destroy();this.moveHud.destroy();this.mobileHud.destroy();this.moveVfx.destroy();});
@@ -276,6 +278,7 @@ class GameScene extends Phaser.Scene {
   for(const landmark of map.landmarks.filter(l=>Math.floor(l.x/pageSize)===cx&&Math.floor(l.y/pageSize)===cy)){
    objects.push(...renderLandmarkArt(this,landmark,this.worldLayer));
   }
+  objects.push(...this.canopyRenderer.renderPage(cx,cy,pageSize));
   this.chunkViews.set(key,objects);
  }
  syncWorldChunks(force=false){
