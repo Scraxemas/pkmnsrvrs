@@ -20,7 +20,7 @@ describe('menu data and saved presentation preferences',()=>{
   it('adds defaults to existing v2 saves and changes settings without losing progress',()=>{
     const local=storage(),save=freshSave();save.research.viridianWins=7;save.unlockedStages.push('mtMoon');
     local.setItem('pokemon-survivors-save',JSON.stringify({...save,settings:{damageNumbers:false}}));
-    expect(loadSave(local).settings).toEqual({damageNumbers:false,reducedMotion:false,screenShake:false});
+    expect(loadSave(local).settings).toEqual({damageNumbers:false,reducedMotion:false,screenShake:false,soundEffects:true,sfxVolume:.6});
     updateSettings({reducedMotion:true},local);expect(loadSave(local)).toMatchObject({unlockedStages:['viridian','mtMoon','pewterGym'],research:{viridianWins:7},settings:{reducedMotion:true,damageNumbers:false}});
   });
   it('improves best-run ties by defeated count then time, and preserves stronger records',()=>{

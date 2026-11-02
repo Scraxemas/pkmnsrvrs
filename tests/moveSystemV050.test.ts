@@ -145,10 +145,10 @@ describe('permanent generation-aware TM discovery and additive saves',()=>{
   const saved=loadSave(storage);expect(saved.discoveredTms).toEqual(['gen1:021','sv:111']);expect(saved.tmDiscoveries).toEqual([{id:'gen1:021',source:'trainer'},{id:'sv:111',source:'stage'}]);
   const nextRun=makeState(POKEMON.bulbasaur,502,world,{discoveredTms:saved.discoveredTms});learnThroughPath(nextRun,'leechSeed');expect(canEvolveMove(nextRun,'megaDrain')).toBe(true);expect(nextRun.discoveredTms).not.toBe(saved.discoveredTms);
  });
- it('demonstrates only two early research discoveries and keeps advanced machines out of forest rewards',()=>{
+ it('preserves the two original early research discoveries before newer objectives are completed',()=>{
   const storage=memoryStorage();recordSessionEvents({caterpie:24,weedle:24},0,storage);expect(loadSave(storage).discoveredTms).toEqual([]);
   recordEvent('defeat','caterpie',storage);expect(loadSave(storage).discoveredTms).toEqual(['sv:056']);recordSessionEvents({weedle:1},1,storage);
-  const save=loadSave(storage);expect(new Set(save.discoveredTms)).toEqual(new Set(TM_RESEARCH_REWARDS.map(reward=>reward.tm)));expect(save.discoveredTms).toHaveLength(2);expect(save.research.pokeBalls).toBe(1);
+  const save=loadSave(storage);expect(new Set(save.discoveredTms)).toEqual(new Set(['sv:056','sv:013']));expect(save.discoveredTms).toHaveLength(2);expect(save.research.pokeBalls).toBe(1);
   recordSessionEvents({caterpie:500,weedle:500},0,storage);expect(loadSave(storage).tmDiscoveries).toHaveLength(2);
  });
 });

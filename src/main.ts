@@ -21,6 +21,9 @@ import {frameGroundOffset} from './groundOffsets';
 import {interpolatePosition,interpolationAlpha,Position} from './interpolation';
 import {chunkKey,prewarmWorldChunk,syncWorldChunks as syncWorldData} from './worldgen';
 import {forestObjectiveText} from './forestObjectives';
+import {forestResearchHud} from './forestResearch';
+import {playGameCue,installGameAudioUnlock} from './gameAudio';
+import {fusionForResult} from './data/moveFusions';
 import {MenuScene,PokemonScene,StageScene,DexScene,ResearchScene,SettingsScene,stopFrontendScenes} from './menuScenes';
 import {motionReduced,PlayerSettings} from './preferences';
 import {preloadItemArt} from './itemAssets';
@@ -49,7 +52,7 @@ class GameScene extends Phaser.Scene {
  debugText?:Phaser.GameObjects.Text;debugGraphics?:Phaser.GameObjects.Graphics;enemyViews=new Map<number,Phaser.GameObjects.Sprite>();enemyShadows=new Map<number,Phaser.GameObjects.Ellipse>();pickupViews=new Map<number,Phaser.GameObjects.Image>();projectileViews=new Map<number,Phaser.GameObjects.Shape>();
  pickupRenderer!:PickupRenderer;itemHud!:ItemHud;moveHud!:MoveHud;previousPickups=new Map<number,Position>();
  playerAnimation!:PokemonAnimationController;enemyAnimations=new Map<number,PokemonAnimationController>();previousPlayer!:Position;previousEnemies=new Map<number,Position>();previousProjectiles=new Map<number,Position>();renderPlayer:Position={x:0,y:0};
- chunkViews=new Map<string,Phaser.GameObjects.GameObject[]>();chunkRangeKey='';activeChunk={cx:Number.NaN,cy:Number.NaN};sessionDefeats:Record<string,number>={};sessionBalls=0;acc=0;overlay?:Phaser.GameObjects.Container;fast=false;debug=false;duration=1800;nextSpawn=0;miniIndex=0;ended=false;
+ chunkViews=new Map<string,Phaser.GameObjects.GameObject[]>();chunkRangeKey='';activeChunk={cx:Number.NaN,cy:Number.NaN};sessionDefeats:Record<string,number>={};sessionBalls=0;sessionUnlockedTms:string[]=[];runStartPokemon:string[]=[];acc=0;overlay?:Phaser.GameObjects.Container;fast=false;debug=false;duration=1800;nextSpawn=0;miniIndex=0;bossWarningShown=false;ended=false;
  grassViews=new Map<string,GrassView>();grassBrush=new GrassBrushField();grassParticles=new Set<Phaser.GameObjects.Rectangle>();grassBrushCount=0;
  pokemonVisibleRows=new Map<string,VisibleRows[]>();
  moveVfx!:MoveVfxRenderer;statusHud!:Phaser.GameObjects.Text;researchBase:Record<string,number>={};lastHitReaction=Number.NEGATIVE_INFINITY;
@@ -60,15 +63,16 @@ class GameScene extends Phaser.Scene {
  pointerMovement!:PointerMovementController;
  private movement:MovementVector={x:0,y:0};private padMovement:MovementVector={x:0,y:0};
  private controlPointer!:Phaser.Input.Pointer;
- readonly fixedStep=1/30;readonly miniProgress=[.10,.233,.367,.50,.633,.767,.90];
+ readonly fixedStep=1/30;readonly miniProgress=[5/30,8/30,11/30,15/30,19/30,23/30,27/30];
 
  constructor(){super('game')}
  init(d:{pokemon:string;fast?:boolean;seed?:number}){
-  const saved=loadSave();this.preferences=saved.settings;this.researchBase={...saved.research};this.fast=!!d.fast;this.debug=import.meta.env.DEV&&new URLSearchParams(location.search).has('debug');this.state=makeState(POKEMON[d.pokemon]??POKEMON.bulbasaur,seedForRun(location.search,d.seed),undefined,{discoveredTms:saved.discoveredTms});this.duration=this.fast?90:1800;this.ended=false;this.overlay=undefined;this.acc=0;this.nextSpawn=0;this.miniIndex=0;this.sessionDefeats={};this.sessionBalls=0;this.expDisplay=0;this.expLevel=1;this.expFlash=0;
+  const saved=loadSave();this.runStartPokemon=[...saved.unlockedPokemon];this.preferences=saved.settings;this.researchBase={...saved.research};this.fast=!!d.fast;this.debug=import.meta.env.DEV&&new URLSearchParams(location.search).has('debug');this.state=makeState(POKEMON[d.pokemon]??POKEMON.bulbasaur,seedForRun(location.search,d.seed),undefined,{discoveredTms:saved.discoveredTms});this.duration=this.fast?90:1800;this.ended=false;this.overlay=undefined;this.acc=0;this.nextSpawn=0;this.miniIndex=0;this.sessionDefeats={};this.sessionBalls=0;this.sessionUnlockedTms=[];this.expDisplay=0;this.expLevel=1;this.expFlash=0;
   this.enemyViews.clear();this.enemyShadows.clear();this.enemyAnimations.clear();this.pickupViews.clear();this.projectileViews.clear();this.previousEnemies.clear();this.previousProjectiles.clear();this.chunkViews.clear();this.chunkRangeKey='';this.activeChunk={cx:Number.NaN,cy:Number.NaN};this.previousPlayer={x:this.state.player.x,y:this.state.player.y};
   this.grassViews.clear();this.grassBrush.clear();this.grassParticles.clear();this.grassBrushCount=0;
   this.previousPickups.clear();
   this.chunkContentRevision=0;
+  this.bossWarningShown=false;
   this.forestDiscoveryCount=0;
   this.pendingChoices=[];this.activeChoice=undefined;this.choiceSerial=0;this.lastHitReaction=Number.NEGATIVE_INFINITY;
  }
@@ -295,7 +299,7 @@ class GameScene extends Phaser.Scene {
   const active=this.activeChoice;if(!active||active.request.id!==id||!active.options.includes(u))return;
   if(!isUpgradeAvailable(this.state,u)||!applyUpgrade(this.state,u)){this.activeChoice=undefined;this.pendingChoices.unshift(active.request);this.showNextChoice();return;}
   if(active.request.kind==='credit')this.state.moveUpgradeCredits=Math.max(0,this.state.moveUpgradeCredits-1);
-  this.pickupRenderer.onUpgrade(u,this.state);this.itemHud.update(this.state,motionReduced(this.preferences));this.renderMoveHud();if(u.kind==='moveEvolution'||u.kind==='moveFusion')this.showProgressionNotices();this.activeChoice=undefined;this.acc=0;active.request.onDone?.();this.renderHealthBars();
+  this.pickupRenderer.onUpgrade(u,this.state);if(u.kind==='moveFusion')playGameCue('fusion',this.preferences);else if(u.kind==='moveEvolution')playGameCue('reward',this.preferences);this.itemHud.update(this.state,motionReduced(this.preferences));this.renderMoveHud();if(u.kind==='moveEvolution'||u.kind==='moveFusion')this.showProgressionNotices();this.activeChoice=undefined;this.acc=0;active.request.onDone?.();this.renderHealthBars();
   this.showNextChoice();
  }
  resumeAfterChoices(){
@@ -308,7 +312,7 @@ class GameScene extends Phaser.Scene {
  renderMoveHud(){
   this.moveHud.update(this.state);
   this.hud.setText(`XP ${this.state.level>=100?'MAX':`${Number(this.state.xp.toFixed(1))}/${this.state.nextXp}`}   TIME ${Math.floor(this.state.time/60)}:${String(Math.floor(this.state.time%60)).padStart(2,'0')}   KO ${this.state.defeated}${this.fast?'   [FAST TEST MODE]':''}${this.state.moveUpgradeCredits?`   MOVE CREDITS ${this.state.moveUpgradeCredits}`:''}`);
-  this.objectiveHud.setText(forestObjectiveText(this.state.world,this.state.player,this.state.bossSpawned));
+  this.objectiveHud.setText(forestObjectiveText(this.state.world,this.state.player,this.state.bossSpawned)+'\nFIELD RESEARCH · '+forestResearchHud(this.researchBase,this.sessionDefeats,this.state.discoveredTms));
  }
  showProgressionNotices(){
   if(!this.state.progressionNotices.length)return;this.renderMoveHud();
@@ -321,10 +325,14 @@ class GameScene extends Phaser.Scene {
   }
   this.time.delayedCall(2800,()=>notice.destroy(true));
  }
- showEvolution(id:string){const p=POKEMON[id],profile=renderProfile(id);recordEvolution(id);this.player.anims.stop();this.player.setTexture(`${id}-sprite`,0);this.playerAnimation.setSpecies(id);this.playerAnimation.trigger('evolution',this.state.time,1.8);this.playerShadow.setSize(profile.shadowWidth,profile.shadowHeight);this.portrait.setTexture(`${id}-portrait`);const text=this.add.text(W/2,H/2,`Congratulations!\nYour Pokémon evolved into ${p.name}!`,{fontFamily:FONT,fontSize:'30px',color:'#ffe26b',backgroundColor:'#102019ee',padding:{x:30,y:24},align:'center'}).setOrigin(.5).setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);this.time.delayedCall(1800,()=>text.destroy());}
- showReward(tier:1|2|3){const options=rewardRoll(this.state,tier);this.showChoices(`${tier===3?'ULTRA':tier===2?'GREAT':'POKÉ'} BALL OPENED!`,options);}
+ showEventBanner(message:string,color='#ffe7a2',duration=2400){
+  const notice=this.add.text(W/2,208,message,{fontFamily:FONT,fontSize:'22px',fontStyle:'bold',color,backgroundColor:'#102019ee',padding:{x:16,y:10},align:'center',stroke:'#102019',strokeThickness:2}).setName('forest-event-notice').setOrigin(.5,0).setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);
+  this.time.delayedCall(duration,()=>notice.destroy());
+ }
+ showEvolution(id:string){const p=POKEMON[id],profile=renderProfile(id);recordEvolution(id);playGameCue('evolution',this.preferences);if(!motionReduced(this.preferences)){const burst=this.add.circle(this.state.player.x,this.state.player.y-18,24,0xffe9a1,.5).setDepth(this.state.player.y+30);this.effectsLayer.add(burst);this.tweens.add({targets:burst,scale:3,alpha:0,duration:650,onComplete:()=>burst.destroy()});}this.player.anims.stop();this.player.setTexture(`${id}-sprite`,0);this.playerAnimation.setSpecies(id);this.playerAnimation.trigger('evolution',this.state.time,1.8);this.playerShadow.setSize(profile.shadowWidth,profile.shadowHeight);this.portrait.setTexture(`${id}-portrait`);const text=this.add.text(W/2,H/2,`Congratulations!\nYour Pokémon evolved into ${p.name}!`,{fontFamily:FONT,fontSize:'30px',color:'#ffe26b',backgroundColor:'#102019ee',padding:{x:30,y:24},align:'center'}).setOrigin(.5).setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);this.time.delayedCall(1800,()=>text.destroy());}
+ showReward(tier:1|2|3){playGameCue('reward',this.preferences);const options=rewardRoll(this.state,tier);this.showChoices(`${tier===3?'ULTRA':tier===2?'GREAT':'POKÉ'} BALL OPENED!`,options);}
  renderAttack(a:AttackEvent){
-  this.moveVfx.emit(a,this.state.time,motionReduced(this.preferences));
+  this.moveVfx.emit(a,this.state.time,motionReduced(this.preferences));if(a.damage>=55||fusionForResult(a.moveId))playGameCue('major-attack',this.preferences);
   if(a.damage>0&&this.preferences.damageNumbers){
    const n=this.add.text(a.tx,a.ty-22,`${a.critical?'CRIT ':''}${Math.round(a.damage)}`,{fontFamily:FONT,fontSize:a.critical?'19px':'16px',fontStyle:'bold',color:a.critical?'#ffe08c':'#fff',stroke:'#17231c',strokeThickness:3}).setOrigin(.5).setDepth(17000);
    this.effectsLayer.add(n);
@@ -335,7 +343,7 @@ class GameScene extends Phaser.Scene {
  syncTmResearch(){
   if(!TM_RESEARCH_REWARDS.some(reward=>!this.state.discoveredTms.includes(reward.tm)&&(this.researchBase[reward.research]??0)+(this.sessionDefeats[reward.research]??0)>=reward.count))return;
   const old=new Set(this.state.discoveredTms),saved=recordSessionEvents(this.sessionDefeats,this.sessionBalls);this.sessionDefeats={};this.sessionBalls=0;this.researchBase={...saved.research};this.state.discoveredTms=[...saved.discoveredTms];
-  const unlocked=saved.discoveredTms.filter(id=>!old.has(id));if(!unlocked.length)return;
+  const unlocked=saved.discoveredTms.filter(id=>!old.has(id));if(!unlocked.length)return;for(const id of unlocked)if(!this.sessionUnlockedTms.includes(id))this.sessionUnlockedTms.push(id);playGameCue('tm',this.preferences);
   const notice=this.add.text(W/2,183,`TM DISCOVERED! ${unlocked.map(tmLabel).join(' · ')}\nPermanently unlocked for compatible moves`,{fontFamily:FONT,fontSize:'15px',color:'#b9f1cd',backgroundColor:'#102019ed',padding:{x:14,y:10},align:'center'}).setName('tm-discovery-notice').setOrigin(.5,0).setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);
   this.time.delayedCall(3500,()=>notice.destroy());
  }
@@ -356,19 +364,41 @@ class GameScene extends Phaser.Scene {
  schedule(){
   const phase=encounterPhaseAt(this.state.time,this.duration);this.state.encounterPhase=phase.id;this.state.maxRangedEnemies=phase.maxRanged;this.state.maxEnemyProjectiles=phase.projectileCap;
   if(this.state.time>=this.nextSpawn&&this.state.enemies.length<phase.maxAlive){const roll=((this.state.seed>>>8)%100000)/100000;let species=weightedSpecies(phase,roll);const ranged=this.state.enemies.filter(e=>e.behavior==='ranged').length;if((species==='pidgey'||species==='butterfree')&&ranged>=phase.maxRanged)species=this.state.time%2<1?'caterpie':'weedle';spawnSpecies(this.state,species,this.fast?2:Math.min(1+Math.floor(this.state.time/360),5));this.nextSpawn=this.state.time+phase.spawnInterval*(this.fast?.55:1);}
+  if(!this.bossWarningShown&&this.state.time>=this.duration-(this.fast?5:30)){this.bossWarningShown=true;this.showEventBanner('The hive is stirring... Beedrill approaches!', '#ffe0a0',3200);playGameCue('boss-warning',this.preferences);}
   const progress=this.state.time/this.duration;if(this.miniIndex<this.miniProgress.length&&progress>=this.miniProgress[this.miniIndex]){spawnSpecies(this.state,this.miniIndex%2?'pidgeotto':'butterfree',1,true);this.miniIndex++;}
   if(!this.state.bossSpawned&&this.state.time>=this.duration&&beginBossEncounter(this.state)){
+   this.showEventBanner('BEEDRILL · GUARDIAN OF VIRIDIAN FOREST','#ffafb7',3600);playGameCue('boss-phase',this.preferences);
    this.previousPlayer={x:this.state.player.x,y:this.state.player.y};this.previousEnemies.clear();this.cameraTarget.setPosition(this.state.player.x,this.state.player.y);this.cameras.main.centerOn(this.state.player.x,this.state.player.y);this.syncWorldChunks(true);this.cameras.main.fadeIn(400,0,0,0);
   }
  }
- finish(result:'victory'|'defeat'){if(this.ended)return;this.ended=true;this.cancelChoices(false);if(!this.scene.isPaused('game'))this.scene.manager.pause(this);this.playerAnimation.trigger('defeat',this.state.time);recordSessionEvents(this.sessionDefeats,this.sessionBalls);recordRun({result,pokemon:this.state.pokemonId,stage:'viridian',level:this.state.level,time:this.state.time,defeated:this.state.defeated});this.overlay=this.add.container(0,0).setScrollFactor(0);this.scene.launch('results',{result,level:this.state.level,defeated:this.state.defeated,time:this.state.time,seed:this.state.world.seed,onReturn:()=>this.scene.start('menu')});}
+ finish(result:'victory'|'defeat'){
+  if(this.ended)return;
+  this.ended=true;playGameCue(result,this.preferences);this.cancelChoices(false);
+  if(!this.scene.isPaused('game'))this.scene.manager.pause(this);
+  // A completed forest run is a victory, not the player's defeat animation.
+  if(result==='defeat')this.playerAnimation.trigger('defeat',this.state.time);
+  const prior=loadSave();
+  recordSessionEvents(this.sessionDefeats,this.sessionBalls);
+  this.sessionDefeats={};this.sessionBalls=0;
+  const saved=recordRun({result,pokemon:this.state.pokemonId,stage:'viridian',level:this.state.level,time:this.state.time,defeated:this.state.defeated});
+  // Research TMs can be saved during the run. Keep these in the final reward list.
+  const earnedTms=new Set([...this.sessionUnlockedTms,...saved.discoveredTms.filter(id=>!prior.discoveredTms.includes(id))]);
+  const unlocks=[...saved.unlockedPokemon.filter(id=>!this.runStartPokemon.includes(id)).map(id=>`Pokémon unlocked: ${POKEMON[id]?.name??id}`),...[...earnedTms].map(id=>`TM discovered: ${tmLabel(id)}`)];
+  this.overlay=this.add.container(0,0).setScrollFactor(0);
+  this.scene.launch('results',{result,level:this.state.level,defeated:this.state.defeated,time:this.state.time,seed:this.state.world.seed,unlocks,onReturn:()=>this.scene.start('menu')});
+ }
  step(){
   if(this.overlay||this.ended)return;
   this.previousPlayer={x:this.state.player.x,y:this.state.player.y};this.previousEnemies=new Map(this.state.enemies.map(e=>[e.id,{x:e.x,y:e.y}]));this.previousProjectiles=new Map(this.state.projectiles.map(p=>[p.id,{x:p.x,y:p.y}]));this.previousPickups.clear();for(const p of this.state.pickups)this.previousPickups.set(p.id,{x:p.x,y:p.y});const previousHp=this.state.hp;
   const previousLevel=this.state.level;this.schedule();const events=tick(this.state,this.fixedStep,this.moveInput());const fired=this.state.attacks.filter(attack=>attack.animationEligible),primary=fired.find(attack=>attack.signature)??fired[0];if(primary){const kind=MOVES[primary.moveId].damageClass==='Special'?'special':'physical',action=nativeActionFor(this.state.pokemonId,'attack',kind);this.playerAnimation.attack(this.state.time,kind,facingFromVector(primary.tx-primary.x,primary.ty-primary.y,this.state.player.facing),action?.durationSeconds??.24,!!primary.signature);}if(this.state.hp<previousHp){if(this.state.time-this.lastHitReaction>=.45&&this.playerAnimation.trigger('hit',this.state.time,nativeActionFor(this.state.pokemonId,'hit')?.durationSeconds??.12))this.lastHitReaction=this.state.time;if(this.preferences.screenShake&&!motionReduced(this.preferences))this.cameras.main.shake(80,.002);}
   const discoveries=this.state.world.stream?.persistent.discoveries??[];if(discoveries.length!==this.forestDiscoveryCount){this.forestDiscoveryCount=discoveries.length;recordForestDiscoveries(discoveries);}
   this.pickupRenderer.onStep(this.state);for(const a of this.state.attacks){this.renderAttack(a);for(const id of a.hits)this.enemyAnimations.get(id)?.trigger('hit',this.state.time,.1);}
-  for(const event of events)if(event.startsWith('evolution:'))this.showEvolution(event.split(':')[1]);this.showProgressionNotices();let earnedLevel=previousLevel;for(const e of events){if(e==='level-up'||e==='mastery-up')this.queueLevelChoice(e==='mastery-up'?'mastery':'level',++earnedLevel);else if(e.startsWith('ball-collected:')){this.sessionBalls++;this.showReward(Number(e.split(':')[1]) as 1|2|3);}else if(e.startsWith('defeated:')){const id=e.split(':')[1];this.sessionDefeats[id]=(this.sessionDefeats[id]??0)+1;}else if(e==='boss-defeated')this.finish('victory');}this.syncTmResearch();if(this.state.hp<=0)this.finish('defeat');
+  for(const event of events)if(event.startsWith('evolution:'))this.showEvolution(event.split(':')[1]);this.showProgressionNotices();let earnedLevel=previousLevel;for(const e of events){if(e==='level-up'||e==='mastery-up'){playGameCue('level',this.preferences);this.queueLevelChoice(e==='mastery-up'?'mastery':'level',++earnedLevel);}else if(e.startsWith('ball-collected:')){this.sessionBalls++;this.showReward(Number(e.split(':')[1]) as 1|2|3);}else if(e.startsWith('defeated:')){const id=e.split(':')[1];this.sessionDefeats[id]=(this.sessionDefeats[id]??0)+1;}else if(e==='xp-collected')playGameCue('xp',this.preferences);else if(e==='boss-windup')playGameCue('boss-windup',this.preferences);else if(e==='boss-attack')playGameCue('boss-attack',this.preferences);else if(e.startsWith('boss-phase:')){const phase=Number(e.split(':')[1]);this.showEventBanner(phase===2?'BEEDRILL · POISON LANES':'BEEDRILL · HIVE SWARM','#ffafb7');playGameCue('boss-phase',this.preferences);}}
+  // Commit research once before ending the run. The old flow finalized
+  // victory mid-loop, then wrote the same pending defeats a second time here.
+  this.syncTmResearch();
+  if(events.includes('boss-defeated'))this.finish('victory');
+  else if(this.state.hp<=0)this.finish('defeat');
  }
  drawDebug(){const g=this.debugGraphics;if(!g)return;g.clear();g.lineStyle(2,0xff5d73,.65);for(const d of this.state.world.decorations)if(Math.abs(d.x-this.state.player.x)<900&&Math.abs(d.y-this.state.player.y)<650)g.strokeCircle(d.x,d.y,d.collisionRadius+14);g.lineStyle(2,0x62e8ff,.8);for(const e of this.state.enemies.slice(0,100)){g.lineBetween(e.x,e.y,e.x+e.vx*.28,e.y+e.vy*.28);if(e.blockedFor>.4){g.lineStyle(2,0xffd45c,.9);g.strokeCircle(e.x,e.y,18);g.lineStyle(2,0x62e8ff,.8);}}g.lineStyle(3,0x8fff89,.9);g.lineBetween(this.state.player.x,this.state.player.y,this.state.player.x+this.state.player.vx*.3,this.state.player.y+this.state.player.vy*.3);}
  update(_t:number,delta:number){
@@ -380,6 +410,8 @@ class GameScene extends Phaser.Scene {
   if(this.debugText){const ranged=this.state.enemies.filter(e=>e.behavior==='ranged').length;this.debugText.setText(`DEBUG\nFPS ${Math.round(this.game.loop.actualFps)}  SIM 30 Hz  α ${alpha.toFixed(2)}\nAnim ${this.playerAnimation.state}  Key ${this.player.anims.currentAnim?.key??'idle'}  Frame ${String(this.player.frame.name)}\nFacing ${this.state.player.facing}  Ground offset ${playerOffset.toFixed(1)}\nSim ${this.state.player.x.toFixed(1)},${this.state.player.y.toFixed(1)}  Prev ${this.previousPlayer.x.toFixed(1)},${this.previousPlayer.y.toFixed(1)}\nRender ${this.renderPlayer.x.toFixed(1)},${this.renderPlayer.y.toFixed(1)}  Shadow ${this.playerShadow.x.toFixed(1)},${this.playerShadow.y.toFixed(1)}\nCamera ${this.cameraTarget.x.toFixed(1)},${this.cameraTarget.y.toFixed(1)}  Chunk ${this.activeChunk.cx},${this.activeChunk.cy}\nPhase ${this.state.encounterPhase}  Ranged ${ranged}/${this.state.maxRangedEnemies}  Shots ${this.state.projectiles.length}/${this.state.maxEnemyProjectiles}\nEnemies ${this.state.enemies.length}  Checks ${this.state.collisionChecks}  Nav ${this.state.navigationRebuilds}\nWorld ${this.state.world.seed}  RNG ${this.state.seed}  Hash ${stateHash(this.state)}`);}
  }
 }
+// Register before the first menu click: Web Audio requires real user activation.
+installGameAudioUnlock(()=>loadSave().settings);
 // Canvas text keeps its initial font, so load the primary face before creating scenes.
 document.fonts.load(`16px ${PRIMARY_FONT_FAMILY}`)
  .catch(error=>console.warn('Could not load the primary font; using monospace.',error))

@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import {POKEMON} from './content';
 import {loadSave,updateSettings} from './save';
+import {TM_RESEARCH_REWARDS,tmLabel} from './data/moveUnlocks';
+import {playGameCue} from './gameAudio';
 import {motionReduced,PlayerSettings} from './preferences';
 import {actionButton,element,icon} from './ui/dom';
 import {CampaignView} from './ui/campaignView';
@@ -119,7 +121,8 @@ export class ResearchScene extends FrontendScene {
     for(const [panel,name] of [[challenges,'Challenges'],[statistics,'Statistics']] as const){panel.setAttribute('role','tabpanel');panel.setAttribute('aria-label',name);}
     const select=(name:string)=>{challenges.hidden=name!=='Challenges';statistics.hidden=name!=='Statistics';for(const tab of tabs.querySelectorAll('button'))tab.setAttribute('aria-selected',String(tab.textContent===name));};
     for(const name of ['Challenges','Statistics']){const tab=actionButton(name,()=>select(name));tab.setAttribute('role','tab');tab.setAttribute('aria-controls',name==='Challenges'?challenges.id:statistics.id);tabs.append(tab);}
-    const tasks=[['Defeat 100 Pokémon',r.enemiesDefeated,100],['Defeat 100 Caterpie',r.caterpie,100],['Defeat 100 Weedle',r.weedle,100],['Defeat Beedrill',r.beedrill,1],['Evolve a starter',r.evolutions,1],['Complete Viridian Forest',r.viridianWins,1]] as const;
+    const tasks:[string,number,number][]=[['Defeat 100 Pokémon',r.enemiesDefeated,100],['Defeat 100 Caterpie',r.caterpie,100],['Defeat 100 Weedle',r.weedle,100],['Defeat Beedrill',r.beedrill,1],['Evolve a starter',r.evolutions,1],['Complete Viridian Forest',r.viridianWins,1]];
+    for(const reward of TM_RESEARCH_REWARDS)tasks.push([`${reward.label} — ${tmLabel(reward.tm)}`,r[reward.research]??0,reward.count]);
     const grid=element('div','research-grid');tasks.forEach(([label,value,max],i)=>{const count=Math.min(value??0,max),card=element('article',`research-entry${count>=max?' is-complete':''}`),header=element('div','research-entry__heading');header.append(element('span','eyebrow',`FIELD NOTES ${String(i+1).padStart(2,'0')}`),icon(count>=max?'check':'flask'));const progress=element('progress');progress.max=max;progress.value=count;progress.setAttribute('aria-label',label);card.append(header,element('h2','',label),progress,element('span','research-count',`${count} / ${max}${count>=max?' · Complete':''}`));grid.append(card);});challenges.append(grid);
     const stats=researchStatistics(save),totals=element('div','statistics-grid');
     for(const [name,value] of stats.totals){const stat=element('article','statistic');stat.append(element('span','eyebrow',name),element('strong','',String(value)));totals.append(stat);}statistics.append(totals);
@@ -133,7 +136,7 @@ export class SettingsScene extends FrontendScene {
   constructor(){super('settings');}
   create(){
     this.mount('settings','Settings','Presentation preferences are saved automatically.');const settings=loadSave().settings,list=element('div','settings-list');
-    const options:[keyof PlayerSettings,string,string][]=[['reducedMotion','Reduced motion','Reduce menu and card animation. Disable camera shake. Also respects your system preference.'],['damageNumbers','Damage numbers','Show the damage dealt by automatic attacks.'],['screenShake','Screen shake','A subtle camera response when your Pokémon takes damage. Disabled by reduced motion.']];
+    const options:[Exclude<keyof PlayerSettings,'sfxVolume'>,string,string][]=[['reducedMotion','Reduced motion','Reduce menu and card animation. Disable camera shake. Also respects your system preference.'],['damageNumbers','Damage numbers','Show the damage dealt by automatic attacks.'],['screenShake','Screen shake','A subtle camera response when your Pokémon takes damage. Disabled by reduced motion.'],['soundEffects','Sound effects','Original effects for experience, evolution, TMs, powerful moves and boss encounters.']];
     for(const [key,title,description] of options){
       const row=actionButton('',()=>{settings[key]=!settings[key];updateSettings({[key]:settings[key]});row.setAttribute('aria-checked',String(settings[key]));row.querySelector('.switch-state')!.textContent=settings[key]?'ON':'OFF';this.root.dataset.reducedMotion=String(motionReduced(settings));},'setting-row');row.replaceChildren();row.setAttribute('role','switch');row.setAttribute('aria-label',title);row.setAttribute('aria-checked',String(settings[key]));
       const text=element('span','setting-copy');text.append(element('strong','',title),element('span','',description));const toggle=element('span','setting-switch');toggle.append(element('span','switch-state',settings[key]?'ON':'OFF'),element('span','switch-track'));row.append(text,toggle);list.append(row);
@@ -141,7 +144,11 @@ export class SettingsScene extends FrontendScene {
     const fullscreen=actionButton('',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{status.textContent='Fullscreen is unavailable in this browser. The game still scales to your window.';}},'setting-row');fullscreen.replaceChildren();fullscreen.setAttribute('aria-label','Toggle fullscreen');
     const fsCopy=element('span','setting-copy');fsCopy.append(element('strong','','Fullscreen'),element('span','','Use the whole display where your browser supports it.'));const fsState=element('span','fullscreen-state',document.fullscreenElement?'EXIT FULLSCREEN':'ENTER FULLSCREEN');fullscreen.append(fsCopy,fsState,icon('expand'));fullscreen.disabled=!document.fullscreenEnabled;if(fullscreen.disabled)fsState.textContent='BROWSER UNAVAILABLE';list.append(fullscreen);
     const changed=()=>{fsState.textContent=document.fullscreenElement?'EXIT FULLSCREEN':'ENTER FULLSCREEN';};document.addEventListener('fullscreenchange',changed);this.events.once('shutdown',()=>document.removeEventListener('fullscreenchange',changed));
-    const audio=element('div','setting-row setting-row--unavailable'),audioText=element('span','setting-copy');audioText.append(element('strong','','Audio'),element('span','','Music and sound effects are not available in this build.'));audio.append(audioText,element('span','eyebrow','COMING LATER'));list.append(audio);
+    const audio=element('div','setting-row'),audioText=element('span','setting-copy');
+    audioText.append(element('strong','','SFX volume'),element('span','','Adjust gameplay sound effects. Music is not yet available.'));
+    const volume=document.createElement('input');volume.type='range';volume.min='0';volume.max='100';volume.step='5';volume.value=String(Math.round(settings.sfxVolume*100));volume.setAttribute('aria-label','Sound effects volume');volume.className='sfx-volume';
+    volume.addEventListener('input',()=>{settings.sfxVolume=Number(volume.value)/100;updateSettings({sfxVolume:settings.sfxVolume});});
+    volume.addEventListener('change',()=>playGameCue('reward',settings));audio.append(audioText,volume);list.append(audio);
     const status=element('p','settings-status');status.setAttribute('role','status');this.content.append(list,status);this.controls(()=>this.scene.start('menu'));
   }
 }
