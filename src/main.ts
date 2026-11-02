@@ -13,7 +13,7 @@ import {renderProfile} from './renderProfiles';
 import { applyUpgrade, AttackEvent, beginBossEncounter, isUpgradeAvailable, makeState, masteryOptions, rewardRoll, SimState, spawnSpecies, stateHash, tick, Upgrade, upgradeOptions, canSpendMoveCredit } from './simulation';
 import {UpgradeScene} from './upgradeScene';
 import {RunResultsScene} from './ui/runResultsScene';
-import { discover, loadSave, recordEvolution, recordForestDiscoveries, recordRun, recordSessionEvents } from './save';
+import { discover, discoverTm, loadSave, recordEvolution, recordForestDiscoveries, recordRun, recordSessionEvents } from './save';
 import {adjacencyMask,TERRAIN,terrainAt} from './terrain';
 import {PokemonAnimationController} from './animationState';
 import {encounterPhaseAt,weightedSpecies} from './encounters';
@@ -269,7 +269,7 @@ class GameScene extends Phaser.Scene {
   for(const landmark of map.landmarks.filter(l=>Math.floor(l.x/pageSize)===cx&&Math.floor(l.y/pageSize)===cy)){
    if(landmark.id.startsWith('ancient-tree:'))objects.push(this.addForestTree(landmark.x,landmark.y,ENVIRONMENT_ASSETS.ancientTree,3));
    const label=({'entrance':'VIRIDIAN FOREST','pikachu-hollow':'PIKACHU HOLLOW','beedrill-nest':'BEEDRILL NEST','pewter-exit':'TO PEWTER CITY'} as Record<string,string>)[landmark.id];
-   if(label)objects.push(this.groundObject(this.add.text(landmark.x,landmark.y-90,label,{fontFamily:FONT,fontSize:'13px',color:'#f2f1c9',backgroundColor:'#193d2bdd',padding:{x:8,y:5}}).setOrigin(.5).setDepth(2)));
+   if(label||landmark.id.startsWith('tm-cache:'))objects.push(this.groundObject(this.add.text(landmark.x,landmark.y-90,label||'HIDDEN TM CACHE',{fontFamily:FONT,fontSize:'13px',color:'#f2f1c9',backgroundColor:'#193d2bdd',padding:{x:8,y:5}}).setOrigin(.5).setDepth(2)));
   }
   this.chunkViews.set(key,objects);
  }
@@ -437,7 +437,14 @@ class GameScene extends Phaser.Scene {
   const previousLevel=this.state.level;this.schedule();const events=tick(this.state,this.fixedStep,this.moveInput());const fired=this.state.attacks.filter(attack=>attack.animationEligible),primary=fired.find(attack=>attack.signature)??fired[0];if(primary){const kind=MOVES[primary.moveId].damageClass==='Special'?'special':'physical',action=nativeActionFor(this.state.pokemonId,'attack',kind);this.playerAnimation.attack(this.state.time,kind,facingFromVector(primary.tx-primary.x,primary.ty-primary.y,this.state.player.facing),action?.durationSeconds??.24,!!primary.signature);}if(this.state.hp<previousHp){if(this.state.time-this.lastHitReaction>=.45&&this.playerAnimation.trigger('hit',this.state.time,nativeActionFor(this.state.pokemonId,'hit')?.durationSeconds??.12))this.lastHitReaction=this.state.time;if(this.preferences.screenShake&&!motionReduced(this.preferences))this.cameras.main.shake(80,.002);}
   const discoveries=this.state.world.stream?.persistent.discoveries??[];if(discoveries.length!==this.forestDiscoveryCount){this.forestDiscoveryCount=discoveries.length;recordForestDiscoveries(discoveries);}
   this.pickupRenderer.onStep(this.state);for(const a of this.state.attacks){this.renderAttack(a);for(const id of a.hits)this.enemyAnimations.get(id)?.trigger('hit',this.state.time,.1);}
-  for(const event of events)if(event.startsWith('evolution:'))this.showEvolution(event.split(':')[1]);this.showProgressionNotices();let earnedLevel=previousLevel;for(const e of events){if(e==='level-up'||e==='mastery-up'){playGameCue('level',this.preferences);this.queueLevelChoice(e==='mastery-up'?'mastery':'level',++earnedLevel);}else if(e.startsWith('ball-collected:')){this.sessionBalls++;this.showReward(Number(e.split(':')[1]) as 1|2|3);}else if(e.startsWith('defeated:')){const id=e.split(':')[1];this.sessionDefeats[id]=(this.sessionDefeats[id]??0)+1;}else if(e==='xp-collected')playGameCue('xp',this.preferences);else if(e==='boss-windup')playGameCue('boss-windup',this.preferences);else if(e==='boss-attack')playGameCue('boss-attack',this.preferences);else if(e.startsWith('boss-phase:')){const phase=Number(e.split(':')[1]);this.showEventBanner(phase===2?'BEEDRILL · POISON LANES':'BEEDRILL · HIVE SWARM','#ffafb7');playGameCue('boss-phase',this.preferences);}}
+  for(const event of events)if(event.startsWith('evolution:'))this.showEvolution(event.split(':')[1]);this.showProgressionNotices();let earnedLevel=previousLevel;for(const e of events){if(e==='level-up'||e==='mastery-up'){playGameCue('level',this.preferences);this.queueLevelChoice(e==='mastery-up'?'mastery':'level',++earnedLevel);}else if(e.startsWith('ball-collected:')){this.sessionBalls++;this.showReward(Number(e.split(':')[1]) as 1|2|3);}else if(e.startsWith('defeated:')){const id=e.split(':')[1];this.sessionDefeats[id]=(this.sessionDefeats[id]??0)+1;}else if(e.startsWith('forest-discovery:tm-cache:')){
+   const tm='sv:020'; // Trailblaze: a permanent optional wilderness discovery.
+   if(discoverTm(tm,undefined,'overworld')){
+    if(!this.state.discoveredTms.includes(tm))this.state.discoveredTms.push(tm);
+    if(!this.sessionUnlockedTms.includes(tm))this.sessionUnlockedTms.push(tm);
+    this.showEventBanner('HIDDEN TM CACHE · '+tmLabel(tm),'#ffefb0',3300);playGameCue('tm',this.preferences);
+   }else this.showEventBanner('HIDDEN CACHE DISCOVERED','#ffefb0',2300);
+  }else if(e==='xp-collected')playGameCue('xp',this.preferences);else if(e==='boss-windup')playGameCue('boss-windup',this.preferences);else if(e==='boss-attack')playGameCue('boss-attack',this.preferences);else if(e.startsWith('boss-phase:')){const phase=Number(e.split(':')[1]);this.showEventBanner(phase===2?'BEEDRILL · POISON LANES':'BEEDRILL · HIVE SWARM','#ffafb7');playGameCue('boss-phase',this.preferences);}}
   // Commit research once before ending the run. The old flow finalized
   // victory mid-loop, then wrote the same pending defeats a second time here.
   this.syncTmResearch();
