@@ -1,4 +1,5 @@
-import Phaser from 'phaser';
+import type Phaser from 'phaser';
+import {NEAREST_PIXEL_FILTER} from './pixelFiltering';
 import {FACINGS,Facing,facingRow} from './direction';
 import {NATIVE_ACTIONS,NativeAction} from './data/nativeActions';
 import type {PokemonAnimationState} from './animationState';
@@ -15,7 +16,7 @@ export function registerNativeAnimations(scene:Phaser.Scene){
   if(!action||!scene.textures.exists(nativeTexture(species,kind as NativeActionKind)))continue;
   // Attack and hurt sheets must use NEAREST: setFilter(0) means LINEAR and blurs scaled pixel art.
   // Set it once per shared texture, rather than touching GPU state every frame.
-  scene.textures.get(nativeTexture(species,kind as NativeActionKind)).setFilter(Phaser.Textures.FilterMode.NEAREST);
+  scene.textures.get(nativeTexture(species,kind as NativeActionKind)).setFilter(NEAREST_PIXEL_FILTER);
   for(const facing of FACINGS){const key=nativeAnimationKey(species,kind as NativeActionKind,facing);if(scene.anims.exists(key))continue;
    // Phaser adds per-frame duration to the default frame time; upstream ticks are60Hz.
    scene.anims.create({key,frames:action.durations.map((ticks,index)=>({key:nativeTexture(species,kind as NativeActionKind),frame:facingRow(facing)*action.frames+index,duration:(ticks-1)*1000/60})),frameRate:60,repeat:0});
