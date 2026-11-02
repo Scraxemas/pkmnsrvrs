@@ -56,20 +56,34 @@ export function spawnSpecies(state:SimState,species:string,count=1,elite=false,b
  }
  state.seed=rng.seed;
 }
-/** The timed finale takes place in the authored, protected Beedrill clearing. */
+/** At 30:00 the boss arrives near the player, wherever they explored. */
 export function beginBossEncounter(state:SimState){
  if(state.bossSpawned)return false;
- const arena=state.world.bossArena,x=arena.x+arena.width/2,y=arena.y+arena.height/2;
- Object.assign(state.player,{x,y:y+170,vx:0,vy:0});syncWorldChunks(state.world,x,y+170);
+ const {x,y}=state.player;
+ syncWorldChunks(state.world,x,y);
+ // Keep the player exactly where they are; inspect a wide ring for a safe
+ // arrival. Do not force players to visit a nest, arena, or finite map edge.
+ let arrival:{x:number;y:number}|undefined;
+ for(const distance of [320,400,480,560]){
+  if(arrival)break;
+  for(let n=0;n<32;n++){
+   const angle=n*Math.PI/16+(state.seed%17)*.019;
+   const candidate={x:x+Math.cos(angle)*distance,y:y+Math.sin(angle)*distance};
+   if(!collides(state.world,candidate.x,candidate.y,85)){arrival=candidate;break;}
+  }
+ }
+ if(!arrival)return false;
  state.enemies=[];state.projectiles=[];state.hazards=[];
- state.navigation=buildFlowField(state.world,state.player.x,state.player.y,state.navigation.cellSize);state.navigationRebuilds++;
- spawnSpecies(state,'beedrill',1,false,true,{x,y:y-100});
+ state.world.bossArena={x:x-300,y:y-300,width:600,height:600};
+ state.navigation=buildFlowField(state.world,x,y,state.navigation.cellSize);state.navigationRebuilds++;
+ spawnSpecies(state,'beedrill',1,false,true,arrival);
  state.bossSpawned=state.enemies.some(e=>e.boss);return state.bossSpawned;
 }
 export function discoverNearbyForest(state:SimState){
  const stream=state.world.stream;if(!stream)return;
  for(const landmark of state.world.landmarks){
-  if(!['entrance','pikachu-hollow','beedrill-nest','pewter-exit'].includes(landmark.id)||Math.hypot(landmark.x-state.player.x,landmark.y-state.player.y)>landmark.radius+80)continue;
+  if(Math.hypot(landmark.x-state.player.x,landmark.y-state.player.y)>landmark.radius+80)continue;
+  if(!['entrance','pikachu-hollow','beedrill-nest','pewter-exit','campsite'].includes(landmark.id)&&!landmark.id.startsWith('campsite:')&&!landmark.id.startsWith('ancient-tree:'))continue;
   if(landmark.id==='pikachu-hollow'&&!stream.persistent.discoveries.includes('pikachu-encounter')){
    const before=state.enemies.length;spawnSpecies(state,'pikachu',1,true,false,{x:landmark.x,y:landmark.y});
    if(state.enemies.length>before)markWorldDiscovery(state.world,'pikachu-encounter');
