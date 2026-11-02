@@ -1,4 +1,4 @@
-import type Phaser from 'phaser';
+import Phaser from 'phaser';
 import {PRIMARY_FONT_FAMILY} from './fonts';
 import type {SimState} from '../simulation';
 import {MOVES} from '../content';
@@ -87,7 +87,7 @@ export class MoveHud {
     .setData('artFallback',!!slot&&!art);
    view.image.setVisible(art);
    if(slot&&move){
-    if(art)view.image.setTexture(moveTexture(slot.id)).setDisplaySize(32,32).setData('assetId',slot.id).texture.setFilter(0);
+    if(art)view.image.setTexture(moveTexture(slot.id)).setDisplaySize(32,32).setData('assetId',slot.id).texture.setFilter(Phaser.Textures.FilterMode.NEAREST);
     view.label.setText(art?'':move.name.slice(0,2).toUpperCase()).setFontSize(art?20:13).setVisible(!art);
     view.rank.setText('R'+slot.rank).setVisible(true);
     const stats=moveRankStats(move,slot.rank);
