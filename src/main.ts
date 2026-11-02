@@ -21,7 +21,7 @@ import {frameGroundOffset} from './groundOffsets';
 import {interpolatePosition,interpolationAlpha,Position} from './interpolation';
 import {chunkKey,prewarmWorldChunk,syncWorldChunks as syncWorldData} from './worldgen';
 import {forestObjectiveText} from './forestObjectives';
-import {forestHash} from './forestPlan';
+import {forestHash,forestNoise} from './forestPlan';
 import {forestResearchHud} from './forestResearch';
 import {playGameCue,installGameAudioUnlock} from './gameAudio';
 import {fusionForResult} from './data/moveFusions';
@@ -254,7 +254,10 @@ class GameScene extends Phaser.Scene {
   const ownerKey=chunkKey(Math.floor(cx*pageSize/map.chunkSize),Math.floor(cy*pageSize/map.chunkSize));if(!map.chunks[ownerKey])return;
   for(let ly=0;ly<cells;ly++)for(let lx=0;lx<cells;lx++){
    const x=baseX+lx,y=baseY+ly;if(!map.stream&&(x<0||y<0||x>=map.terrain.cols||y>=map.terrain.rows))continue;const wx=x*tile+tile/2,wy=y*tile+tile/2,value=terrainAt(map.terrain,x,y),hash=forestHash(map.seed,x,y,0x17e3);
-   objects.push(this.groundObject(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.grassFill)).setDisplaySize(tile,tile).setDepth(0)));
+   // Soft global color variation adds moss and sunlit areas without solid terrain.
+   const light=forestNoise(map.seed,wx,wy,630,0x27ba);
+   const tint=light<.30?0xeaf3e7:light>.71?0xf5ffee:0xffffff;
+   objects.push(this.groundObject(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.grassFill)).setDisplaySize(tile,tile).setTint(tint).setDepth(0)));
    if(value===TERRAIN.path||value===TERRAIN.water)objects.push(this.groundObject(this.add.image(wx,wy,environmentKey(this.terrainTexture(x,y)),adjacencyMask(map.terrain,x,y,value)).setDisplaySize(tile,tile).setDepth(1)));
    else if(value===TERRAIN.cliff){const mask=adjacencyMask(map.terrain,x,y,value),image=this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.cliffAtlas),cliffFrame(!!(mask&1),!!(mask&4),!!(mask&16),!!(mask&64))).setDisplaySize(tile,tile).setDepth(wy+tile/2);this.worldLayer.add(image);objects.push(image);}
    // Transparent whole tufts can bend without rotating opaque ground squares.
