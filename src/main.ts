@@ -358,7 +358,7 @@ class GameScene extends Phaser.Scene {
   this.researchHud.setVisible(!!research);
  }
  showProgressionNotices(){
-  if(!this.state.progressionNotices.length)return;this.renderMoveHud();
+  if(!this.state.progressionNotices.length)return;this.children.getByName('move-progression-notice')?.destroy(true);this.renderMoveHud();
   const text=this.add.text(0,0,this.state.progressionNotices.map(progressionNoticeText).join('\n'),{fontFamily:FONT,fontSize:'16px',fontStyle:'bold',color:'#ffe9a0',backgroundColor:'#102019ed',padding:{x:12,y:8},align:'center',wordWrap:{width:950}}).setOrigin(.5,0);
   const notice=this.add.container(W/2,176,[text]).setName('move-progression-notice').setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);
   let row=0;for(const change of this.state.progressionNotices){
