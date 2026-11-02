@@ -20,14 +20,37 @@ const NOTES:Readonly<Record<GameCue,readonly Tone[]>>={
 const MIN_INTERVAL:Partial<Record<GameCue,number>>={xp:90,'major-attack':230,'boss-windup':320,'boss-attack':300};
 let context:AudioContext|undefined;
 const lastPlayed=new Map<GameCue,number>();
+
+/** Prime or resume Web Audio synchronously inside a trusted input gesture. */
+export function unlockGameAudio(settings:PlayerSettings){
+ if(!settings.soundEffects||settings.sfxVolume<=0||typeof AudioContext==='undefined')return false;
+ try{
+  context??=new AudioContext();
+  if(context.state==='suspended')void context.resume().catch(()=>{});
+  return context.state==='running';
+ }catch{return false;}
+}
+
+/** Menu, keyboard, and touch input are all eligible user-activation paths. */
+export function installGameAudioUnlock(readSettings:()=>PlayerSettings){
+ if(typeof document==='undefined')return()=>{};
+ const onInput=()=>{if(context?.state!=='running')unlockGameAudio(readSettings());};
+ document.addEventListener('pointerdown',onInput,true);
+ document.addEventListener('keydown',onInput,true);
+ return()=>{
+  document.removeEventListener('pointerdown',onInput,true);
+  document.removeEventListener('keydown',onInput,true);
+ };
+}
+
 /** Small original synthesized SFX. Never touches game RNG or the fixed simulation tick. */
 export function playGameCue(cue:GameCue,settings:PlayerSettings){
  if(!settings.soundEffects||settings.sfxVolume<=0||typeof AudioContext==='undefined')return false;
  const now=typeof performance==='undefined'?Date.now():performance.now(),previous=lastPlayed.get(cue)??-Infinity;
  if(now-previous<(MIN_INTERVAL[cue]??60))return false;
  try{
-  context??=new AudioContext();
-  if(context.state==='suspended')void context.resume().catch(()=>{});
+  if(!context)unlockGameAudio(settings);
+  if(!context||context.state!=='running')return false;
   const time=context.currentTime,volume=Math.max(0,Math.min(1,settings.sfxVolume));
   for(const tone of NOTES[cue]){
    const start=time+(tone.offset??0),end=start+tone.duration;
