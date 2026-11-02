@@ -21,6 +21,7 @@ import {frameGroundOffset} from './groundOffsets';
 import {interpolatePosition,interpolationAlpha,Position} from './interpolation';
 import {chunkKey,prewarmWorldChunk,syncWorldChunks as syncWorldData} from './worldgen';
 import {forestObjectiveText} from './forestObjectives';
+import {renderLandmarkArt,landmarkDiscoveryLabel} from './landmarkPresentation';
 import {forestHash,forestNoise} from './forestPlan';
 import {forestResearchHud} from './forestResearch';
 import {playGameCue,installGameAudioUnlock} from './gameAudio';
@@ -61,7 +62,7 @@ class GameScene extends Phaser.Scene {
  objectiveHud!:Phaser.GameObjects.Text;inspectMove=0;inspectItem=0;
  pendingChoices:ChoiceRequest[]=[];activeChoice?:{request:ChoiceRequest;options:Upgrade[]};choiceSerial=0;
  chunkContentRevision=0;
- forestDiscoveryCount=0;
+ forestDiscoveryCount=0;knownDiscoveries=new Set<string>();
  pointerMovement!:PointerMovementController;
  private movement:MovementVector={x:0,y:0};private padMovement:MovementVector={x:0,y:0};
  private controlPointer!:Phaser.Input.Pointer;
@@ -69,7 +70,7 @@ class GameScene extends Phaser.Scene {
 
  constructor(){super('game')}
  init(d:{pokemon:string;fast?:boolean;seed?:number}){
-  const saved=loadSave();this.runStartPokemon=[...saved.unlockedPokemon];this.preferences=saved.settings;this.researchBase={...saved.research};this.fast=!!d.fast;this.debug=import.meta.env.DEV&&new URLSearchParams(location.search).has('debug');this.state=makeState(POKEMON[d.pokemon]??POKEMON.bulbasaur,seedForRun(location.search,d.seed),undefined,{discoveredTms:saved.discoveredTms});this.duration=this.fast?90:1800;this.ended=false;this.overlay=undefined;this.acc=0;this.nextSpawn=0;this.miniIndex=0;this.sessionDefeats={};this.sessionBalls=0;this.sessionUnlockedTms=[];this.expDisplay=0;this.expLevel=1;this.expFlash=0;this.inspectMove=0;this.inspectItem=0;
+  const saved=loadSave();this.runStartPokemon=[...saved.unlockedPokemon];this.knownDiscoveries=new Set(saved.discoveredLocations??[]);this.preferences=saved.settings;this.researchBase={...saved.research};this.fast=!!d.fast;this.debug=import.meta.env.DEV&&new URLSearchParams(location.search).has('debug');this.state=makeState(POKEMON[d.pokemon]??POKEMON.bulbasaur,seedForRun(location.search,d.seed),undefined,{discoveredTms:saved.discoveredTms});this.duration=this.fast?90:1800;this.ended=false;this.overlay=undefined;this.acc=0;this.nextSpawn=0;this.miniIndex=0;this.sessionDefeats={};this.sessionBalls=0;this.sessionUnlockedTms=[];this.expDisplay=0;this.expLevel=1;this.expFlash=0;this.inspectMove=0;this.inspectItem=0;
   this.enemyViews.clear();this.enemyShadows.clear();this.enemyAnimations.clear();this.pickupViews.clear();this.projectileViews.clear();this.previousEnemies.clear();this.previousProjectiles.clear();this.chunkViews.clear();this.chunkRangeKey='';this.activeChunk={cx:Number.NaN,cy:Number.NaN};this.previousPlayer={x:this.state.player.x,y:this.state.player.y};
   this.grassViews.clear();this.grassBrush.clear();this.grassParticles.clear();this.grassBrushCount=0;
   this.previousPickups.clear();
@@ -273,9 +274,7 @@ class GameScene extends Phaser.Scene {
    image.setOrigin(.5,(image.height-visual.trunkPadding)/image.height).setDepth(d.y).setScale(visual.scale).setData('mapProp',d.id);if(d.id==='tree')image.setData('forestTree',true);objects.push(image);
   }
   for(const landmark of map.landmarks.filter(l=>Math.floor(l.x/pageSize)===cx&&Math.floor(l.y/pageSize)===cy)){
-   if(landmark.id.startsWith('ancient-tree:'))objects.push(this.addForestTree(landmark.x,landmark.y,ENVIRONMENT_ASSETS.ancientTree,3));
-   const label=({'entrance':'VIRIDIAN FOREST','pikachu-hollow':'PIKACHU HOLLOW','beedrill-nest':'BEEDRILL NEST','pewter-exit':'TO PEWTER CITY'} as Record<string,string>)[landmark.id];
-   if(label||landmark.id.startsWith('tm-cache:'))objects.push(this.groundObject(this.add.text(landmark.x,landmark.y-90,label||'HIDDEN TM CACHE',{fontFamily:FONT,fontSize:'13px',color:'#f2f1c9',backgroundColor:'#193d2bdd',padding:{x:8,y:5}}).setOrigin(.5).setDepth(2)));
+   objects.push(...renderLandmarkArt(this,landmark,this.worldLayer));
   }
   this.chunkViews.set(key,objects);
  }
@@ -450,6 +449,13 @@ class GameScene extends Phaser.Scene {
     if(!this.sessionUnlockedTms.includes(tm))this.sessionUnlockedTms.push(tm);
     this.showEventBanner('HIDDEN TM CACHE · '+tmLabel(tm),'#ffefb0',3300);playGameCue('tm',this.preferences);
    }else this.showEventBanner('HIDDEN CACHE DISCOVERED','#ffefb0',2300);
+  }else if(e.startsWith('forest-discovery:')){
+   const id=e.slice('forest-discovery:'.length),key='viridian:'+id;
+   const label=landmarkDiscoveryLabel(id);
+   if(label&&!this.knownDiscoveries.has(key)){
+    this.knownDiscoveries.add(key);
+    this.showEventBanner('DISCOVERED · '+label,'#f1e9b1',2500);
+   }
   }else if(e==='xp-collected')playGameCue('xp',this.preferences);else if(e==='boss-windup')playGameCue('boss-windup',this.preferences);else if(e==='boss-attack')playGameCue('boss-attack',this.preferences);else if(e.startsWith('boss-phase:')){const phase=Number(e.split(':')[1]);this.showEventBanner(phase===2?'BEEDRILL · POISON LANES':'BEEDRILL · HIVE SWARM','#ffafb7');playGameCue('boss-phase',this.preferences);}}
   // Commit research once before ending the run. The old flow finalized
   // victory mid-loop, then wrote the same pending defeats a second time here.
