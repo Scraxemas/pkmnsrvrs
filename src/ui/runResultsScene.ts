@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import {PRIMARY_FONT_FAMILY} from './fonts';
-interface ResultConfig {result:'victory'|'defeat';level:number;defeated:number;time:number;seed:number;onReturn:()=>void;}
+interface ResultConfig {result:'victory'|'defeat';level:number;defeated:number;time:number;seed:number;unlocks?:string[];onReturn:()=>void;}
 /** Screen-space input stays independent of the scrolling gameplay camera. */
 export class RunResultsScene extends Phaser.Scene {
   private config!:ResultConfig;private locked=false;returnButton!:Phaser.GameObjects.Text;
@@ -10,6 +10,7 @@ export class RunResultsScene extends Phaser.Scene {
     this.cameras.main.setScroll(0,0);const c=this.config,title=c.result==='victory'?'VIRIDIAN FOREST CLEARED!':'RUN DEFEATED';
     this.add.rectangle(640,360,680,360,0x102019,.98);
     this.add.text(640,260,`${title}\n\nLevel ${c.level} · ${c.defeated} defeated\nTime ${Math.floor(c.time/60)}:${String(Math.floor(c.time%60)).padStart(2,'0')}\nSeed ${c.seed}`,{fontFamily:PRIMARY_FONT_FAMILY,fontSize:'28px',color:c.result==='victory'?'#ffe26b':'#ff8f8f',align:'center'}).setOrigin(.5);
+    if(c.unlocks?.length)this.add.text(640,411,c.unlocks.slice(0,3).join('\\n'),{fontFamily:PRIMARY_FONT_FAMILY,fontSize:'16px',color:'#c6f2a5',align:'center',wordWrap:{width:610}}).setOrigin(.5);
     this.returnButton=this.add.text(640,485,'RETURN TO MENU',{fontFamily:PRIMARY_FONT_FAMILY,fontSize:'22px',color:'#fff',backgroundColor:'#244c37',padding:{x:18,y:12},align:'center',fixedWidth:260}).setOrigin(.5).setInteractive({useHandCursor:true});
     this.returnButton.on('pointerover',()=>this.returnButton.setBackgroundColor('#3c7652'));this.returnButton.on('pointerout',()=>this.returnButton.setBackgroundColor('#244c37'));this.returnButton.on('pointerdown',()=>this.returnToMenu());
     this.input.keyboard!.on('keydown',(event:KeyboardEvent)=>{if(!event.repeat&&(event.key==='Enter'||event.key==='Escape'))this.returnToMenu();});
