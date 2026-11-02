@@ -1,5 +1,6 @@
 import {POKESPRITE_ASSETS} from './data/pokespriteAssets';
-import Phaser from 'phaser';
+import type Phaser from 'phaser';
+import {NEAREST_PIXEL_FILTER} from './pixelFiltering';
 export {POKESPRITE_ASSETS};
 export function itemArt(id:string,outlined=false){const art=POKESPRITE_ASSETS[id];if(!art)throw new Error(`Missing registered PokéSprite art: ${id}`);return outlined&&art.outline?art.outline:art.normal;}
 export const itemTexture=(id:string,outlined=false)=>`pokesprite:${id}${outlined&&POKESPRITE_ASSETS[id]?.outline?':outline':''}`;
@@ -29,7 +30,7 @@ export function safeItemTexture(scene:Phaser.Scene,id:string,outlined=false){
    g.fillStyle(0xffffff,1).fillCircle(12,11,3);
   }
   g.generateTexture(fallback,32,32);g.destroy();
-  scene.textures.get(fallback).setFilter(Phaser.Textures.FilterMode.NEAREST);
+  scene.textures.get(fallback).setFilter(NEAREST_PIXEL_FILTER);
  }
  if(!fallbackWarned.has(key)){fallbackWarned.add(key);console.warn('[item-art] Failed to load '+key+'; showing pixel-art fallback.');}
  return fallback;
