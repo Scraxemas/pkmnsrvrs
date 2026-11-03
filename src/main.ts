@@ -22,7 +22,7 @@ import {interpolatePosition,interpolationAlpha,Position} from './interpolation';
 import {chunkKey,prewarmWorldChunk,syncWorldChunks as syncWorldData} from './worldgen';
 import {forestObjectiveText} from './forestObjectives';
 import {renderLandmarkArt,landmarkDiscoveryLabel} from './landmarkPresentation';
-import {forestHash,forestNoise} from './forestPlan';
+import {forestHash} from './forestPlan';
 import {ForestCanopyRenderer} from './forestCanopyRenderer';
 import {forestResearchHud} from './forestResearch';
 import {playGameCue,installGameAudioUnlock} from './gameAudio';
@@ -257,10 +257,9 @@ class GameScene extends Phaser.Scene {
   const ownerKey=chunkKey(Math.floor(cx*pageSize/map.chunkSize),Math.floor(cy*pageSize/map.chunkSize));if(!map.chunks[ownerKey])return;
   for(let ly=0;ly<cells;ly++)for(let lx=0;lx<cells;lx++){
    const x=baseX+lx,y=baseY+ly;if(!map.stream&&(x<0||y<0||x>=map.terrain.cols||y>=map.terrain.rows))continue;const wx=x*tile+tile/2,wy=y*tile+tile/2,value=terrainAt(map.terrain,x,y),hash=forestHash(map.seed,x,y,0x17e3);
-   // Soft global color variation adds moss and sunlit areas without solid terrain.
-   const light=forestNoise(map.seed,wx,wy,630,0x27ba);
-   const tint=light<.30?0xeaf3e7:light>.71?0xf5ffee:0xffffff;
-   objects.push(this.groundObject(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.grassFill)).setDisplaySize(tile,tile).setTint(tint).setDepth(0)));
+   // Keep the grass tile's color consistent. The world-space canopy overlay,
+   // not a per-tile tint threshold, is responsible for all sunlight and shade.
+   objects.push(this.groundObject(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.grassFill)).setDisplaySize(tile,tile).setDepth(0)));
    // The legacy 48x48 cliff PNG is actually one boulder, NOT a 3x3
    // cliff tileset. Never slice it into mountain-wall fragments in the
    // endless forest, even if an old save somehow contains cliff tiles.
