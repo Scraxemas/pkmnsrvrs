@@ -71,7 +71,8 @@ describe('v0.7.2 Eterna-inspired rounded sunlight canopy',()=>{
    const lit=canopyLighting(seed,x,y,'standard',site,none);
    expect(lit.shade).toBeLessThan(dark.shade);
    expect(lit.sunlight).toBeGreaterThan(0);
-   expect(canopyLighting(seed,x+2000,y,'standard',site,none)).toEqual(dark);
+   expect(canopyLighting(seed,x+2000,y,'standard',site,none))
+    .toEqual(canopyLighting(seed,x+2000,y,'standard',[],none));
   }
   const base=[{id:'pikachu-hollow',x,y,radius:120}];
   const nest=[...base,{id:'beedrill-nest',x,y,radius:120}];
