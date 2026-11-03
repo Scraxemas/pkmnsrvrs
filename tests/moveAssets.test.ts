@@ -3,17 +3,17 @@ import {readFileSync,readdirSync} from 'node:fs';
 import {decodeRgba} from './helpers/png';
 import {createHash} from 'node:crypto';
 import {MOVES} from '../src/content';
-import {MOVE_ASSETS,MOVE_ICON_SIZE,moveArtUrl,moveTexture} from '../src/moveAssets';
+import {MOVE_ASSETS,MOVE_ICON_SIZE,MOVE_ICON_ALIASES,moveArtUrl,moveTexture} from '../src/moveAssets';
 
 describe('generated move artwork',()=>{
   it('maps every current move ID exactly once, preserving case for GitHub Pages',()=>{
     const ids=Object.keys(MOVES).sort();
     expect(Object.keys(MOVE_ASSETS).sort()).toEqual(ids);
-    expect(readdirSync('public/assets/moves').sort()).toEqual(ids.map(id=>`${id}.png`).sort());
+    expect(readdirSync('public/assets/moves').sort()).toEqual(ids.filter(id=>!MOVE_ICON_ALIASES[id]).map(id=>`${id}.png`).sort());
     for(const id of ids){
-      expect(MOVE_ASSETS[id]).toEqual({id,path:`assets/moves/${id}.png`,width:32,height:32});
+      expect(MOVE_ASSETS[id]).toEqual({id,path:`assets/moves/${MOVE_ICON_ALIASES[id]??id}.png`,width:32,height:32});
       expect(moveTexture(id)).toBe(`move:${id}`);
-      expect(moveArtUrl(id)).toBe(`${import.meta.env.BASE_URL}assets/moves/${id}.png`);
+      expect(moveArtUrl(id)).toBe(`${import.meta.env.BASE_URL}assets/moves/${MOVE_ICON_ALIASES[id]??id}.png`);
     }
   });
   it.each(Object.keys(MOVES))('%s is a decodable, crisp, transparent 32×32 RGBA PNG',(id)=>{
@@ -64,7 +64,7 @@ describe('generated move artwork',()=>{
     }
   });
   it('uses distinct art for every move and rejects corrupt or truncated pixel data',()=>{
-    const files=Object.values(MOVE_ASSETS).map(asset=>readFileSync(`public/${asset.path}`));
+    const files=Object.entries(MOVE_ASSETS).filter(([id])=>!MOVE_ICON_ALIASES[id]).map(([,asset])=>readFileSync(`public/${asset.path}`));
     expect(new Set(files.map(png=>createHash('sha256').update(decodeRgba(png).pixels).digest('hex'))).size).toBe(files.length);
     const damaged=Buffer.from(files[0]);damaged[damaged.length-13]^=1;
     expect(()=>decodeRgba(damaged)).toThrow();
