@@ -9,7 +9,7 @@ import {BuffKind,buffStrength,grantMoveBuff,spendHealingBudget} from './combatRu
 
 export type CombatPattern='single'|'line'|'radial'|'multishot'|'homing'|'explosion'|'cyclone'|'columns'|'charge'|'drain'|'cloud'|'beam'|'support';
 export type EnemyDebuffKind=Status['kind'];
-export interface MoveCombatProfile {pattern:CombatPattern;effect?:EnemyDebuffKind;duration?:number;targets?:number;radius?:number;healRatio?:number;healFlat?:number;poisonBonus?:number;sizeBonus?:number;recoil?:number;chargeSeconds?:number;recoverySeconds?:number;support?:BuffKind;strength?:number;terrain?:'poison'|'grass'|'roots'|'petals';strikes?:number;advance?:number;}
+export interface MoveCombatProfile {pattern:CombatPattern;effect?:EnemyDebuffKind;duration?:number;targets?:number;radius?:number;healRatio?:number;healFlat?:number;poisonBonus?:number;requiresSleep?:boolean;sizeBonus?:number;recoil?:number;chargeSeconds?:number;recoverySeconds?:number;support?:BuffKind;strength?:number;terrain?:'poison'|'grass'|'roots'|'petals';strikes?:number;advance?:number;}
 
 /** Composable mechanics, independent of species/learnsets and of the visual registry. */
 export const MOVE_COMBAT_PROFILES:Readonly<Record<string,MoveCombatProfile>>={
@@ -44,6 +44,15 @@ export const MOVE_COMBAT_PROFILES:Readonly<Record<string,MoveCombatProfile>>={
  protect:{pattern:'support',support:'protect',strength:.42,duration:.6},
  swordsDance:{pattern:'support',support:'swordsDance',strength:.2,duration:3.5},
  helpingHand:{pattern:'support',support:'helpingHand',strength:.1,duration:4},
+ stringShot:{pattern:'homing',targets:2,effect:'rooted',duration:1.6},
+ infestation:{pattern:'cloud',targets:12,effect:'infested',duration:4},
+ harden:{pattern:'support',support:'harden',strength:.18,duration:5},
+ gust:{pattern:'line',targets:3,radius:24},
+ psychic:{pattern:'homing',targets:3,effect:'exposed',duration:3},
+ bugBuzz:{pattern:'radial',targets:12},
+ quiverDance:{pattern:'support',support:'quiverDance',strength:.15,duration:5.5},
+ dreamEater:{pattern:'drain',targets:4,requiresSleep:true,healRatio:.32},
+ pollenPuff:{pattern:'explosion',targets:14,radius:70,healRatio:.12},
 };
 
 const distance=(a:{x:number;y:number},b:{x:number;y:number})=>Math.hypot(a.x-b.x,a.y-b.y);
@@ -77,7 +86,7 @@ function eventFor(state:SimState,slot:MoveSlot,move:MoveDef,range:number,targets
 
 function targetsFor(state:SimState,profile:MoveCombatProfile,move:MoveDef,rank:number,range:number,mods:ItemModifiers,aim?:{x:number;y:number}){
  const fx=moveRankStats(move,rank),origin=state.player;
- const candidates=state.enemies.filter(enemy=>enemy.hp>0&&distance(enemy,origin)<=range).sort((a,b)=>distance(a,origin)-distance(b,origin)||a.id-b.id);
+ const candidates=state.enemies.filter(enemy=>enemy.hp>0&&distance(enemy,origin)<=range&&(!profile.requiresSleep||enemy.statuses.some(status=>status.kind==='sleep'&&status.remaining>0))).sort((a,b)=>distance(a,origin)-distance(b,origin)||a.id-b.id);
  if(!candidates.length)return[];
  const primary=aim??candidates[0],dx=primary.x-origin.x,dy=primary.y-origin.y,length=Math.hypot(dx,dy)||1;
  const limit=combatTargetLimit(move,rank,state.masteries.multicast??0);
@@ -136,7 +145,7 @@ export function activateProfileMove(state:SimState,slot:MoveSlot,move:MoveDef,mo
   }
   const effect=profile.effect??move.status;
   if(effect){
-   const guaranteed=['toxic','weaken','sleep','exposed','worried','defenseBreak','rooted'].includes(effect);
+   const guaranteed=['toxic','weaken','sleep','exposed','worried','defenseBreak','rooted','infested'].includes(effect);
    if(guaranteed||seededRoll(state)<fx.statusChance){
     const power=move.damageClass==='Status'&&move.power===0?(8+slot.rank*2)*(1+(mods.typeDamage[move.type]??0))*(1+mods.damage):moveDamage(state,{...move,damageClass:'Special'},target,slot.rank,mods,true).amount;
     const seconds=(profile.duration?profile.duration*fx.duration:fx.statusSeconds)*(1+mods.duration);
@@ -191,7 +200,7 @@ export function stepEnemyMoveStatuses(state:SimState,enemy:Entity,dt:number,mods
   if(status.kind==='rooted')enemy.speed*=enemy.boss?.7:.15;
   if(status.kind==='sleep')enemy.speed=0;
   while(status.tick>=.5){status.tick-=.5;
-   if(['poison','toxic','burn','seeded'].includes(status.kind)){
+   if(['poison','toxic','burn','seeded','infested'].includes(status.kind)){
     const ramp=status.kind==='toxic'?1+Math.min(3,(status.elapsed??0)*.3):1;
     enemy.hp-=status.sourcePower*.18*ramp*(1+mods.sustained);
     if(status.kind==='seeded')restoreHp(state,spendHealingBudget(state,status.sourcePower*.08*(1+mods.drain)),'leechSeed');
