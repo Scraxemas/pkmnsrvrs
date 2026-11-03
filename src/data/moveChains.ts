@@ -1,4 +1,5 @@
 import {BULBASAUR_FAMILY} from './bulbasaurMoves';
+import {CATERPIE_FAMILY} from './caterpieMoves';
 
 export interface MoveChain {id:string;kind:'signature'|'upgrade';family:readonly string[];stages:readonly string[];requiredRank:number;independentAncestors:boolean;}
 /** Directed lineage data; shared moves can participate in family-specific branches. */
@@ -12,6 +13,7 @@ export const MOVE_CHAINS:readonly MoveChain[]=[
   {id:'poison-status',kind:'upgrade',family:BULBASAUR_FAMILY,stages:['poisonPowder','toxic'],requiredRank:5,independentAncestors:false},
   {id:'lifesteal',kind:'upgrade',family:BULBASAUR_FAMILY,stages:['leechSeed','megaDrain','gigaDrain'],requiredRank:5,independentAncestors:false},
   {id:'physical-impact',kind:'upgrade',family:BULBASAUR_FAMILY,stages:['tackle','takeDown','bodySlam'],requiredRank:5,independentAncestors:false},
+  {id:'bug-infestation',kind:'upgrade',family:CATERPIE_FAMILY,stages:['stringShot','infestation'],requiredRank:5,independentAncestors:false},
 ];
 export function chainsForSpecies(species:string){return MOVE_CHAINS.filter(chain=>chain.family.includes(species));}
 export function ordinaryPredecessor(id:string,species:string){
