@@ -31,6 +31,12 @@ export const MOVE_VFX_PROFILES:Readonly<Record<string,MoveVfxProfile>>={
  sleepPowder:fx('poison','cloud',80,1.2,4,{tint:0xa7c0f5}),sweetScent:fx('petal','cloud',80,1.15,4),
  worrySeed:fx('seed','travel',38,.6,3,{impact:'aura'}),protect:fx('aura','aura',115,.75,1,{tint:0xb5ebff}),
  swordsDance:fx('slash','orbit',88,.8,3,{tint:0xe4f4ff,spin:4}),helpingHand:fx('bloom','aura',95,.8,2,{tint:0xffdfaa}),
+ stringShot:fx('vine','travel',34,.45,4,{tint:0xdde7c5}),infestation:fx('poison','cloud',95,.9,7,{tint:0xa6d15d}),
+ harden:fx('aura','aura',92,.8,3,{tint:0xbcd5ba}),gust:fx('water','beam',92,.6,4,{tint:0xd1efff}),
+ psychic:fx('aura','travel',75,.7,3,{tint:0xed88cb}),bugBuzz:fx('toxicWave','burst',152,.8,5,{tint:0xb7e183}),
+ quiverDance:fx('petal','orbit',85,1.1,6,{tint:0xf2baff,spin:5}),
+ dreamEater:fx('drain','drain',108,.85,5,{tint:0xb88ce9,impact:'aura'}),
+ pollenPuff:fx('bloom','travel',93,.76,3,{tint:0xffcfb2,impact:'petal'}),
 };
 
 export const vfxTexture=(asset:string)=>`vfx:${asset}`;
