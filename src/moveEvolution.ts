@@ -9,7 +9,8 @@ export const MOVE_EVOLUTIONS:readonly MoveEvolutionRule[]=[
   {fromSpecies:'squirtle',toSpecies:'wartortle',fromMove:'tackle',toMove:'waterGun'},
   {fromSpecies:'wartortle',toSpecies:'blastoise',fromMove:'waterGun',toMove:'hydroPump'},
 ];
-export type ProgressionNotice={kind:'slot';slot:number}|{kind:'move';from:string;to:string;rank:number;refund:number;fusion?:readonly [string,string]};
+export const EVOLUTION_MOVE_REWARDS:Readonly<Record<string,readonly string[]>>={metapod:['harden'],butterfree:['gust']};
+export type ProgressionNotice={kind:'slot';slot:number}|{kind:'reward';move:string}|{kind:'move';from:string;to:string;rank:number;refund:number;fusion?:readonly [string,string]};
 /** Keeps the starter's object/slot (including cooldown state). Duplicate ranks become chosen move rewards. */
 export function transformStarterMove(slots:EvolvingMoveSlot[],fromSpecies:string,toSpecies:string,rules=MOVE_EVOLUTIONS){
   const notices:ProgressionNotice[]=[];
