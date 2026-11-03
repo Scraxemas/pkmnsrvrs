@@ -78,14 +78,17 @@ describe('Caterpie battle mechanics',()=>{
   expect(attack?.moveId).toBe('infestation');expect(e.statuses.some(status=>status.kind==='infested')).toBe(true);
   const hp=e.hp;stepEnemyMoveStatuses(s,e,1,aggregateItems([]));expect(e.hp).toBeLessThan(hp);
  });
- it('Dream Eater cannot fire or heal without sleep, then drains a sleeping enemy',()=>{
+ it('Dream Eater carries its fused sleep setup, drains victims and respects control immunity',()=>{
   const s=fresh(),e=target(s);e.hp=15000;s.hp=s.maxHp/2;
   const slot={id:'dreamEater',rank:5};s.moveSlots=[slot];
-  expect(activateProfileMove(s,slot,MOVES.dreamEater,aggregateItems([]))).toBeUndefined();
   const hp=e.hp,heal=s.hp;
-  e.statuses.push({kind:'sleep',remaining:3,tick:0,sourcePower:0});
   const attack=activateProfileMove(s,slot,MOVES.dreamEater,aggregateItems([]));
-  expect(attack?.hits).toContain(e.id);expect(e.hp).toBeLessThan(hp);expect(s.hp).toBeGreaterThan(heal);
+  expect(attack?.hits).toContain(e.id);expect(e.statuses.some(status=>status.kind==='sleep')).toBe(true);
+  expect(e.hp).toBeLessThan(hp);expect(s.hp).toBeGreaterThan(heal);
+  // After boss control resistance activates, fresh casts cannot bypass that immunity.
+  e.statuses=[];e.controlImmuneUntil=s.time+3;const after=e.hp;
+  activateProfileMove(s,slot,MOVES.dreamEater,aggregateItems([]));
+  expect(e.hp).toBe(after);
  });
  it('Harden protects and Quiver Dance buffs special damage, each without stacking',()=>{
   const s=fresh();const mods=aggregateItems([]);s.moveSlots=[{id:'harden',rank:5},{id:'quiverDance',rank:5}];
