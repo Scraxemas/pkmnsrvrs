@@ -2,10 +2,12 @@ import type Phaser from 'phaser';
 import {MOVES} from './content';
 
 export const MOVE_ICON_SIZE=32;
+/** Explicit temporary icons using existing authored move art; the original PNG/manifest set remains immutable. */
+export const MOVE_ICON_ALIASES:Readonly<Record<string,string>>={stringShot:'vineWhip',infestation:'poisonPowder',harden:'protect',gust:'waterGun',psychic:'dragonRage',bugBuzz:'sludgeWave',quiverDance:'growth',dreamEater:'megaDrain',pollenPuff:'seedBomb'};
 /** File names deliberately preserve the move ID's case for case-sensitive hosts. */
-export const MOVE_ASSETS:Readonly<Record<string,{id:string;path:string;width:number;height:number}>>=Object.freeze(Object.fromEntries(Object.keys(MOVES).map(id=>[id,{id,path:`assets/moves/${id}.png`,width:MOVE_ICON_SIZE,height:MOVE_ICON_SIZE}])));
+export const MOVE_ASSETS:Readonly<Record<string,{id:string;path:string;width:number;height:number}>>=Object.freeze(Object.fromEntries(Object.keys(MOVES).map(id=>[id,{id,path:`assets/moves/${MOVE_ICON_ALIASES[id]??id}.png`,width:MOVE_ICON_SIZE,height:MOVE_ICON_SIZE}])));
 export const moveTexture=(id:string)=>`move:${id}`;
-export const moveArtUrl=(id:string)=>`${import.meta.env.BASE_URL}${MOVE_ASSETS[id]?.path??`assets/moves/${id}.png`}`;
+export const moveArtUrl=(id:string)=>`${import.meta.env.BASE_URL}${MOVE_ASSETS[id]?.path??`assets/moves/${MOVE_ICON_ALIASES[id]??id}.png`}`;
 const warned=new Set<string>();
 
 /** A missing asset may use the legacy presentation, but must be visible in development. */
