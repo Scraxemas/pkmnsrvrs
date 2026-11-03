@@ -12,7 +12,7 @@ describe('character roster and independent selections',()=>{
   it('uses evolutionary ancestry to retain only actual base-form candidates',()=>{
     expect(baseCharacterRoster().map(record=>record.id)).toEqual(['bulbasaur','charmander','squirtle','caterpie','weedle','pidgey','pikachu','oddish','bellsprout']);
     for(const dex of [2,3,5,6,8,9,11,12,14,15,17,18,26,44,45,70,71])expect(isBaseStartingForm(dex)).toBe(false);
-    expect(buildRoster('character')).toHaveLength(9);expect(buildRoster('pokedex')).toHaveLength(151);expect(buildRoster('character','johto')).toEqual([]);
+    expect(buildRoster('character')).toHaveLength(12);expect(buildRoster('pokedex')).toHaveLength(151);expect(buildRoster('character','johto')).toEqual([]);
   });
   it('does not exclude single-stage species, legendary species or mythical species',()=>{
     const records:RosterRecord[]=[127,132,143,144,145,146,150,151].map(dex=>({dex,id:`fixture-${dex}`,types:[],startingPartner:false}));
