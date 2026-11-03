@@ -1,7 +1,7 @@
 import type {DamageClass,PokemonType} from './content';
 import type {SimState} from './simulation';
 
-export type BuffKind='growth'|'swordsDance'|'helpingHand'|'sunlight'|'protect'|'trailblaze'|'leafRecovery'|'ingrain';
+export type BuffKind='growth'|'swordsDance'|'helpingHand'|'sunlight'|'protect'|'harden'|'quiverDance'|'trailblaze'|'leafRecovery'|'ingrain';
 export interface TimedBuff {kind:BuffKind;remaining:number;strength:number;source:string;}
 export interface MoveTerrain {id:number;moveId:string;kind:'poison'|'grass'|'roots'|'petals';x:number;y:number;radius:number;remaining:number;tick:number;strength:number;rank:number;followPlayer:boolean;}
 export interface ChargedMove {moveId:string;rank:number;fireAt:number;tx:number;ty:number;signature:boolean;}
@@ -20,12 +20,13 @@ export function grantMoveBuff(state:SimState,kind:BuffKind,source:string,strengt
 export function moveOffenseFactor(state:SimState,damageClass:DamageClass,type:PokemonType){
  let factor=1+buffStrength(state,'growth')+buffStrength(state,'helpingHand');
  if(damageClass==='Physical')factor+=buffStrength(state,'swordsDance');
+ if(damageClass==='Special')factor+=buffStrength(state,'quiverDance');
  if(type==='Grass'||type==='Fire')factor+=buffStrength(state,'sunlight');
  if(type==='Grass'&&state.combatRuntime?.terrains.some(zone=>zone.kind==='grass'&&zone.remaining>0&&Math.hypot(state.player.x-zone.x,state.player.y-zone.y)<=zone.radius))factor+=.08;
  if(damageClass==='Special')factor*=1-buffStrength(state,'leafRecovery');
  return Math.max(.65,Math.min(2.1,factor));
 }
-export const moveGuardFactor=(state:SimState)=>Math.max(.25,1-buffStrength(state,'protect')-buffStrength(state,'ingrain'));
+export const moveGuardFactor=(state:SimState)=>Math.max(.25,1-buffStrength(state,'protect')-buffStrength(state,'ingrain')-buffStrength(state,'harden')-buffStrength(state,'quiverDance')*.5);
 
 /** A shared burst bucket permits useful recovery while sustained move healing stays <=6% maxHP/s. */
 export function spendHealingBudget(state:SimState,amount:number){
