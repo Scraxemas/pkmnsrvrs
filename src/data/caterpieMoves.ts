@@ -13,6 +13,6 @@ export const CATERPIE_MOVES:Record<string,MoveDef>={
  psychic:def('psychic','Psychic','Psychic','Special','projectile',37,1.8,320,'Seeking psychic blasts disrupt defenses.'),
  bugBuzz:def('bugBuzz','Bug Buzz','Bug','Special','cloud',43,2.7,245,'A wide, resonant Bug-type shockwave.',area),
  quiverDance:def('quiverDance','Quiver Dance','Bug','Status','cloud',0,9,110,'Timed special-offense and resistance boost without stacking.',support),
- dreamEater:def('dreamEater','Dream Eater','Psychic','Special','drain',64,2.8,320,'Sleep Powder + Psychic fusion: damage and healing only against sleeping foes.',[{count:2},{damage:1.15},{count:3},{cooldown:.88},{damage:1.3,count:4}]),
+ dreamEater:def('dreamEater','Dream Eater','Psychic','Special','drain',64,2.8,320,'Sleep Powder + Psychic fusion: briefly lulls foes to sleep, then drains their health.',[{count:2},{damage:1.15},{count:3},{cooldown:.88},{damage:1.3,count:4}]),
  pollenPuff:def('pollenPuff','Pollen Puff','Bug','Special','projectile',57,3.4,310,'Bug Buzz + Quiver Dance fusion: explosive pollen with bounded healing.',area)
 };
