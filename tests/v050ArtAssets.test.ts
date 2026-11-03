@@ -2,6 +2,7 @@ import {describe,it,expect} from 'vitest';
 import {readFileSync,readdirSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {MOVES} from '../src/content';
+import {MOVE_ICON_ALIASES} from '../src/moveAssets';
 import {VFX_ASSETS} from '../src/data/vfxAssets';
 import {NATIVE_ACTIONS} from '../src/data/nativeActions';
 import {decodeRgba} from './helpers/png';
@@ -17,8 +18,8 @@ describe('v0.5.0 original and imported artwork',()=>{
   it('records each new icon and VFX source with exact prompts and matching output hashes',()=>{
     const manifest=JSON.parse(readFileSync('assets/moves/v050-generation-manifest.json','utf8')) as {tool:string;moves:{id:string}[];generations:{id:string;kind:string;prompt:string;sourceFile:string;sourceSha256:string;output:string;outputSha256:string}[]};
     expect(manifest.tool).toBe('Codex built-in image_gen.imagegen');
-    expect(manifest.moves.map(move=>move.id).sort()).toEqual(Object.keys(MOVES).sort());
-    expect(manifest.generations.filter(entry=>entry.kind==='icon').map(entry=>entry.id).sort()).toEqual(Object.keys(MOVES).filter(id=>!(id in retained)).sort());
+    expect(manifest.moves.map(move=>move.id).sort()).toEqual(Object.keys(MOVES).filter(id=>!MOVE_ICON_ALIASES[id]).sort());
+    expect(manifest.generations.filter(entry=>entry.kind==='icon').map(entry=>entry.id).sort()).toEqual(Object.keys(MOVES).filter(id=>!(id in retained)&&!MOVE_ICON_ALIASES[id]).sort());
     expect(manifest.generations.filter(entry=>entry.kind==='vfx').map(entry=>entry.id).sort()).toEqual(Object.keys(VFX_ASSETS).sort());
     const outputs=manifest.generations.map(entry=>entry.output);expect(new Set(outputs).size).toBe(outputs.length);
     for(const entry of manifest.generations){
