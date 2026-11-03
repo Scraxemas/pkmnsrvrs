@@ -86,7 +86,7 @@ function eventFor(state:SimState,slot:MoveSlot,move:MoveDef,range:number,targets
 
 function targetsFor(state:SimState,profile:MoveCombatProfile,move:MoveDef,rank:number,range:number,mods:ItemModifiers,aim?:{x:number;y:number}){
  const fx=moveRankStats(move,rank),origin=state.player;
- const candidates=state.enemies.filter(enemy=>enemy.hp>0&&distance(enemy,origin)<=range&&(!profile.requiresSleep||enemy.statuses.some(status=>status.kind==='sleep'&&status.remaining>0))).sort((a,b)=>distance(a,origin)-distance(b,origin)||a.id-b.id);
+ const candidates=state.enemies.filter(enemy=>enemy.hp>0&&distance(enemy,origin)<=range).sort((a,b)=>distance(a,origin)-distance(b,origin)||a.id-b.id);
  if(!candidates.length)return[];
  const primary=aim??candidates[0],dx=primary.x-origin.x,dy=primary.y-origin.y,length=Math.hypot(dx,dy)||1;
  const limit=combatTargetLimit(move,rank,state.masteries.multicast??0);
@@ -136,6 +136,11 @@ export function activateProfileMove(state:SimState,slot:MoveSlot,move:MoveDef,mo
  let dealt=0,critical=false,applied=false;
  const poisoned=(target:Entity)=>target.statuses.some(status=>status.kind==='poison'||status.kind==='toxic');
  for(const target of targets){
+  // Dream Eater consumes Sleep Powder in the fusion, so the finished move carries a sleep setup.
+  // Control-immune enemies are not drained unless they are already asleep.
+  if(profile.requiresSleep&&!target.statuses.some(status=>status.kind==='sleep'&&status.remaining>0))
+   applied=applyEnemyStatus(state,target,'sleep',0,3.2*(1+mods.duration))||applied;
+  if(profile.requiresSleep&&!target.statuses.some(status=>status.kind==='sleep'&&status.remaining>0))continue;
   if(move.damageClass!=='Status'||profile.pattern==='drain'){
    const damageMove=move.damageClass==='Status'?{...move,damageClass:'Special' as const}:move;
    const hit=moveDamage(state,damageMove,target,slot.rank,mods),strikes=profile.pattern==='multishot'?Math.max(profile.strikes??1,fx.count)/Math.max(1,targets.length):1;
