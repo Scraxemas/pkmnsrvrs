@@ -110,7 +110,7 @@ test('canopy still keeps HUD and combat visible at a mobile viewport',async({pag
   return{vignette:s.canopyRenderer.vignette?.visible,shadowCount:s.canopyRenderer.layer.list.length,
    timer:s.timerText.visible,player:s.player.visible,rect:{x:rect.x,y:rect.y,right:rect.right,bottom:rect.bottom}};
  });
- expect(result.vignette).toBe(false);expect(result.timer).toBe(true);expect(result.player).toBe(true);
+ expect(result.vignette).toBeFalsy();expect(result.timer).toBe(true);expect(result.player).toBe(true);
  expect(result.shadowCount).toBeGreaterThan(0);
  expect(result.rect.x).toBeGreaterThanOrEqual(-1);expect(result.rect.right).toBeLessThanOrEqual(391);
  expect(result.rect.bottom).toBeLessThanOrEqual(845);
