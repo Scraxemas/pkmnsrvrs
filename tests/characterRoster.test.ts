@@ -12,7 +12,7 @@ describe('character roster and independent selections',()=>{
   it('uses evolutionary ancestry to retain only actual base-form candidates',()=>{
     expect(baseCharacterRoster().map(record=>record.id)).toEqual(['bulbasaur','charmander','squirtle','caterpie','weedle','pidgey','pikachu','oddish','bellsprout']);
     for(const dex of [2,3,5,6,8,9,11,12,14,15,17,18,26,44,45,70,71])expect(isBaseStartingForm(dex)).toBe(false);
-    expect(buildRoster('character')).toHaveLength(12);expect(buildRoster('pokedex')).toHaveLength(151);expect(buildRoster('character','johto')).toEqual([]);
+    expect(buildRoster('character')).toHaveLength(9);expect(buildRoster('pokedex')).toHaveLength(151);expect(buildRoster('character','johto')).toEqual([]);
   });
   it('does not exclude single-stage species, legendary species or mythical species',()=>{
     const records:RosterRecord[]=[127,132,143,144,145,146,150,151].map(dex=>({dex,id:`fixture-${dex}`,types:[],startingPartner:false}));
@@ -33,9 +33,9 @@ describe('character roster and independent selections',()=>{
     const save=freshSave(),caterpie=find('caterpie'),ivysaur=find('ivysaur');
     expect(rosterState(caterpie,save)).toBe('undiscovered');expect(rosterName(ivysaur,save)).toBe('Undiscovered');
     save.pokedex.push('caterpie','ivysaur');save.unlockedPokemon.push('caterpie','ivysaur');
-    expect(rosterState(caterpie,save)).toBe('unavailable');expect(rosterState(ivysaur,save)).toBe('unavailable');expect(rosterRequirement(ivysaur,save)).toContain('Evolve Bulbasaur at level 16');
+    expect(rosterState(caterpie,save)).toBe('unlocked');expect(rosterState(ivysaur,save)).toBe('unavailable');expect(rosterRequirement(ivysaur,save)).toContain('Evolve Bulbasaur at level 16');
     save.unlockedPokemon=save.unlockedPokemon.filter(id=>id!=='charmander');expect(rosterState(find('charmander'),save)).toBe('locked');
-    expect(filterRoster(regionRoster(ROSTER_REGIONS[0]),save,'dex','unlocked').map(r=>r.id)).toEqual(['bulbasaur','squirtle']);
+    expect(filterRoster(regionRoster(ROSTER_REGIONS[0]),save,'dex','unlocked').map(r=>r.id)).toEqual(['bulbasaur','squirtle','caterpie']);
   });
   it('sorts actual visible identities without exposing undiscovered names',()=>{
     const save=freshSave(),roster=regionRoster(ROSTER_REGIONS[0]),byName=filterRoster(roster,save,'name','all');
