@@ -1,6 +1,7 @@
 import {describe,it,expect} from 'vitest';
 import {MOVES,POKEMON,TYPES} from '../src/content';
 import {BULBASAUR_MOVE_CATALOG,BULBASAUR_FAMILY} from '../src/data/bulbasaurMoves';
+import {CATERPIE_MOVES} from '../src/data/caterpieMoves';
 import {MOVE_CHAINS,ordinaryPredecessor} from '../src/data/moveChains';
 import {MOVE_FUSIONS} from '../src/data/moveFusions';
 import {ALL_TM_IDS,TECHNICAL_MACHINES,MOVE_UNLOCKS,TM_RESEARCH_REWARDS} from '../src/data/moveUnlocks';
@@ -34,7 +35,7 @@ function memoryStorage(){
 describe('approved v0.5.0 family data',()=>{
  it('contains exactly the approved 43 unique family moves while retaining all existing global moves',()=>{
   expect([...BULBASAUR_MOVE_CATALOG].sort()).toEqual(expectedCatalog.sort());expect(new Set(BULBASAUR_MOVE_CATALOG).size).toBe(43);
-  expect(Object.keys(MOVES)).toHaveLength(52);
+  expect(Object.keys(MOVES)).toHaveLength(52+Object.keys(CATERPIE_MOVES).length);
   for(const species of BULBASAUR_FAMILY)expect(new Set(POKEMON[species].learnset)).toEqual(new Set(expectedCatalog));
   for(const id of ['scratch','ember','dragonRage','metalClaw','dragonClaw','hydroPump','waterGun','bubble','rapidSpin'])expect(MOVES[id]).toBeDefined();
  });
@@ -45,8 +46,8 @@ describe('approved v0.5.0 family data',()=>{
  });
  it('uses consistent acyclic chains and valid, reachable fusion inputs',()=>{
   for(const chain of MOVE_CHAINS){expect(chain.stages.length).toBeGreaterThan(1);expect(new Set(chain.stages).size).toBe(chain.stages.length);for(const id of chain.stages){expect(MOVES[id]).toBeDefined();for(const species of chain.family)expect(moveAncestors(id,species)).not.toContain(id);}}
-  expect(MOVE_CHAINS.filter(chain=>chain.kind==='upgrade')).toHaveLength(6);
-  for(const recipe of MOVE_FUSIONS){expect(recipe.ingredients[0]).not.toBe(recipe.ingredients[1]);expect(recipe.ingredients).not.toContain(recipe.result);for(const id of [...recipe.ingredients,recipe.result])expect(MOVES[id]).toBeDefined();const s=state('venusaur',true);for(const id of recipe.ingredients)learnThroughPath(s,id);expect(canFuseMove(s,recipe.result)).toBe(true);}
+  expect(MOVE_CHAINS.filter(chain=>chain.kind==='upgrade'&&chain.family===BULBASAUR_FAMILY)).toHaveLength(6);
+  for(const recipe of MOVE_FUSIONS){expect(recipe.ingredients[0]).not.toBe(recipe.ingredients[1]);expect(recipe.ingredients).not.toContain(recipe.result);for(const id of [...recipe.ingredients,recipe.result])expect(MOVES[id]).toBeDefined();const s=state(recipe.species?.[0]??recipe.family[recipe.family.length-1],true);for(const id of recipe.ingredients)learnThroughPath(s,id);expect(canFuseMove(s,recipe.result)).toBe(true);}
  });
  it('keeps legacy TM numbers generation-aware with one stable identity per machine',()=>{
   expect(new Set(ALL_TM_IDS).size).toBe(TECHNICAL_MACHINES.length);
@@ -88,7 +89,7 @@ describe('general ancestry and apply-time offer validation',()=>{
 
 describe('ordinary transformation chains and TM gates',()=>{
  it.each(MOVE_CHAINS.filter(chain=>chain.kind==='upgrade'))('$id requires rank five, preserves its slot and rank, and never offers later tiers as NEW MOVE',chain=>{
-  const s=state('venusaur',true);learnThroughPath(s,chain.stages[0]);
+  const s=state(chain.family[chain.family.length-1],true);learnThroughPath(s,chain.stages[0]);
   for(const id of chain.stages.slice(1)){const previous=ordinaryPredecessor(id,s.pokemonId)!,slot=s.moveSlots.find(slot=>slot.id===previous.id)!;slot.rank=4;expect(canEvolveMove(s,id)).toBe(false);slot.rank=5;slot.nextAttackAt=10;slot.cooldownDuration=2;
    expect(canLearnMove(s,id)).toBe(false);expect(upgradeOptions(s,100).some(offer=>offer.kind==='moveEvolution'&&offer.id===id)).toBe(true);const length=s.moveSlots.length;
    expect(applyUpgrade(s,choice(id,'moveEvolution'))).toBe(true);expect(s.moveSlots).toHaveLength(length);expect(s.moveSlots.find(slot=>slot.id===id)).toBe(slot);expect(slot).toMatchObject({id,rank:5,nextAttackAt:10,cooldownDuration:2});
@@ -111,7 +112,7 @@ describe('ordinary transformation chains and TM gates',()=>{
 
 describe('two-ingredient fusion transactions',()=>{
  it.each(MOVE_FUSIONS)('$result requires both rank-five inputs and all unlocks; consumes two, creates one and frees one slot exactly once',recipe=>{
-  const s=state('venusaur',true);for(const id of recipe.ingredients)learnThroughPath(s,id);
+  const s=state(recipe.species?.[0]??recipe.family[recipe.family.length-1],true);for(const id of recipe.ingredients)learnThroughPath(s,id);
   const unrelated=s.moveSlots[0],before=s.moveSlots.length;expect(canFuseMove(s,recipe.result)).toBe(true);expect(upgradeOptions(s,100).some(offer=>offer.kind==='moveFusion'&&offer.id===recipe.result)).toBe(true);
   const second=s.moveSlots.find(slot=>slot.id===recipe.ingredients[1])!;second.rank=4;expect(canFuseMove(s,recipe.result)).toBe(false);expect(applyUpgrade(s,choice(recipe.result,'moveFusion'))).toBe(false);second.rank=5;
   for(const ingredient of recipe.ingredients){const index=s.moveSlots.findIndex(slot=>slot.id===ingredient),slot=s.moveSlots.splice(index,1)[0];expect(canFuseMove(s,recipe.result)).toBe(false);s.moveSlots.splice(index,0,slot);}
