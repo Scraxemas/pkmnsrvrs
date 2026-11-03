@@ -1,6 +1,7 @@
 import {describe,it,expect} from 'vitest';
 import {MOVES,POKEMON} from '../src/content';
 import {BULBASAUR_MOVE_CATALOG} from '../src/data/bulbasaurMoves';
+import {CATERPIE_MOVES} from '../src/data/caterpieMoves';
 import {makeState,spawnSpecies,tick,stateHash,playerMovementFactor} from '../src/simulation';
 import {activateProfileMove,applyEnemyStatus,combatTargetLimit,MOVE_COMBAT_PROFILES,stepEnemyMoveStatuses,stepMoveRuntime} from '../src/moveCombat';
 import {grantMoveBuff,moveOffenseFactor} from '../src/combatRuntime';
@@ -18,7 +19,7 @@ function cast(id:string,rank=5){const s=state();s.hp=20;s.moveSlots=[{id,rank,st
 
 describe('v0.5.0 composable combat catalog',()=>{
  it('provides explicit mechanics for the complete exact approved catalog',()=>{
-  expect(Object.keys(MOVE_COMBAT_PROFILES).sort()).toEqual([...BULBASAUR_MOVE_CATALOG].sort());
+  expect(Object.keys(MOVE_COMBAT_PROFILES).sort()).toEqual([...BULBASAUR_MOVE_CATALOG,...Object.keys(CATERPIE_MOVES)].sort());
   expect(new Set(Object.values(MOVE_COMBAT_PROFILES).map(profile=>profile.pattern)).size).toBeGreaterThanOrEqual(11);
  });
  it.each(BULBASAUR_MOVE_CATALOG)('%s produces its actual damage, status, buff, terrain or recovery effect',id=>{
