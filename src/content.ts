@@ -1,5 +1,6 @@
 import {visibleCampaignNodes} from './campaign/data';
 import {BULBASAUR_ADDITIONAL_MOVES,BULBASAUR_MOVE_CATALOG} from './data/bulbasaurMoves';
+import {CATERPIE_MOVES} from './data/caterpieMoves';
 export const TYPES=['Normal','Fire','Water','Electric','Grass','Ice','Fighting','Poison','Ground','Flying','Psychic','Bug','Rock','Ghost','Dragon','Dark','Steel','Fairy'] as const;
 export type PokemonType=typeof TYPES[number];
 export type DamageClass='Physical'|'Special'|'Status';
@@ -14,6 +15,7 @@ export interface EnemyDef { id:string; name:string; types:PokemonType[]; hp:numb
 const ranks=(...values:RankEffect[])=>values;
 export const MOVES:Record<string,MoveDef>={
  ...BULBASAUR_ADDITIONAL_MOVES,
+ ...CATERPIE_MOVES,
  tackle:{id:'tackle',name:'Tackle',type:'Normal',damageClass:'Physical',kind:'charge',power:18,cooldown:.75,range:70,description:'A controlled forward impact with knockback.',ranks:ranks({},{damage:1.18,range:1.15},{cooldown:.85},{damage:1.25,range:1.2},{damage:1.2,count:2})},
  scratch:{id:'scratch',name:'Scratch',type:'Normal',damageClass:'Physical',kind:'slash',power:15,cooldown:.5,range:62,description:'Fast narrow claw arcs.',ranks:ranks({},{cooldown:.85},{count:2},{range:1.25},{damage:1.35,count:2})},
  vineWhip:{id:'vineWhip',name:'Vine Whip',type:'Grass',damageClass:'Physical',kind:'sweep',power:23,cooldown:1.1,range:145,description:'A long sweeping vine that hits a line of foes.',ranks:ranks({},{range:1.2},{count:2},{damage:1.3},{count:3,range:1.15})},
@@ -40,6 +42,9 @@ export const POKEMON:Record<string,PokemonDef>={
  squirtle:{id:'squirtle',dex:7,name:'Squirtle',types:['Water'],stats:S(44,48,65,50,64,43),speed:155,startingMove:'tackle',learnset:['tackle','waterGun','bubble','rapidSpin'],evolvesTo:'wartortle',evolutionLevel:16,description:'Durable close-range controller with piercing water.',color:0x5a9fd6},
  wartortle:{id:'wartortle',dex:8,name:'Wartortle',types:['Water'],stats:S(59,63,80,65,80,58),speed:164,startingMove:'waterGun',learnset:['waterGun','bubble','rapidSpin','tackle'],evolvesTo:'blastoise',evolutionLevel:36,description:'A sturdy Water specialist.',color:0x4c87ca},
  blastoise:{id:'blastoise',dex:9,name:'Blastoise',types:['Water'],stats:S(79,83,100,85,105,78),speed:172,startingMove:'hydroPump',learnset:['hydroPump','waterGun','bubble','rapidSpin','tackle'],description:'A heavily armored piercing attacker.',color:0x4479b3},
+ caterpie:{id:'caterpie',dex:10,name:'Caterpie',types:['Bug'],stats:S(45,30,35,20,20,45),speed:158,startingMove:'stringShot',learnset:['stringShot','infestation','tackle'],evolvesTo:'metapod',evolutionLevel:7,description:'A thread-weaving controller that grows into a master of spores and swarms.',color:0x76bf54},
+ metapod:{id:'metapod',dex:11,name:'Metapod',types:['Bug'],stats:S(50,20,55,25,25,30),speed:142,startingMove:'stringShot',learnset:['stringShot','infestation','tackle','harden'],evolvesTo:'butterfree',evolutionLevel:10,description:'An armored cocoon rewarded with Harden on evolution.',color:0x7ab85b},
+ butterfree:{id:'butterfree',dex:12,name:'Butterfree',types:['Bug','Flying'],stats:S(60,45,50,90,80,70),speed:180,startingMove:'stringShot',learnset:['stringShot','infestation','tackle','harden','gust','sleepPowder','psychic','bugBuzz','quiverDance','dreamEater','pollenPuff'],description:'An aerial caster combining sleep, psychic energy and pollen fusions.',color:0x9b8cc4},
  weedle:{id:'weedle',dex:13,name:'Weedle',types:['Bug','Poison'],stats:S(40,35,30,20,20,50),speed:165,startingMove:'tackle',learnset:['tackle','poisonPowder'],evolvesTo:'kakuna',evolutionLevel:7,description:'A forest partner unlocked by defeating Beedrill, with close impacts and poison control.',color:0xc7a84e},
  kakuna:{id:'kakuna',dex:14,name:'Kakuna',types:['Bug','Poison'],stats:S(45,25,50,25,25,35),speed:148,startingMove:'tackle',learnset:['tackle','poisonPowder'],evolvesTo:'beedrill',evolutionLevel:10,description:'A defensive cocoon preparing for its final evolution.',color:0xd5c75a},
  beedrill:{id:'beedrill',dex:15,name:'Beedrill',types:['Bug','Poison'],stats:S(65,90,40,45,80,75),speed:195,startingMove:'tackle',learnset:['tackle','poisonPowder'],description:'A fast forest evolution with strong physical impacts and poison control.',color:0xe3c33d}
