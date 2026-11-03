@@ -22,7 +22,8 @@ import {interpolatePosition,interpolationAlpha,Position} from './interpolation';
 import {chunkKey,prewarmWorldChunk,syncWorldChunks as syncWorldData} from './worldgen';
 import {forestObjectiveText} from './forestObjectives';
 import {renderLandmarkArt,landmarkDiscoveryLabel} from './landmarkPresentation';
-import {forestHash,forestNoise} from './forestPlan';
+import {forestHash} from './forestPlan';
+import {ForestCanopyRenderer} from './forestCanopyRenderer';
 import {forestResearchHud} from './forestResearch';
 import {playGameCue,installGameAudioUnlock} from './gameAudio';
 import {fusionForResult} from './data/moveFusions';
@@ -47,7 +48,7 @@ const W=1280,H=720,FONT=PRIMARY_FONT_FAMILY;
 interface GrassView {back:Phaser.GameObjects.Image;front:Phaser.GameObjects.Image;blades:Phaser.GameObjects.Image;x:number;y:number;}
 interface ChoiceRequest {id:number;title:string;kind:'level'|'mastery'|'fixed'|'credit';options?:Upgrade[];onDone?:()=>void;}
 class GameScene extends Phaser.Scene {
- groundLayer!:Phaser.GameObjects.Layer;worldLayer!:Phaser.GameObjects.Layer;effectsLayer!:Phaser.GameObjects.Layer;
+ groundLayer!:Phaser.GameObjects.Layer;canopyRenderer!:ForestCanopyRenderer;worldLayer!:Phaser.GameObjects.Layer;effectsLayer!:Phaser.GameObjects.Layer;
  preferences!:PlayerSettings;
  state!:SimState;keys!:Record<string,Phaser.Input.Keyboard.Key>;player!:Phaser.GameObjects.Sprite;playerShadow!:Phaser.GameObjects.Ellipse;cameraTarget!:Phaser.GameObjects.Zone;
  portrait!:Phaser.GameObjects.Image;hud!:Phaser.GameObjects.Text;timerText!:Phaser.GameObjects.Text;researchHud!:Phaser.GameObjects.Text;expGraphics!:Phaser.GameObjects.Graphics;expText!:Phaser.GameObjects.Text;playerHpGraphics!:Phaser.GameObjects.Graphics;bossGraphics!:Phaser.GameObjects.Graphics;bossText!:Phaser.GameObjects.Text;hpLayout!:GameplayHudLayout;
@@ -85,6 +86,7 @@ class GameScene extends Phaser.Scene {
   // World-coordinate depths sort only inside these layers. Their bounded
   // scene depths keep terrain below actors and the HUD above any world y.
   this.groundLayer=this.add.layer().setName('terrain-layer').setDepth(0);
+   this.canopyRenderer=new ForestCanopyRenderer(this,this.state.world.seed,this.preferences.canopyIntensity);
   this.worldLayer=this.add.layer().setName('world-layer').setDepth(1);
   this.effectsLayer=this.add.layer().setName('world-effects-layer').setDepth(2);
   this.events.once('shutdown',()=>{this.scene.stop('upgrade');this.scene.stop('results');this.pickupRenderer.destroy();this.itemHud.destroy();this.moveHud.destroy();this.mobileHud.destroy();this.moveVfx.destroy();});
@@ -255,10 +257,9 @@ class GameScene extends Phaser.Scene {
   const ownerKey=chunkKey(Math.floor(cx*pageSize/map.chunkSize),Math.floor(cy*pageSize/map.chunkSize));if(!map.chunks[ownerKey])return;
   for(let ly=0;ly<cells;ly++)for(let lx=0;lx<cells;lx++){
    const x=baseX+lx,y=baseY+ly;if(!map.stream&&(x<0||y<0||x>=map.terrain.cols||y>=map.terrain.rows))continue;const wx=x*tile+tile/2,wy=y*tile+tile/2,value=terrainAt(map.terrain,x,y),hash=forestHash(map.seed,x,y,0x17e3);
-   // Soft global color variation adds moss and sunlit areas without solid terrain.
-   const light=forestNoise(map.seed,wx,wy,630,0x27ba);
-   const tint=light<.30?0xeaf3e7:light>.71?0xf5ffee:0xffffff;
-   objects.push(this.groundObject(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.grassFill)).setDisplaySize(tile,tile).setTint(tint).setDepth(0)));
+   // Keep the grass tile's color consistent. The world-space canopy overlay,
+   // not a per-tile tint threshold, is responsible for all sunlight and shade.
+   objects.push(this.groundObject(this.add.image(wx,wy,environmentKey(ENVIRONMENT_ASSETS.grassFill)).setDisplaySize(tile,tile).setDepth(0)));
    // The legacy 48x48 cliff PNG is actually one boulder, NOT a 3x3
    // cliff tileset. Never slice it into mountain-wall fragments in the
    // endless forest, even if an old save somehow contains cliff tiles.
@@ -276,6 +277,7 @@ class GameScene extends Phaser.Scene {
   for(const landmark of map.landmarks.filter(l=>Math.floor(l.x/pageSize)===cx&&Math.floor(l.y/pageSize)===cy)){
    objects.push(...renderLandmarkArt(this,landmark,this.worldLayer));
   }
+  objects.push(...this.canopyRenderer.renderPage(cx,cy,pageSize,map.landmarks));
   this.chunkViews.set(key,objects);
  }
  syncWorldChunks(force=false){
@@ -374,9 +376,10 @@ class GameScene extends Phaser.Scene {
   }
   this.time.delayedCall(2800,()=>notice.destroy(true));
  }
- showEventBanner(message:string,color='#ffe7a2',duration=2400){
-  const notice=this.add.text(W/2,208,message,{fontFamily:FONT,fontSize:'22px',fontStyle:'bold',color,backgroundColor:'#102019ee',padding:{x:16,y:10},align:'center',stroke:'#102019',strokeThickness:2}).setName('forest-event-notice').setOrigin(.5,0).setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);
-  this.time.delayedCall(duration,()=>notice.destroy());
+ showEventBanner(message:string,color='#ffe7a2',duration=2400,y=208){
+  const notice=this.add.text(W/2,y,message,{fontFamily:FONT,fontSize:'22px',fontStyle:'bold',color,backgroundColor:'#102019ee',padding:{x:16,y:10},align:'center',stroke:'#102019',strokeThickness:2}).setName('forest-event-notice').setOrigin(.5,0).setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);
+  if(!motionReduced(this.preferences))this.tweens.add({targets:notice,alpha:0,duration:220,delay:Math.max(0,duration-220)});
+  this.time.delayedCall(duration,()=>{if(notice.active)notice.destroy();});
  }
  showEvolution(id:string){const p=POKEMON[id],profile=renderProfile(id);recordEvolution(id);playGameCue('evolution',this.preferences);if(!motionReduced(this.preferences)){const burst=this.add.circle(this.state.player.x,this.state.player.y-18,24,0xffe9a1,.5).setDepth(this.state.player.y+30);this.effectsLayer.add(burst);this.tweens.add({targets:burst,scale:3,alpha:0,duration:650,onComplete:()=>burst.destroy()});}this.player.anims.stop();this.player.setTexture(`${id}-sprite`,0);this.playerAnimation.setSpecies(id);this.playerAnimation.trigger('evolution',this.state.time,1.8);this.playerShadow.setSize(profile.shadowWidth,profile.shadowHeight);this.portrait.setTexture(`${id}-portrait`);const text=this.add.text(W/2,H/2,`Congratulations!\nYour Pokémon evolved into ${p.name}!`,{fontFamily:FONT,fontSize:'30px',color:'#ffe26b',backgroundColor:'#102019ee',padding:{x:30,y:24},align:'center'}).setOrigin(.5).setDepth(21000).setScrollFactor(0).setData('gameplayNotice',true).setVisible(!this.overlay);this.time.delayedCall(1800,()=>text.destroy());}
  showReward(tier:1|2|3){playGameCue('reward',this.preferences);const options=rewardRoll(this.state,tier);this.showChoices(`${tier===3?'ULTRA':tier===2?'GREAT':'POKÉ'} BALL OPENED!`,options);}
@@ -454,7 +457,7 @@ class GameScene extends Phaser.Scene {
    const label=landmarkDiscoveryLabel(id);
    if(label&&!this.knownDiscoveries.has(key)){
     this.knownDiscoveries.add(key);
-    this.showEventBanner('DISCOVERED · '+label,'#f1e9b1',2500);
+    this.showEventBanner('DISCOVERED · '+label,'#f1e9b1',2500,146);
    }
   }else if(e==='xp-collected')playGameCue('xp',this.preferences);else if(e==='boss-windup')playGameCue('boss-windup',this.preferences);else if(e==='boss-attack')playGameCue('boss-attack',this.preferences);else if(e.startsWith('boss-phase:')){const phase=Number(e.split(':')[1]);this.showEventBanner(phase===2?'BEEDRILL · POISON LANES':'BEEDRILL · HIVE SWARM','#ffafb7');playGameCue('boss-phase',this.preferences);}}
   // Commit research once before ending the run. The old flow finalized
