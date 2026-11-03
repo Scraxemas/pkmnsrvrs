@@ -1,67 +1,59 @@
 import type Phaser from 'phaser';
-import {canopyLighting,vignetteAlpha,type CanopyIntensity,type CanopyLandmark} from './forestCanopy';
+import {
+ canopyLighting,sunOpeningsForRegion,type CanopyIntensity,type CanopyLandmark
+} from './forestCanopy';
 
-export const CANOPY_TEXTURE_RESOLUTION=96;
-const CANOPY_SHADE=[18,54,42] as const;
-const CANOPY_SUNLIGHT=[244,225,159] as const;
+export const CANOPY_TEXTURE_RESOLUTION=128;
+export const CANOPY_TEXTURE_GUTTER=1;
+const SHADE_COLOR=[13,45,34] as const;
 
-/** One soft pixel field per streamed page. Texture coordinates sample the
- * same absolute world positions irrespective of chunk order or sign.
- * Canopy shades ground only: actors, attacks, pickups and HUD remain bright.
+/** A single continuous dark-green canopy shadow layer, punched through by
+ * rounded sunlit areas. No overhead art and no camera-space vignette.
+ * All lighting is underneath Pokémon, enemies, projectiles and the HUD.
  */
 export class ForestCanopyRenderer{
  readonly layer:Phaser.GameObjects.Layer;
- readonly vignette?:Phaser.GameObjects.Image;
-
  constructor(private scene:Phaser.Scene,private seed:number,readonly intensity:CanopyIntensity){
   this.layer=scene.add.layer().setName('canopy-shadows-layer').setDepth(.5);
-  if(intensity==='off')return;
-  const key='forest-vignette-'+intensity;
-  if(!scene.textures.exists(key)){
-   const texture=scene.textures.createCanvas(key,512,288);
-   if(!texture)return;
-   const ctx=texture.getContext(),gradient=ctx.createRadialGradient(256,144,70,256,144,300);
-   const alpha=vignetteAlpha(1,intensity);
-   gradient.addColorStop(0,'rgba(10,35,25,0)');
-   gradient.addColorStop(.58,'rgba(10,35,25,0)');
-   gradient.addColorStop(1,'rgba(10,35,25,'+alpha.toFixed(4)+')');
-   ctx.fillStyle=gradient;ctx.fillRect(0,0,512,288);texture.refresh();
-   texture.setFilter(0); // Linear is intentional for soft lighting, not Pokémon sprites.
-  }
-  this.vignette=scene.add.image(640,360,key).setDisplaySize(1280,720)
-   .setScrollFactor(0).setDepth(3).setName('forest-canopy-vignette');
  }
 
  renderPage(cx:number,cy:number,size:number,landmarks:readonly CanopyLandmark[]=[]):Phaser.GameObjects.GameObject[]{
   if(this.intensity==='off')return [];
-  const startX=cx*size,startY=cy*size,res=CANOPY_TEXTURE_RESOLUTION;
+  const left=cx*size,top=cy*size,res=CANOPY_TEXTURE_RESOLUTION,gutter=CANOPY_TEXTURE_GUTTER;
+  const pitch=size/res;
   const key=`forest-canopy-field:${this.seed}:${this.intensity}:${cx}:${cy}:${size}`;
   if(!this.scene.textures.exists(key)){
-   const texture=this.scene.textures.createCanvas(key,res,res);
+   const width=res+gutter*2;
+   const texture=this.scene.textures.createCanvas(key,width,width);
    if(!texture)return [];
-   const ctx=texture.getContext(),data=ctx.createImageData(res,res);
-   const relevant=landmarks.filter(l=>
-    l.x+l.radius+200>startX&&l.x-l.radius-200<startX+size&&
-    l.y+l.radius+200>startY&&l.y-l.radius-200<startY+size);
-   for(let row=0;row<res;row++)for(let col=0;col<res;col++){
-    const x=startX+(col+.5)*size/res,y=startY+(row+.5)*size/res;
-    const {shade,sunlight}=canopyLighting(this.seed,x,y,this.intensity,relevant);
-    // Compose cool translucent shade and warm sunlight in ONE smooth texture.
-    const alpha=shade+sunlight*(1-shade),i=(row*res+col)*4;
-    const darkWeight=shade/Math.max(alpha,1/255),lightWeight=1-darkWeight;
-    data.data[i]=Math.round(CANOPY_SHADE[0]*darkWeight+CANOPY_SUNLIGHT[0]*lightWeight);
-    data.data[i+1]=Math.round(CANOPY_SHADE[1]*darkWeight+CANOPY_SUNLIGHT[1]*lightWeight);
-    data.data[i+2]=Math.round(CANOPY_SHADE[2]*darkWeight+CANOPY_SUNLIGHT[2]*lightWeight);
-    data.data[i+3]=Math.round(alpha*255);
+   const ctx=texture.getContext(),pixels=ctx.createImageData(width,width);
+   const openings=sunOpeningsForRegion(this.seed,left-pitch,top-pitch,size+pitch*2,size+pitch*2);
+   const relevant=landmarks.filter(site=>{
+    const r=Math.max(150,site.radius+70)+pitch;
+    return site.x+r>left&&site.x-r<left+size&&site.y+r>top&&site.y-r<top+size;
+   });
+   // Gutters are sampled in world coordinates, NOT copied from the adjacent
+   // page. Linear sampling through the cropped frame sees matching neighbors.
+   for(let row=0;row<width;row++)for(let col=0;col<width;col++){
+    const x=left+(col-gutter+.5)*pitch;
+    const y=top+(row-gutter+.5)*pitch;
+    const shade=canopyLighting(this.seed,x,y,this.intensity,relevant,openings).shade;
+    const i=(row*width+col)*4;
+    pixels.data[i]=SHADE_COLOR[0];
+    pixels.data[i+1]=SHADE_COLOR[1];
+    pixels.data[i+2]=SHADE_COLOR[2];
+    pixels.data[i+3]=Math.round(shade*255);
    }
-   ctx.putImageData(data,0,0);texture.refresh();
-   texture.setFilter(0); // Smooth interpolated canopy edges; pixel-art assets remain NEAREST.
+   ctx.putImageData(pixels,0,0);
+   texture.refresh();
+   texture.setFilter(0); // LINEAR for the lighting only; Pokémon stay NEAREST.
+   texture.add('world-page',0,gutter,gutter,res,res);
   }
-  const image=this.scene.add.image(startX+size/2,startY+size/2,key)
-   .setDisplaySize(size,size).setDepth(0).setName('canopy-page-'+cx+','+cy)
-   .setData('canopyPage',cx+','+cy);
+  const image=this.scene.add.image(left+size/2,top+size/2,key,'world-page')
+   .setDisplaySize(size,size).setDepth(0)
+   .setName('canopy-page-'+cx+','+cy).setData('canopyPage',cx+','+cy);
   this.layer.add(image);
-  // Same lifecycle as world page objects; no unbounded persistent GPU texture cache.
+  // No persistent GPU cache: this texture is owned by its streaming page.
   image.once('destroy',()=>{
    if(this.scene.textures.exists(key))this.scene.textures.remove(key);
   });
